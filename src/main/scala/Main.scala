@@ -19,11 +19,6 @@ object Main {
     System.out.println("解析時間 = " + formatter.format(endtime - start))
     start = System.currentTimeMillis
     System.out.println("> compose")
-    /*
-    val outputFile = if (args.length > 0) args(3) else null
-    extract(outputFile)
-    compose()
-    */
     for (t <- treeList) {
       //println(t)
     }
