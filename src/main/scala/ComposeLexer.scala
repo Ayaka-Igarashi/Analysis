@@ -4,6 +4,7 @@ import edu.stanford.nlp.trees.Tree
 
 import scala.collection.JavaConverters._
 
+
 object ComposeLexer {
 
   // オートマトンを定義
