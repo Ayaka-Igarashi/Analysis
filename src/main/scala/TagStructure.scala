@@ -1,4 +1,4 @@
-object PosStructure {
+object TagStructure {
   // tagの種類全部書く
   trait Tag
 
