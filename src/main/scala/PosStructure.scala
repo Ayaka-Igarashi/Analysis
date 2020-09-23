@@ -4,20 +4,23 @@ object PosStructure {
 
   //syntactic tagset
   case class ROOT(list: List[Tag]) extends Tag
-  case class S(list: List[Tag]) extends Tag
-  case class VP(list: List[Tag]) extends Tag
-  case class NP(list: List[Tag]) extends Tag
-  case class PP(list: List[Tag]) extends Tag
   case class ADJP(list: List[Tag]) extends Tag
   case class ADVP(list: List[Tag]) extends Tag
+  case class NP(list: List[Tag]) extends Tag
+  case class PP(list: List[Tag]) extends Tag
+  case class S(list: List[Tag]) extends Tag
   case class SBAR(list: List[Tag]) extends Tag
   case class SBARQ(list: List[Tag]) extends Tag
   case class SINV(list: List[Tag]) extends Tag
   case class SQ(list: List[Tag]) extends Tag
+  case class VP(list: List[Tag]) extends Tag
   case class WHADVP(list: List[Tag]) extends Tag
   case class WHNP(list: List[Tag]) extends Tag
   case class WHPP(list: List[Tag]) extends Tag
   case class X(list: List[Tag]) extends Tag
+  case class Asterisk(list: List[Tag]) extends Tag // *
+  case class Zero(list: List[Tag]) extends Tag // 0
+  case class T(list: List[Tag]) extends Tag
 
   // POS tagset (word)
   case class CC(token: Token) extends Tag
@@ -58,14 +61,14 @@ object PosStructure {
   case class WRB(token: Token) extends Tag
 
   // POS tagset (記号)
-  case class Pound(token: Token) extends Tag
-  case class Dollar(token: Token) extends Tag
-  case class Dot(token: Token) extends Tag
-  case class Comma(token: Token) extends Tag
-  case class Colon(token: Token) extends Tag
-  case class LBracket(token: Token) extends Tag
-  case class RBracket(token: Token) extends Tag
-  case class DoubleQuote(token: Token) extends Tag
+  case class Pound(token: Token) extends Tag // #
+  case class Dollar(token: Token) extends Tag // $
+  case class Dot(token: Token) extends Tag // .
+  case class Comma(token: Token) extends Tag // ,
+  case class Colon(token: Token) extends Tag // : or ;
+  case class LBracket(token: Token) extends Tag // (
+  case class RBracket(token: Token) extends Tag // )
+  case class DoubleQuote(token: Token) extends Tag // "
   case class LSingleQuote(token: Token) extends Tag
   case class RSingleQuote(token: Token) extends Tag
   case class LDoubleQuote(token: Token) extends Tag
