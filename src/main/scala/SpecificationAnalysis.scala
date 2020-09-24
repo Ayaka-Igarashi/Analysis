@@ -107,12 +107,14 @@ object SpecificationAnalysis {
     for (i <- 0 to sentences_java.size() - 1) {
       sentences :+= sentences_java.get(i)
     }*/
+    //System.out.println(">1")
     for(sent: Sentence <- sentences) {
       // System.out.println("The second word of the sentence '" + sent + "' is " + sent.word(1))
       // System.out.println("The third lemma of the sentence '" + sent + "' is " + sent.lemma(2))
       val parse: Tree = sent.parse
       treeList :+= parse
       out.println(parse)
+      //System.out.println(">2")
     }
 
     // ファイルを閉じる

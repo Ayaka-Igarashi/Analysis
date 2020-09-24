@@ -26,6 +26,10 @@ object ConvertTree {
       case "0" => Zero(toStruct(tree))
       case "T" => T(toStruct(tree))
 
+      case "NML" => NML(toStruct(tree))
+      case "FRAG" => FRAG(toStruct(tree))
+      case "PRN" => PRN(toStruct(tree))
+
       // pos tag
       case "CC" => CC(toToken(tree))
       case "CD" => CD(toToken(tree))
@@ -71,7 +75,11 @@ object ConvertTree {
       case ":" => Colon(toToken(tree))
       case "(" | "-LRB-" => LBracket(toToken(tree))
       case ")" | "-RRB-" => RBracket(toToken(tree))
+      case "``" => LDoubleQuote(toToken(tree))
+      case "''" => RDoubleQuote(toToken(tree))
       // あと少し省略しているので必要になったら加える
+
+      case "HYPH" => HYPH(toToken(tree))
       case _ => println(tree.value() + " is not defined");null // error吐くようにする
 
     }

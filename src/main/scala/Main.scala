@@ -21,7 +21,11 @@ object Main {
     start = System.currentTimeMillis
     System.out.println("> compose")
 
-    println(convert(treeList(0)))
+    for (t <- treeList) {
+      //val tag = convert(t)
+      //println(tag)
+    }
+
 
 
     /*
