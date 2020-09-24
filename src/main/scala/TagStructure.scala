@@ -45,7 +45,7 @@ object TagStructure {
   case class PDT(token: Token) extends Tag
   case class POS(token: Token) extends Tag
   case class PRP(token: Token) extends Tag // 主格
-  case class PP$(token: Token) extends Tag // 所有格
+  case class PPD(token: Token) extends Tag // 所有格(PP$)
   case class RB(token: Token) extends Tag
   case class RBR(token: Token) extends Tag
   case class RBS(token: Token) extends Tag
@@ -61,7 +61,7 @@ object TagStructure {
   case class VBZ(token: Token) extends Tag
   case class WDT(token: Token) extends Tag
   case class WP(token: Token) extends Tag
-  case class WP$(token: Token) extends Tag
+  case class WPD(token: Token) extends Tag // WP$
   case class WRB(token: Token) extends Tag
 
   // POS tagset (記号)

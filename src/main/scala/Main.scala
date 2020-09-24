@@ -22,8 +22,8 @@ object Main {
     System.out.println("> compose")
 
     for (t <- treeList) {
-      //val tag = convert(t)
-      //println(tag)
+      val tag = convert(t)
+      println(tag)
     }
 
 
