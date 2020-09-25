@@ -4,18 +4,17 @@ import java.text.DateFormat._
 import java.text.SimpleDateFormat
 import java.util
 
+import Main.inputFileName
 import com.sun.tools.javac.code.TypeTag
 import edu.stanford.nlp._
 import edu.stanford.nlp.simple._
 import edu.stanford.nlp.io.IOUtils
 import edu.stanford.nlp.pipeline.{Annotation, StanfordCoreNLP}
 import edu.stanford.nlp.trees.Tree
-
 import edu.stanford.nlp.ling.CoreAnnotations
 import edu.stanford.nlp.trees.TreeCoreAnnotations
 
 import scala.collection.JavaConverters._
-
 import scala.reflect.runtime.universe.typeOf
 
 object SpecificationAnalysis {
@@ -23,24 +22,7 @@ object SpecificationAnalysis {
 
   // 入力ファイルを解析する
   @throws[IOException]
-  def analysis(args: Array[String]): Unit = {
-    /*
-    // 出力ファイル設定
-    var txtOut : PrintWriter= null
-    if (args.length > 1) {
-      txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
-      System.out.println("input -> output.txt")
-    }
-    else txtOut = new PrintWriter(System.out)
-    // xml出力ファイル設定(未使用)
-    var xmlOut : PrintWriter = null
-    if (args.length > 2) {
-      xmlOut = new PrintWriter(args(2))
-      System.out.println("input -> output.xml")
-    }
-
-     */
-
+  def analysis(): Unit = {
     /** Core NLP */
 
     /*
@@ -78,7 +60,7 @@ object SpecificationAnalysis {
     start = System.currentTimeMillis
     // 入力ファイル設定
     var annotation : Annotation = null
-    if (args.length > 0) annotation = new Annotation(IOUtils.slurpFileNoExceptions(args(0)))
+    if (inputFileName != null) annotation = new Annotation(IOUtils.slurpFileNoExceptions(inputFileName))
     else annotation = new Annotation("Karma of humans is AI. She was sad.") // She sent an email to Tokyo Tech University yestuday.
     // 読み込み終了時間
     endtime = System.currentTimeMillis
@@ -111,7 +93,7 @@ object SpecificationAnalysis {
 
     // parseのみ解析
     var doc: Document = null
-    if (args.length > 0) doc = new Document(IOUtils.slurpFileNoExceptions(args(0)))
+    if (inputFileName != null) doc = new Document(IOUtils.slurpFileNoExceptions(inputFileName))
     else doc = new Document("put your text to input.txt")
 
     val sentences = doc.sentences().asScala.toList
