@@ -2,6 +2,8 @@ import TagStructure._
 import edu.stanford.nlp.ling.CoreLabel
 import edu.stanford.nlp.trees.Tree
 
+import Main.txtOut
+
 import scala.collection.JavaConverters._
 
 // CoreNLPのTree型からTag型へ変換する
@@ -83,7 +85,7 @@ object ConvertTree {
       //
 
       case "HYPH" => HYPH(toToken(tree))
-      case _ => println(tree.value() + " is not defined");null // error吐くようにする
+      case _ => txtOut.println(tree.value() + " is not defined");null // error吐くようにする
 
     }
   }

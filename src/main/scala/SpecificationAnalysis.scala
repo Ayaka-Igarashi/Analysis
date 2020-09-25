@@ -24,6 +24,7 @@ object SpecificationAnalysis {
   // 入力ファイルを解析する
   @throws[IOException]
   def analysis(args: Array[String]): Unit = {
+    /*
     // 出力ファイル設定
     var txtOut : PrintWriter= null
     if (args.length > 1) {
@@ -37,6 +38,8 @@ object SpecificationAnalysis {
       xmlOut = new PrintWriter(args(2))
       System.out.println("input -> output.xml")
     }
+
+     */
 
     /** Core NLP */
 
@@ -118,11 +121,7 @@ object SpecificationAnalysis {
       // System.out.println("The third lemma of the sentence '" + sent + "' is " + sent.lemma(2))
       val parse: Tree = sent.parse
       treeList :+= parse
-      txtOut.println(parse)
+      //txtOut.println(parse)
     }
-
-    // ファイルを閉じる
-    IOUtils.closeIgnoringExceptions(txtOut)
-    IOUtils.closeIgnoringExceptions(xmlOut)
   }
 }
