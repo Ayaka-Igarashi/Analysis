@@ -11,6 +11,9 @@ import edu.stanford.nlp.io.IOUtils
 import edu.stanford.nlp.pipeline.{Annotation, StanfordCoreNLP}
 import edu.stanford.nlp.trees.Tree
 
+import edu.stanford.nlp.ling.CoreAnnotations
+import edu.stanford.nlp.trees.TreeCoreAnnotations
+
 import scala.collection.JavaConverters._
 
 import scala.reflect.runtime.universe.typeOf
@@ -18,23 +21,26 @@ import scala.reflect.runtime.universe.typeOf
 object SpecificationAnalysis {
   var treeList: List[Tree] = List()
 
+  // 入力ファイルを解析する
   @throws[IOException]
   def analysis(args: Array[String]): Unit = {
     // 出力ファイル設定
-    var out : PrintWriter= null
+    var txtOut : PrintWriter= null
     if (args.length > 1) {
-      out = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
+      txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
       System.out.println("input -> output.txt")
     }
-    else out = new PrintWriter(System.out)
+    else txtOut = new PrintWriter(System.out)
+    // xml出力ファイル設定(未使用)
     var xmlOut : PrintWriter = null
     if (args.length > 2) {
       xmlOut = new PrintWriter(args(2))
       System.out.println("input -> output.xml")
     }
 
-    /*
+    /** Core NLP */
 
+    /*
     // 設定時間
     var start = System.currentTimeMillis
     val formatter = new SimpleDateFormat("mm:ss.SSS")
@@ -52,7 +58,7 @@ object SpecificationAnalysis {
      * Key : annotators
      * Value : tokenize, ssplit, pos, lemma, ner, parse, dcoref, sentiment
      */
-    props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref, sentiment")
+    props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse")
     // パイプラインを設定する
     // new StanfordCoreNLP(props)で基本設定にできる
     val pipeline = new StanfordCoreNLP(props)
@@ -86,40 +92,37 @@ object SpecificationAnalysis {
     // 出力スタート時間記録
     start = System.currentTimeMillis
     /** 解析結果を出力する */
-    pipeline.prettyPrint(annotation, out)
-    if (xmlOut != null) pipeline.xmlPrint(annotation, xmlOut)
+
+    val tree = annotation.get(classOf[CoreAnnotations.SentencesAnnotation]).get(0).get(classOf[TreeCoreAnnotations.TreeAnnotation])
+    txtOut.println(tree)
+    //pipeline.prettyPrint(annotation, out)
+    //if (xmlOut != null) pipeline.xmlPrint(annotation, xmlOut)
 
     // 解析出力時間記録
     endtime = System.currentTimeMillis
     System.out.println("解析出力時間 = " + formatter.format(endtime - start))
 
-    */
+    */////
+
+    /** Simple */
 
     // parseのみ解析
     var doc: Document = null
     if (args.length > 0) doc = new Document(IOUtils.slurpFileNoExceptions(args(0)))
-    else doc = new Document("add your text here! It can contain multiple sentences.") // She sent an email to Tokyo Tech University yestuday.
+    else doc = new Document("put your text to input.txt")
 
     val sentences = doc.sentences().asScala.toList
-    /*
-    val sentences_java: util.List[Sentence] = doc.sentences()
-    var sentences: List[Sentence] = List()
-    for (i <- 0 to sentences_java.size() - 1) {
-      sentences :+= sentences_java.get(i)
-    }*/
-    System.out.println(">1")
+
     for(sent: Sentence <- sentences) {
       // System.out.println("The second word of the sentence '" + sent + "' is " + sent.word(1))
       // System.out.println("The third lemma of the sentence '" + sent + "' is " + sent.lemma(2))
-      System.out.println(">2_")
       val parse: Tree = sent.parse
       treeList :+= parse
-      out.println(parse)
-      System.out.println(">2")
+      txtOut.println(parse)
     }
 
     // ファイルを閉じる
-    IOUtils.closeIgnoringExceptions(out)
+    IOUtils.closeIgnoringExceptions(txtOut)
     IOUtils.closeIgnoringExceptions(xmlOut)
   }
 }

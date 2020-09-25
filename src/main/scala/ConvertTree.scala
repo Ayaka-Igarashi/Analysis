@@ -1,7 +1,10 @@
 import TagStructure._
+import edu.stanford.nlp.ling.CoreLabel
 import edu.stanford.nlp.trees.Tree
+
 import scala.collection.JavaConverters._
 
+// CoreNLPのTree型からTag型へ変換する
 object ConvertTree {
   // TreeからTag構造体に変換
   def convert(tree: Tree): Tag = {
@@ -77,7 +80,7 @@ object ConvertTree {
       case ")" | "-RRB-" => RBracket(toToken(tree))
       case "``" => LDoubleQuote(toToken(tree))
       case "''" => RDoubleQuote(toToken(tree))
-      // あと少し省略しているので必要になったら加える
+      //
 
       case "HYPH" => HYPH(toToken(tree))
       case _ => println(tree.value() + " is not defined");null // error吐くようにする
@@ -86,17 +89,20 @@ object ConvertTree {
   }
 
 
-  // 補助関数
+  // 補助関数(Node)
   def toStruct(tree: Tree): List[Tag] = {
     val treeList = tree.getChildrenAsList.asScala.toList
     var list: List[Tag] = List()
     for(t <- treeList){ list :+= convert(t)}
     list
   }
-  // 補助関数
+  // 補助関数(Leaf)
   def toToken(tree: Tree): Token = {
     if (tree.numChildren() != 1) System.out.println("token num error")
     val child = tree.firstChild()
+    //child.label()
+    //val coreLabel: CoreLabel = new CoreLabel()
+
     Token(child.value())
   }
 }

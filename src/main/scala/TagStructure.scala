@@ -1,3 +1,4 @@
+// parseのデータ型を定義
 object TagStructure {
   // tagの種類全部書く
   trait Tag

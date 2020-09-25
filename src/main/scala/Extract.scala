@@ -23,7 +23,7 @@ case object OtherElement extends Directory
 case object Other extends Directory
 
 
-// 解析結果をもとに、字句解析器を作る
+// 未使用
 object Extract {
   // 外部ファイル出力
   var writer : PrintWriter= new PrintWriter(System.out)
