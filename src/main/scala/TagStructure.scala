@@ -81,6 +81,6 @@ object TagStructure {
 
   case class HYPH(token: Token) extends Tag
 
-  // Leaf
-  case class Token(token: String) extends Tag
+  // Leaf(とりあえず元の単語と原型両方格納する)
+  case class Token(word: String, lemma: String) extends Tag
 }

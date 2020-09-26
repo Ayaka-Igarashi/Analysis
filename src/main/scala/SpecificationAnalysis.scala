@@ -18,7 +18,7 @@ import scala.collection.JavaConverters._
 import scala.reflect.runtime.universe.typeOf
 
 object SpecificationAnalysis {
-  var treeList: List[Tree] = List()
+  var treeList: List[(Tree, List[String])] = List()
 
   // 入力ファイルを解析する
   @throws[IOException]
@@ -100,9 +100,9 @@ object SpecificationAnalysis {
 
     for(sent: Sentence <- sentences) {
       // System.out.println("The second word of the sentence '" + sent + "' is " + sent.word(1))
-      // System.out.println("The third lemma of the sentence '" + sent + "' is " + sent.lemma(2))
+      val lemmas: List[String] = sent.lemmas().asScala.toList
       val parse: Tree = sent.parse
-      treeList :+= parse
+      treeList :+= (parse, lemmas)
       //txtOut.println(parse)
     }
   }

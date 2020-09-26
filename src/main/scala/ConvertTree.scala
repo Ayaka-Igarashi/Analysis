@@ -8,6 +8,9 @@ import scala.collection.JavaConverters._
 
 // CoreNLPのTree型からTag型へ変換する
 object ConvertTree {
+  var lemmasList: List[String] = null
+  var leafDict: Map[Tree, Int] = null
+
   // TreeからTag構造体に変換
   def convert(tree: Tree): Tag = {
     tree.value() match {
@@ -102,9 +105,21 @@ object ConvertTree {
   def toToken(tree: Tree): Token = {
     if (tree.numChildren() != 1) System.out.println("token num error")
     val child = tree.firstChild()
-    //child.label()
-    //val coreLabel: CoreLabel = new CoreLabel()
-
-    Token(child.value())
+    leafDict.get(child) match {
+      case Some(i) => Token(child.value(), lemmasList(i))
+      case None => Token(child.value(), null) // error
+    }
   }
+
+  // lemmaツリーを作るのに使う関数
+  def makeLeafMap(tree: Tree) = {
+    leafDict = Map()
+    var i = 0
+    val leaveList: List[Tree] = tree.getLeaves().asScala.toList
+    for (leaf <- leaveList) {
+      leafDict += (leaf -> i)
+      i += 1
+    }
+  }
+
 }

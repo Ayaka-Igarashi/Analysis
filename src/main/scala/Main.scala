@@ -5,7 +5,7 @@ import java.util.TimeZone
 import Extract.extract
 import ComposeLexer.{compose, readTree}
 import SpecificationAnalysis.{analysis, treeList}
-import ConvertTree.convert
+import ConvertTree.{convert, lemmasList, makeLeafMap}
 import edu.stanford.nlp.io.IOUtils
 
 object Main {
@@ -15,7 +15,7 @@ object Main {
   var xmlOut : PrintWriter = null
   /***
    *
-   * @param args
+   * @param args ファイル名
    * args(0) : 解析したい入力ファイル(input.txt)
    * args(1) : 解析結果出力ファイル(output.txt)
    * args(2) : 出力xmlファイル(output.xml)...未使用
@@ -53,7 +53,9 @@ object Main {
 
     System.out.println("> convert_start")
     for (t <- treeList) {
-      val tag = convert(t)
+      makeLeafMap(t._1)
+      lemmasList = t._2
+      val tag = convert(t._1)
       txtOut.println(tag)
     }
 
