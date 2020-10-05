@@ -2,10 +2,9 @@ import java.io.{BufferedWriter, File, FileWriter, PrintWriter}
 import java.text.SimpleDateFormat
 import java.util.TimeZone
 
-import Extract.extract
-import ComposeLexer.{compose, readTree}
 import SpecificationAnalysis.{analysis, treeList}
-import ConvertTree.{convert, tokenList, makeLeafMap}
+import ConvertTree.{convert, makeLeafMap, tokenList}
+import ParseHtml.parseHtml
 import edu.stanford.nlp.io.IOUtils
 
 object Main {
@@ -22,6 +21,9 @@ object Main {
    *
    */
   def main(args: Array[String]) = {
+
+    parseHtml()
+
     // 入力ファイル
     if (args.length > 0) {
       inputFileName = args(0)
