@@ -2,7 +2,11 @@
 object TagStructure {
   // tagの種類全部書く
   trait Tag
-
+  /*
+  trait Nodetype
+  case object Root
+  case class Node(type: Nodetype, list: List[Tag]) extends Tag
+*/
   //syntactic tagset
   case class ROOT(list: List[Tag]) extends Tag
   case class ADJP(list: List[Tag]) extends Tag
