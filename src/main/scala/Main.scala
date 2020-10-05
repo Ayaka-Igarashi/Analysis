@@ -5,7 +5,7 @@ import java.util.TimeZone
 import Extract.extract
 import ComposeLexer.{compose, readTree}
 import SpecificationAnalysis.{analysis, treeList}
-import ConvertTree.{convert, lemmasList, makeLeafMap}
+import ConvertTree.{convert, tokenList, makeLeafMap}
 import edu.stanford.nlp.io.IOUtils
 
 object Main {
@@ -54,7 +54,7 @@ object Main {
     System.out.println("> convert_start")
     for (t <- treeList) {
       makeLeafMap(t._1)
-      lemmasList = t._2
+      tokenList = t._2
       val tag = convert(t._1)
       txtOut.println(tag)
     }
