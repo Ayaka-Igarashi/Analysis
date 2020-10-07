@@ -22,6 +22,7 @@ object Main {
    */
   def main(args: Array[String]) = {
 
+    // HTMLのパーサー
     parseHtml()
 
     // 入力ファイル

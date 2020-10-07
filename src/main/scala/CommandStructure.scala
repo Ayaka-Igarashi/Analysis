@@ -5,7 +5,7 @@ object CommandStructure {
   case class Switch(state: String) extends Command
 
   /**
-   * Set文はいろんなパターンがある -> nlpで上手く解析できたらよい
+   * Set文はいろんなパターンがある(大体代入をする命令、対象が様々) -> 同じ関数でいいのか？
    *  Set the temporary buffer to the empty string.
    *  Set its force-quirks flag to on
    * Setするものが複数ある場合はSet自体を複数作成する?
@@ -52,11 +52,6 @@ object CommandStructure {
   // Flush code points consumed as a character reference.
   case class Flush() extends Command
 
-  // the temporary buffer is the string "script"
-  // there is an adjusted current node and it is not an element in the HTML namespace
-  // the character reference was consumed as part of an attribute
-  case class Bool(a: String, b: String) extends Command
-
   //Start a new attribute in the current tag token.
   case class Start() extends Command
 
@@ -66,6 +61,16 @@ object CommandStructure {
   // Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0037 from the character's code point) to the character reference code.
   case class Add() extends Command
 
-  //12.2.5.73あたり
+
+  // the temporary buffer is the string "script"
+  // there is an adjusted current node and it is not an element in the HTML namespace
+  // the character reference was consumed as part of an attribute
+  case class Bool(str: String) extends Command
+
+  /*
+  trait Bool extends Command
+
+  case class ConsumedAsAttribute() extends Bool
+   */
 
 }

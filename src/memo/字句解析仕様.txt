@@ -1,0 +1,56 @@
+<12.2.5の冒頭をまとめたもの>
+
+最初の状態は data state である
+
+ほとんどの状態は1文字を消費する
+その時、
+様々な副作用が現れ、次の1.2.3.のどれかになる
+1.新しい状態へ遷移し、今入力した文字を再度消費する
+2.新しい状態へ遷移し、次の文字を消費する
+3.現在の状態にとどまり、次の文字を消費する
+
+しかしいくつかの状態は次の状態に行く前に数個の文字を消費することもある
+
+いくつかの場合、字句解析の状態は木構造のステージによって変わることもある
+
+reconsume: reconsume in <状態>
+    <状態>に遷移し、その状態においてconsume the next input character となっているとき、（つまり次の文字を消費しようとしているとき）
+    次の文字の代わりにcurrent input character(現在消費した文字)を消費する
+
+特定の状態の正確な振る舞いはinsertion modeとstack of open elementによる。
+特定の状態ではtemporary bufferを進捗状況を追跡するのに使う
+character reference stateではreturn stateが使われる
+return stateに遷移する: 今の状態を呼び出した状態に遷移。つまり一つ前の状態に遷移するということ。
+
+==========================================================================================
+字句解析の出力は0個以上のトークンの列となっている。
+トークンの種類: DOCTYPE, start tag, end tag, comment, character, end-of-file
+
+DOCTYPEのトークンは、name, public identifier, system identifier, force-quirks flag を持つ
+DOCTYPEトークンが作られたとき、name, public identifier, system identifierは無いものとする。force-quirks flagはoffにする。
+
+starttag,endtagトークンは tag name, self-closing flag, 属性のリスト(属性は名前と値を持つ)を持っている。
+starttag,endtagが作られたとき、self-closing flagはunsetにする。属性のリストは空にする。
+
+comment, characterトークンはデータを持っている。
+
+==================================================================================
+
+トークンが出力されたとき、そのトークンは直ちに"tree construction stage"で処理する。
+tree constructionの段階はtokenizationの段階に影響を与えることがある。
+さらに追加の文字を入力に挿入することもある。(ex. scriptとか動的なやつ)
+
+appropriate end tag token: end tag tokenの名前が、最後のstart tagの名前と一致するときのend tag tokenのこと
+
+character referenceがconsumed as part of an attribute:
+    return stateが attribute value (double-quoted) state,
+                   attribute value (single-quoted) state,
+                   attribute value (unquoted) state.
+    のとき。
+    つまり属性の一部として消費されるものかどうか判定するためのものである。
+
+flush code points consumed as a character reference:
+    it means that for each code point in the temporary buffer (in the order they were added to the buffer)
+    user agent must append the code point from the buffer to the current attribute's value
+    if the character reference was consumed as part of an attribute,
+    or emit the code point as a character token otherwise.
