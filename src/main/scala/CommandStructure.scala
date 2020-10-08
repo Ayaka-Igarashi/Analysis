@@ -4,6 +4,8 @@ object CommandStructure {
 
   case class Switch(state: String) extends Command
 
+  case class Reconsume(state: String) extends Command
+
   /**
    * Set文はいろんなパターンがある(大体代入をする命令、対象が様々) -> 同じ関数でいいのか？
    *  Set the temporary buffer to the empty string.
@@ -17,7 +19,8 @@ object CommandStructure {
   case class Set(obj: String, to: String) extends Command
 
 
-  //Consume those two characters
+  // Consume those two characters
+  // Consume the next input character
   case class Consume(character: String) extends Command
 
   /**
@@ -30,8 +33,6 @@ object CommandStructure {
   case class Emit(characters: String) extends Command
   case class Error(error: String) extends Command
 
-  case class Reconsume(state: String) extends Command
-
   // Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name.
   // Append a U+FFFD REPLACEMENT CHARACTER character to the current tag token's tag name.
   case class Append(obj: String, to: String) extends Command
@@ -41,10 +42,10 @@ object CommandStructure {
   // treat it as per the "anything else" entry below.
   case class Treat(obj: String, as: String) extends Command
 
-  //Create a new start tag token, set its tag name to the empty string.
+  // Create a new start tag token, set its tag name to the empty string.
   // create a comment token whose data is the empty string
   // Create a new DOCTYPE token
-  case class CreateSet(token: String, set: String, to: String) extends Command
+  case class Create(token: String) extends Command
 
   // Ignore the character.
   case class Ignore() extends Command

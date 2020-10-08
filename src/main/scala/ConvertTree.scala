@@ -13,6 +13,15 @@ object ConvertTree {
 
   // TreeからTag構造体に変換
   def convert(tree: Tree): Tag = {
+    /*
+    tree.value() match {
+      case "ROOT" => Node(ROOT, toStruct(tree))
+      case "ADJP" => Node(ADJP, toStruct(tree))
+      case "*" => Node(Asterisk, toStruct(tree))
+
+      case "$" => Leaf(Dollar, toToken(tree))
+    }
+    */
     tree.value() match {
       // syntactic tag
       case "ROOT" => ROOT(toStruct(tree))
