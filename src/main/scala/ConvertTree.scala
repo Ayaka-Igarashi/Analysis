@@ -14,6 +14,8 @@ object ConvertTree {
   // TreeからTag構造体に変換
   def convert(tree: Tree): Tag = {
     /*
+    // 元のTree型のLeafからの距離が1だったら、Leafを作成し
+    // それより大きかったらNodeを作成するという風なmatch文にすればより簡潔?(面倒くさい?)
     tree.value() match {
       case "ROOT" => Node(ROOT, toStruct(tree))
       case "ADJP" => Node(ADJP, toStruct(tree))

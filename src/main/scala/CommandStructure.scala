@@ -66,7 +66,7 @@ object CommandStructure {
   // the temporary buffer is the string "script"
   // there is an adjusted current node and it is not an element in the HTML namespace
   // the character reference was consumed as part of an attribute
-  case class Bool(str: String) extends Command
+  case class Bool(str: String)
 
   /*
   trait Bool extends Command
