@@ -1,1 +1,21 @@
-Tag(h5,Map(),List(Tag(span,Map(),List(Text(12.2.5.1))), Text( ), Tag(dfn,Map(),List(Text(Data state))), Tag(a,Map(),List())))
+List(State(Data state,Consume the next input character:,List(Trance(
+U+0026 AMPERSAND (&amp;),
+Set the return state to the data state. Switch to the character reference state.), Trance(
+U+003C LESS-THAN SIGN (&lt;),
+Switch to the tag open state.), Trance(
+U+0000 NULL,
+This is an unexpected-null-character parse error. Emit the current input character as a character token.), Trance(
+EOF,
+Emit an end-of-file token.), Trance(
+Anything else,
+Emit the current input character as a character token.))), State(RCDATA state,Consume the next input character:,List(Trance(
+U+0026 AMPERSAND (&amp;),
+Set the return state to the RCDATA state. Switch to the character reference state.), Trance(
+U+003C LESS-THAN SIGN (&lt;),
+Switch to the RCDATA less-than sign state.), Trance(
+U+0000 NULL,
+This is an unexpected-null-character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.), Trance(
+EOF,
+Emit an end-of-file token.), Trance(
+Anything else,
+Emit the current input character as a character token.))))

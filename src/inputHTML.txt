@@ -1,7 +1,17 @@
-  <h5><span>12.2.5.1</span> <dfn>Data state</dfn><a></a></h5>
+  <h5 id=data-state><span class=secno>13.2.5.1</span> <dfn>Data state</dfn><a href=#data-state class=self-link></a></h5>
 
   <p>Consume the <a href=#next-input-character id=data-state:next-input-character>next input character</a>:</p>
 
   <dl class=switch><dt>U+0026 AMPERSAND (&amp;)<dd>Set the <var id=data-state:return-state><a href=#return-state>return state</a></var> to the <a href=#data-state id=data-state:data-state>data state</a>.
    Switch to the <a href=#character-reference-state id=data-state:character-reference-state>character reference state</a>.<dt>U+003C LESS-THAN SIGN (&lt;)<dd>Switch to the <a href=#tag-open-state id=data-state:tag-open-state>tag open state</a>.<dt>U+0000 NULL<dd>This is an <a href=#parse-error-unexpected-null-character id=data-state:parse-error-unexpected-null-character>unexpected-null-character</a> <a href=#parse-errors id=data-state:parse-errors>parse
    error</a>. Emit the <a href=#current-input-character id=data-state:current-input-character>current input character</a> as a character token.<dt>EOF<dd>Emit an end-of-file token.<dt>Anything else<dd>Emit the <a href=#current-input-character id=data-state:current-input-character-2>current input character</a> as a character token.</dl>
+
+
+  <h5 id=rcdata-state><span class=secno>13.2.5.2</span> <dfn>RCDATA state</dfn><a href=#rcdata-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=rcdata-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+0026 AMPERSAND (&amp;)<dd>Set the <var id=rcdata-state:return-state><a href=#return-state>return state</a></var> to the <a href=#rcdata-state id=rcdata-state:rcdata-state>RCDATA state</a>.
+   Switch to the <a href=#character-reference-state id=rcdata-state:character-reference-state>character reference state</a>.<dt>U+003C LESS-THAN SIGN (&lt;)<dd>Switch to the <a href=#rcdata-less-than-sign-state id=rcdata-state:rcdata-less-than-sign-state>RCDATA less-than sign state</a>.<dt>U+0000 NULL<dd>This is an <a href=#parse-error-unexpected-null-character id=rcdata-state:parse-error-unexpected-null-character>unexpected-null-character</a> <a href=#parse-errors id=rcdata-state:parse-errors>parse
+   error</a>. Emit a U+FFFD REPLACEMENT CHARACTER character token.<dt>EOF<dd>Emit an end-of-file token.<dt>Anything else<dd>Emit the <a href=#current-input-character id=rcdata-state:current-input-character>current input character</a> as a character token.</dl>
+

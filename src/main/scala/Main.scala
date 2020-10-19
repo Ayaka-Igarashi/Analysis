@@ -25,6 +25,8 @@ object Main {
     // HTMLのパーサー
     parseHtml()
 
+    /*
+
     // 入力ファイル
     if (args.length > 0) {
       inputFileName = args(0)
@@ -66,5 +68,7 @@ object Main {
     System.out.println("変換時間 = " + formatter.format(endtime - start))
     // ファイルを閉じる
     IOUtils.closeIgnoringExceptions(txtOut)
+
+     */
   }
 }
