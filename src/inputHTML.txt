@@ -15,3 +15,225 @@
    Switch to the <a href=#character-reference-state id=rcdata-state:character-reference-state>character reference state</a>.<dt>U+003C LESS-THAN SIGN (&lt;)<dd>Switch to the <a href=#rcdata-less-than-sign-state id=rcdata-state:rcdata-less-than-sign-state>RCDATA less-than sign state</a>.<dt>U+0000 NULL<dd>This is an <a href=#parse-error-unexpected-null-character id=rcdata-state:parse-error-unexpected-null-character>unexpected-null-character</a> <a href=#parse-errors id=rcdata-state:parse-errors>parse
    error</a>. Emit a U+FFFD REPLACEMENT CHARACTER character token.<dt>EOF<dd>Emit an end-of-file token.<dt>Anything else<dd>Emit the <a href=#current-input-character id=rcdata-state:current-input-character>current input character</a> as a character token.</dl>
 
+
+  <h5 id=rawtext-state><span class=secno>13.2.5.3</span> <dfn>RAWTEXT state</dfn><a href=#rawtext-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=rawtext-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+003C LESS-THAN SIGN (&lt;)<dd>Switch to the <a href=#rawtext-less-than-sign-state id=rawtext-state:rawtext-less-than-sign-state>RAWTEXT less-than sign state</a>.<dt>U+0000 NULL<dd>This is an <a href=#parse-error-unexpected-null-character id=rawtext-state:parse-error-unexpected-null-character>unexpected-null-character</a> <a href=#parse-errors id=rawtext-state:parse-errors>parse
+   error</a>. Emit a U+FFFD REPLACEMENT CHARACTER character token.<dt>EOF<dd>Emit an end-of-file token.<dt>Anything else<dd>Emit the <a href=#current-input-character id=rawtext-state:current-input-character>current input character</a> as a character token.</dl>
+
+
+  <h5 id=script-data-state><span class=secno>13.2.5.4</span> <dfn>Script data state</dfn><a href=#script-data-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=script-data-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+003C LESS-THAN SIGN (&lt;)<dd>Switch to the <a href=#script-data-less-than-sign-state id=script-data-state:script-data-less-than-sign-state>script data less-than sign state</a>.<dt>U+0000 NULL<dd>This is an <a href=#parse-error-unexpected-null-character id=script-data-state:parse-error-unexpected-null-character>unexpected-null-character</a> <a href=#parse-errors id=script-data-state:parse-errors>parse
+   error</a>. Emit a U+FFFD REPLACEMENT CHARACTER character token.<dt>EOF<dd>Emit an end-of-file token.<dt>Anything else<dd>Emit the <a href=#current-input-character id=script-data-state:current-input-character>current input character</a> as a character token.</dl>
+
+
+  <h5 id=plaintext-state><span class=secno>13.2.5.5</span> <dfn>PLAINTEXT state</dfn><a href=#plaintext-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=plaintext-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+0000 NULL<dd>This is an <a href=#parse-error-unexpected-null-character id=plaintext-state:parse-error-unexpected-null-character>unexpected-null-character</a> <a href=#parse-errors id=plaintext-state:parse-errors>parse
+   error</a>. Emit a U+FFFD REPLACEMENT CHARACTER character token.<dt>EOF<dd>Emit an end-of-file token.<dt>Anything else<dd>Emit the <a href=#current-input-character id=plaintext-state:current-input-character>current input character</a> as a character token.</dl>
+
+
+  <h5 id=tag-open-state><span class=secno>13.2.5.6</span> <dfn>Tag open state</dfn><a href=#tag-open-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=tag-open-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+0021 EXCLAMATION MARK (!)<dd>Switch to the <a href=#markup-declaration-open-state id=tag-open-state:markup-declaration-open-state>markup declaration open state</a>.<dt>U+002F SOLIDUS (/)<dd>Switch to the <a href=#end-tag-open-state id=tag-open-state:end-tag-open-state>end tag open state</a>.<dt><a id=tag-open-state:ascii-letters href=https://infra.spec.whatwg.org/#ascii-alpha data-x-internal=ascii-letters>ASCII alpha</a><dd>Create a new start tag token, set its tag name to the empty string. <a href=#reconsume id=tag-open-state:reconsume>Reconsume</a> in
+   the <a href=#tag-name-state id=tag-open-state:tag-name-state>tag name state</a>.
+
+   <dt>U+003F QUESTION MARK (?)<dd>This is an <a href=#parse-error-unexpected-question-mark-instead-of-tag-name id=tag-open-state:parse-error-unexpected-question-mark-instead-of-tag-name>unexpected-question-mark-instead-of-tag-name</a>
+   <a href=#parse-errors id=tag-open-state:parse-errors>parse error</a>. Create a comment token whose data is the empty string.
+   <a href=#reconsume id=tag-open-state:reconsume-2>Reconsume</a> in the <a href=#bogus-comment-state id=tag-open-state:bogus-comment-state>bogus comment state</a>.<dt>EOF<dd>This is an <a href=#parse-error-eof-before-tag-name id=tag-open-state:parse-error-eof-before-tag-name>eof-before-tag-name</a>
+   <a href=#parse-errors id=tag-open-state:parse-errors-2>parse error</a>. Emit a U+003C LESS-THAN SIGN character token and an end-of-file
+   token.<dt>Anything else<dd>This is an <a href=#parse-error-invalid-first-character-of-tag-name id=tag-open-state:parse-error-invalid-first-character-of-tag-name>invalid-first-character-of-tag-name</a>
+   <a href=#parse-errors id=tag-open-state:parse-errors-3>parse error</a>. Emit a U+003C LESS-THAN SIGN character token. <a href=#reconsume id=tag-open-state:reconsume-3>Reconsume</a> in
+   the <a href=#data-state id=tag-open-state:data-state>data state</a>.</dl>
+
+  <h5 id=end-tag-open-state><span class=secno>13.2.5.7</span> <dfn>End tag open state</dfn><a href=#end-tag-open-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=end-tag-open-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt><a id=end-tag-open-state:ascii-letters href=https://infra.spec.whatwg.org/#ascii-alpha data-x-internal=ascii-letters>ASCII alpha</a><dd>Create a new end tag token, set its tag name to the empty string. <a href=#reconsume id=end-tag-open-state:reconsume>Reconsume</a> in
+   the <a href=#tag-name-state id=end-tag-open-state:tag-name-state>tag name state</a>.
+
+   <dt>U+003E GREATER-THAN SIGN (>)<dd>This is a <a href=#parse-error-missing-end-tag-name id=end-tag-open-state:parse-error-missing-end-tag-name>missing-end-tag-name</a>
+   <a href=#parse-errors id=end-tag-open-state:parse-errors>parse error</a>. Switch to the <a href=#data-state id=end-tag-open-state:data-state>data state</a>.<dt>EOF<dd>This is an <a href=#parse-error-eof-before-tag-name id=end-tag-open-state:parse-error-eof-before-tag-name>eof-before-tag-name</a>
+   <a href=#parse-errors id=end-tag-open-state:parse-errors-2>parse error</a>. Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS
+   character token and an end-of-file token.
+
+   <dt>Anything else<dd>This is an <a href=#parse-error-invalid-first-character-of-tag-name id=end-tag-open-state:parse-error-invalid-first-character-of-tag-name>invalid-first-character-of-tag-name</a>
+   <a href=#parse-errors id=end-tag-open-state:parse-errors-3>parse error</a>. Create a comment token whose data is the empty string.
+   <a href=#reconsume id=end-tag-open-state:reconsume-2>Reconsume</a> in the <a href=#bogus-comment-state id=end-tag-open-state:bogus-comment-state>bogus comment state</a>.</dl>
+
+
+  <h5 id=tag-name-state><span class=secno>13.2.5.8</span> <dfn>Tag name state</dfn><a href=#tag-name-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=tag-name-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+0009 CHARACTER TABULATION (tab)<dt>U+000A LINE FEED (LF)<dt>U+000C FORM FEED (FF)<dt>U+0020 SPACE<dd>Switch to the <a href=#before-attribute-name-state id=tag-name-state:before-attribute-name-state>before attribute name state</a>.<dt>U+002F SOLIDUS (/)<dd>Switch to the <a href=#self-closing-start-tag-state id=tag-name-state:self-closing-start-tag-state>self-closing start tag state</a>.<dt>U+003E GREATER-THAN SIGN (>)<dd>Switch to the <a href=#data-state id=tag-name-state:data-state>data state</a>. Emit the current tag token.<dt><a id=tag-name-state:uppercase-ascii-letters href=https://infra.spec.whatwg.org/#ascii-upper-alpha data-x-internal=uppercase-ascii-letters>ASCII upper alpha</a><dd>Append the lowercase version of the <a href=#current-input-character id=tag-name-state:current-input-character>current input character</a> (add 0x0020 to the
+   character's code point) to the current tag token's tag name.<dt>U+0000 NULL<dd>This is an <a href=#parse-error-unexpected-null-character id=tag-name-state:parse-error-unexpected-null-character>unexpected-null-character</a> <a href=#parse-errors id=tag-name-state:parse-errors>parse
+   error</a>. Append a U+FFFD REPLACEMENT CHARACTER character to the current tag token's tag
+   name.<dt>EOF<dd>This is an <a href=#parse-error-eof-in-tag id=tag-name-state:parse-error-eof-in-tag>eof-in-tag</a> <a href=#parse-errors id=tag-name-state:parse-errors-2>parse error</a>.
+   Emit an end-of-file token.<dt>Anything else<dd>Append the <a href=#current-input-character id=tag-name-state:current-input-character-2>current input character</a> to the current tag token's tag name.</dl>
+
+
+  <h5 id=rcdata-less-than-sign-state><span class=secno>13.2.5.9</span> <dfn>RCDATA less-than sign state</dfn><a href=#rcdata-less-than-sign-state class=self-link></a></h5>
+
+
+  <p>Consume the <a href=#next-input-character id=rcdata-less-than-sign-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+002F SOLIDUS (/)<dd>Set the <var id=rcdata-less-than-sign-state:temporary-buffer><a href=#temporary-buffer>temporary buffer</a></var> to the empty string. Switch to
+   the <a href=#rcdata-end-tag-open-state id=rcdata-less-than-sign-state:rcdata-end-tag-open-state>RCDATA end tag open state</a>.<dt>Anything else<dd>Emit a U+003C LESS-THAN SIGN character token. <a href=#reconsume id=rcdata-less-than-sign-state:reconsume>Reconsume</a> in the <a href=#rcdata-state id=rcdata-less-than-sign-state:rcdata-state>RCDATA
+   state</a>.</dl>
+
+
+  <h5 id=rcdata-end-tag-open-state><span class=secno>13.2.5.10</span> <dfn>RCDATA end tag open state</dfn><a href=#rcdata-end-tag-open-state class=self-link></a></h5>
+
+
+  <p>Consume the <a href=#next-input-character id=rcdata-end-tag-open-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt><a id=rcdata-end-tag-open-state:ascii-letters href=https://infra.spec.whatwg.org/#ascii-alpha data-x-internal=ascii-letters>ASCII alpha</a><dd>Create a new end tag token, set its tag name to the empty string. <a href=#reconsume id=rcdata-end-tag-open-state:reconsume>Reconsume</a> in
+   the <a href=#rcdata-end-tag-name-state id=rcdata-end-tag-open-state:rcdata-end-tag-name-state>RCDATA end tag name state</a>.
+
+   <dt>Anything else<dd>Emit a U+003C LESS-THAN SIGN character token and a U+002F SOLIDUS character token.
+   <a href=#reconsume id=rcdata-end-tag-open-state:reconsume-2>Reconsume</a> in the <a href=#rcdata-state id=rcdata-end-tag-open-state:rcdata-state>RCDATA state</a>.</dl>
+
+
+  <h5 id=rcdata-end-tag-name-state><span class=secno>13.2.5.11</span> <dfn>RCDATA end tag name state</dfn><a href=#rcdata-end-tag-name-state class=self-link></a></h5>
+
+
+  <p>Consume the <a href=#next-input-character id=rcdata-end-tag-name-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+0009 CHARACTER TABULATION (tab)<dt>U+000A LINE FEED (LF)<dt>U+000C FORM FEED (FF)<dt>U+0020 SPACE<dd>If the current end tag token is an <a href=#appropriate-end-tag-token id=rcdata-end-tag-name-state:appropriate-end-tag-token>appropriate end tag token</a>, then switch to the
+   <a href=#before-attribute-name-state id=rcdata-end-tag-name-state:before-attribute-name-state>before attribute name state</a>. Otherwise, treat it as per the "anything else" entry
+   below.<dt>U+002F SOLIDUS (/)<dd>If the current end tag token is an <a href=#appropriate-end-tag-token id=rcdata-end-tag-name-state:appropriate-end-tag-token-2>appropriate end tag token</a>, then switch to the
+   <a href=#self-closing-start-tag-state id=rcdata-end-tag-name-state:self-closing-start-tag-state>self-closing start tag state</a>. Otherwise, treat it as per the "anything else" entry
+   below.<dt>U+003E GREATER-THAN SIGN (>)<dd>If the current end tag token is an <a href=#appropriate-end-tag-token id=rcdata-end-tag-name-state:appropriate-end-tag-token-3>appropriate end tag token</a>, then switch to the
+   <a href=#data-state id=rcdata-end-tag-name-state:data-state>data state</a> and emit the current tag token. Otherwise, treat it as per the "anything
+   else" entry below.<dt><a id=rcdata-end-tag-name-state:uppercase-ascii-letters href=https://infra.spec.whatwg.org/#ascii-upper-alpha data-x-internal=uppercase-ascii-letters>ASCII upper alpha</a><dd>Append the lowercase version of the <a href=#current-input-character id=rcdata-end-tag-name-state:current-input-character>current input character</a> (add 0x0020 to the
+   character's code point) to the current tag token's tag name. Append the <a href=#current-input-character id=rcdata-end-tag-name-state:current-input-character-2>current input
+   character</a> to the <var id=rcdata-end-tag-name-state:temporary-buffer><a href=#temporary-buffer>temporary buffer</a></var>.<dt><a id=rcdata-end-tag-name-state:lowercase-ascii-letters href=https://infra.spec.whatwg.org/#ascii-lower-alpha data-x-internal=lowercase-ascii-letters>ASCII lower alpha</a><dd>Append the <a href=#current-input-character id=rcdata-end-tag-name-state:current-input-character-3>current input character</a> to the current tag token's tag name. Append
+   the <a href=#current-input-character id=rcdata-end-tag-name-state:current-input-character-4>current input character</a> to the <var id=rcdata-end-tag-name-state:temporary-buffer-2><a href=#temporary-buffer>temporary
+   buffer</a></var>.<dt>Anything else<dd>Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token, and a
+   character token for each of the characters in the <var id=rcdata-end-tag-name-state:temporary-buffer-3><a href=#temporary-buffer>temporary
+   buffer</a></var> (in the order they were added to the buffer). <a href=#reconsume id=rcdata-end-tag-name-state:reconsume>Reconsume</a> in the
+   <a href=#rcdata-state id=rcdata-end-tag-name-state:rcdata-state>RCDATA state</a>.</dl>
+
+
+  <h5 id=rawtext-less-than-sign-state><span class=secno>13.2.5.12</span> <dfn>RAWTEXT less-than sign state</dfn><a href=#rawtext-less-than-sign-state class=self-link></a></h5>
+
+
+  <p>Consume the <a href=#next-input-character id=rawtext-less-than-sign-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+002F SOLIDUS (/)<dd>Set the <var id=rawtext-less-than-sign-state:temporary-buffer><a href=#temporary-buffer>temporary buffer</a></var> to the empty string. Switch to
+   the <a href=#rawtext-end-tag-open-state id=rawtext-less-than-sign-state:rawtext-end-tag-open-state>RAWTEXT end tag open state</a>.<dt>Anything else<dd>Emit a U+003C LESS-THAN SIGN character token. <a href=#reconsume id=rawtext-less-than-sign-state:reconsume>Reconsume</a> in the <a href=#rawtext-state id=rawtext-less-than-sign-state:rawtext-state>RAWTEXT
+   state</a>.</dl>
+
+
+  <h5 id=rawtext-end-tag-open-state><span class=secno>13.2.5.13</span> <dfn>RAWTEXT end tag open state</dfn><a href=#rawtext-end-tag-open-state class=self-link></a></h5>
+
+
+  <p>Consume the <a href=#next-input-character id=rawtext-end-tag-open-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt><a id=rawtext-end-tag-open-state:ascii-letters href=https://infra.spec.whatwg.org/#ascii-alpha data-x-internal=ascii-letters>ASCII alpha</a><dd>Create a new end tag token, set its tag name to the empty string. <a href=#reconsume id=rawtext-end-tag-open-state:reconsume>Reconsume</a> in
+   the <a href=#rawtext-end-tag-name-state id=rawtext-end-tag-open-state:rawtext-end-tag-name-state>RAWTEXT end tag name state</a>.
+
+   <dt>Anything else<dd>Emit a U+003C LESS-THAN SIGN character token and a U+002F SOLIDUS character token.
+   <a href=#reconsume id=rawtext-end-tag-open-state:reconsume-2>Reconsume</a> in the <a href=#rawtext-state id=rawtext-end-tag-open-state:rawtext-state>RAWTEXT state</a>.</dl>
+
+
+  <h5 id=rawtext-end-tag-name-state><span class=secno>13.2.5.14</span> <dfn>RAWTEXT end tag name state</dfn><a href=#rawtext-end-tag-name-state class=self-link></a></h5>
+
+
+  <p>Consume the <a href=#next-input-character id=rawtext-end-tag-name-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+0009 CHARACTER TABULATION (tab)<dt>U+000A LINE FEED (LF)<dt>U+000C FORM FEED (FF)<dt>U+0020 SPACE<dd>If the current end tag token is an <a href=#appropriate-end-tag-token id=rawtext-end-tag-name-state:appropriate-end-tag-token>appropriate end tag token</a>, then switch to the
+   <a href=#before-attribute-name-state id=rawtext-end-tag-name-state:before-attribute-name-state>before attribute name state</a>. Otherwise, treat it as per the "anything else" entry
+   below.<dt>U+002F SOLIDUS (/)<dd>If the current end tag token is an <a href=#appropriate-end-tag-token id=rawtext-end-tag-name-state:appropriate-end-tag-token-2>appropriate end tag token</a>, then switch to the
+   <a href=#self-closing-start-tag-state id=rawtext-end-tag-name-state:self-closing-start-tag-state>self-closing start tag state</a>. Otherwise, treat it as per the "anything else" entry
+   below.<dt>U+003E GREATER-THAN SIGN (>)<dd>If the current end tag token is an <a href=#appropriate-end-tag-token id=rawtext-end-tag-name-state:appropriate-end-tag-token-3>appropriate end tag token</a>, then switch to the
+   <a href=#data-state id=rawtext-end-tag-name-state:data-state>data state</a> and emit the current tag token. Otherwise, treat it as per the "anything
+   else" entry below.<dt><a id=rawtext-end-tag-name-state:uppercase-ascii-letters href=https://infra.spec.whatwg.org/#ascii-upper-alpha data-x-internal=uppercase-ascii-letters>ASCII upper alpha</a><dd>Append the lowercase version of the <a href=#current-input-character id=rawtext-end-tag-name-state:current-input-character>current input character</a> (add 0x0020 to the
+   character's code point) to the current tag token's tag name. Append the <a href=#current-input-character id=rawtext-end-tag-name-state:current-input-character-2>current input
+   character</a> to the <var id=rawtext-end-tag-name-state:temporary-buffer><a href=#temporary-buffer>temporary buffer</a></var>.<dt><a id=rawtext-end-tag-name-state:lowercase-ascii-letters href=https://infra.spec.whatwg.org/#ascii-lower-alpha data-x-internal=lowercase-ascii-letters>ASCII lower alpha</a><dd>Append the <a href=#current-input-character id=rawtext-end-tag-name-state:current-input-character-3>current input character</a> to the current tag token's tag name. Append
+   the <a href=#current-input-character id=rawtext-end-tag-name-state:current-input-character-4>current input character</a> to the <var id=rawtext-end-tag-name-state:temporary-buffer-2><a href=#temporary-buffer>temporary
+   buffer</a></var>.<dt>Anything else<dd>Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token, and a
+   character token for each of the characters in the <var id=rawtext-end-tag-name-state:temporary-buffer-3><a href=#temporary-buffer>temporary
+   buffer</a></var> (in the order they were added to the buffer). <a href=#reconsume id=rawtext-end-tag-name-state:reconsume>Reconsume</a> in the
+   <a href=#rawtext-state id=rawtext-end-tag-name-state:rawtext-state>RAWTEXT state</a>.</dl>
+
+
+  <h5 id=script-data-less-than-sign-state><span class=secno>13.2.5.15</span> <dfn>Script data less-than sign state</dfn><a href=#script-data-less-than-sign-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=script-data-less-than-sign-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+002F SOLIDUS (/)<dd>Set the <var id=script-data-less-than-sign-state:temporary-buffer><a href=#temporary-buffer>temporary buffer</a></var> to the empty string. Switch to
+   the <a href=#script-data-end-tag-open-state id=script-data-less-than-sign-state:script-data-end-tag-open-state>script data end tag open state</a>.<dt>U+0021 EXCLAMATION MARK (!)<dd>Switch to the <a href=#script-data-escape-start-state id=script-data-less-than-sign-state:script-data-escape-start-state>script data escape start state</a>. Emit a U+003C LESS-THAN SIGN
+   character token and a U+0021 EXCLAMATION MARK character token.<dt>Anything else<dd>Emit a U+003C LESS-THAN SIGN character token. <a href=#reconsume id=script-data-less-than-sign-state:reconsume>Reconsume</a> in the <a href=#script-data-state id=script-data-less-than-sign-state:script-data-state>script data
+   state</a>.</dl>
+
+
+  <h5 id=script-data-end-tag-open-state><span class=secno>13.2.5.16</span> <dfn>Script data end tag open state</dfn><a href=#script-data-end-tag-open-state class=self-link></a></h5>
+
+
+  <p>Consume the <a href=#next-input-character id=script-data-end-tag-open-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt><a id=script-data-end-tag-open-state:ascii-letters href=https://infra.spec.whatwg.org/#ascii-alpha data-x-internal=ascii-letters>ASCII alpha</a><dd>Create a new end tag token, set its tag name to the empty string. <a href=#reconsume id=script-data-end-tag-open-state:reconsume>Reconsume</a> in
+   the <a href=#script-data-end-tag-name-state id=script-data-end-tag-open-state:script-data-end-tag-name-state>script data end tag name state</a>.
+
+   <dt>Anything else<dd>Emit a U+003C LESS-THAN SIGN character token and a U+002F SOLIDUS character token.
+   <a href=#reconsume id=script-data-end-tag-open-state:reconsume-2>Reconsume</a> in the <a href=#script-data-state id=script-data-end-tag-open-state:script-data-state>script data state</a>.</dl>
+
+
+  <h5 id=script-data-end-tag-name-state><span class=secno>13.2.5.17</span> <dfn>Script data end tag name state</dfn><a href=#script-data-end-tag-name-state class=self-link></a></h5>
+
+
+  <p>Consume the <a href=#next-input-character id=script-data-end-tag-name-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+0009 CHARACTER TABULATION (tab)<dt>U+000A LINE FEED (LF)<dt>U+000C FORM FEED (FF)<dt>U+0020 SPACE<dd>If the current end tag token is an <a href=#appropriate-end-tag-token id=script-data-end-tag-name-state:appropriate-end-tag-token>appropriate end tag token</a>, then switch to the
+   <a href=#before-attribute-name-state id=script-data-end-tag-name-state:before-attribute-name-state>before attribute name state</a>. Otherwise, treat it as per the "anything else" entry
+   below.<dt>U+002F SOLIDUS (/)<dd>If the current end tag token is an <a href=#appropriate-end-tag-token id=script-data-end-tag-name-state:appropriate-end-tag-token-2>appropriate end tag token</a>, then switch to the
+   <a href=#self-closing-start-tag-state id=script-data-end-tag-name-state:self-closing-start-tag-state>self-closing start tag state</a>. Otherwise, treat it as per the "anything else" entry
+   below.<dt>U+003E GREATER-THAN SIGN (>)<dd>If the current end tag token is an <a href=#appropriate-end-tag-token id=script-data-end-tag-name-state:appropriate-end-tag-token-3>appropriate end tag token</a>, then switch to the
+   <a href=#data-state id=script-data-end-tag-name-state:data-state>data state</a> and emit the current tag token. Otherwise, treat it as per the "anything
+   else" entry below.<dt><a id=script-data-end-tag-name-state:uppercase-ascii-letters href=https://infra.spec.whatwg.org/#ascii-upper-alpha data-x-internal=uppercase-ascii-letters>ASCII upper alpha</a><dd>Append the lowercase version of the <a href=#current-input-character id=script-data-end-tag-name-state:current-input-character>current input character</a> (add 0x0020 to the
+   character's code point) to the current tag token's tag name. Append the <a href=#current-input-character id=script-data-end-tag-name-state:current-input-character-2>current input
+   character</a> to the <var id=script-data-end-tag-name-state:temporary-buffer><a href=#temporary-buffer>temporary buffer</a></var>.<dt><a id=script-data-end-tag-name-state:lowercase-ascii-letters href=https://infra.spec.whatwg.org/#ascii-lower-alpha data-x-internal=lowercase-ascii-letters>ASCII lower alpha</a><dd>Append the <a href=#current-input-character id=script-data-end-tag-name-state:current-input-character-3>current input character</a> to the current tag token's tag name. Append
+   the <a href=#current-input-character id=script-data-end-tag-name-state:current-input-character-4>current input character</a> to the <var id=script-data-end-tag-name-state:temporary-buffer-2><a href=#temporary-buffer>temporary
+   buffer</a></var>.<dt>Anything else<dd>Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token, and a
+   character token for each of the characters in the <var id=script-data-end-tag-name-state:temporary-buffer-3><a href=#temporary-buffer>temporary
+   buffer</a></var> (in the order they were added to the buffer). <a href=#reconsume id=script-data-end-tag-name-state:reconsume>Reconsume</a> in the
+   <a href=#script-data-state id=script-data-end-tag-name-state:script-data-state>script data state</a>.</dl>
+
+
+  <h5 id=script-data-escape-start-state><span class=secno>13.2.5.18</span> <dfn>Script data escape start state</dfn><a href=#script-data-escape-start-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=script-data-escape-start-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+002D HYPHEN-MINUS (-)<dd>Switch to the <a href=#script-data-escape-start-dash-state id=script-data-escape-start-state:script-data-escape-start-dash-state>script data escape start dash state</a>. Emit a U+002D HYPHEN-MINUS
+   character token.<dt>Anything else<dd><a href=#reconsume id=script-data-escape-start-state:reconsume>Reconsume</a> in the <a href=#script-data-state id=script-data-escape-start-state:script-data-state>script data state</a>.</dl>
+
+
+  <h5 id=script-data-escape-start-dash-state><span class=secno>13.2.5.19</span> <dfn>Script data escape start dash state</dfn><a href=#script-data-escape-start-dash-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=script-data-escape-start-dash-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+002D HYPHEN-MINUS (-)<dd>Switch to the <a href=#script-data-escaped-dash-dash-state id=script-data-escape-start-dash-state:script-data-escaped-dash-dash-state>script data escaped dash dash state</a>. Emit a U+002D HYPHEN-MINUS
+   character token.<dt>Anything else<dd><a href=#reconsume id=script-data-escape-start-dash-state:reconsume>Reconsume</a> in the <a href=#script-data-state id=script-data-escape-start-dash-state:script-data-state>script data state</a>.</dl>
+
+
+  <h5 id=script-data-escaped-state><span class=secno>13.2.5.20</span> <dfn>Script data escaped state</dfn><a href=#script-data-escaped-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=script-data-escaped-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+002D HYPHEN-MINUS (-)<dd>Switch to the <a href=#script-data-escaped-dash-state id=script-data-escaped-state:script-data-escaped-dash-state>script data escaped dash state</a>. Emit a U+002D HYPHEN-MINUS
+   character token.<dt>U+003C LESS-THAN SIGN (&lt;)<dd>Switch to the <a href=#script-data-escaped-less-than-sign-state id=script-data-escaped-state:script-data-escaped-less-than-sign-state>script data escaped less-than sign state</a>.<dt>U+0000 NULL<dd>This is an <a href=#parse-error-unexpected-null-character id=script-data-escaped-state:parse-error-unexpected-null-character>unexpected-null-character</a> <a href=#parse-errors id=script-data-escaped-state:parse-errors>parse
+   error</a>. Emit a U+FFFD REPLACEMENT CHARACTER character token.<dt>EOF<dd>This is an <a href=#parse-error-eof-in-script-html-comment-like-text id=script-data-escaped-state:parse-error-eof-in-script-html-comment-like-text>eof-in-script-html-comment-like-text</a>
+   <a href=#parse-errors id=script-data-escaped-state:parse-errors-2>parse error</a>. Emit an end-of-file token.<dt>Anything else<dd>Emit the <a href=#current-input-character id=script-data-escaped-state:current-input-character>current input character</a> as a character token.</dl>
+

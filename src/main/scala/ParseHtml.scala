@@ -10,12 +10,15 @@ import scala.collection.JavaConverters._
 // HTML文章の解析、構造化する
 object ParseHtml {
   var stateList: List[State] = List()
-  var state: State = State(null, null, List())
+  var state: State = State(null, "", List())
   var chara: String = null
+  var charas: List[String] = List()
+
+  var htmlOut: PrintWriter = null
 
   def parseHtml() = {
     System.out.println("> html_parse_start")
-    val htmlOut = new PrintWriter(new BufferedWriter(new FileWriter(new File("src/outputHTML.txt"))))
+    htmlOut = new PrintWriter(new BufferedWriter(new FileWriter(new File("src/outputHTML.txt"))))
 
     // htmlのparse
     val doc: Document = Jsoup.parse(new File("src/inputHTML.txt"),null)
@@ -24,7 +27,7 @@ object ParseHtml {
     // 必要なものを取り出す
     val rootNode: Node = doc.body()
     readHtml(rootNode)
-    htmlOut.println(stateList)
+    //htmlOut.println(stateList)
 
     htmlOut.close()
 
@@ -36,11 +39,12 @@ object ParseHtml {
       case "h5" => stateName(node)
       case "p" => {
         val leave = getLeave(node)
-        state.prev = leave
+        state.prev += leave
       }
       case "dl" => {
         trans(node)
         stateList :+= state
+        htmlOut.println(state)
       }
       case _ => {
         val children: List[Node] = node.childNodes().asScala.toList
@@ -53,7 +57,7 @@ object ParseHtml {
   }
 
   def stateName(node: Node) = {
-    state = State(null, null, List())
+    state = State(null, "", List())
     val children: List[Node] = node.childNodes().asScala.toList
     for (child <- children) {
       if (child.nodeName() == "dfn") {
@@ -65,12 +69,19 @@ object ParseHtml {
   def trans(node: Node):Unit = {
     node.nodeName() match {
       case "dt" => {
-        val leave = getLeave(node)
-        chara = leave
+        var leave = getLeave(node)
+        leave = leave.replace("\n", "")
+        //chara = leave
+        charas :+= leave
       }
       case "dd" => {
-        val leave = getLeave(node)
-        state.trance :+= Trance(chara, leave)
+        var leave = getLeave(node)
+        leave = leave.replace("\n", "")
+        for (c <- charas) {
+          state.trance :+= Trance(c, leave)
+        }
+        //state.trance :+= Trance(chara, leave)
+        charas = List()
       }
       case _ => {
         val children: List[Node] = node.childNodes().asScala.toList
