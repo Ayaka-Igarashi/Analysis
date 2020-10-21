@@ -4,7 +4,8 @@ import java.util.TimeZone
 
 import SpecificationAnalysis.{analysis, treeList}
 import ConvertTree.{convert, makeLeafMap, tokenList}
-import ParseHtml.parseHtml
+import ParseHtml.{parseHtml, stateList}
+import TreeToCommand.toCommand
 import edu.stanford.nlp.io.IOUtils
 
 object Main {
@@ -25,7 +26,7 @@ object Main {
     // HTMLのパーサー
     parseHtml()
 
-    /*
+
 
     // 入力ファイル
     if (args.length > 0) {
@@ -50,7 +51,8 @@ object Main {
 
     System.out.println("> parse_start")
     // 入力ファイルを解析する
-    analysis()
+    val str: String = stateList(1).trance(0).process
+    analysis(str)
 
     var endtime = System.currentTimeMillis
     System.out.println("解析時間 = " + formatter.format(endtime - start))
@@ -62,6 +64,8 @@ object Main {
       tokenList = t._2
       val tag = convert(t._1)
       txtOut.println(tag)
+
+      txtOut.println(toCommand(tag))
     }
 
     endtime = System.currentTimeMillis
@@ -69,6 +73,6 @@ object Main {
     // ファイルを閉じる
     IOUtils.closeIgnoringExceptions(txtOut)
 
-     */
+
   }
 }

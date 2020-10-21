@@ -22,7 +22,7 @@ object SpecificationAnalysis {
 
   // 入力ファイルを解析する
   @throws[IOException]
-  def analysis(): Unit = {
+  def analysis(str: String): Unit = {
     /** Core NLP */
 
     /*
@@ -93,9 +93,11 @@ object SpecificationAnalysis {
 
     // parseのみ解析
     var doc: Document = null
+    /*
     if (inputFileName != null) doc = new Document(IOUtils.slurpFileNoExceptions(inputFileName))
     else doc = new Document("put your text to input.txt")
-
+    */
+    doc = new Document(str)
     val sentences = doc.sentences().asScala.toList
 
     for(sent: Sentence <- sentences) {

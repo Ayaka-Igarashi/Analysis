@@ -11,7 +11,6 @@ import scala.collection.JavaConverters._
 object ParseHtml {
   var stateList: List[State] = List()
   var state: State = State(null, "", List())
-  var chara: String = null
   var charas: List[String] = List()
 
   var htmlOut: PrintWriter = null

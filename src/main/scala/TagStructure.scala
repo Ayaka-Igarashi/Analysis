@@ -2,11 +2,15 @@
 object TagStructure {
   // tagの種類全部書く
   trait Tag
-  /*
-  trait NodeType
-  case class Node(type: NodeType, list: List[Tag]) extends Tag
 
-  case object Root extends NodeType
+  trait NodeType
+  case class Node(node: NodeType, list: List[Tag]) extends Tag
+
+  trait LeafType
+  case class Leaf(leaf: LeafType, token: Token) extends Tag
+
+  //syntactic tagset
+  case object ROOT extends NodeType
   case object ADJP extends NodeType
   case object ADVP extends NodeType
   case object NP extends NodeType
@@ -21,17 +25,15 @@ object TagStructure {
   case object WHNP extends NodeType
   case object WHPP extends NodeType
   case object X extends NodeType
-  case object Asterisk extends NodeType
-  case object Zero extends NodeType
+  case object Asterisk extends NodeType // *
+  case object Zero extends NodeType // 0
   case object T extends NodeType
 
   case object NML extends NodeType
   case object FRAG extends NodeType
   case object PRN extends NodeType
 
-  trait LeafType
-  case class Leaf(type: LeafType, token: Token) extends Tag
-
+  // POS tagset (word)
   case object CC extends LeafType
   case object CD extends LeafType
   case object DT extends LeafType
@@ -49,8 +51,8 @@ object TagStructure {
   case object NNPS extends LeafType
   case object PDT extends LeafType
   case object POS extends LeafType
-  case object PRP extends LeafType
-  case object PPD extends LeafType
+  case object PRP extends LeafType // 主格
+  case object PPD extends LeafType // 所有格(PP$)
   case object RB extends LeafType
   case object RBR extends LeafType
   case object RBS extends LeafType
@@ -66,25 +68,28 @@ object TagStructure {
   case object VBZ extends LeafType
   case object WDT extends LeafType
   case object WP extends LeafType
-  case object WPD extends LeafType
+  case object WPD extends LeafType // WP$
   case object WRB extends LeafType
-  case object Pound extends LeafType
-  case object Dollar extends LeafType
-  case object Dot extends LeafType
-  case object Comma extends LeafType
-  case object Colon extends LeafType
-  case object LBracket extends LeafType
-  case object RBracket extends LeafType
-  case object DoubleQuote extends LeafType
+  // POS tagset (記号)
+  case object Pound extends LeafType // #
+  case object Dollar extends LeafType // $
+  case object Dot extends LeafType // .
+  case object Comma extends LeafType // ,
+  case object Colon extends LeafType // : or ;
+  case object LBracket extends LeafType // (
+  case object RBracket extends LeafType // )
+  case object DoubleQuote extends LeafType // "
   case object LSingleQuote extends LeafType
   case object RSingleQuote extends LeafType
-  case object LDoubleQuote extends LeafType
-  case object RDoubleQuote extends LeafType
+  case object LDoubleQuote extends LeafType // ``
+  case object RDoubleQuote extends LeafType // ''
 
   case object HYPH extends LeafType
 
+  // Leaf(とりあえず元の単語と原型両方格納する)
   case class Token(word: String, lemma: String) extends Tag
-*/
+
+  /*
   //syntactic tagset
   case class ROOT(list: List[Tag]) extends Tag
   case class ADJP(list: List[Tag]) extends Tag
@@ -163,6 +168,26 @@ object TagStructure {
 
   case class HYPH(token: Token) extends Tag
 
-  // Leaf(とりあえず元の単語と原型両方格納する)
   case class Token(word: String, lemma: String) extends Tag
+*/
+
+  // 全ての葉の要素をつなげて取り出す
+  def getLeave(tag: Tag): String = {
+    getLeave_(tag).tail
+  }
+
+  def getLeave_(tag: Tag): String = {
+    var str: String = ""
+    tag match {
+      case Node(_, list) => {
+        for (n <- list) {
+          str += "_" + getLeave_(n)
+        }
+      }
+      case Leaf(_, Token(_, lem)) => {
+        str = lem
+      }
+    }
+    str
+  }
 }
