@@ -92,12 +92,12 @@ object SpecificationAnalysis {
     /** Simple */
 
     // parseのみ解析
-    var doc: Document = null
-    /*
-    if (inputFileName != null) doc = new Document(IOUtils.slurpFileNoExceptions(inputFileName))
-    else doc = new Document("put your text to input.txt")
-    */
-    doc = new Document(str)
+    var doc: Document = new Document(str)
+
+    //if (inputFileName != null) doc = new Document(IOUtils.slurpFileNoExceptions(inputFileName))
+    //else doc = new Document("put your text to input.txt")
+
+    //doc =
     val sentences = doc.sentences().asScala.toList
 
     for(sent: Sentence <- sentences) {

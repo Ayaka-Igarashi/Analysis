@@ -1,1 +1,1 @@
-Set the return state to the data state. Switch to the character reference state.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.

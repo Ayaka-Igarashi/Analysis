@@ -44,32 +44,37 @@ object Main {
       System.out.println("xmlout: " + args(2))
     }
 
-    // 時間を計測
-    var start = System.currentTimeMillis
-    val formatter = new SimpleDateFormat("mm:ss.SSS")
-    formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
+    for (i <- 0 to 2) {
 
-    System.out.println("> parse_start")
-    // 入力ファイルを解析する
-    val str: String = stateList(1).trance(0).process
-    analysis(str)
+      // 時間を計測
+      var start = System.currentTimeMillis
+      val formatter = new SimpleDateFormat("mm:ss.SSS")
+      formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
 
-    var endtime = System.currentTimeMillis
-    System.out.println("解析時間 = " + formatter.format(endtime - start))
-    start = System.currentTimeMillis
+      System.out.println("> parse_start")
+      // 入力ファイルを解析する
+      val str: String = stateList(i).trance(0).process
+      analysis(str)
 
-    System.out.println("> convert_start")
-    for (t <- treeList) {
-      makeLeafMap(t._1)
-      tokenList = t._2
-      val tag = convert(t._1)
-      txtOut.println(tag)
+      var endtime = System.currentTimeMillis
+      System.out.println("解析時間 = " + formatter.format(endtime - start))
+      start = System.currentTimeMillis
 
-      txtOut.println(toCommand(tag))
+      System.out.println("> convert_start")
+      for (t <- treeList) {
+        makeLeafMap(t._1)
+        tokenList = t._2
+        val tag = convert(t._1)
+        txtOut.println(tag)
+
+        txtOut.println(toCommand(tag))
+      }
+      treeList = List()
+
+      endtime = System.currentTimeMillis
+      System.out.println("変換時間 = " + formatter.format(endtime - start))
     }
 
-    endtime = System.currentTimeMillis
-    System.out.println("変換時間 = " + formatter.format(endtime - start))
     // ファイルを閉じる
     IOUtils.closeIgnoringExceptions(txtOut)
 

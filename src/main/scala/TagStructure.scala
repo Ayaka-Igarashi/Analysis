@@ -184,8 +184,8 @@ object TagStructure {
           str += "_" + getLeave_(n)
         }
       }
-      case Leaf(_, Token(_, lem)) => {
-        str = lem
+      case Leaf(_, Token(word, lem)) => {
+        str = word
       }
     }
     str
