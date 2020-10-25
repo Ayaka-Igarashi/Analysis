@@ -3,8 +3,8 @@ import TagStructure.Tag
 
 // htmlを構造化
 object StateStructure {
-  case class State(var name: String, var prev: String, var trance: List[Trance])
-  case class Trance(character: String, process: String)
+  case class State(var name: String, var prev: String, var trance: List[Trans])
+  case class Trans(character: String, process: String)
 }
 
 // 自然言語処理した後の構造体

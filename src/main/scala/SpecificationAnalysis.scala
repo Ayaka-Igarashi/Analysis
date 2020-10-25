@@ -97,7 +97,7 @@ object SpecificationAnalysis {
     //if (inputFileName != null) doc = new Document(IOUtils.slurpFileNoExceptions(inputFileName))
     //else doc = new Document("put your text to input.txt")
 
-    //doc =
+    //doc = new Document("Create a new end tag token, set its tag name to the empty string.")
     val sentences = doc.sentences().asScala.toList
 
     for(sent: Sentence <- sentences) {
@@ -106,6 +106,20 @@ object SpecificationAnalysis {
       //val lemmas: List[String] = sent.lemmas().asScala.toList
       val parse: Tree = sent.parse
       treeList :+= (parse, tokens)
+
+      //val coref = sent.coref()
+      //println(coref)
+      import edu.stanford.nlp.coref.CorefCoreAnnotations
+      import edu.stanford.nlp.ling.CoreAnnotations
+//      for (sentence <- coref) {
+//        System.out.println("---")
+//        System.out.println("mentions")
+//        sentence.get(classOf[CorefCoreAnnotations.CorefMentionsAnnotation])
+//        for (m <- sentence.get(classOf[CorefCoreAnnotations.CorefMentionsAnnotation])) {
+//          System.out.println("\t" + m)
+//        }
+//      }
+
       //txtOut.println(parse)
     }
   }

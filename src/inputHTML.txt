@@ -237,3 +237,23 @@
    error</a>. Emit a U+FFFD REPLACEMENT CHARACTER character token.<dt>EOF<dd>This is an <a href=#parse-error-eof-in-script-html-comment-like-text id=script-data-escaped-state:parse-error-eof-in-script-html-comment-like-text>eof-in-script-html-comment-like-text</a>
    <a href=#parse-errors id=script-data-escaped-state:parse-errors-2>parse error</a>. Emit an end-of-file token.<dt>Anything else<dd>Emit the <a href=#current-input-character id=script-data-escaped-state:current-input-character>current input character</a> as a character token.</dl>
 
+  <h5 id=after-doctype-name-state><span class=secno>13.2.5.56</span> <dfn>After DOCTYPE name state</dfn><a href=#after-doctype-name-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=after-doctype-name-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+0009 CHARACTER TABULATION (tab)<dt>U+000A LINE FEED (LF)<dt>U+000C FORM FEED (FF)<dt>U+0020 SPACE<dd>Ignore the character.<dt>U+003E GREATER-THAN SIGN (>)<dd>Switch to the <a href=#data-state id=after-doctype-name-state:data-state>data state</a>. Emit the current DOCTYPE token.<dt>EOF<dd>This is an <a href=#parse-error-eof-in-doctype id=after-doctype-name-state:parse-error-eof-in-doctype>eof-in-doctype</a> <a href=#parse-errors id=after-doctype-name-state:parse-errors>parse
+   error</a>. Set the DOCTYPE token's <i id=after-doctype-name-state:force-quirks-flag><a href=#force-quirks-flag>force-quirks flag</a></i> to
+   <i>on</i>. Emit that DOCTYPE token. Emit an end-of-file token.<dt>Anything else<dd>
+    <p>If the six characters starting from the <a href=#current-input-character id=after-doctype-name-state:current-input-character>current input character</a> are an
+    <a id=after-doctype-name-state:ascii-case-insensitive href=https://infra.spec.whatwg.org/#ascii-case-insensitive data-x-internal=ascii-case-insensitive>ASCII case-insensitive</a> match for the word "PUBLIC", then consume those characters
+    and switch to the <a href=#after-doctype-public-keyword-state id=after-doctype-name-state:after-doctype-public-keyword-state>after DOCTYPE public keyword state</a>.</p>
+
+    <p>Otherwise, if the six characters starting from the <a href=#current-input-character id=after-doctype-name-state:current-input-character-2>current input character</a> are
+    an <a id=after-doctype-name-state:ascii-case-insensitive-2 href=https://infra.spec.whatwg.org/#ascii-case-insensitive data-x-internal=ascii-case-insensitive>ASCII case-insensitive</a> match for the word "SYSTEM", then consume those
+    characters and switch to the <a href=#after-doctype-system-keyword-state id=after-doctype-name-state:after-doctype-system-keyword-state>after DOCTYPE system keyword state</a>.</p>
+
+    <p>Otherwise, this is an <a href=#parse-error-invalid-character-sequence-after-doctype-name id=after-doctype-name-state:parse-error-invalid-character-sequence-after-doctype-name>invalid-character-sequence-after-doctype-name</a>
+    <a href=#parse-errors id=after-doctype-name-state:parse-errors-2>parse error</a>. Set the DOCTYPE token's <i id=after-doctype-name-state:force-quirks-flag-2><a href=#force-quirks-flag>force-quirks
+    flag</a></i> to <i>on</i>. <a href=#reconsume id=after-doctype-name-state:reconsume>Reconsume</a> in the <a href=#bogus-doctype-state id=after-doctype-name-state:bogus-doctype-state>bogus DOCTYPE state</a>.</p>
+   </dl>
+

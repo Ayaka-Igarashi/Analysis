@@ -5,6 +5,7 @@ import java.util.TimeZone
 import SpecificationAnalysis.{analysis, treeList}
 import ConvertTree.{convert, makeLeafMap, tokenList}
 import ParseHtml.{parseHtml, stateList}
+import TagStructure.Tag
 import TreeToCommand.toCommand
 import edu.stanford.nlp.io.IOUtils
 
@@ -44,7 +45,7 @@ object Main {
       System.out.println("xmlout: " + args(2))
     }
 
-    for (i <- 0 to 2) {
+    for (i <- 6 to 6) {
 
       // 時間を計測
       var start = System.currentTimeMillis
@@ -53,7 +54,7 @@ object Main {
 
       System.out.println("> parse_start")
       // 入力ファイルを解析する
-      val str: String = stateList(i).trance(0).process
+      val str: String = stateList(20).trance(i).process
       analysis(str)
 
       var endtime = System.currentTimeMillis
@@ -61,14 +62,16 @@ object Main {
       start = System.currentTimeMillis
 
       System.out.println("> convert_start")
+      var tagList: List[Tag] = List()
       for (t <- treeList) {
         makeLeafMap(t._1)
         tokenList = t._2
         val tag = convert(t._1)
+        tagList :+= tag
         txtOut.println(tag)
-
-        txtOut.println(toCommand(tag))
       }
+      val commandList = toCommand(tagList)
+      for (c <- commandList) {txtOut.println(c)}
       treeList = List()
 
       endtime = System.currentTimeMillis

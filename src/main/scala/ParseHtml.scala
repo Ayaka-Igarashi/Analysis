@@ -77,7 +77,7 @@ object ParseHtml {
         var leave = getLeave(node)
         leave = leave.replace("\n", "")
         for (c <- charas) {
-          state.trance :+= Trance(c, leave)
+          state.trance :+= Trans(c, leave)
         }
         //state.trance :+= Trance(chara, leave)
         charas = List()
