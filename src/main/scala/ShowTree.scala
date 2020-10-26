@@ -9,15 +9,17 @@ import scalafx.scene.paint.Color
 object ShowTree extends JFXApp{
 
   // tagを見やすく表示する
-  def showTree(tag: Tag) = {
-    Main.tag = tag
+  def showTree(tag_list: List[Tag]) = {
+    Main.tag_list = tag_list
     super.main(Array())
   }
 
   val tree = new TreeView[String]() {
     vgrow = Priority.Always
     root = new TreeItem[String]("tag") {
-      children = Seq(nodes(Main.tag))
+      children = Main.tag_list.map { t =>
+        nodes(t)
+      }
     }
   }
 
@@ -42,9 +44,9 @@ object ShowTree extends JFXApp{
           treeItem.children.add(nodes(l))
         }
       }
-      case Leaf(n, Token(_, t)) => {
+      case Leaf(n, Token(w, t)) => {
         treeItem = new TreeItem[String](n.toString)
-        treeItem.children = Seq(new TreeItem[String](t))
+        treeItem.children = Seq(new TreeItem[String](w))
       }
       case _ =>
     }

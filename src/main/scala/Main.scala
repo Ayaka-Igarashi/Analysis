@@ -6,11 +6,11 @@ import SpecificationAnalysis.{analysis, treeList}
 import ConvertTree.{convert, makeLeafMap, tokenList}
 import ParseHtml.{parseHtml, stateList}
 import TagStructure._
-import TagToCommand.toCommand
+import TagToCommand.{tag_list, toCommand}
 import edu.stanford.nlp.io.IOUtils
 
 object Main {
-  var tag: Tag = null
+  var tag_list: List[Tag] = null
 
   // ファイル
   var inputFileName: String = null
@@ -43,44 +43,42 @@ object Main {
       xmlOut = new PrintWriter(args(2))
       System.out.println("xmlout: " + args(2))
     }
+    // 時間を計測
+    var start = System.currentTimeMillis
+    val formatter = new SimpleDateFormat("mm:ss.SSS")
+    formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
 
-    for (i <- 6 to 6) {
+    System.out.println("> parse&convert_start")
+    for (i <- 0 to stateList.length - 1) {
+      println(i+1)
+      txtOut.println(i+1)
+      for (j <- 0 to stateList(i).trance.length - 1) {
+        // 入力ファイルを解析する
+        val str: String = stateList(i).trance(j).process
+        analysis(str)
 
-      // 時間を計測
-      var start = System.currentTimeMillis
-      val formatter = new SimpleDateFormat("mm:ss.SSS")
-      formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
+        var tagList: List[Tag] = List()
+        for (t <- treeList) {
+          makeLeafMap(t._1)
+          tokenList = t._2
+          val tag = convert(t._1)
+          tagList :+= tag
+          txtOut.println(tag)
+        }
+        val commandList = toCommand(tagList)
+        for (c <- commandList) {txtOut.println(c)}
 
-      System.out.println("> parse_start")
-      // 入力ファイルを解析する
-      val str: String = stateList(20).trance(i).process
-      analysis(str)
-
-      var endtime = System.currentTimeMillis
-      System.out.println("解析時間 = " + formatter.format(endtime - start))
-      start = System.currentTimeMillis
-
-      System.out.println("> convert_start")
-      var tagList: List[Tag] = List()
-      for (t <- treeList) {
-        makeLeafMap(t._1)
-        tokenList = t._2
-        val tag = convert(t._1)
-        tagList :+= tag
-        txtOut.println(tag)
+        treeList = List()
+        if (i == 1 && j == 2)ShowTree.showTree(tagList)
       }
-      val commandList = toCommand(tagList)
-      for (c <- commandList) {txtOut.println(c)}
-      treeList = List()
 
-      endtime = System.currentTimeMillis
-      System.out.println("変換時間 = " + formatter.format(endtime - start))
 
-      ShowTree.showTree(tagList(0))
     }
+    var endtime = System.currentTimeMillis
+    endtime = System.currentTimeMillis
+    System.out.println("時間 = " + formatter.format(endtime - start))
     // ファイルを閉じる
     IOUtils.closeIgnoringExceptions(txtOut)
-
 
   }
 }
