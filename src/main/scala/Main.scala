@@ -5,11 +5,13 @@ import java.util.TimeZone
 import SpecificationAnalysis.{analysis, treeList}
 import ConvertTree.{convert, makeLeafMap, tokenList}
 import ParseHtml.{parseHtml, stateList}
-import TagStructure.Tag
-import TreeToCommand.toCommand
+import TagStructure._
+import TagToCommand.toCommand
 import edu.stanford.nlp.io.IOUtils
 
 object Main {
+  var tag: Tag = null
+
   // ファイル
   var inputFileName: String = null
   var txtOut: PrintWriter = null
@@ -23,11 +25,8 @@ object Main {
    *
    */
   def main(args: Array[String]) = {
-
     // HTMLのパーサー
     parseHtml()
-
-
 
     // 入力ファイル
     if (args.length > 0) {
@@ -76,8 +75,9 @@ object Main {
 
       endtime = System.currentTimeMillis
       System.out.println("変換時間 = " + formatter.format(endtime - start))
-    }
 
+      ShowTree.showTree(tagList(0))
+    }
     // ファイルを閉じる
     IOUtils.closeIgnoringExceptions(txtOut)
 

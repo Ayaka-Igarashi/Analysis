@@ -3,8 +3,8 @@ import TagStructure._
 
 import scala.collection.mutable
 
-// parseTreeからCommand型に変換する
-object TreeToCommand {
+// TagのリストからCommand型に変換する
+object TagToCommand {
   val ifStack: mutable.Stack[If] = mutable.Stack()
 
   def toCommand(tagList: List[Tag]): List[Command] = {
