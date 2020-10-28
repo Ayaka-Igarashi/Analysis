@@ -53,4 +53,16 @@ object ShowTree extends JFXApp{
 
     treeItem
   }
+
+  // console用
+  def rpl(str: String): String = {
+    val re =  "Token\\(([a-zA-Z\\-\\.\\+]+),([a-zA-Z\\-\\.\\+]+)\\)".r
+    val re2 = "[a-zA-Z\\-\\.]+".r
+    re.replaceAllIn(str, m =>  m.toString().substring(0,6)+ re2.replaceAllIn(m.toString().substring(6), m2 =>"\\\"" + m2.toString() + "\\\"") )
+  }
+
+  def show(tag: Tag) = {
+    Main.tag_list = List(tag)
+    super.main(Array())
+  }
 }

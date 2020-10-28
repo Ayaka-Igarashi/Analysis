@@ -51,7 +51,7 @@ object Main {
     System.out.println("> parse&convert_start")
     for (i <- 0 to stateList.length - 1) {
       println(i+1)
-      txtOut.println(i+1)
+      txtOut.println(i+1 + " : " + stateList(i).name)
       for (j <- 0 to stateList(i).trance.length - 1) {
         txtOut.println( "-- chara: "+stateList(i).trance(j).character + " --")
         // 入力ファイルを解析する
@@ -67,7 +67,9 @@ object Main {
           txtOut.println(tag)
         }
         val commandList = toCommand(tagList)
-        for (c <- commandList) {txtOut.println(c)}
+        txtOut.println("")
+        for (c <- commandList) {txtOut.println(" -> " + c)}
+        txtOut.println("")
 
         treeList = List()
         if (i == 18 && j == 0)ShowTree.showTree(tagList)

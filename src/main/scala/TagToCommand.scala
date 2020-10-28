@@ -23,7 +23,7 @@ object TagToCommand {
       case Node(ROOT, List(Node(S, list))) => {
         commandList ++= STag(Node(S, list))
       }
-      case _ => println("error_not_root")
+      case _ => println("error_root")
     }
     commandList
   }
