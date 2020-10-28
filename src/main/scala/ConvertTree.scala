@@ -60,6 +60,7 @@ object ConvertTree {
       case "PDT" => Leaf(PDT,toToken(tree))
       case "POS" => Leaf(POS,toToken(tree))
       case "PRP" => Leaf(PRP,toToken(tree))
+      case "PRP$" => Leaf(PRPD,toToken(tree))
       case "PP$" => Leaf(PPD,toToken(tree))
       case "RB" => Leaf(RB,toToken(tree))
       case "RBR" => Leaf(RBR,toToken(tree))

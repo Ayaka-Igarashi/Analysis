@@ -85,6 +85,11 @@ object TagToCommand {
           // &文(途中?)
           case Node(VP, vp1) :: Leaf(CC,Token(_,"and")) :: rst => {
             commandList ++= VPTag(Node(VP, vp1))
+            commandList ++= STag(Node(S, rst))
+          }
+          // コンマで繋がっている文
+          case Node(VP, vp1) :: Leaf(Comma, _) :: rst => {
+            commandList ++= VPTag(Node(VP, vp1))
             //println(rst)
             commandList ++= STag(Node(S, rst))
           }
@@ -116,9 +121,17 @@ object TagToCommand {
           case List(Leaf(VB,Token(_,"emit")), Node(NP,np), Node(PP, pp)) => {
             commandList :+= Emit(getLeave(Node(NP,np)) + getLeave(Node(PP, pp)))
           }
+          // create
+          case List(Leaf(VB,Token(_,"create")), Node(NP,np)) => {
+            commandList :+= Create(getLeave(Node(NP,np)))
+          }
           // treat(途中)
           case List(Leaf(VB, Token(_, "treat")), Node(NP, _), Node(PP, _), Node(ADVP, _)) => {
             commandList :+= Treat(null,null)
+          }
+          // append(途中)
+          case Leaf(_, Token(_, "append")) :: rst => {
+            commandList :+= Append(null, null)
           }
           case _ => println("dont match_vp")
         }

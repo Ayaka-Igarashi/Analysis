@@ -53,6 +53,7 @@ object Main {
       println(i+1)
       txtOut.println(i+1)
       for (j <- 0 to stateList(i).trance.length - 1) {
+        txtOut.println( "-- chara: "+stateList(i).trance(j).character + " --")
         // 入力ファイルを解析する
         val str: String = stateList(i).trance(j).process
         analysis(str)
@@ -69,8 +70,9 @@ object Main {
         for (c <- commandList) {txtOut.println(c)}
 
         treeList = List()
-        if (i == 1 && j == 2)ShowTree.showTree(tagList)
+        if (i == 18 && j == 0)ShowTree.showTree(tagList)
       }
+
 
 
     }

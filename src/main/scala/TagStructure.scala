@@ -52,6 +52,7 @@ object TagStructure {
   case object PDT extends LeafType
   case object POS extends LeafType
   case object PRP extends LeafType // 主格
+  case object PRPD extends LeafType // PRP$
   case object PPD extends LeafType // 所有格(PP$)
   case object RB extends LeafType
   case object RBR extends LeafType
@@ -173,7 +174,7 @@ object TagStructure {
 
   // 全ての葉の要素をつなげて取り出す
   def getLeave(tag: Tag): String = {
-    getLeave_(tag).tail
+    getLeave_(tag)
   }
 
   def getLeave_(tag: Tag): String = {
@@ -181,7 +182,8 @@ object TagStructure {
     tag match {
       case Node(_, list) => {
         for (n <- list) {
-          str += "_" + getLeave_(n)
+          if (str.length > 0 && str.last != '_') str += "_"
+          str += getLeave_(n)
         }
       }
       case Leaf(_, Token(word, lem)) => {
