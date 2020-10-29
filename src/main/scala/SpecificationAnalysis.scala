@@ -9,9 +9,9 @@ import com.sun.tools.javac.code.TypeTag
 import edu.stanford.nlp._
 import edu.stanford.nlp.simple._
 import edu.stanford.nlp.io.IOUtils
-import edu.stanford.nlp.pipeline.{Annotation, StanfordCoreNLP}
+import edu.stanford.nlp.pipeline.{Annotation, CoreDocument, CoreSentence, StanfordCoreNLP}
 import edu.stanford.nlp.trees.Tree
-import edu.stanford.nlp.ling.CoreAnnotations
+import edu.stanford.nlp.ling.{CoreAnnotations, CoreLabel}
 import edu.stanford.nlp.trees.TreeCoreAnnotations
 
 import scala.collection.JavaConverters._
@@ -19,17 +19,19 @@ import scala.reflect.runtime.universe.typeOf
 
 object SpecificationAnalysis {
   var treeList: List[(Tree, List[Token])] = List()
+  var treeList2: List[(Tree, List[CoreLabel])] = List()
 
   // 入力ファイルを解析する
   @throws[IOException]
   def analysis(str: String): Unit = {
     /** Core NLP */
+    coreNlpParse(str)
 
-    /*
-    // 設定時間
-    var start = System.currentTimeMillis
-    val formatter = new SimpleDateFormat("mm:ss.SSS")
-    formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
+    /** Simple */
+    //simpleParse(str)
+  }
+
+  def coreNlpParse(str: String) = {
     /**
      * 解析したい要素をプロパティに設定
      * pos : 品詞
@@ -44,6 +46,7 @@ object SpecificationAnalysis {
      * Value : tokenize, ssplit, pos, lemma, ner, parse, dcoref, sentiment
      */
     props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse")
+    props.setProperty("tokenize.whitespace", "false")
     // パイプラインを設定する
     // new StanfordCoreNLP(props)で基本設定にできる
     val pipeline = new StanfordCoreNLP(props)
@@ -53,44 +56,33 @@ object SpecificationAnalysis {
     //   props.put("ner.model", "edu/stanford/nlp/models/ner/english.all.3class.distsim.crf.ser.gz");
     //   props.put("ner.applyNumericClassifiers", "false");
     //   StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
-    var endtime = System.currentTimeMillis
-    System.out.println("設定時間 = " + formatter.format(endtime - start))
 
-    // 読み込み時間
-    start = System.currentTimeMillis
-    // 入力ファイル設定
-    var annotation : Annotation = null
-    if (inputFileName != null) annotation = new Annotation(IOUtils.slurpFileNoExceptions(inputFileName))
-    else annotation = new Annotation("Karma of humans is AI. She was sad.") // She sent an email to Tokyo Tech University yestuday.
-    // 読み込み終了時間
-    endtime = System.currentTimeMillis
-    System.out.println("読み込み時間 = " + formatter.format(endtime - start))
+    // 入力ファイル
+    val doc = new CoreDocument(str)
+    //val annotation : Annotation = new Annotation(str)
 
-    // 解析スタート時間記録
-    start = System.currentTimeMillis
-    /** run all the selected Annotators on this text解析する */
-    pipeline.annotate(annotation)
-    // 解析時間記録
-    endtime = System.currentTimeMillis
-    System.out.println("解析時間 = " + formatter.format(endtime - start))
-
-    // 出力スタート時間記録
-    start = System.currentTimeMillis
+    /** 解析する */
+    pipeline.annotate(doc)
     /** 解析結果を出力する */
-
-    val tree = annotation.get(classOf[CoreAnnotations.SentencesAnnotation]).get(0).get(classOf[TreeCoreAnnotations.TreeAnnotation])
-    txtOut.println(tree)
+//    val tokens: List[CoreLabel] = doc.tokens().asScala.toList
+//    for (tok <- tokens) {
+//      System.out.println(String.format("%s\t%d\t%d", tok.word, tok.beginPosition, tok.endPosition))
+//    }
+    val sentences: List[CoreSentence] = doc.sentences().asScala.toList
+    for(sent: CoreSentence <- sentences) {
+      val tokens: List[CoreLabel] = sent.tokens().asScala.toList
+      //val lemmas: List[String] = sent.lemmas().asScala.toList
+      val parse: Tree = sent.constituencyParse()
+      treeList2 :+= (parse, tokens)
+    }
+    // val tree = annotation.get(classOf[CoreAnnotations.SentencesAnnotation]).get(0).get(classOf[TreeCoreAnnotations.TreeAnnotation])
+    //txtOut.println(tree)
     //pipeline.prettyPrint(annotation, out)
     //if (xmlOut != null) pipeline.xmlPrint(annotation, xmlOut)
 
-    // 解析出力時間記録
-    endtime = System.currentTimeMillis
-    System.out.println("解析出力時間 = " + formatter.format(endtime - start))
+  }
 
-    */////
-
-    /** Simple */
-
+  def simpleParse(str: String) = {
     // parseのみ解析
     var doc: Document = new Document(str)
 
@@ -111,14 +103,14 @@ object SpecificationAnalysis {
       //println(coref)
       import edu.stanford.nlp.coref.CorefCoreAnnotations
       import edu.stanford.nlp.ling.CoreAnnotations
-//      for (sentence <- coref) {
-//        System.out.println("---")
-//        System.out.println("mentions")
-//        sentence.get(classOf[CorefCoreAnnotations.CorefMentionsAnnotation])
-//        for (m <- sentence.get(classOf[CorefCoreAnnotations.CorefMentionsAnnotation])) {
-//          System.out.println("\t" + m)
-//        }
-//      }
+      //      for (sentence <- coref) {
+      //        System.out.println("---")
+      //        System.out.println("mentions")
+      //        sentence.get(classOf[CorefCoreAnnotations.CorefMentionsAnnotation])
+      //        for (m <- sentence.get(classOf[CorefCoreAnnotations.CorefMentionsAnnotation])) {
+      //          System.out.println("\t" + m)
+      //        }
+      //      }
 
       //txtOut.println(parse)
     }

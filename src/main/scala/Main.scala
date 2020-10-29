@@ -2,8 +2,8 @@ import java.io.{BufferedWriter, File, FileWriter, PrintWriter}
 import java.text.SimpleDateFormat
 import java.util.TimeZone
 
-import SpecificationAnalysis.{analysis, treeList}
-import ConvertTree.{convert, makeLeafMap, tokenList}
+import SpecificationAnalysis.{analysis, treeList, treeList2}
+import ConvertTree.{convert, makeLeafMap, tokenList, tokenList2}
 import ParseHtml.{parseHtml, stateList}
 import TagStructure._
 import TagToCommand.{tag_list, toCommand}
@@ -49,7 +49,7 @@ object Main {
     formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
 
     System.out.println("> parse&convert_start")
-    for (i <- 0 to stateList.length - 1) {
+    for (i <- 0 to stateList.length - 10) {
       println(i+1)
       txtOut.println(i+1 + " : " + stateList(i).name)
       for (j <- 0 to stateList(i).trance.length - 1) {
@@ -59,9 +59,9 @@ object Main {
         analysis(str)
 
         var tagList: List[Tag] = List()
-        for (t <- treeList) {
+        for (t <- treeList2) {
           makeLeafMap(t._1)
-          tokenList = t._2
+          tokenList2 = t._2
           val tag = convert(t._1)
           tagList :+= tag
           txtOut.println(tag)
@@ -72,6 +72,7 @@ object Main {
         txtOut.println("")
 
         treeList = List()
+        treeList2 = List()
         if (i == 18 && j == 0)ShowTree.showTree(tagList)
       }
 
