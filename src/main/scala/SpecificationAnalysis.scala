@@ -1,12 +1,6 @@
 import java.io.{BufferedWriter, File, FileWriter, IOException, PrintWriter}
 import java.util.{Date, Locale, Properties, TimeZone}
-import java.text.DateFormat._
-import java.text.SimpleDateFormat
-import java.util
 
-import Main.inputFileName
-import com.sun.tools.javac.code.TypeTag
-import edu.stanford.nlp._
 import edu.stanford.nlp.simple._
 import edu.stanford.nlp.io.IOUtils
 import edu.stanford.nlp.pipeline.{Annotation, CoreDocument, CoreSentence, StanfordCoreNLP}
@@ -15,7 +9,6 @@ import edu.stanford.nlp.ling.{CoreAnnotations, CoreLabel}
 import edu.stanford.nlp.trees.TreeCoreAnnotations
 
 import scala.collection.JavaConverters._
-import scala.reflect.runtime.universe.typeOf
 
 object SpecificationAnalysis {
   var treeList: List[(Tree, List[Token])] = List()
@@ -46,16 +39,18 @@ object SpecificationAnalysis {
      * Value : tokenize, ssplit, pos, lemma, ner, parse, dcoref, sentiment
      */
     props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse")
-    props.setProperty("tokenize.whitespace", "false")
+    props.setProperty("tokenize.whitespace", "true") // 空白で区切られてないものは1つの文字として認識する
+    //props.setProperty("tokenize.keepeol", "true")
+    props.setProperty("tokenize.options", "strictTreebank3=true")
+    props.setProperty("ssplit.boundaryTokenRegex", "\\\\.|[!?]+")
+    //props.setProperty("tokenize.options", "splitHyphenated=false") // "-"で繋がる文字を1つの文字として認識する:false
     // パイプラインを設定する
     // new StanfordCoreNLP(props)で基本設定にできる
     val pipeline = new StanfordCoreNLP(props)
     // もっと複雑な設定にするには
-    //   Properties props = new Properties();
     //   props.put("annotators", "tokenize, ssplit, pos, lemma, ner, depparse");
     //   props.put("ner.model", "edu/stanford/nlp/models/ner/english.all.3class.distsim.crf.ser.gz");
     //   props.put("ner.applyNumericClassifiers", "false");
-    //   StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
     // 入力ファイル
     val doc = new CoreDocument(str)
@@ -64,19 +59,12 @@ object SpecificationAnalysis {
     /** 解析する */
     pipeline.annotate(doc)
     /** 解析結果を出力する */
-//    val tokens: List[CoreLabel] = doc.tokens().asScala.toList
-//    for (tok <- tokens) {
-//      System.out.println(String.format("%s\t%d\t%d", tok.word, tok.beginPosition, tok.endPosition))
-//    }
     val sentences: List[CoreSentence] = doc.sentences().asScala.toList
     for(sent: CoreSentence <- sentences) {
       val tokens: List[CoreLabel] = sent.tokens().asScala.toList
-      //val lemmas: List[String] = sent.lemmas().asScala.toList
       val parse: Tree = sent.constituencyParse()
       treeList2 :+= (parse, tokens)
     }
-    // val tree = annotation.get(classOf[CoreAnnotations.SentencesAnnotation]).get(0).get(classOf[TreeCoreAnnotations.TreeAnnotation])
-    //txtOut.println(tree)
     //pipeline.prettyPrint(annotation, out)
     //if (xmlOut != null) pipeline.xmlPrint(annotation, xmlOut)
 

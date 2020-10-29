@@ -49,13 +49,14 @@ object Main {
     formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
 
     System.out.println("> parse&convert_start")
-    for (i <- 0 to stateList.length - 10) {
+    for (i <- 0 to stateList.length - 20) {
       println(i+1)
       txtOut.println(i+1 + " : " + stateList(i).name)
       for (j <- 0 to stateList(i).trance.length - 1) {
         txtOut.println( "-- chara: "+stateList(i).trance(j).character + " --")
         // 入力ファイルを解析する
         val str: String = stateList(i).trance(j).process
+        txtOut.println(str)
         analysis(str)
 
         var tagList: List[Tag] = List()

@@ -1,344 +1,58 @@
 1 : Data state
 -- chara: U+0026 AMPERSAND (&amp;) --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(return,return)), Leaf(NN,Token(state,state)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNS,Token(data,datum)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)), Leaf(NN,Token(reference,reference)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Set the return state to the data state. Switch to the character reference state.
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(SBAR,List(Node(S,List(Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(return,return)), Leaf(NN,Token(state,state)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNS,Token(data,datum)))))))), Node(ADVP,List(Leaf(RB,Token(state.,state.)))), Node(VP,List(Leaf(VBP,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)), Leaf(NN,Token(reference,reference)), Leaf(NN,Token(state.,state.))))))))))))))))))
 
- -> Set(the_return_state,the_data_state)
- -> Switch(the_character_reference_state)
 
 -- chara: U+003C LESS-THAN SIGN (&lt;) --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(tag,tag)), Leaf(JJ,Token(open,open)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Switch to the tag open state.
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(tag,tag)), Leaf(JJ,Token(open,open)), Leaf(NN,Token(state.,state.))))))))))))
 
- -> Switch(the_tag_open_state)
+ -> Switch(the_tag_open_state.)
 
 -- chara: U+0000 NULL --
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(null,null)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(parse,parse)))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))))))), Leaf(Dot,Token(.,.))))))
+This is an unexpected-null-character parse error. Emit the current input character as a character token.
+Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(unexpected-null-character,unexpected-null-character)), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(parse,parse)), Node(S,List(Node(NP,List(Leaf(NN,Token(error.,error.)))), Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)))))))))))))))), Leaf(NN,Token(token.,token.))))))))))
 
- -> Error(an_unexpected_-_null_-_character_parse_error)
- -> Emit(the_current_input_characteras_a_character_token)
 
 -- chara: EOF --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
+Emit an end-of-file token.
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(end-of-file,end-of-file)), Leaf(NN,Token(token.,token.))))))))))
 
- -> Emit(an_end_-_of_-_file_token)
+ -> Emit(an_end-of-file_token.)
 
 -- chara: Anything else --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))))))), Leaf(Dot,Token(.,.))))))
+Emit the current input character as a character token.
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token.,token.))))))))))))
 
- -> Emit(the_current_input_characteras_a_character_token)
+ -> Emit(the_current_input_characteras_a_character_token.)
 
 2 : RCDATA state
 -- chara: U+0026 AMPERSAND (&amp;) --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(return,return)), Leaf(NN,Token(state,state)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA,RCDATA)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)), Leaf(NN,Token(reference,reference)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Set the return state to the RCDATA state. Switch to the character reference state.
+Node(ROOT,List(Node(S,List(Node(PRN,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(return,return)), Leaf(NN,Token(state,state)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA,RCDATA)))))))))))), Node(NP,List(Leaf(NNS,Token(state.,state.)))), Node(VP,List(Leaf(VBP,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)), Leaf(NN,Token(reference,reference)), Leaf(NN,Token(state.,state.))))))))))))
 
- -> Set(the_return_state,the_RCDATA_state)
- -> Switch(the_character_reference_state)
 
 -- chara: U+003C LESS-THAN SIGN (&lt;) --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA,RCDATA)), Node(ADJP,List(Node(ADJP,List(Leaf(RBR,Token(less,less)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(than,than)), Node(ADJP,List(Leaf(VB,Token(sign,sign)))))))), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Switch to the RCDATA less-than sign state.
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA,RCDATA)), Leaf(JJ,Token(less-than,less-than)), Leaf(NN,Token(sign,sign)), Leaf(NN,Token(state.,state.))))))))))))
 
- -> Switch(the_RCDATA_less_-_than_sign_state)
-
--- chara: U+0000 NULL --
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(null,null)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(parse,parse)))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NNP,Token(U+FFFD,U+FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NNP,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_unexpected_-_null_-_character_parse_error)
- -> Emit(a_U+FFFD_REPLACEMENT_CHARACTER_character_token)
-
--- chara: EOF --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Emit(an_end_-_of_-_file_token)
-
--- chara: Anything else --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Emit(the_current_input_characteras_a_character_token)
-
-3 : RAWTEXT state
--- chara: U+003C LESS-THAN SIGN (&lt;) --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RAWTEXT,RAWTEXT)), Node(ADJP,List(Node(ADJP,List(Leaf(RBR,Token(less,less)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(than,than)), Node(ADJP,List(Leaf(VB,Token(sign,sign)))))))), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_RAWTEXT_less_-_than_sign_state)
+ -> Switch(the_RCDATA_less-than_sign_state.)
 
 -- chara: U+0000 NULL --
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(null,null)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(parse,parse)))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NNP,Token(U+FFFD,U+FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NNP,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
+This is an unexpected-null-character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(unexpected-null-character,unexpected-null-character)), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(parse,parse)), Node(S,List(Node(NP,List(Leaf(NN,Token(error.,error.)))), Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NNP,Token(U+FFFD,U+FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NNP,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)))))))))))))), Leaf(NN,Token(token.,token.))))))))))
 
- -> Error(an_unexpected_-_null_-_character_parse_error)
- -> Emit(a_U+FFFD_REPLACEMENT_CHARACTER_character_token)
 
 -- chara: EOF --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
+Emit an end-of-file token.
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(end-of-file,end-of-file)), Leaf(NN,Token(token.,token.))))))))))
 
- -> Emit(an_end_-_of_-_file_token)
-
--- chara: Anything else --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Emit(the_current_input_characteras_a_character_token)
-
-4 : Script data state
--- chara: U+003C LESS-THAN SIGN (&lt;) --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(ADJP,List(Node(ADJP,List(Node(NP,List(Leaf(NN,Token(script,script)), Leaf(NNS,Token(data,datum)))), Leaf(RBR,Token(less,less)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(than,than)), Node(ADJP,List(Leaf(VB,Token(sign,sign)))))))), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_script_data_less_-_than_sign_state)
-
--- chara: U+0000 NULL --
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(null,null)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(parse,parse)))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NNP,Token(U+FFFD,U+FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NNP,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_unexpected_-_null_-_character_parse_error)
- -> Emit(a_U+FFFD_REPLACEMENT_CHARACTER_character_token)
-
--- chara: EOF --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Emit(an_end_-_of_-_file_token)
+ -> Emit(an_end-of-file_token.)
 
 -- chara: Anything else --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))))))), Leaf(Dot,Token(.,.))))))
+Emit the current input character as a character token.
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token.,token.))))))))))))
 
- -> Emit(the_current_input_characteras_a_character_token)
-
-5 : PLAINTEXT state
--- chara: U+0000 NULL --
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(null,null)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(parse,parse)))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NNP,Token(U+FFFD,U+FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NNP,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_unexpected_-_null_-_character_parse_error)
- -> Emit(a_U+FFFD_REPLACEMENT_CHARACTER_character_token)
-
--- chara: EOF --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Emit(an_end_-_of_-_file_token)
-
--- chara: Anything else --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Emit(the_current_input_characteras_a_character_token)
-
-6 : Tag open state
--- chara: U+0021 EXCLAMATION MARK (!) --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(ADJP,List(Node(NP,List(Leaf(NN,Token(markup,markup)), Leaf(NN,Token(declaration,declaration)))), Leaf(JJ,Token(open,open)))), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_markup_declaration_open_state)
-
--- chara: U+002F SOLIDUS (/) --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))), Leaf(JJ,Token(open,open)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_end_tag_open_state)
-
--- chara: ASCII alpha --
-Node(ROOT,List(Node(S,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(NN,Token(start,start)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))))))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VBD,Token(set,set)), Node(NP,List(Leaf(PRPD,Token(its,its)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(empty,empty)), Leaf(NN,Token(string,string)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(NP,List(Node(NP,List(Leaf(NN,Token(Reconsume,reconsume)))), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))), Leaf(Dot,Token(.,.))))))
-
-
--- chara: U+003F QUESTION MARK (?) --
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(ADJP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)))), Node(NML,List(Node(NML,List(Leaf(NN,Token(question,question)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(mark,mark)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Node(ADVP,List(Leaf(RB,Token(instead,instead)))), Leaf(HYPH,Token(-,-)), Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(tag,tag)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(name,name)))))))), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(parse,parse)))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(token,token)))), Node(SBAR,List(Node(WHNP,List(Leaf(WPD,Token(whose,whose)), Node(NML,List(Leaf(NNS,Token(data,datum)))))), Node(S,List(Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(empty,empty)), Leaf(NN,Token(string,string)))))))))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(NP,List(Node(NP,List(Leaf(NN,Token(Reconsume,reconsume)))), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(bogus,bogus)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(state,state)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_unexpected_-_question_-_mark_-_instead_-_of_-_tag_-_name_parse_error)
- -> Create(a_comment_token_whose_data_is_the_empty_string)
-
--- chara: EOF --
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(eof,eof)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(before,before)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(tag,tag)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(name,name)))))))), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(parse,parse)))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Node(ADJP,List(Node(ADJP,List(Node(NML,List(Leaf(NN,Token(U,u)), Leaf(NN,Token(+003,+003)))), Node(NP,List(Leaf(NN,Token(C,c)), Leaf(NN,Token(LESS,less)))))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(THAN,than)), Node(NP,List(Leaf(NNP,Token(SIGN,SIGN)))))))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))), Leaf(CC,Token(and,and)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_eof_-_before_-_tag_-_name_parse_error)
- -> Emit(a_U_+003_C_LESS_-_THAN_SIGN_character_token_and_an_end_-_of_-_file_token)
-
--- chara: Anything else --
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(invalid,invalid)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(first,first)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(tag,tag)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(name,name)))))))), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(parse,parse)))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Node(ADJP,List(Node(ADJP,List(Node(NML,List(Leaf(NN,Token(U,u)), Leaf(NN,Token(+003,+003)))), Node(NP,List(Leaf(NN,Token(C,c)), Leaf(NN,Token(LESS,less)))))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(THAN,than)), Node(NP,List(Leaf(NNP,Token(SIGN,SIGN)))))))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(NP,List(Node(NP,List(Leaf(NN,Token(Reconsume,reconsume)))), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNS,Token(data,datum)), Leaf(NN,Token(state,state)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_invalid_-_first_-_character_-_of_-_tag_-_name_parse_error)
- -> Emit(a_U_+003_C_LESS_-_THAN_SIGN_character_token)
-
-7 : End tag open state
--- chara: ASCII alpha --
-Node(ROOT,List(Node(S,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))))))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VBD,Token(set,set)), Node(NP,List(Leaf(PRPD,Token(its,its)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(empty,empty)), Leaf(NN,Token(string,string)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(NP,List(Node(NP,List(Leaf(NN,Token(Reconsume,reconsume)))), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))), Leaf(Dot,Token(.,.))))))
-
-
--- chara: U+003E GREATER-THAN SIGN (&gt;) --
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(a,a)), Node(ADJP,List(Leaf(JJ,Token(missing,missing)), Leaf(HYPH,Token(-,-)), Node(SBAR,List(Node(S,List(Node(NP,List(Leaf(NN,Token(end,end)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(tag,tag)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(name,name)))), Node(VP,List(Leaf(VB,Token(parse,parse)))))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNS,Token(data,datum)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(a_missing_-_end_-_tag_-_name_parse_error)
- -> Switch(the_data_state)
-
--- chara: EOF --
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(eof,eof)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(before,before)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(tag,tag)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(name,name)))))))), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(parse,parse)))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Node(ADJP,List(Node(ADJP,List(Node(NML,List(Leaf(NN,Token(U,U)), Leaf(NN,Token(+003,+003)))), Node(NP,List(Leaf(NN,Token(C,c)), Leaf(NN,Token(LESS,less)))))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(THAN,than)), Node(NP,List(Leaf(NNP,Token(SIGN,SIGN)))))))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))), Leaf(Comma,Token(,,,)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Node(NML,List(Leaf(NNP,Token(U,U)), Leaf(CD,Token(+002,+002)))), Leaf(NNP,Token(F,F)), Leaf(NNP,Token(SOLIDUS,SOLIDUS)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))), Leaf(CC,Token(and,and)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_eof_-_before_-_tag_-_name_parse_error)
- -> Emit(a_U_+003_C_LESS_-_THAN_SIGN_character_token_,_a_U_+002_F_SOLIDUS_character_token_and_an_end_-_of_-_file_token)
-
--- chara: Anything else --
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(invalid,invalid)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(first,first)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(tag,tag)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(name,name)))))))), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(parse,parse)))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(token,token)))), Node(SBAR,List(Node(WHNP,List(Leaf(WPD,Token(whose,whose)), Node(NML,List(Leaf(NNS,Token(data,datum)))))), Node(S,List(Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(empty,empty)), Leaf(NN,Token(string,string)))))))))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(NP,List(Node(NP,List(Leaf(NN,Token(Reconsume,reconsume)))), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(bogus,bogus)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(state,state)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_invalid_-_first_-_character_-_of_-_tag_-_name_parse_error)
- -> Create(a_comment_token_whose_data_is_the_empty_string)
-
-8 : Tag name state
--- chara: U+0009 CHARACTER TABULATION (tab) --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(JJ,Token(before,before)), Leaf(NN,Token(attribute,attribute)))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_before_attribute_name_state)
-
--- chara: U+000A LINE FEED (LF) --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(JJ,Token(before,before)), Leaf(NN,Token(attribute,attribute)))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_before_attribute_name_state)
-
--- chara: U+000C FORM FEED (FF) --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(JJ,Token(before,before)), Leaf(NN,Token(attribute,attribute)))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_before_attribute_name_state)
-
--- chara: U+0020 SPACE --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(JJ,Token(before,before)), Leaf(NN,Token(attribute,attribute)))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_before_attribute_name_state)
-
--- chara: U+002F SOLIDUS (/) --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(NN,Token(self,self)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(closing,closing)))), Leaf(NN,Token(start,start)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_self_-_closing_start_tag_state)
-
--- chara: U+003E GREATER-THAN SIGN (&gt;) --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNS,Token(data,datum)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_data_state)
- -> Emit(the_current_tag_token)
-
--- chara: ASCII upper alpha --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VBP,Token(Append,append)), Node(NP,List(Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(lowercase,lowercase)), Leaf(NN,Token(version,version)))), Node(PP,List(Leaf(IN,Token(of,of)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))))), Node(PRN,List(Leaf(LBracket,Token((,()), Node(S,List(Node(VP,List(Leaf(VB,Token(add,add)), Node(NP,List(Leaf(NN,Token(0x0020,0x0020)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(code,code)), Leaf(NN,Token(point,point)))))))))), Leaf(RBracket,Token(),))))))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))))))))), Leaf(Dot,Token(.,.))))))
-
- -> Append(null,null)
-
--- chara: U+0000 NULL --
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(null,null)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(parse,parse)))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NNP,Token(U+FFFD,U+FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NNP,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_unexpected_-_null_-_character_parse_error)
- -> Append(null,null)
-
--- chara: EOF --
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Leaf(NN,Token(eof,eof)), Leaf(HYPH,Token(-,-)), Leaf(IN,Token(in,in)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(tag,tag)))), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(parse,parse)))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_eof_-_in_-_tag_parse_error)
- -> Emit(an_end_-_of_-_file_token)
-
--- chara: Anything else --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VBP,Token(Append,append)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Append(null,null)
-
-9 : RCDATA less-than sign state
--- chara: U+002F SOLIDUS (/) --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(temporary,temporary)), Leaf(NN,Token(buffer,buffer)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(empty,empty)), Leaf(NN,Token(string,string)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA,RCDATA)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))))), Node(NP,List(Leaf(JJ,Token(open,open)), Leaf(NN,Token(state,state)))))), Leaf(Dot,Token(.,.))))))
-
- -> Set(the_temporary_buffer,the_empty_string)
-
--- chara: Anything else --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Node(ADJP,List(Node(ADJP,List(Node(NML,List(Leaf(NN,Token(U,u)), Leaf(NN,Token(+003,+003)))), Node(NP,List(Leaf(NN,Token(C,c)), Leaf(NN,Token(LESS,less)))))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(THAN,than)), Node(NP,List(Leaf(NNP,Token(SIGN,SIGN)))))))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(NP,List(Node(NP,List(Leaf(NN,Token(Reconsume,reconsume)))), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA,RCDATA)), Leaf(NN,Token(state,state)))))), Leaf(Dot,Token(.,.))))))
-
- -> Emit(a_U_+003_C_LESS_-_THAN_SIGN_character_token)
-
-10 : RCDATA end tag open state
--- chara: ASCII alpha --
-Node(ROOT,List(Node(S,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))))))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VBD,Token(set,set)), Node(NP,List(Leaf(PRPD,Token(its,its)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(empty,empty)), Leaf(NN,Token(string,string)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(NP,List(Node(NP,List(Leaf(NN,Token(Reconsume,reconsume)))), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA,RCDATA)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))), Leaf(Dot,Token(.,.))))))
-
-
--- chara: Anything else --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Node(ADJP,List(Node(ADJP,List(Node(NML,List(Leaf(NN,Token(U,u)), Leaf(NN,Token(+003,+003)))), Node(NP,List(Leaf(NN,Token(C,c)), Leaf(NN,Token(LESS,less)))))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(THAN,than)), Node(NP,List(Leaf(NNP,Token(SIGN,SIGN)))))))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))), Leaf(CC,Token(and,and)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(U,u)), Leaf(CD,Token(+002,+002)))), Leaf(NNP,Token(F,F)), Leaf(NNP,Token(SOLIDUS,SOLIDUS)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(NP,List(Node(NP,List(Leaf(NN,Token(Reconsume,reconsume)))), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA,RCDATA)), Leaf(NN,Token(state,state)))))), Leaf(Dot,Token(.,.))))))
-
- -> Emit(a_U_+003_C_LESS_-_THAN_SIGN_character_token_and_a_U_+002_F_SOLIDUS_character_token)
-
-11 : RCDATA end tag name state
--- chara: U+0009 CHARACTER TABULATION (tab) --
-Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(appropriate,appropriate)), Node(NML,List(Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(token,token)))))))))), Leaf(Comma,Token(,,,)), Node(ADVP,List(Leaf(RB,Token(then,then)))), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(JJ,Token(before,before)), Leaf(NN,Token(attribute,attribute)))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VB,Token(treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(PP,List(Leaf(IN,Token(as,as)), Leaf(IN,Token(per,per)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(anything,anything)), Leaf(JJ,Token(else,else)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(entry,entry)))), Node(PP,List(Leaf(IN,Token(below,below)))))))))), Leaf(Dot,Token(.,.))))))
-
- -> If(Bool(the_current_end_tag_token_is_an_appropriate_end_tag_token),List(Switch(the_before_attribute_name_state)),List())
-
--- chara: U+000A LINE FEED (LF) --
-Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(appropriate,appropriate)), Node(NML,List(Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(token,token)))))))))), Leaf(Comma,Token(,,,)), Node(ADVP,List(Leaf(RB,Token(then,then)))), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(JJ,Token(before,before)), Leaf(NN,Token(attribute,attribute)))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VB,Token(treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(PP,List(Leaf(IN,Token(as,as)), Leaf(IN,Token(per,per)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(anything,anything)), Leaf(JJ,Token(else,else)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(entry,entry)))), Node(PP,List(Leaf(IN,Token(below,below)))))))))), Leaf(Dot,Token(.,.))))))
-
- -> If(Bool(the_current_end_tag_token_is_an_appropriate_end_tag_token),List(Switch(the_before_attribute_name_state)),List())
-
--- chara: U+000C FORM FEED (FF) --
-Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(appropriate,appropriate)), Node(NML,List(Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(token,token)))))))))), Leaf(Comma,Token(,,,)), Node(ADVP,List(Leaf(RB,Token(then,then)))), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(JJ,Token(before,before)), Leaf(NN,Token(attribute,attribute)))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VB,Token(treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(PP,List(Leaf(IN,Token(as,as)), Leaf(IN,Token(per,per)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(anything,anything)), Leaf(JJ,Token(else,else)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(entry,entry)))), Node(PP,List(Leaf(IN,Token(below,below)))))))))), Leaf(Dot,Token(.,.))))))
-
- -> If(Bool(the_current_end_tag_token_is_an_appropriate_end_tag_token),List(Switch(the_before_attribute_name_state)),List())
-
--- chara: U+0020 SPACE --
-Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(appropriate,appropriate)), Node(NML,List(Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(token,token)))))))))), Leaf(Comma,Token(,,,)), Node(ADVP,List(Leaf(RB,Token(then,then)))), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(JJ,Token(before,before)), Leaf(NN,Token(attribute,attribute)))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VB,Token(treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(PP,List(Leaf(IN,Token(as,as)), Leaf(IN,Token(per,per)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(anything,anything)), Leaf(JJ,Token(else,else)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(entry,entry)))), Node(PP,List(Leaf(IN,Token(below,below)))))))))), Leaf(Dot,Token(.,.))))))
-
- -> If(Bool(the_current_end_tag_token_is_an_appropriate_end_tag_token),List(Switch(the_before_attribute_name_state)),List())
-
--- chara: U+002F SOLIDUS (/) --
-Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(appropriate,appropriate)), Node(NML,List(Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(token,token)))))))))), Leaf(Comma,Token(,,,)), Node(ADVP,List(Leaf(RB,Token(then,then)))), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(NN,Token(self,self)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(closing,closing)))), Leaf(NN,Token(start,start)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VB,Token(treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(PP,List(Leaf(IN,Token(as,as)), Leaf(IN,Token(per,per)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(anything,anything)), Leaf(JJ,Token(else,else)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(entry,entry)))), Node(PP,List(Leaf(IN,Token(below,below)))))))))), Leaf(Dot,Token(.,.))))))
-
- -> If(Bool(the_current_end_tag_token_is_an_appropriate_end_tag_token),List(Switch(the_self_-_closing_start_tag_state)),List())
-
--- chara: U+003E GREATER-THAN SIGN (&gt;) --
-Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(appropriate,appropriate)), Node(NML,List(Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(token,token)))))))))), Leaf(Comma,Token(,,,)), Node(ADVP,List(Leaf(RB,Token(then,then)))), Node(VP,List(Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNS,Token(data,datum)), Leaf(NN,Token(state,state)))))))), Leaf(CC,Token(and,and)), Node(VP,List(Leaf(VB,Token(emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VB,Token(treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(PP,List(Leaf(IN,Token(as,as)), Leaf(IN,Token(per,per)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(anything,anything)), Leaf(JJ,Token(else,else)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(entry,entry)))), Node(PP,List(Leaf(IN,Token(below,below)))))))))), Leaf(Dot,Token(.,.))))))
-
- -> If(Bool(the_current_end_tag_token_is_an_appropriate_end_tag_token),List(Switch(the_data_state), Emit(the_current_tag_token)),List())
-
--- chara: ASCII upper alpha --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VBP,Token(Append,append)), Node(NP,List(Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(lowercase,lowercase)), Leaf(NN,Token(version,version)))), Node(PP,List(Leaf(IN,Token(of,of)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))))), Node(PRN,List(Leaf(LBracket,Token((,()), Node(S,List(Node(VP,List(Leaf(VB,Token(add,add)), Node(NP,List(Leaf(NN,Token(0x0020,0x0020)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(code,code)), Leaf(NN,Token(point,point)))))))))), Leaf(RBracket,Token(),))))))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VBP,Token(Append,append)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(temporary,temporary)), Leaf(NN,Token(buffer,buffer)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Append(null,null)
- -> Append(null,null)
-
--- chara: ASCII lower alpha --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VBP,Token(Append,append)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VBP,Token(Append,append)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(temporary,temporary)), Leaf(NN,Token(buffer,buffer)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Append(null,null)
- -> Append(null,null)
-
--- chara: Anything else --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Node(ADJP,List(Node(ADJP,List(Node(NML,List(Leaf(NN,Token(U,U)), Leaf(NN,Token(+003,+003)))), Node(NP,List(Leaf(NN,Token(C,c)), Leaf(NN,Token(LESS,less)))))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(THAN,than)), Node(NP,List(Leaf(NNP,Token(SIGN,SIGN)))))))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))), Leaf(Comma,Token(,,,)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Node(NML,List(Leaf(NNP,Token(U,U)), Leaf(CD,Token(+002,+002)))), Leaf(NNP,Token(F,F)), Leaf(NNP,Token(SOLIDUS,SOLIDUS)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))), Leaf(Comma,Token(,,,)), Leaf(CC,Token(and,and)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))), Node(PP,List(Leaf(IN,Token(for,for)), Node(NP,List(Node(NP,List(Leaf(DT,Token(each,each)))), Node(PP,List(Leaf(IN,Token(of,of)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNS,Token(characters,character)))))))))))))), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(temporary,temporary)), Leaf(NN,Token(buffer,buffer)))), Leaf(LBracket,Token((,()), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(order,order)))), Node(SBAR,List(Node(S,List(Node(NP,List(Leaf(PRP,Token(they,they)))), Node(VP,List(Leaf(VBD,Token(were,be)), Node(VP,List(Leaf(VBN,Token(added,add)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(buffer,buffer)))))))))))))))))), Leaf(RBracket,Token(),))))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(NP,List(Node(NP,List(Leaf(NN,Token(Reconsume,reconsume)))), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA,RCDATA)), Leaf(NN,Token(state,state)))))), Leaf(Dot,Token(.,.))))))
-
- -> Emit(a_U_+003_C_LESS_-_THAN_SIGN_character_token_,_a_U_+002_F_SOLIDUS_character_token_,_and_a_character_token_for_each_of_the_charactersin_the_temporary_buffer_(_in_the_order_they_were_added_to_the_buffer_))
-
-12 : RAWTEXT less-than sign state
--- chara: U+002F SOLIDUS (/) --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(temporary,temporary)), Leaf(NN,Token(buffer,buffer)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(empty,empty)), Leaf(NN,Token(string,string)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(NN,Token(RAWTEXT,rawtext)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))), Leaf(JJ,Token(open,open)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Set(the_temporary_buffer,the_empty_string)
- -> Switch(the_RAWTEXT_end_tag_open_state)
-
--- chara: Anything else --
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Node(ADJP,List(Node(ADJP,List(Node(NML,List(Leaf(NN,Token(U,u)), Leaf(NN,Token(+003,+003)))), Node(NP,List(Leaf(NN,Token(C,c)), Leaf(NN,Token(LESS,less)))))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(THAN,than)), Node(NP,List(Leaf(NNP,Token(SIGN,SIGN)))))))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(NP,List(Node(NP,List(Leaf(NN,Token(Reconsume,reconsume)))), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(RAWTEXT,rawtext)), Leaf(NN,Token(state,state)))))), Leaf(Dot,Token(.,.))))))
-
- -> Emit(a_U_+003_C_LESS_-_THAN_SIGN_character_token)
+ -> Emit(the_current_input_characteras_a_character_token.)
 
