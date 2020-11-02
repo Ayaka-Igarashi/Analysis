@@ -49,7 +49,7 @@ object Main {
     formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
 
     System.out.println("> parse&convert_start")
-    for (i <- 0 to stateList.length - 20) {
+    for (i <- 35 to stateList.length - 1) {
       println(i+1)
       txtOut.println(i+1 + " : " + stateList(i).name)
       for (j <- 0 to stateList(i).trance.length - 1) {
@@ -60,9 +60,9 @@ object Main {
         analysis(str)
 
         var tagList: List[Tag] = List()
-        for (t <- treeList2) {
+        for (t <- treeList) {
           makeLeafMap(t._1)
-          tokenList2 = t._2
+          tokenList = t._2
           val tag = convert(t._1)
           tagList :+= tag
           txtOut.println(tag)
@@ -74,14 +74,13 @@ object Main {
 
         treeList = List()
         treeList2 = List()
-        if (i == 18 && j == 0)ShowTree.showTree(tagList)
+        if (i == 35 && j == 1)ShowTree.showTree(tagList)
       }
 
 
 
     }
     var endtime = System.currentTimeMillis
-    endtime = System.currentTimeMillis
     System.out.println("時間 = " + formatter.format(endtime - start))
     // ファイルを閉じる
     IOUtils.closeIgnoringExceptions(txtOut)

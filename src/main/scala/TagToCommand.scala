@@ -1,4 +1,5 @@
 import CommandStructure._
+import Main.txtOut
 import TagStructure._
 
 import scala.collection.mutable
@@ -23,7 +24,7 @@ object TagToCommand {
       case Node(ROOT, List(Node(S, list))) => {
         commandList ++= STag(Node(S, list))
       }
-      case _ => println("error_root")
+      case _ => txtOut.println("error_root")
     }
     commandList
   }
@@ -60,19 +61,19 @@ object TagToCommand {
           case node :: Leaf(Dot,_) :: Nil => {
             node match {
               case Node(VP, _) => { commandList ++= VPTag(node)}
-              case _ => println("err")
+              case _ => txtOut.println("err")
             }
           }
           case node :: Nil => {
             node match {
               case Node(VP, _) => { commandList ++= VPTag(node)}
-              case _ => println("err")
+              case _ => txtOut.println("err")
             }
           }
-          case _ => println("not match_s")
+          case _ => txtOut.println("not match_s")
         }
       }
-      case _ => println("error_not_s")
+      case _ => txtOut.println("error_not_s")
     }
     commandList
   }
@@ -119,11 +120,27 @@ object TagToCommand {
           }
           // emit2(途中)
           case List(Leaf(VB,Token(_,"emit")), Node(NP,np), Node(PP, pp)) => {
-            commandList :+= Emit(getLeave(Node(NP,np)) + getLeave(Node(PP, pp)))
+            commandList :+= Emit(getLeave(Node(NP,np)) +"_"+ getLeave(Node(PP, pp)))
+          }
+          // ignore
+          case List(Leaf(VB,Token(_,"ignore")), Node(NP,np)) => {
+            commandList :+= Ignore(getLeave(Node(NP,np)))
           }
           // create
           case List(Leaf(VB,Token(_,"create")), Node(NP,np)) => {
             commandList :+= Create(getLeave(Node(NP,np)))
+          }
+          // multiply
+          case List(Leaf(VB,Token(_,"multiply")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_, "by")), Node(NP, np2)))) => {
+            commandList :+= Multiply(getLeave(Node(NP,np1)), getLeave(Node(NP, np2)))
+          }
+          // add
+          case List(Leaf(VB,Token(_,"add")), Node(NP,List(Node(NP,np1), Node(PP, List(Leaf(IN, Token(_, "to")), Node(NP, np2)))))) => {
+            commandList :+= Add(getLeave(Node(NP,np1)), getLeave(Node(NP, np2)))
+          }
+          // start(途中)
+          case List(Leaf(VB,Token(_,"start")), Node(NP,np), Node(PP, pp)) => {
+            commandList :+= Start(getLeave(Node(NP,np)) +"_"+ getLeave(Node(PP, pp)))
           }
           // treat(途中)
           case List(Leaf(VB, Token(_, "treat")), Node(NP, _), Node(PP, _), Node(ADVP, _)) => {
@@ -133,10 +150,10 @@ object TagToCommand {
           case Leaf(_, Token(_, "append")) :: rst => {
             commandList :+= Append(null, null)
           }
-          case _ => println("dont match_vp")
+          case _ => txtOut.println("dont match_vp")
         }
       }
-      case _ => println("error_not_vp")
+      case _ => txtOut.println("error_not_vp")
     }
     commandList
   }

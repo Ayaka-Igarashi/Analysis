@@ -56,8 +56,8 @@ object ShowTree extends JFXApp{
 
   // console用
   def rpl(str: String): String = {
-    val re =  "Token\\(([a-zA-Z\\-\\.\\+]+),([a-zA-Z\\-\\.\\+]+)\\)".r
-    val re2 = "[a-zA-Z\\-\\.]+".r
+    val re =  "Token\\(([0-9a-zA-Z\\-\\.\\+]+),([0-9a-zA-Z\\-\\.\\+]+)\\)".r
+    val re2 = "[0-9a-zA-Z\\-\\.\\+]+".r
     re.replaceAllIn(str, m =>  m.toString().substring(0,6)+ re2.replaceAllIn(m.toString().substring(6), m2 =>"\\\"" + m2.toString() + "\\\"") )
   }
 

@@ -48,19 +48,19 @@ object CommandStructure {
   case class Create(token: String) extends Command
 
   // Ignore the character.
-  case class Ignore() extends Command
+  case class Ignore(obj: String) extends Command
 
   // Flush code points consumed as a character reference.
   case class Flush() extends Command
 
   //Start a new attribute in the current tag token.
-  case class Start() extends Command
+  case class Start(obj: String) extends Command
 
   // Multiply the character reference code by 16
-  case class Multiply(obj: String, num: Int) extends Command
+  case class Multiply(obj: String, by: String) extends Command
 
   // Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0037 from the character's code point) to the character reference code.
-  case class Add() extends Command
+  case class Add(obj: String, to: String) extends Command
 
 
   // the temporary buffer is the string "script"

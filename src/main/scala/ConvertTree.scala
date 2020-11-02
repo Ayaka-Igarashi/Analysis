@@ -111,7 +111,7 @@ object ConvertTree {
     if (tree.numChildren() != 1) System.out.println("token num error")
     val child = tree.firstChild()
     leafDict.get(child) match {
-      case Some(i) => Token(child.value(), tokenList2(i).lemma())
+      case Some(i) => Token(child.value(), tokenList(i).lemma())
       case None => Token(child.value(), null) // error
     }
   }
