@@ -1,290 +1,108 @@
-36 : Attribute value (double-quoted) state
--- chara: U+0022 QUOTATION MARK (") --
-Switch to the after attribute value (quoted) state.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(after,after)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(value,value)))), Leaf(LBracket,Token((,()), Node(VP,List(Leaf(VBN,Token(quoted,quote)))), Leaf(RBracket,Token(),))))), Node(NP,List(Leaf(NN,Token(state,state)))))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_after_attribute_value_(_quoted_)_state)
-
--- chara: U+0026 AMPERSAND (&amp;) --
-you Set the return state to the attribute value (double-quoted) state. Switch to the character reference state.
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(PRP,Token(you,you)))), Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(return,return)), Node(NP,List(Leaf(NN,Token(state,state)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(attribute,attribute)), Leaf(NN,Token(value,value)))), Leaf(LBracket,Token((,()), Node(ADJP,List(Leaf(NN,Token(double,double)), Leaf(HYPH,Token(-,-)), Leaf(VBN,Token(quoted,quote)))), Leaf(RBracket,Token(),))))))))))))), Leaf(NN,Token(state,state)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)), Leaf(NN,Token(reference,reference)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-not match_s
-
- -> Switch(the_character_reference_state)
-
--- chara: U+0000 NULL --
-This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current attribute's value.
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(null,null)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NNP,Token(U+FFFD,U+FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NNP,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(attribute,attribute)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(value,value)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_unexpected_-_null_-_character_parse_error)
- -> Append(null,null)
-
--- chara: EOF --
-This is an eof-in-tag parse error. Emit an end-of-file token.
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Leaf(NN,Token(eof,eof)), Leaf(HYPH,Token(-,-)), Leaf(IN,Token(in,in)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_eof_-_in_-_tag_parse_error)
- -> Emit(an_end_-_of_-_file_token)
-
--- chara: Anything else --
-Append the current input character to the current attribute's value.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(attribute,attribute)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(value,value)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Append(null,null)
-
-37 : Attribute value (single-quoted) state
--- chara: U+0027 APOSTROPHE (') --
-Switch to the after attribute value (quoted) state.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(after,after)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(value,value)))), Leaf(LBracket,Token((,()), Node(VP,List(Leaf(VBN,Token(quoted,quote)))), Leaf(RBracket,Token(),))))), Node(NP,List(Leaf(NN,Token(state,state)))))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_after_attribute_value_(_quoted_)_state)
-
--- chara: U+0026 AMPERSAND (&amp;) --
-Set the return state to the attribute value (single-quoted) state. Switch to the character reference state.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(return,return)), Node(NP,List(Leaf(NN,Token(state,state)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(attribute,attribute)), Leaf(NN,Token(value,value)))), Leaf(LBracket,Token((,()), Node(ADJP,List(Leaf(JJ,Token(single,single)), Leaf(HYPH,Token(-,-)), Leaf(VBN,Token(quoted,quote)))), Leaf(RBracket,Token(),))))))))))))), Leaf(NN,Token(state,state)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)), Leaf(NN,Token(reference,reference)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-dont match_vp
-
- -> Switch(the_character_reference_state)
-
--- chara: U+0000 NULL --
-This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current attribute's value.
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(null,null)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NNP,Token(U+FFFD,U+FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NNP,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(attribute,attribute)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(value,value)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_unexpected_-_null_-_character_parse_error)
- -> Append(null,null)
-
--- chara: EOF --
-This is an eof-in-tag parse error. Emit an end-of-file token.
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Leaf(NN,Token(eof,eof)), Leaf(HYPH,Token(-,-)), Leaf(IN,Token(in,in)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_eof_-_in_-_tag_parse_error)
- -> Emit(an_end_-_of_-_file_token)
-
--- chara: Anything else --
-Append the current input character to the current attribute's value.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(attribute,attribute)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(value,value)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Append(null,null)
-
-38 : Attribute value (unquoted) state
+43 : Before DOCTYPE name state
 -- chara: U+0009 CHARACTER TABULATION (tab) --
-Switch to the before attribute name state.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Ignore the character.
+List()
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Ignore,ignore)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)))))), Leaf(Dot,Token(.,.))))))
 
- -> Switch(the_before_attribute_name_state)
+ -> Ignore(the_character)
 
 -- chara: U+000A LINE FEED (LF) --
-Switch to the before attribute name state.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Ignore the character.
+List()
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Ignore,ignore)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)))))), Leaf(Dot,Token(.,.))))))
 
- -> Switch(the_before_attribute_name_state)
-
--- chara: U+000C FORM FEED (FF) --
-Switch to the before attribute name state.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_before_attribute_name_state)
-
--- chara: U+0020 SPACE --
-Switch to the before attribute name state.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_before_attribute_name_state)
-
--- chara: U+0026 AMPERSAND (&amp;) --
-Set the return state to the attribute value (unquoted) state. Switch to the character reference state.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(return,return)), Leaf(NN,Token(state,state)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(attribute,attribute)), Leaf(NN,Token(value,value)), Leaf(LBracket,Token((,()), Leaf(JJ,Token(unquoted,unquoted)), Leaf(RBracket,Token(),))), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)), Leaf(NN,Token(reference,reference)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Set(the_return_state,the_attribute_value_(_unquoted_)_state)
- -> Switch(the_character_reference_state)
-
--- chara: U+003E GREATER-THAN SIGN (&gt;) --
-Switch to the data state. Emit the current tag token.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(data,datum)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_data_state)
- -> Emit(the_current_tag_token)
-
--- chara: U+0000 NULL --
-This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current attribute's value.
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(null,null)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NNP,Token(U+FFFD,U+FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NNP,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(attribute,attribute)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(value,value)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_unexpected_-_null_-_character_parse_error)
- -> Append(null,null)
-
--- chara: U+0022 QUOTATION MARK (") --
-This is an unexpected-character-in-unquoted-attribute-value parse error. Treat it as per the "anything else" entry below.
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(in,in)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(JJ,Token(unquoted,unquoted)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(attribute,attribute)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(value,value)))))))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Node(NML,List(Node(PP,List(Leaf(IN,Token(per,per)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(anything,anything)), Leaf(NN,Token(else,else)), Leaf(RDoubleQuote,Token(",")))))))), Leaf(NN,Token(entry,entry)))))), Node(ADVP,List(Leaf(RB,Token(below,below)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_unexpected_-_character_-_in_-_unquoted_-_attribute_-_value_parse_error)
- -> Treat(null,null)
-
--- chara: U+0027 APOSTROPHE (') --
-This is an unexpected-character-in-unquoted-attribute-value parse error. Treat it as per the "anything else" entry below.
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(in,in)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(JJ,Token(unquoted,unquoted)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(attribute,attribute)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(value,value)))))))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Node(NML,List(Node(PP,List(Leaf(IN,Token(per,per)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(anything,anything)), Leaf(NN,Token(else,else)), Leaf(RDoubleQuote,Token(",")))))))), Leaf(NN,Token(entry,entry)))))), Node(ADVP,List(Leaf(RB,Token(below,below)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_unexpected_-_character_-_in_-_unquoted_-_attribute_-_value_parse_error)
- -> Treat(null,null)
-
--- chara: U+003C LESS-THAN SIGN (&lt;) --
-This is an unexpected-character-in-unquoted-attribute-value parse error. Treat it as per the "anything else" entry below.
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(in,in)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(JJ,Token(unquoted,unquoted)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(attribute,attribute)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(value,value)))))))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Node(NML,List(Node(PP,List(Leaf(IN,Token(per,per)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(anything,anything)), Leaf(NN,Token(else,else)), Leaf(RDoubleQuote,Token(",")))))))), Leaf(NN,Token(entry,entry)))))), Node(ADVP,List(Leaf(RB,Token(below,below)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_unexpected_-_character_-_in_-_unquoted_-_attribute_-_value_parse_error)
- -> Treat(null,null)
-
--- chara: U+003D EQUALS SIGN (=) --
-This is an unexpected-character-in-unquoted-attribute-value parse error. Treat it as per the "anything else" entry below.
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(in,in)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(JJ,Token(unquoted,unquoted)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(attribute,attribute)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(value,value)))))))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Node(NML,List(Node(PP,List(Leaf(IN,Token(per,per)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(anything,anything)), Leaf(NN,Token(else,else)), Leaf(RDoubleQuote,Token(",")))))))), Leaf(NN,Token(entry,entry)))))), Node(ADVP,List(Leaf(RB,Token(below,below)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_unexpected_-_character_-_in_-_unquoted_-_attribute_-_value_parse_error)
- -> Treat(null,null)
-
--- chara: U+0060 GRAVE ACCENT (`) --
-This is an unexpected-character-in-unquoted-attribute-value parse error. Treat it as per the "anything else" entry below.
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(in,in)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(JJ,Token(unquoted,unquoted)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(attribute,attribute)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(value,value)))))))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Node(NML,List(Node(PP,List(Leaf(IN,Token(per,per)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(anything,anything)), Leaf(NN,Token(else,else)), Leaf(RDoubleQuote,Token(",")))))))), Leaf(NN,Token(entry,entry)))))), Node(ADVP,List(Leaf(RB,Token(below,below)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_unexpected_-_character_-_in_-_unquoted_-_attribute_-_value_parse_error)
- -> Treat(null,null)
-
--- chara: EOF --
-This is an eof-in-tag parse error. Emit an end-of-file token.
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Leaf(NN,Token(eof,eof)), Leaf(HYPH,Token(-,-)), Leaf(IN,Token(in,in)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_eof_-_in_-_tag_parse_error)
- -> Emit(an_end_-_of_-_file_token)
-
--- chara: Anything else --
-Append the current input character to the current attribute's value.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(attribute,attribute)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(value,value)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Append(null,null)
-
-39 : After attribute value (quoted) state
--- chara: U+0009 CHARACTER TABULATION (tab) --
-Switch to the before attribute name state.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_before_attribute_name_state)
-
--- chara: U+000A LINE FEED (LF) --
-Switch to the before attribute name state.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_before_attribute_name_state)
+ -> Ignore(the_character)
 
 -- chara: U+000C FORM FEED (FF) --
-Switch to the before attribute name state.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Ignore the character.
+List()
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Ignore,ignore)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)))))), Leaf(Dot,Token(.,.))))))
 
- -> Switch(the_before_attribute_name_state)
+ -> Ignore(the_character)
 
 -- chara: U+0020 SPACE --
-Switch to the before attribute name state.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Ignore the character.
+List()
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Ignore,ignore)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)))))), Leaf(Dot,Token(.,.))))))
 
- -> Switch(the_before_attribute_name_state)
+ -> Ignore(the_character)
 
--- chara: U+002F SOLIDUS (/) --
-Switch to the self-closing start tag state.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(NN,Token(self,self)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(closing,closing)))), Leaf(NN,Token(start,start)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_self_-_closing_start_tag_state)
-
--- chara: U+003E GREATER-THAN SIGN (&gt;) --
-Switch to the data state. Emit the current tag token.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(data,datum)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_data_state)
- -> Emit(the_current_tag_token)
-
--- chara: EOF --
-This is an eof-in-tag parse error. Emit an end-of-file token.
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Leaf(NN,Token(eof,eof)), Leaf(HYPH,Token(-,-)), Leaf(IN,Token(in,in)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_eof_-_in_-_tag_parse_error)
- -> Emit(an_end_-_of_-_file_token)
-
--- chara: Anything else --
-This is a missing-whitespace-between-attributes parse error. Reconsume in the before attribute name state. 
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(a,a)), Node(ADJP,List(Node(ADJP,List(Leaf(JJ,Token(missing,missing)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(whitespace,whitespace)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(between,between)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NNS,Token(attributes,attribute)))))))), Leaf(NNP,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(a_missing_-_whitespace_-_between_-_attributes_parse_error)
- -> Reconsume(the_before_attribute_name_state)
-
-40 : Self-closing start tag state
--- chara: U+003E GREATER-THAN SIGN (&gt;) --
-Set the self-closing flag of the current tag token. Switch to the data state. Emit the current tag token.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(NN,Token(self,self)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(closing,closing)))), Leaf(NN,Token(flag,flag)))), Node(PP,List(Leaf(IN,Token(of,of)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(data,datum)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
+-- chara: ASCII upper alpha --
+Create a new DOCTYPE token.
+Set the token's name to the lowercase version of the current input character (add 0x0020 to the character's code point). Switch to the DOCTYPE name state.
+List((3,CHAIN3-["a new DOCTYPE token" in sentence 1]))
+List((3,CHAIN3-["the token 's" in sentence 2]), (8,CHAIN8-["the current input character" in sentence 2, "the character 's" in sentence 2]))
+List()
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(JJ,Token(DOCTYPE,doctype)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(name,name)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(lowercase,lowercase)), Leaf(NN,Token(version,version)))), Node(PP,List(Leaf(IN,Token(of,of)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))))))))), Node(PRN,List(Leaf(LBracket,Token((,()), Node(S,List(Node(VP,List(Leaf(VB,Token(add,add)), Node(NP,List(Leaf(NNS,Token(0x0020,0x0020)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(code,code)), Leaf(NN,Token(point,point)))))))))), Leaf(RBracket,Token(),))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(DOCTYPE,DOCTYPE)), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
 dont match_vp
 
- -> Switch(the_data_state)
- -> Emit(the_current_tag_token)
-
--- chara: EOF --
-This is an eof-in-tag parse error. Emit an end-of-file token.
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Leaf(NN,Token(eof,eof)), Leaf(HYPH,Token(-,-)), Leaf(IN,Token(in,in)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_eof_-_in_-_tag_parse_error)
- -> Emit(an_end_-_of_-_file_token)
-
--- chara: Anything else --
-This is an unexpected-solidus-in-tag parse error. Reconsume in the before attribute name state.
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(unexpected,unexpected)), Node(NML,List(Node(PP,List(Leaf(SYM,Token(-,-)), Node(NP,List(Leaf(NNS,Token(solidus,solidus)))))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(in,in)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(tag,tag)), Leaf(NNS,Token(parse,parse)))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_unexpected_-_solidus_-_in_-_tag_parse_error)
- -> Reconsume(the_before_attribute_name_state)
-
-41 : Bogus comment state
--- chara: U+003E GREATER-THAN SIGN (&gt;) --
-Switch to the data state. Emit the comment token.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(data,datum)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_data_state)
- -> Emit(the_comment_token)
-
--- chara: EOF --
-Emit the comment. Emit an end-of-file token.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(comment,comment)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Emit(the_comment)
- -> Emit(an_end_-_of_-_file_token)
+ -> Create(a_new_DOCTYPE_token)
+ -> Switch(the_DOCTYPE_name_state)
 
 -- chara: U+0000 NULL --
-This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the comment token's data.
+This is an unexpected-null-character parse error. Create a new DOCTYPE token. Set the token's name to a U+FFFD REPLACEMENT CHARACTER character. Switch to the DOCTYPE name state.
+List()
+List((6,CHAIN6-["a new DOCTYPE token" in sentence 2]))
+List((6,CHAIN6-["the token 's" in sentence 3]))
+List()
 Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(null,null)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NNP,Token(U+FFFD,U+FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NNP,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NNS,Token(data,datum)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(JJ,Token(DOCTYPE,doctype)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(name,name)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(VBN,Token(U+FFFD,U+FFFD)), Node(NML,List(Leaf(NN,Token(REPLACEMENT,REPLACEMENT)), Leaf(NN,Token(CHARACTER,CHARACTER)))), Leaf(NN,Token(character,character)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(DOCTYPE,DOCTYPE)), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
 
  -> Error(an_unexpected_-_null_-_character_parse_error)
- -> Append(null,null)
+ -> Create(a_new_DOCTYPE_token)
+ -> Set(the_token_'s_name,a_U+FFFD_REPLACEMENT_CHARACTER_character)
+ -> Switch(the_DOCTYPE_name_state)
+
+-- chara: U+003E GREATER-THAN SIGN (&gt;) --
+This is a missing-doctype-name parse error. Create a new DOCTYPE token. Set its force-quirks flag to on. Switch to the data state. Emit the token.
+List()
+List((8,CHAIN8-["a new DOCTYPE token" in sentence 2]))
+List()
+List()
+List((8,CHAIN8-["the token" in sentence 5]))
+Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(missing,missing)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(doctype,doctype)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(name,name)))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(JJ,Token(DOCTYPE,doctype)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(PRPD,Token(its,its)), Node(NML,List(Leaf(NN,Token(force,force)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(quirks,quirk)))), Leaf(NN,Token(flag,flag)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(PP,List(Leaf(IN,Token(on,on)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(data,datum)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
+
+ -> Error(a_missing_-_doctype_-_name_parse_error)
+ -> Create(a_new_DOCTYPE_token)
+ -> Set(its_force_-_quirks_flag,on)
+ -> Switch(the_data_state)
+ -> Emit(the_token)
+
+-- chara: EOF --
+This is an eof-in-doctype parse error. Create a new DOCTYPE token and Set its  force-quirks flag to on. Emit the token. Emit an end-of-file token.
+List()
+List((4,CHAIN4-["a new DOCTYPE token" in sentence 2, "its" in sentence 2]))
+List((4,CHAIN4-["the token" in sentence 3]))
+List()
+Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(eof,eof)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(in,in)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(JJ,Token(doctype,doctype)), Leaf(NNS,Token(parse,parse)))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(JJ,Token(DOCTYPE,doctype)), Leaf(NN,Token(token,token)))))), Leaf(CC,Token(and,and)), Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(PRPD,Token(its,its)), Node(NML,List(Leaf(NN,Token(force,force)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(quirks,quirk)))), Leaf(NN,Token(flag,flag)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(PP,List(Leaf(IN,Token(on,on)))))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
+
+ -> Error(an_eof_-_in_-_doctype_parse_error)
+ -> Create(a_new_DOCTYPE_token)
+ -> Set(its_force_-_quirks_flag,on)
+ -> Emit(the_token)
+ -> Emit(an_end_-_of_-_file_token)
 
 -- chara: Anything else --
-Append the current input character to the comment token's data.
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NNS,Token(data,datum)))))))), Leaf(Dot,Token(.,.))))))
+Create a new DOCTYPE token. Set the token's name to the current input character. Switch to the DOCTYPE name state.
+List((3,CHAIN3-["a new DOCTYPE token" in sentence 1]))
+List((3,CHAIN3-["the token 's" in sentence 2]))
+List()
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(JJ,Token(DOCTYPE,doctype)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(name,name)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(DOCTYPE,DOCTYPE)), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
 
- -> Append(null,null)
+ -> Create(a_new_DOCTYPE_token)
+ -> Set(the_token_'s_name,the_current_input_character)
+ -> Switch(the_DOCTYPE_name_state)
 

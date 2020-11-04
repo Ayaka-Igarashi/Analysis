@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat
 import java.util
 import java.util.{ArrayList, Date, Locale, Properties, TimeZone}
 
+import Main.txtOut
 import edu.stanford.nlp.simple._
 import edu.stanford.nlp.io.IOUtils
 import edu.stanford.nlp.pipeline.{Annotation, Annotator, AnnotatorImplementations, CoreDocument, CoreSentence, ProtobufAnnotationSerializer, StanfordCoreNLP}
@@ -133,18 +134,18 @@ object SpecificationAnalysis {
       //System.out.println("時間3 = " + formatter.format(endtime - start))
       treeList :+= (parse, tokens)
 
-      //val coref = sent.coref()
-      //println(coref)
-      import edu.stanford.nlp.coref.CorefCoreAnnotations
-      import edu.stanford.nlp.ling.CoreAnnotations
-      //      for (sentence <- coref) {
-      //        System.out.println("---")
-      //        System.out.println("mentions")
-      //        sentence.get(classOf[CorefCoreAnnotations.CorefMentionsAnnotation])
-      //        for (m <- sentence.get(classOf[CorefCoreAnnotations.CorefMentionsAnnotation])) {
-      //          System.out.println("\t" + m)
-      //        }
-      //      }
+      val coref = sent.coref().asScala.toList
+      txtOut.println(coref)
+//      import edu.stanford.nlp.coref.CorefCoreAnnotations
+//      import edu.stanford.nlp.ling.CoreAnnotations
+//      for (sentence <- coref) {
+//        System.out.println("---")
+//        System.out.println("mentions")
+//        //val aa = sentence.get(classOf[CorefCoreAnnotations.CorefMentionsAnnotation])
+//        for (m <- sentence.get(classOf[CorefCoreAnnotations.CorefMentionsAnnotation])) {
+//          System.out.println("\t" + m)
+//        }
+//      }
 
     }
 
