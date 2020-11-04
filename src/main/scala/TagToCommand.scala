@@ -144,11 +144,15 @@ object TagToCommand {
           }
           // treat(途中)
           case List(Leaf(VB, Token(_, "treat")), Node(NP, _), Node(PP, _), Node(ADVP, _)) => {
-            commandList :+= Treat(null,null)
+            commandList :+= Treat(null)
           }
-          // append(途中)
-          case Leaf(_, Token(_, "append")) :: rst => {
-            commandList :+= Append(null, null)
+          // append_1
+          case Leaf(_, Token(_, "append")) :: Node(NP, np1) :: Node(PP, List(Leaf(IN, _), Node(NP, np2))) :: Nil => {
+            commandList :+= Append(getLeave(Node(NP, np1)), getLeave(Node(NP, np2)))
+          }
+          // append_カッコ付き
+          case Leaf(_, Token(_, "append")) :: Node(NP, np1) :: Node(PRN, _) :: Node(PP, List(Leaf(IN, _), Node(NP, np2))) :: Nil => {
+            commandList :+= Append(getLeave(Node(NP, np1)), getLeave(Node(NP, np2)))
           }
           case _ => txtOut.println("dont match_vp")
         }

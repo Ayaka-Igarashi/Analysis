@@ -39,8 +39,8 @@ object CommandStructure {
 
   case class If(bool: Bool, T: List[Command], var F: List[Command]) extends Command
 
-  // treat it as per the "anything else" entry below.
-  case class Treat(obj: String, as: String) extends Command
+  // treat it as per "the character" entry below.
+  case class Treat(chara: String) extends Command
 
   // Create a new start tag token, set its tag name to the empty string.
   // create a comment token whose data is the empty string

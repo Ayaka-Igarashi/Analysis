@@ -1,108 +1,132 @@
-43 : Before DOCTYPE name state
+11 : RCDATA end tag name state
 -- chara: U+0009 CHARACTER TABULATION (tab) --
-Ignore the character.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Ignore,ignore)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)))))), Leaf(Dot,Token(.,.))))))
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, you treat it as per the "anything else" entry below.
+List((5,CHAIN5-["the current end tag token" in sentence 1]))
+List((5,CHAIN5-["it" in sentence 2]))
+Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(appropriate,appropriate)), Node(NML,List(Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(token,token)))))))))), Leaf(Comma,Token(,,,)), Node(ADVP,List(Leaf(RB,Token(then,then)))), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(NP,List(Leaf(PRP,Token(you,you)))), Node(VP,List(Leaf(VBP,Token(treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(ADVP,List(Leaf(RB,Token(as,as)), Node(PP,List(Leaf(IN,Token(per,per)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(LDoubleQuote,Token(",")), Node(FRAG,List(Node(NP,List(Leaf(NN,Token(anything,anything)))), Node(ADVP,List(Leaf(RB,Token(else,else)))))), Leaf(RDoubleQuote,Token(",")))), Leaf(NN,Token(entry,entry)))), Node(ADVP,List(Leaf(RB,Token(below,below)))))))))), Leaf(Dot,Token(.,.))))))
+not match_s
 
- -> Ignore(the_character)
+ -> If(Bool(the_current_end_tag_token_is_an_appropriate_end_tag_token),List(Switch(the_before_attribute_name_state)),List())
 
 -- chara: U+000A LINE FEED (LF) --
-Ignore the character.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Ignore,ignore)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)))))), Leaf(Dot,Token(.,.))))))
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, you treat it as per the "anything else" entry below.
+List((5,CHAIN5-["the current end tag token" in sentence 1]))
+List((5,CHAIN5-["it" in sentence 2]))
+Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(appropriate,appropriate)), Node(NML,List(Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(token,token)))))))))), Leaf(Comma,Token(,,,)), Node(ADVP,List(Leaf(RB,Token(then,then)))), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(NP,List(Leaf(PRP,Token(you,you)))), Node(VP,List(Leaf(VBP,Token(treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(ADVP,List(Leaf(RB,Token(as,as)), Node(PP,List(Leaf(IN,Token(per,per)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(LDoubleQuote,Token(",")), Node(FRAG,List(Node(NP,List(Leaf(NN,Token(anything,anything)))), Node(ADVP,List(Leaf(RB,Token(else,else)))))), Leaf(RDoubleQuote,Token(",")))), Leaf(NN,Token(entry,entry)))), Node(ADVP,List(Leaf(RB,Token(below,below)))))))))), Leaf(Dot,Token(.,.))))))
+not match_s
 
- -> Ignore(the_character)
+ -> If(Bool(the_current_end_tag_token_is_an_appropriate_end_tag_token),List(Switch(the_before_attribute_name_state)),List())
 
 -- chara: U+000C FORM FEED (FF) --
-Ignore the character.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Ignore,ignore)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)))))), Leaf(Dot,Token(.,.))))))
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, you treat it as per the "anything else" entry below.
+List((5,CHAIN5-["the current end tag token" in sentence 1]))
+List((5,CHAIN5-["it" in sentence 2]))
+Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(appropriate,appropriate)), Node(NML,List(Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(token,token)))))))))), Leaf(Comma,Token(,,,)), Node(ADVP,List(Leaf(RB,Token(then,then)))), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(NP,List(Leaf(PRP,Token(you,you)))), Node(VP,List(Leaf(VBP,Token(treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(ADVP,List(Leaf(RB,Token(as,as)), Node(PP,List(Leaf(IN,Token(per,per)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(LDoubleQuote,Token(",")), Node(FRAG,List(Node(NP,List(Leaf(NN,Token(anything,anything)))), Node(ADVP,List(Leaf(RB,Token(else,else)))))), Leaf(RDoubleQuote,Token(",")))), Leaf(NN,Token(entry,entry)))), Node(ADVP,List(Leaf(RB,Token(below,below)))))))))), Leaf(Dot,Token(.,.))))))
+not match_s
 
- -> Ignore(the_character)
+ -> If(Bool(the_current_end_tag_token_is_an_appropriate_end_tag_token),List(Switch(the_before_attribute_name_state)),List())
 
 -- chara: U+0020 SPACE --
-Ignore the character.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Ignore,ignore)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)))))), Leaf(Dot,Token(.,.))))))
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, you treat it as per the "anything else" entry below.
+List((5,CHAIN5-["the current end tag token" in sentence 1]))
+List((5,CHAIN5-["it" in sentence 2]))
+Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(appropriate,appropriate)), Node(NML,List(Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(token,token)))))))))), Leaf(Comma,Token(,,,)), Node(ADVP,List(Leaf(RB,Token(then,then)))), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(NP,List(Leaf(PRP,Token(you,you)))), Node(VP,List(Leaf(VBP,Token(treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(ADVP,List(Leaf(RB,Token(as,as)), Node(PP,List(Leaf(IN,Token(per,per)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(LDoubleQuote,Token(",")), Node(FRAG,List(Node(NP,List(Leaf(NN,Token(anything,anything)))), Node(ADVP,List(Leaf(RB,Token(else,else)))))), Leaf(RDoubleQuote,Token(",")))), Leaf(NN,Token(entry,entry)))), Node(ADVP,List(Leaf(RB,Token(below,below)))))))))), Leaf(Dot,Token(.,.))))))
+not match_s
 
- -> Ignore(the_character)
+ -> If(Bool(the_current_end_tag_token_is_an_appropriate_end_tag_token),List(Switch(the_before_attribute_name_state)),List())
 
--- chara: ASCII upper alpha --
-Create a new DOCTYPE token.
-Set the token's name to the lowercase version of the current input character (add 0x0020 to the character's code point). Switch to the DOCTYPE name state.
-List((3,CHAIN3-["a new DOCTYPE token" in sentence 1]))
-List((3,CHAIN3-["the token 's" in sentence 2]), (8,CHAIN8-["the current input character" in sentence 2, "the character 's" in sentence 2]))
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(JJ,Token(DOCTYPE,doctype)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(name,name)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(lowercase,lowercase)), Leaf(NN,Token(version,version)))), Node(PP,List(Leaf(IN,Token(of,of)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))))))))), Node(PRN,List(Leaf(LBracket,Token((,()), Node(S,List(Node(VP,List(Leaf(VB,Token(add,add)), Node(NP,List(Leaf(NNS,Token(0x0020,0x0020)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(code,code)), Leaf(NN,Token(point,point)))))))))), Leaf(RBracket,Token(),))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(DOCTYPE,DOCTYPE)), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-dont match_vp
+-- chara: U+002F SOLIDUS (/) --
+If the current end tag token is an appropriate end tag token, then switch to the self-closing start tag state. Otherwise, treat it as per the "anything else" entry below.
+List((4,CHAIN4-["the current end tag token" in sentence 1]))
+List((4,CHAIN4-["it" in sentence 2]))
+Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(appropriate,appropriate)), Node(NML,List(Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(token,token)))))))))), Leaf(Comma,Token(,,,)), Node(ADVP,List(Leaf(RB,Token(then,then)))), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(NN,Token(self,self)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(closing,closing)))), Leaf(NN,Token(start,start)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VB,Token(treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Node(NML,List(Node(PP,List(Leaf(IN,Token(per,per)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(anything,anything)), Leaf(NN,Token(else,else)), Leaf(RDoubleQuote,Token(",")))))))), Leaf(NN,Token(entry,entry)))))), Node(ADVP,List(Leaf(RB,Token(below,below)))))), Leaf(Dot,Token(.,.))))))
 
- -> Create(a_new_DOCTYPE_token)
- -> Switch(the_DOCTYPE_name_state)
-
--- chara: U+0000 NULL --
-This is an unexpected-null-character parse error. Create a new DOCTYPE token. Set the token's name to a U+FFFD REPLACEMENT CHARACTER character. Switch to the DOCTYPE name state.
-List()
-List((6,CHAIN6-["a new DOCTYPE token" in sentence 2]))
-List((6,CHAIN6-["the token 's" in sentence 3]))
-List()
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(null,null)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(JJ,Token(DOCTYPE,doctype)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(name,name)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(VBN,Token(U+FFFD,U+FFFD)), Node(NML,List(Leaf(NN,Token(REPLACEMENT,REPLACEMENT)), Leaf(NN,Token(CHARACTER,CHARACTER)))), Leaf(NN,Token(character,character)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(DOCTYPE,DOCTYPE)), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Error(an_unexpected_-_null_-_character_parse_error)
- -> Create(a_new_DOCTYPE_token)
- -> Set(the_token_'s_name,a_U+FFFD_REPLACEMENT_CHARACTER_character)
- -> Switch(the_DOCTYPE_name_state)
+ -> If(Bool(the_current_end_tag_token_is_an_appropriate_end_tag_token),List(Switch(the_self_-_closing_start_tag_state)),List(Treat(null)))
 
 -- chara: U+003E GREATER-THAN SIGN (&gt;) --
-This is a missing-doctype-name parse error. Create a new DOCTYPE token. Set its force-quirks flag to on. Switch to the data state. Emit the token.
-List()
-List((8,CHAIN8-["a new DOCTYPE token" in sentence 2]))
-List()
-List()
-List((8,CHAIN8-["the token" in sentence 5]))
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(missing,missing)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(doctype,doctype)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(name,name)))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(JJ,Token(DOCTYPE,doctype)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(PRPD,Token(its,its)), Node(NML,List(Leaf(NN,Token(force,force)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(quirks,quirk)))), Leaf(NN,Token(flag,flag)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(PP,List(Leaf(IN,Token(on,on)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(data,datum)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
+If the current end tag token is an appropriate end tag token, then switch to the data state and emit the current tag token. Otherwise, treat it as per the "anything else" entry below.
+List((6,CHAIN6-["the current end tag token" in sentence 1, "the current tag token" in sentence 1]))
+List((6,CHAIN6-["it" in sentence 2]))
+Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(appropriate,appropriate)), Node(NML,List(Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))), Leaf(NN,Token(token,token)))))))))), Leaf(Comma,Token(,,,)), Node(ADVP,List(Leaf(RB,Token(then,then)))), Node(VP,List(Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(data,datum)), Leaf(NN,Token(state,state)))))))), Leaf(CC,Token(and,and)), Node(VP,List(Leaf(VB,Token(emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VB,Token(treat,treat)), Node(NP,List(Leaf(PRP,Token(it,it)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Node(NML,List(Node(PP,List(Leaf(IN,Token(per,per)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(LDoubleQuote,Token(",")), Leaf(NN,Token(anything,anything)), Leaf(NN,Token(else,else)), Leaf(RDoubleQuote,Token(",")))))))), Leaf(NN,Token(entry,entry)))))), Node(ADVP,List(Leaf(RB,Token(below,below)))))), Leaf(Dot,Token(.,.))))))
 
- -> Error(a_missing_-_doctype_-_name_parse_error)
- -> Create(a_new_DOCTYPE_token)
- -> Set(its_force_-_quirks_flag,on)
- -> Switch(the_data_state)
- -> Emit(the_token)
+ -> If(Bool(the_current_end_tag_token_is_an_appropriate_end_tag_token),List(Switch(the_data_state), Emit(the_current_tag_token)),List(Treat(null)))
 
--- chara: EOF --
-This is an eof-in-doctype parse error. Create a new DOCTYPE token and Set its  force-quirks flag to on. Emit the token. Emit an end-of-file token.
-List()
-List((4,CHAIN4-["a new DOCTYPE token" in sentence 2, "its" in sentence 2]))
-List((4,CHAIN4-["the token" in sentence 3]))
-List()
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VBZ,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(eof,eof)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(in,in)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(JJ,Token(doctype,doctype)), Leaf(NNS,Token(parse,parse)))))))), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(JJ,Token(DOCTYPE,doctype)), Leaf(NN,Token(token,token)))))), Leaf(CC,Token(and,and)), Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(PRPD,Token(its,its)), Node(NML,List(Leaf(NN,Token(force,force)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(quirks,quirk)))), Leaf(NN,Token(flag,flag)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(PP,List(Leaf(IN,Token(on,on)))))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(NML,List(Leaf(NN,Token(end,end)))), Leaf(HYPH,Token(-,-)), Node(PP,List(Leaf(IN,Token(of,of)), Leaf(HYPH,Token(-,-)), Node(NP,List(Leaf(NN,Token(file,file)))))))), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
+-- chara: ASCII upper alpha --
+Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name. Append the current input character to the temporary buffer.
+List((5,CHAIN5-["the current input character" in sentence 1, "the character 's" in sentence 1]))
+List((5,CHAIN5-["the current input character" in sentence 2]))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VBD,Token(Append,append)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(lowercase,lowercase)), Leaf(NN,Token(version,version)))), Node(PP,List(Leaf(IN,Token(of,of)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))))))), Node(PRN,List(Leaf(LBracket,Token((,()), Node(S,List(Node(VP,List(Leaf(VB,Token(add,add)), Node(NP,List(Leaf(NNS,Token(0x0020,0x0020)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(code,code)), Leaf(NN,Token(point,point)))))))))), Leaf(RBracket,Token(),))))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(temporary,temporary)), Leaf(NN,Token(buffer,buffer)))))))), Leaf(Dot,Token(.,.))))))
 
- -> Error(an_eof_-_in_-_doctype_parse_error)
- -> Create(a_new_DOCTYPE_token)
- -> Set(its_force_-_quirks_flag,on)
- -> Emit(the_token)
- -> Emit(an_end_-_of_-_file_token)
+ -> Append(the_lowercase_version_of_the_current_input_character,the_current_tag_token_'s_tag_name)
+ -> Append(the_current_input_character,the_temporary_buffer)
+
+-- chara: ASCII lower alpha --
+Append the current input character to the current tag token's tag name. Append the current input character to the temporary buffer.
+List((6,CHAIN6-["the current input character" in sentence 1]))
+List((6,CHAIN6-["the current input character" in sentence 2]))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(temporary,temporary)), Leaf(NN,Token(buffer,buffer)))))))), Leaf(Dot,Token(.,.))))))
+
+ -> Append(the_current_input_character,the_current_tag_token_'s_tag_name)
+ -> Append(the_current_input_character,the_temporary_buffer)
 
 -- chara: Anything else --
-Create a new DOCTYPE token. Set the token's name to the current input character. Switch to the DOCTYPE name state.
-List((3,CHAIN3-["a new DOCTYPE token" in sentence 1]))
-List((3,CHAIN3-["the token 's" in sentence 2]))
+Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token, and a character token for each of the characters in the temporary buffer (in the order they were added to the buffer). Reconsume in the RCDATA state.
 List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(JJ,Token(DOCTYPE,doctype)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(name,name)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(DOCTYPE,DOCTYPE)), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+List()
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Node(NML,List(Leaf(NNP,Token(U,U)), Leaf(NNP,Token(+003,+003)), Leaf(NNP,Token(C,c)), Leaf(NNP,Token(LESS,less)))), Leaf(HYPH,Token(-,-)), Node(NML,List(Leaf(NNP,Token(THAN,than)), Leaf(NNP,Token(SIGN,SIGN)))))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))), Leaf(Comma,Token(,,,)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Leaf(NNP,Token(U,U)), Leaf(NNP,Token(+002,+002)), Leaf(NNP,Token(F,F)), Leaf(NNP,Token(SOLIDUS,SOLIDUS)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))), Leaf(Comma,Token(,,,)), Leaf(CC,Token(and,and)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))), Node(PP,List(Leaf(IN,Token(for,for)), Node(NP,List(Node(NP,List(Leaf(DT,Token(each,each)))), Node(PP,List(Leaf(IN,Token(of,of)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNS,Token(characters,character)))))))))))))), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(temporary,temporary)), Leaf(NN,Token(buffer,buffer)))), Leaf(LBracket,Token((,()), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(order,order)))), Node(SBAR,List(Node(S,List(Node(NP,List(Leaf(PRP,Token(they,they)))), Node(VP,List(Leaf(VBD,Token(were,be)), Node(VP,List(Leaf(VBN,Token(added,add)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(buffer,buffer)))))))))))))))))), Leaf(RBracket,Token(),))))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA,RCDATA)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
 
- -> Create(a_new_DOCTYPE_token)
- -> Set(the_token_'s_name,the_current_input_character)
- -> Switch(the_DOCTYPE_name_state)
+ -> Emit(a_U_+003_C_LESS_-_THAN_SIGN_character_token_,_a_U_+002_F_SOLIDUS_character_token_,_and_a_character_token_for_each_of_the_characters_in_the_temporary_buffer_(_in_the_order_they_were_added_to_the_buffer_))
+ -> Reconsume(the_RCDATA_state)
+
+12 : RAWTEXT less-than sign state
+-- chara: U+002F SOLIDUS (/) --
+Set the temporary buffer to the empty string. Switch to the RAWTEXT end tag open state.
+List()
+List()
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(temporary,temporary)), Leaf(NN,Token(buffer,buffer)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(empty,empty)), Leaf(NN,Token(string,string)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(RAWTEXT,rawtext)), Node(NML,List(Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)))), Leaf(JJ,Token(open,open)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+
+ -> Set(the_temporary_buffer,the_empty_string)
+ -> Switch(the_RAWTEXT_end_tag_open_state)
+
+-- chara: Anything else --
+Emit a U+003C LESS-THAN SIGN character token. Reconsume in the RAWTEXT state.
+List()
+List()
+Node(ROOT,List(Node(FRAG,List(Node(NP,List(Leaf(NNP,Token(Emit,emit)))), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NNP,Token(U,u)))), Node(NP,List(Leaf(CD,Token(+003,+003)))), Node(NP,List(Leaf(NNP,Token(C,c)), Leaf(NNP,Token(LESS,less)))), Leaf(Colon,Token(-,-)), Node(NP,List(Leaf(NNP,Token(THAN,than)), Leaf(NNP,Token(SIGN,SIGN)))), Node(NP,List(Leaf(NN,Token(character,character)))), Node(NP,List(Leaf(NN,Token(token,token)))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(RAWTEXT,rawtext)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+error_root
+
+ -> Reconsume(the_RAWTEXT_state)
+
+13 : RAWTEXT end tag open state
+-- chara: ASCII alpha --
+Create a new end tag token, set its tag name to the empty string. Reconsume in the RAWTEXT end tag name state. 
+List()
+List()
+Node(ROOT,List(Node(S,List(Node(VP,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VB,Token(set,set)), Node(NP,List(Leaf(PRPD,Token(its,its)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(empty,empty)), Leaf(NN,Token(string,string)))))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RAWTEXT,rawtext)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+
+ -> Create(a_new_end_tag_token)
+ -> Set(its_tag_name,the_empty_string)
+ -> Reconsume(the_RAWTEXT_end_tag_name_state)
+
+-- chara: Anything else --
+Emit a U+003C LESS-THAN SIGN character token and a U+002F SOLIDUS character token. Reconsume in the RAWTEXT state.
+List()
+List()
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Node(NML,List(Leaf(NNP,Token(U,u)), Leaf(NNP,Token(+003,+003)), Leaf(NNP,Token(C,c)), Leaf(NNP,Token(LESS,less)))), Leaf(HYPH,Token(-,-)), Node(NML,List(Leaf(NNP,Token(THAN,than)), Leaf(NNP,Token(SIGN,SIGN)))))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))), Leaf(CC,Token(and,and)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Leaf(NNP,Token(U,u)), Leaf(NNP,Token(+002,+002)), Leaf(NNP,Token(F,F)), Leaf(NNP,Token(SOLIDUS,SOLIDUS)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(RAWTEXT,rawtext)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+
+ -> Emit(a_U_+003_C_LESS_-_THAN_SIGN_character_token_and_a_U_+002_F_SOLIDUS_character_token)
+ -> Reconsume(the_RAWTEXT_state)
 

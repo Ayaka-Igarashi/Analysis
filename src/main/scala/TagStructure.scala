@@ -32,6 +32,7 @@ object TagStructure {
   case object NML extends NodeType
   case object FRAG extends NodeType
   case object PRN extends NodeType
+  case object INTJ extends NodeType
 
   // POS tagset (word)
   case object CC extends LeafType
@@ -86,6 +87,8 @@ object TagStructure {
   case object RDoubleQuote extends LeafType // ''
 
   case object HYPH extends LeafType
+  case object NFP extends LeafType
+  case object GW extends LeafType
 
   // Leaf(とりあえず元の単語と原型両方格納する)
   case class Token(word: String, lemma: String) extends Tag
@@ -189,6 +192,8 @@ object TagStructure {
       case Leaf(_, Token(word, lem)) => {
         str = word
       }
+
+      case _ => print("matchERROR: ");println(tag)
     }
     str
   }

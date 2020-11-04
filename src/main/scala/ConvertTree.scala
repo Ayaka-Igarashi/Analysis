@@ -41,6 +41,7 @@ object ConvertTree {
       case "NML" => Node(NML,toStruct(tree))
       case "FRAG" => Node(FRAG,toStruct(tree))
       case "PRN" => Node(PRN,toStruct(tree))
+      case "INTJ" => Node(INTJ,toStruct(tree))
 
       // pos tag
       case "CC" => Leaf(CC,toToken(tree))
@@ -93,7 +94,9 @@ object ConvertTree {
       //
 
       case "HYPH" => Leaf(HYPH,toToken(tree))
-      case _ => txtOut.println(tree.value() + " is not defined");null // error吐くようにする
+      case "NFP" => Leaf(NFP,toToken(tree))
+      case "GW" =>Leaf(GW,toToken(tree))
+      case _ => txtOut.println(tree.value() + " is not defined : " + tree.numChildren());null // error吐くようにする
 
     }
   }
@@ -108,7 +111,7 @@ object ConvertTree {
   }
   // 補助関数(Leaf)
   def toToken(tree: Tree): Token = {
-    if (tree.numChildren() != 1) System.out.println("token num error")
+    if (tree.numChildren() != 1) System.out.println("not leaf error")
     val child = tree.firstChild()
     leafDict.get(child) match {
       case Some(i) => Token(child.value(), tokenList(i).lemma())
