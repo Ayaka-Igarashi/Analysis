@@ -187,4 +187,14 @@ object TagToCommand {
     }
     taglist
   }
+
+  def NPhozyo(tag: Tag): String = {
+    var str = "List ("
+    val taglist = NPTag(tag)
+    for(t <- taglist) {
+      str += getLeave(t)
+      str += ", "
+    }
+    str + ")"
+  }
 }
