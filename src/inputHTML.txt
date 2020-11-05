@@ -197,7 +197,7 @@
   <p>Consume the <a href=#next-input-character id=script-data-end-tag-name-state:next-input-character>next input character</a>:</p>
 
   <dl class=switch><dt>U+0009 CHARACTER TABULATION (tab)<dt>U+000A LINE FEED (LF)<dt>U+000C FORM FEED (FF)<dt>U+0020 SPACE<dd>If the current end tag token is an <a href=#appropriate-end-tag-token id=script-data-end-tag-name-state:appropriate-end-tag-token>appropriate end tag token</a>, then switch to the
-   <a href=#before-attribute-name-state id=script-data-end-tag-name-state:before-attribute-name-state>before attribute name state</a>. Otherwise, treat it as per the "anything else" entry
+   <a href=#before-attribute-name-state id=script-data-end-tag-name-state:before-attribute-name-state>before attribute name state</a>. Otherwise, you treat it as per the "anything else" entry
    below.<dt>U+002F SOLIDUS (/)<dd>If the current end tag token is an <a href=#appropriate-end-tag-token id=script-data-end-tag-name-state:appropriate-end-tag-token-2>appropriate end tag token</a>, then switch to the
    <a href=#self-closing-start-tag-state id=script-data-end-tag-name-state:self-closing-start-tag-state>self-closing start tag state</a>. Otherwise, treat it as per the "anything else" entry
    below.<dt>U+003E GREATER-THAN SIGN (>)<dd>If the current end tag token is an <a href=#appropriate-end-tag-token id=script-data-end-tag-name-state:appropriate-end-tag-token-3>appropriate end tag token</a>, then switch to the
@@ -576,7 +576,7 @@
 
   <p>Consume the <a href=#next-input-character id=comment-end-bang-state:next-input-character>next input character</a>:</p>
 
-  <dl class=switch><dt>U+002D HYPHEN-MINUS (-)<dd>Append two U+002D HYPHEN-MINUS characters (-) and a U+0021 EXCLAMATION MARK character to
+  <dl class=switch><dt>U+002D HYPHEN-MINUS (-)<dd>Append two U+002D HYPHEN-MINUS characters (-) and a U+0021 EXCLAMATION MARK character (!) to
    the comment token's data. Switch to the <a href=#comment-end-dash-state id=comment-end-bang-state:comment-end-dash-state>comment end dash state</a>.<dt>U+003E GREATER-THAN SIGN (>)<dd>This is an <a href=#parse-error-incorrectly-closed-comment id=comment-end-bang-state:parse-error-incorrectly-closed-comment>incorrectly-closed-comment</a> <a href=#parse-errors id=comment-end-bang-state:parse-errors>parse
    error</a>. Switch to the <a href=#data-state id=comment-end-bang-state:data-state>data state</a>. Emit the comment token.<dt>EOF<dd>This is an <a href=#parse-error-eof-in-comment id=comment-end-bang-state:parse-error-eof-in-comment>eof-in-comment</a> <a href=#parse-errors id=comment-end-bang-state:parse-errors-2>parse
    error</a>. Emit the comment token. Emit an end-of-file token.<dt>Anything else<dd>Append two U+002D HYPHEN-MINUS characters (-) and a U+0021 EXCLAMATION MARK character (!) to

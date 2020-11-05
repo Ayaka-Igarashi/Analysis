@@ -40,7 +40,7 @@ object ConvertTree {
 
       case "NML" => Node(NML,toStruct(tree))
       case "FRAG" => Node(FRAG,toStruct(tree))
-      case "PRN" => Node(PRN,toStruct(tree))
+      case "PRN" => null//Node(PRN,toStruct(tree)) // カッコの要素を除くならnullにする
       case "INTJ" => Node(INTJ,toStruct(tree))
 
       // pos tag
@@ -106,7 +106,10 @@ object ConvertTree {
   def toStruct(tree: Tree): List[Tag] = {
     val treeList = tree.getChildrenAsList.asScala.toList
     var list: List[Tag] = List()
-    for(t <- treeList){ list :+= convert(t)}
+    for(t <- treeList){
+      val tag = convert(t)
+      if (tag != null) list :+= tag
+    }
     list
   }
   // 補助関数(Leaf)

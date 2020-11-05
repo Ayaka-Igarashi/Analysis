@@ -161,4 +161,30 @@ object TagToCommand {
     }
     commandList
   }
+
+  // and文を分解する
+  def NPTag(tag: Tag): List[Tag] = {
+    var taglist: List[Tag] = List()
+    tag match {
+      case Node(NP, list) => {
+        list match {
+          case Node(NP, np1) :: Leaf(Comma, _) :: Leaf(CC, Token(_, "and")) :: rst => {
+            taglist :+= Node(NP, np1)
+            taglist = taglist ++ NPTag(Node(NP, rst))
+          }
+          case Node(NP, np1) :: Leaf(Comma, _) :: rst => {
+            taglist :+= Node(NP, np1)
+            taglist = taglist ++ NPTag(Node(NP, rst))
+          }
+          case Node(NP, np1) :: Leaf(CC, Token(_, "and")) :: rst => {
+            taglist ++= NPTag(Node(NP, np1))
+            taglist = taglist ++ NPTag(Node(NP, rst))
+          }
+          case _ => taglist :+= tag
+        }
+      }
+      case _ => println("NpTag error")
+    }
+    taglist
+  }
 }
