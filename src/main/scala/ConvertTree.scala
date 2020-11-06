@@ -22,7 +22,11 @@ object ConvertTree {
       case "ROOT" => Node(ROOT,toStruct(tree))
       case "ADJP" => Node(ADJP,toStruct(tree))
       case "ADVP" => Node(ADVP,toStruct(tree))
-      case "NP" => Node(NP,toStruct(tree))
+      case "NP" => {
+        val c = tree.getChild(0)
+        if (c.value() == "PRP" && c.getChild(0).value() == "you") null // "you"を取り除く
+        else Node(NP,toStruct(tree))
+      }
       case "PP" => Node(PP,toStruct(tree))
       case "S" => Node(S,toStruct(tree))
       case "SBAR" => Node(SBAR,toStruct(tree))
@@ -71,12 +75,12 @@ object ConvertTree {
       case "SYM" => Leaf(SYM,toToken(tree))
       case "TO" => Leaf(TO,toToken(tree))
       case "UH" => Leaf(UH,toToken(tree))
-      case "VB" => Leaf(VB,toToken(tree))
-      case "VBD" => Leaf(VBD,toToken(tree))
-      case "VBG" => Leaf(VBG,toToken(tree))
-      case "VBN" => Leaf(VBN,toToken(tree))
-      case "VBP" => Leaf(VBP,toToken(tree))
-      case "VBZ" => Leaf(VBZ,toToken(tree))
+      case "VB"|"VBD"|"VBG"|"VBN"|"VBP"|"VBZ" => Leaf(VB,toToken(tree)) // 動詞は全部同じく扱う
+//      case "VBD" => Leaf(VBD,toToken(tree))
+//      case "VBG" => Leaf(VBG,toToken(tree))
+//      case "VBN" => Leaf(VBN,toToken(tree))
+//      case "VBP" => Leaf(VBP,toToken(tree))
+//      case "VBZ" => Leaf(VBZ,toToken(tree))
       case "WDT" => Leaf(WDT,toToken(tree))
       case "WP" => Leaf(WP,toToken(tree))
       case "WP$" => Leaf(WPD,toToken(tree))

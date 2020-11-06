@@ -76,6 +76,7 @@ object ParseHtml {
       case "dd" => {
         var leave = getLeave(node)
         leave = leave.replace("\n", "")
+        leave = Replacement.replace(leave)
         for (c <- charas) {
           state.trance :+= Trans(c, leave)
         }

@@ -39,8 +39,7 @@ object CommandStructure {
 
   case class If(bool: Bool, T: List[Command], var F: List[Command]) extends Command
 
-  // treat it as per "the character" entry below.
-  case class Treat(chara: String) extends Command
+
 
   // Create a new start tag token, set its tag name to the empty string.
   // create a comment token whose data is the empty string
@@ -53,8 +52,11 @@ object CommandStructure {
   // Flush code points consumed as a character reference.
   case class Flush() extends Command
 
+  // 1パターンしかないから決め打ちする
+  // treat it as per "the character" entry below.
+  case class Treat() extends Command
   //Start a new attribute in the current tag token.
-  case class Start(obj: String) extends Command
+  case class Start() extends Command
 
   // Multiply the character reference code by 16
   case class Multiply(obj: String, by: String) extends Command
