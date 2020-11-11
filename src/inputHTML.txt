@@ -850,3 +850,113 @@
    reference state</a>.<dt>Anything else<dd><a href=#flush-code-points-consumed-as-a-character-reference id=character-reference-state:flush-code-points-consumed-as-a-character-reference>you Flush code points consumed as a character reference</a>. <a href=#reconsume id=character-reference-state:reconsume-2>Reconsume</a> in
    the <var id=character-reference-state:return-state><a href=#return-state>return state</a></var>.</dl>
 
+  <h5 id=named-character-reference-state><span class=secno>13.2.5.73</span> <dfn>Named character reference state</dfn><a href=#named-character-reference-state class=self-link></a></h5>
+
+  <p>Consume the maximum number of characters possible, where the consumed characters are one of the
+  identifiers in the first column of the <a id=named-character-reference-state:named-character-references href=named-characters.html#named-character-references>named character references</a> table. Append each
+  character to the <var id=named-character-reference-state:temporary-buffer><a href=#temporary-buffer>temporary buffer</a></var> when it's consumed.</p>
+
+  <dl class=switch><dt>If there is a match<dd>
+    <p>If the character reference was <a href=#charref-in-attribute id=named-character-reference-state:charref-in-attribute>consumed as part of an
+    attribute</a>, and the last character matched is not a U+003B SEMICOLON character (;), and
+    the <a href=#next-input-character id=named-character-reference-state:next-input-character>next input character</a> is either a U+003D EQUALS SIGN character (=) or an
+    <a id=named-character-reference-state:alphanumeric-ascii-characters href=https://infra.spec.whatwg.org/#ascii-alphanumeric data-x-internal=alphanumeric-ascii-characters>ASCII alphanumeric</a>, then, for historical reasons, <a href=#flush-code-points-consumed-as-a-character-reference id=named-character-reference-state:flush-code-points-consumed-as-a-character-reference>flush code points consumed
+    as a character reference</a> and switch to the <var id=named-character-reference-state:return-state><a href=#return-state>return state</a></var>.
+    </p>
+
+
+    <p>Otherwise:</p>
+
+    <ol><li><p>If the last character matched is not a U+003B SEMICOLON character (;), then this is a
+     <a href=#parse-error-missing-semicolon-after-character-reference id=named-character-reference-state:parse-error-missing-semicolon-after-character-reference>missing-semicolon-after-character-reference</a>
+     <a href=#parse-errors id=named-character-reference-state:parse-errors>parse error</a>.<li><p>Set the <var id=named-character-reference-state:temporary-buffer-2><a href=#temporary-buffer>temporary buffer</a></var> to the empty string.
+     Append one or two characters corresponding to the character reference name (as given by the
+     second column of the <a id=named-character-reference-state:named-character-references-2 href=named-characters.html#named-character-references>named character references</a> table) to the <var id=named-character-reference-state:temporary-buffer-3><a href=#temporary-buffer>temporary buffer</a></var>.<li><a href=#flush-code-points-consumed-as-a-character-reference id=named-character-reference-state:flush-code-points-consumed-as-a-character-reference-2>Flush code points consumed as a character reference</a>. Switch to the <var id=named-character-reference-state:return-state-2><a href=#return-state>return state</a></var>.</ol>
+   <dt>Otherwise<dd><a href=#flush-code-points-consumed-as-a-character-reference id=named-character-reference-state:flush-code-points-consumed-as-a-character-reference-3>Flush code points consumed as a character reference</a>. Switch to the
+   <a href=#ambiguous-ampersand-state id=named-character-reference-state:ambiguous-ampersand-state>ambiguous ampersand state</a>.</dl>
+
+  <div class=example>
+
+    <p>If the markup contains (not in an attribute) the string <code>I'm &amp;notit; I
+    tell you</code>, the character reference is parsed as "not", as in, <code>I'm ¬it;
+    I tell you</code> (and this is a parse error). But if the markup was <code>I'm
+    &amp;notin; I tell you</code>, the character reference would be parsed as "notin;", resulting
+    in <code>I'm ∉ I tell you</code> (and no parse error).</p>
+
+    <p>However, if the markup contains the string <code>I'm &amp;notit; I tell you</code>
+    in an attribute, no character reference is parsed and string remains intact (and there is no
+    parse error).</p>
+
+  </div>
+
+
+  <h5 id=ambiguous-ampersand-state><span class=secno>13.2.5.74</span> <dfn>Ambiguous ampersand state</dfn><a href=#ambiguous-ampersand-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=ambiguous-ampersand-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt><a href=https://infra.spec.whatwg.org/#ascii-alphanumeric id=ambiguous-ampersand-state:alphanumeric-ascii-characters data-x-internal=alphanumeric-ascii-characters>ASCII alphanumeric</a><dd>If the character reference was <a href=#charref-in-attribute id=ambiguous-ampersand-state:charref-in-attribute>consumed as part of an
+    attribute</a>, then append the <a href=#current-input-character id=ambiguous-ampersand-state:current-input-character>current input character</a> to the current
+    attribute's value. Otherwise, emit the <a href=#current-input-character id=ambiguous-ampersand-state:current-input-character-2>current input character</a> as a character
+    token.<dt>U+003B SEMICOLON (;)<dd>This is an <a href=#parse-error-unknown-named-character-reference id=ambiguous-ampersand-state:parse-error-unknown-named-character-reference>unknown-named-character-reference</a>
+    <a href=#parse-errors id=ambiguous-ampersand-state:parse-errors>parse error</a>. <a href=#reconsume id=ambiguous-ampersand-state:reconsume>Reconsume</a> in the <var id=ambiguous-ampersand-state:return-state><a href=#return-state>return
+    state</a></var>.
+
+    <dt>Anything else<dd><a href=#reconsume id=ambiguous-ampersand-state:reconsume-2>Reconsume</a> in the <var id=ambiguous-ampersand-state:return-state-2><a href=#return-state>return state</a></var>.</dl>
+
+  <h5 id=numeric-character-reference-state><span class=secno>13.2.5.75</span> <dfn>Numeric character reference state</dfn><a href=#numeric-character-reference-state class=self-link></a></h5>
+
+  <p>Set the <dfn id=character-reference-code><var>character reference code</var></dfn> to
+  zero (0).</p>
+
+  <p>Consume the <a href=#next-input-character id=numeric-character-reference-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt>U+0078 LATIN SMALL LETTER X<dt>U+0058 LATIN CAPITAL LETTER X<dd>Append the <a href=#current-input-character id=numeric-character-reference-state:current-input-character>current input character</a> to the <var id=numeric-character-reference-state:temporary-buffer><a href=#temporary-buffer>temporary buffer</a></var>. Switch to the <a href=#hexadecimal-character-reference-start-state id=numeric-character-reference-state:hexadecimal-character-reference-start-state>hexadecimal character reference start
+    state</a>.<dt>Anything else<dd><a href=#reconsume id=numeric-character-reference-state:reconsume>Reconsume</a> in the <a href=#decimal-character-reference-start-state id=numeric-character-reference-state:decimal-character-reference-start-state>decimal character reference start state</a>.</dl>
+
+
+  <h5 id=hexadecimal-character-reference-start-state><span class=secno>13.2.5.76</span> <dfn>Hexadecimal character reference start state</dfn><a href=#hexadecimal-character-reference-start-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=hexadecimal-character-reference-start-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt><a href=https://infra.spec.whatwg.org/#ascii-hex-digit id=hexadecimal-character-reference-start-state:ascii-hex-digits data-x-internal=ascii-hex-digits>ASCII hex digit</a><dd><a href=#reconsume id=hexadecimal-character-reference-start-state:reconsume>Reconsume</a> in the <a href=#hexadecimal-character-reference-state id=hexadecimal-character-reference-start-state:hexadecimal-character-reference-state>hexadecimal character reference state</a>.<dt>Anything else<dd>This is an <a href=#parse-error-absence-of-digits-in-numeric-character-reference id=hexadecimal-character-reference-start-state:parse-error-absence-of-digits-in-numeric-character-reference>absence-of-digits-in-numeric-character-reference</a>
+    <a href=#parse-errors id=hexadecimal-character-reference-start-state:parse-errors>parse error</a>. <a href=#flush-code-points-consumed-as-a-character-reference id=hexadecimal-character-reference-start-state:flush-code-points-consumed-as-a-character-reference>Flush code points consumed as a character reference</a>.
+    <a href=#reconsume id=hexadecimal-character-reference-start-state:reconsume-2>Reconsume</a> in the <var id=hexadecimal-character-reference-start-state:return-state><a href=#return-state>return state</a></var>.</dl>
+
+
+  <h5 id=decimal-character-reference-start-state><span class=secno>13.2.5.77</span> <dfn>Decimal character reference start state</dfn><a href=#decimal-character-reference-start-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=decimal-character-reference-start-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt><a href=https://infra.spec.whatwg.org/#ascii-digit id=decimal-character-reference-start-state:ascii-digits data-x-internal=ascii-digits>ASCII digit</a><dd><a href=#reconsume id=decimal-character-reference-start-state:reconsume>Reconsume</a> in the <a href=#decimal-character-reference-state id=decimal-character-reference-start-state:decimal-character-reference-state>decimal character reference state</a>.<dt>Anything else<dd>This is an <a href=#parse-error-absence-of-digits-in-numeric-character-reference id=decimal-character-reference-start-state:parse-error-absence-of-digits-in-numeric-character-reference>absence-of-digits-in-numeric-character-reference</a>
+    <a href=#parse-errors id=decimal-character-reference-start-state:parse-errors>parse error</a>. <a href=#flush-code-points-consumed-as-a-character-reference id=decimal-character-reference-start-state:flush-code-points-consumed-as-a-character-reference>Flush code points consumed as a character reference</a>.
+    <a href=#reconsume id=decimal-character-reference-start-state:reconsume-2>Reconsume</a> in the <var id=decimal-character-reference-start-state:return-state><a href=#return-state>return state</a></var>.</dl>
+
+
+  <h5 id=hexadecimal-character-reference-state><span class=secno>13.2.5.78</span> <dfn>Hexadecimal character reference state</dfn><a href=#hexadecimal-character-reference-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=hexadecimal-character-reference-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt><a href=https://infra.spec.whatwg.org/#ascii-digit id=hexadecimal-character-reference-state:ascii-digits data-x-internal=ascii-digits>ASCII digit</a><dd>Multiply the <var id=hexadecimal-character-reference-state:character-reference-code><a href=#character-reference-code>character reference code</a></var> by 16.
+    Add a numeric version of the <a href=#current-input-character id=hexadecimal-character-reference-state:current-input-character>current input character</a> (subtract 0x0030 from the
+    character's code point) to the <var id=hexadecimal-character-reference-state:character-reference-code-2><a href=#character-reference-code>character reference
+    code</a></var>.<dt><a id=hexadecimal-character-reference-state:uppercase-ascii-hex-digits href=https://infra.spec.whatwg.org/#ascii-upper-hex-digit data-x-internal=uppercase-ascii-hex-digits>ASCII upper hex digit</a><dd>Multiply the <var id=hexadecimal-character-reference-state:character-reference-code-3><a href=#character-reference-code>character reference code</a></var> by 16.
+    Add a numeric version of the <a href=#current-input-character id=hexadecimal-character-reference-state:current-input-character-2>current input character</a> as a hexadecimal digit
+    (subtract 0x0037 from the character's code point) to the <var id=hexadecimal-character-reference-state:character-reference-code-4><a href=#character-reference-code>character reference code</a></var>.<dt><a id=hexadecimal-character-reference-state:lowercase-ascii-hex-digits href=https://infra.spec.whatwg.org/#ascii-lower-hex-digit data-x-internal=lowercase-ascii-hex-digits>ASCII lower hex digit</a><dd>Multiply the <var id=hexadecimal-character-reference-state:character-reference-code-5><a href=#character-reference-code>character reference code</a></var> by 16.
+    Add a numeric version of the <a href=#current-input-character id=hexadecimal-character-reference-state:current-input-character-3>current input character</a> as a hexadecimal digit
+    (subtract 0x0057 from the character's code point) to the <var id=hexadecimal-character-reference-state:character-reference-code-6><a href=#character-reference-code>character reference code</a></var>.<dt>U+003B SEMICOLON<dd>Switch to the <a href=#numeric-character-reference-end-state id=hexadecimal-character-reference-state:numeric-character-reference-end-state>numeric character reference end state</a>.<dt>Anything else<dd>This is a <a href=#parse-error-missing-semicolon-after-character-reference id=hexadecimal-character-reference-state:parse-error-missing-semicolon-after-character-reference>missing-semicolon-after-character-reference</a>
+    <a href=#parse-errors id=hexadecimal-character-reference-state:parse-errors>parse error</a>. <a href=#reconsume id=hexadecimal-character-reference-state:reconsume>Reconsume</a> in the <a href=#numeric-character-reference-end-state id=hexadecimal-character-reference-state:numeric-character-reference-end-state-2>numeric character reference end
+    state</a>.</dl>
+
+
+  <h5 id=decimal-character-reference-state><span class=secno>13.2.5.79</span> <dfn>Decimal character reference state</dfn><a href=#decimal-character-reference-state class=self-link></a></h5>
+
+  <p>Consume the <a href=#next-input-character id=decimal-character-reference-state:next-input-character>next input character</a>:</p>
+
+  <dl class=switch><dt><a href=https://infra.spec.whatwg.org/#ascii-digit id=decimal-character-reference-state:ascii-digits data-x-internal=ascii-digits>ASCII digit</a><dd>Multiply the <var id=decimal-character-reference-state:character-reference-code><a href=#character-reference-code>character reference code</a></var> by 10.
+    Add a numeric version of the <a href=#current-input-character id=decimal-character-reference-state:current-input-character>current input character</a> (subtract 0x0030 from the
+    character's code point) to the <var id=decimal-character-reference-state:character-reference-code-2><a href=#character-reference-code>character reference
+    code</a></var>.<dt>U+003B SEMICOLON<dd>Switch to the <a href=#numeric-character-reference-end-state id=decimal-character-reference-state:numeric-character-reference-end-state>numeric character reference end state</a>.<dt>Anything else<dd>This is a <a href=#parse-error-missing-semicolon-after-character-reference id=decimal-character-reference-state:parse-error-missing-semicolon-after-character-reference>missing-semicolon-after-character-reference</a>
+    <a href=#parse-errors id=decimal-character-reference-state:parse-errors>parse error</a>. <a href=#reconsume id=decimal-character-reference-state:reconsume>Reconsume</a> in the <a href=#numeric-character-reference-end-state id=decimal-character-reference-state:numeric-character-reference-end-state-2>numeric character reference end
+    state</a>.</dl>
+
+

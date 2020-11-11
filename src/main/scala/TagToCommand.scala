@@ -42,18 +42,23 @@ object TagToCommand {
           case Node(S, s) :: Leaf(Dot, _) :: Nil => {
             commandList ++= STag(Node(S,s))
           }
+          case Node(S, s) :: Nil => {
+            commandList ++= STag(Node(S,s))
+          }
+
           // if文
           case Node(SBAR, List(Leaf(IN, Token(_, "if")), Node(S, l2))) :: Leaf(Comma, _) :: Node(ADVP, List(Leaf(RB, Token(_, "then")))) :: rst => {
             //commandList :+= If(Bool(getLeave(Node(S, l2))), STag(Node(S, rst)), null)
             val com_list = STag(Node(S, rst))
             ifStack.push(If(Bool(getLeave(Node(S, l2))), com_list, null))
+            //txtOut.println(ifStack)
           }
           // otherwise
           case Node(ADVP, List(Leaf(RB, Token(_, "otherwise")))) :: Leaf(Comma, _) :: rst => {
             val com_list = STag(Node(S, rst))
             //println(com_list)
             if (ifStack.length == 0) {
-              txtOut.println("error_otherwise")
+              txtOut.print("error_otherwise : ");txtOut.println(ifStack)
               commandList :+= If(Bool("otherwise"),null,com_list)
             } else {
               val ifbun = ifStack.pop()
@@ -78,17 +83,11 @@ object TagToCommand {
             }
           }
           // 命令文
-          case node :: Leaf(Dot,_) :: Nil => {
-            node match {
-              case Node(VP, _) => { commandList ++= VPTag(node)}
-              case _ => txtOut.println("err")
-            }
+          case Node(VP, vp) :: Leaf(Dot,_) :: Nil => {
+            commandList ++= VPTag(Node(VP, vp))
           }
-          case node :: Nil => {
-            node match {
-              case Node(VP, _) => { commandList ++= VPTag(node)}
-              case _ => txtOut.println("err")
-            }
+          case Node(VP, vp) :: Nil => {
+            commandList ++= VPTag(Node(VP, vp))
           }
           case _ => txtOut.print("not match_s : ");txtOut.println(list)
         }
@@ -133,6 +132,10 @@ object TagToCommand {
           case List(Leaf(VB, Token(_,"set")), Node(NP, np), Node(PP, List(Leaf(IN, _), Node(PP, pp)))) => {
             commandList :+= CommandStructure.Set(getLeave(Node(NP, np)), getLeave(Node(PP, pp)))
           }
+          // set3(状態を変更_PPが省略されてるもの)
+          case List(Leaf(VB, Token(_,"set")), Node(NP, np)) => {
+            commandList :+= CommandStructure.Set(getLeave(Node(NP, np)), "on")
+          }
           // consume
           case List(Leaf(VB,Token(_,"consume")), Node(NP,np)) => {
             commandList :+= CommandStructure.Consume(NPDistribute(Node(NP,np)))
@@ -158,7 +161,7 @@ object TagToCommand {
             commandList :+= Multiply(NPDistribute(Node(NP,np1)), getLeave(Node(NP, np2)))
           }
           // add
-          case List(Leaf(VB,Token(_,"add")), Node(NP,List(Node(NP,np1), Node(PP, List(Leaf(IN, Token(_, "to")), Node(NP, np2)))))) => {
+          case List(Leaf(VB,Token(_,"add")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_, "to")), Node(NP, np2)))) => {
             commandList :+= Add(NPDistribute(Node(NP,np1)), getLeave(Node(NP, np2)))
           }
           // start
@@ -168,6 +171,10 @@ object TagToCommand {
           // treat
           case List(Leaf(VB, Token(_, "treat")), Node(NP, _), Node(PP, _), Node(ADVP, _)) | List(Leaf(VB, Token(_, "treat")), Node(NP, _), Node(ADVP, _)) => {
             commandList :+= Treat()
+          }
+          // flush
+          case List(Leaf(VB,Token(_,"flush")), Node(NP,_)) => {
+            commandList :+= Flush()
           }
           // append_1
           case Leaf(VB, Token(_, "append")) :: Node(NP, np1) :: Node(PP, List(Leaf(IN, _), Node(NP, np2))) :: Nil => {

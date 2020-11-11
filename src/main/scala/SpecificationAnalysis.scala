@@ -42,7 +42,7 @@ object SpecificationAnalysis {
        * sentiment : 感情
        */
       val props = new Properties()
-      props.setProperty("annotators", "tokenize, ssplit, pos, lemma, parse")
+//      props.setProperty("annotators", "tokenize, ssplit, pos, lemma, parse")
 //      props.setProperty("language", "english")
 //      props.setProperty("tokenize.class", "PTBTokenizer")
 //      props.setProperty("tokenize.language", "en")
@@ -55,13 +55,13 @@ object SpecificationAnalysis {
        * Key : annotators
        * Value : tokenize, ssplit, pos, lemma, ner, parse, dcoref, sentiment
        */
-      //props.setProperty("annotators", "tokenize, ssplit, pos, lemma, parse")
+      props.setProperty("annotators", "tokenize, ssplit, pos, lemma, parse")
       //props.setProperty("tokenize.whitespace", "true") // 空白で区切られてないものは1つの文字として認識する
       //props.setProperty("tokenize.keepeol", "true")
       //props.setProperty("tokenize.options", "strictTreebank3=true")
       //props.setProperty("pos.model", "edu/stanford/nlp/models/pos-tagger/english-bidirectional-distsim.tagger")
       //props.setProperty("ssplit.boundaryTokenRegex", "\\\\.|[!?]+")
-      //props.setProperty("tokenize.options", "splitHyphenated=false") // "-"で繋がる文字を1つの文字として認識する:false
+      props.setProperty("tokenize.options", "splitHyphenated=false") // "-"で繋がる文字を1つの文字として認識する:false
       // パイプラインを設定する
       pipeline = new StanfordCoreNLP(props)
       // もっと複雑な設定にするには
