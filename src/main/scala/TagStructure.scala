@@ -63,11 +63,11 @@ object TagStructure {
   case object TO extends LeafType
   case object UH extends LeafType
   case object VB extends LeafType
-  case object VBD extends LeafType
-  case object VBG extends LeafType
-  case object VBN extends LeafType
-  case object VBP extends LeafType
-  case object VBZ extends LeafType
+//  case object VBD extends LeafType
+//  case object VBG extends LeafType
+//  case object VBN extends LeafType
+//  case object VBP extends LeafType
+//  case object VBZ extends LeafType
   case object WDT extends LeafType
   case object WP extends LeafType
   case object WPD extends LeafType // WP$

@@ -5,6 +5,7 @@ import java.util.TimeZone
 import SpecificationAnalysis.{analysis, treeList, treeList2}
 import ConvertTree.{convert, makeLeafMap, tokenList, tokenList2}
 import ParseHtml.{parseHtml, stateList}
+import Replacement.replace_out
 import TagStructure._
 import TagToCommand.{tag_list, toCommand}
 import edu.stanford.nlp.io.IOUtils
@@ -27,6 +28,7 @@ object Main {
   def main(args: Array[String]) = {
     // HTMLのパーサー
     parseHtml()
+    IOUtils.closeIgnoringExceptions(replace_out)
 
     // 入力ファイル
     if (args.length > 0) {
@@ -49,7 +51,7 @@ object Main {
     formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
 
     System.out.println("> parse&convert_start")
-    for (i <- 67 - 1 to stateList.length - 1 - (stateList.length - 67)) {
+    for (i <- 8 - 1 to stateList.length - 1 - (stateList.length - 8)) {
       println(i+1)
       txtOut.println(i+1 + " : " + stateList(i).name)
       for (j <- 0 to stateList(i).trance.length - 1) {
@@ -74,7 +76,7 @@ object Main {
 
         treeList = List()
         treeList2 = List()
-        if (i == 67 - 1 && j == 5)ShowTree.showTree(tagList)
+        if (i == 8 - 1 && j == 6)ShowTree.showTree(tagList)
       }
 
 

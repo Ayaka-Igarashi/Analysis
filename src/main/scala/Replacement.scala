@@ -1,8 +1,11 @@
+import java.io.{BufferedWriter, File, FileWriter, PrintWriter}
+
 object Replacement {
+  val replace_out = new PrintWriter(new BufferedWriter(new FileWriter(new File("src/replaceOut.txt"))))
   // 自然言語処理しやすいように、文字の置き換えを行う
   def replace(str: String): String = {
     var s = str
-    println(s)
+    replace_out.println(s)
 
     // U+xxxx => UPxxxx
     val re =  "(U\\+[0-9A-F][0-9A-F][0-9A-F][0-9A-F])".r
@@ -17,12 +20,16 @@ object Replacement {
     // ",", "." => " and"
     val re4 = "(\\.|\\,) [sS]et".r
     s = re4.replaceAllIn(s, m => " and" + m.toString().tail)
-    s = s.replace("and and", "and")
-    s = s.replace("and then", ", then")
-    s = s.replace("and Otherwise and", ". Otherwise,")
-    s = s.replace("error and", "error.")
+//    s = s.replace("and and", "and")
+//    s = s.replace("and then", ", then")
+//    s = s.replace("and Otherwise and", ". Otherwise,")
+//    s = s.replace("error and", "error.")
 
-    println(" => " + s)
+    // (, ) => '
+//    s = s.replace("(", "'")
+//    s = s.replace(")", "'")
+
+    replace_out.println(" => " + s)
     s
   }
 }

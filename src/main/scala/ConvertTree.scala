@@ -44,7 +44,7 @@ object ConvertTree {
 
       case "NML" => Node(NML,toStruct(tree))
       case "FRAG" => Node(FRAG,toStruct(tree))
-      case "PRN" => null//Node(PRN,toStruct(tree)) // カッコの要素を除くならnullにする
+      case "PRN" => Node(PRN,toStruct(tree)) // カッコの要素を除くならnullにする
       case "INTJ" => Node(INTJ,toStruct(tree))
 
       // pos tag

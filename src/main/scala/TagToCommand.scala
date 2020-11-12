@@ -39,12 +39,21 @@ object TagToCommand {
             commandList ++= STag(Node(S, s1))
             commandList ++= STag(Node(S, rst))
           }
+          case Node(S, s1) :: Leaf(Comma, _):: Leaf(CC, Token(_, "and")) :: rst => {
+            commandList ++= STag(Node(S, s1))
+            commandList ++= STag(Node(S, rst))
+          }
+          case Node(S, s) :: Leaf(Comma, _) :: Node(ADVP, List(Leaf(RB, Token(_, "then")))) :: rst => {
+            commandList ++= STag(Node(S, s))
+            commandList ++= STag(Node(S, rst))
+          }
           case Node(S, s) :: Leaf(Dot, _) :: Nil => {
             commandList ++= STag(Node(S,s))
           }
           case Node(S, s) :: Nil => {
             commandList ++= STag(Node(S,s))
           }
+
 
           // if文
           case Node(SBAR, List(Leaf(IN, Token(_, "if")), Node(S, l2))) :: Leaf(Comma, _) :: Node(ADVP, List(Leaf(RB, Token(_, "then")))) :: rst => {
