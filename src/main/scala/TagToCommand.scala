@@ -47,6 +47,9 @@ object TagToCommand {
             commandList ++= STag(Node(S, s))
             commandList ++= STag(Node(S, rst))
           }
+          case Node(S, s) :: Leaf(LBracket, _) :: Node(S, _) :: Leaf(RBracket, _) :: Leaf(Dot, _) :: Nil => {
+            commandList ++= STag(Node(S,s))
+          }
           case Node(S, s) :: Leaf(Dot, _) :: Nil => {
             commandList ++= STag(Node(S,s))
           }
@@ -143,7 +146,15 @@ object TagToCommand {
           }
           // set3(状態を変更_PPが省略されてるもの)
           case List(Leaf(VB, Token(_,"set")), Node(NP, np)) => {
-            commandList :+= CommandStructure.Set(getLeave(Node(NP, np)), "on")
+            np match {
+              // Set that attribute's name to the current input character, and its value to the empty string.(仮)
+              case Node(NP, List(Node(NP, np1_1), Leaf(TO, _), Node(NP, np1_2))) :: Leaf(Comma,_)::Leaf(CC, _)::Node(NP, List(Node(NP, np2_1), Node(PP, List(Leaf(IN, _), Node(NP, np2_2)))))::Nil => {
+                commandList :+= CommandStructure.Set(getLeave(Node(NP, np1_1)), getLeave(Node(NP, np1_2)))
+                commandList :+= CommandStructure.Set(getLeave(Node(NP, np2_1)), getLeave(Node(NP, np2_2)))
+              }
+              case _ => commandList :+= CommandStructure.Set(getLeave(Node(NP, np)), "on")
+            }
+
           }
           // consume
           case List(Leaf(VB,Token(_,"consume")), Node(NP,np)) => {

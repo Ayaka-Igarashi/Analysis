@@ -1,65 +1,30 @@
-8 : Tag name state
--- chara: U+0009 CHARACTER TABULATION (tab) --
-you Switch to the before attribute name state.
+36 : Attribute value (double-quoted) state
+-- chara: U+0022 QUOTATION MARK (") --
+you Switch to the after attribute value (quoted) state.
 List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(FRAG,List(Node(PRN,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)))))))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(after,after)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(value,value)))))), Leaf(LBracket,Token((,()), Node(VP,List(Leaf(VB,Token(quoted,quote)))), Leaf(RBracket,Token(),))), Node(NP,List(Leaf(NN,Token(state,state)))), Leaf(Dot,Token(.,.))))))
+error_root
 
- -> Switch(the_before_attribute_name_state)
 
--- chara: U+000A LINE FEED (LF) --
-you Switch to the before attribute name state.
+-- chara: U+0026 AMPERSAND (&amp;) --
+Set the return state to the [attribute value (double-quoted) state]. you Switch to the character reference state.
 List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_before_attribute_name_state)
-
--- chara: U+000C FORM FEED (FF) --
-you Switch to the before attribute name state.
 List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(return,return)), Leaf(NN,Token(state,state)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)))), Node(PRN,List(Leaf(LBracket,Token([,[)), Node(S,List(Node(VP,List(Leaf(VB,Token(attribute,attribute)), Node(NP,List(Node(NML,List(Leaf(NN,Token(value,value)), Node(PRN,List(Leaf(LBracket,Token((,()), Node(ADJP,List(Leaf(NN,Token(double,double)), Leaf(HYPH,Token(-,-)), Leaf(VB,Token(quoted,quote)))), Leaf(RBracket,Token(),))))))), Leaf(NN,Token(state,state)))))))), Leaf(RBracket,Token(],])))))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)), Leaf(NN,Token(reference,reference)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
 
- -> Switch(the_before_attribute_name_state)
-
--- chara: U+0020 SPACE --
-you Switch to the before attribute name state.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Node(PP,List(Leaf(IN,Token(before,before)), Node(NP,List(Leaf(NN,Token(attribute,attribute)))))))), Leaf(NN,Token(name,name)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_before_attribute_name_state)
-
--- chara: U+002F SOLIDUS (/) --
-you Switch to the self-closing start tag state.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Node(NML,List(Leaf(NN,Token(self,self)), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(closing,closing)))), Leaf(NN,Token(start,start)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_self_-_closing_start_tag_state)
-
--- chara: U+003E GREATER-THAN SIGN (&gt;) --
-you Switch to the data state. you Emit the current tag token.
-List((4,CHAIN4-["you" in sentence 1]))
-List((4,CHAIN4-["you" in sentence 2]))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(data,datum)), Leaf(NN,Token(state,state)))))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))))), Leaf(Dot,Token(.,.))))))
-
- -> Switch(the_data_state)
- -> Emit(List (the_current_tag_token, ))
-
--- chara: ASCII upper alpha --
-you Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name.
-List((6,CHAIN6-["the current input character" in sentence 1, "the character 's" in sentence 1]))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(lowercase,lowercase)), Leaf(NN,Token(version,version)))), Node(PP,List(Leaf(IN,Token(of,of)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))))))), Node(PRN,List(Leaf(LBracket,Token((,()), Node(S,List(Node(VP,List(Leaf(VB,Token(add,add)), Node(NP,List(Leaf(NNS,Token(0x0020,0x0020)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(code,code)), Leaf(NN,Token(point,point)))))))))), Leaf(RBracket,Token(),))))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))))))), Leaf(Dot,Token(.,.))))))
-
- -> Append(List (the_lowercase_version_of_the_current_input_character, ),the_current_tag_token_'s_tag_name)
+ -> Set(the_return_state,the_[_attribute_value_(_double_-_quoted_)_state_])
+ -> Switch(the_character_reference_state)
 
 -- chara: U+0000 NULL --
-This is an unexpected-null-character parse error. you Append a UPFFFD REPLACEMENT CHARACTER character to the current tag token's tag name.
+This is an unexpected-null-character parse error. you Append a UPFFFD REPLACEMENT CHARACTER character to the current attribute's value.
 List()
 List()
 Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Node(NML,List(Node(ADJP,List(Leaf(JJ,Token(unexpected,unexpected)), Leaf(HYPH,Token(-,-)), Leaf(JJ,Token(null,null)))), Leaf(HYPH,Token(-,-)), Leaf(NN,Token(character,character)))), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error)))))), Leaf(Dot,Token(.,.))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(UPFFFD,UPFFFD)), Node(NML,List(Leaf(NN,Token(REPLACEMENT,REPLACEMENT)), Leaf(NN,Token(CHARACTER,CHARACTER)))), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(UPFFFD,UPFFFD)), Node(NML,List(Leaf(NN,Token(REPLACEMENT,REPLACEMENT)), Leaf(NN,Token(CHARACTER,CHARACTER)))), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(attribute,attribute)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(value,value)))))))), Leaf(Dot,Token(.,.))))))
 
  -> Error(an_unexpected_-_null_-_character_parse_error)
- -> Append(List (a_UPFFFD_REPLACEMENT_CHARACTER_character, ),the_current_tag_token_'s_tag_name)
+ -> Append(List (a_UPFFFD_REPLACEMENT_CHARACTER_character, ),the_current_attribute_'s_value)
 
 -- chara: EOF --
 This is an eof-in-tag parse error. you Emit an end-of-file token.
@@ -72,9 +37,9 @@ Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(
  -> Emit(List (an_end_-_of_-_file_token, ))
 
 -- chara: Anything else --
-you Append the current input character to the current tag token's tag name.
+you Append the current input character to the current attribute's value.
 List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))))))), Leaf(Dot,Token(.,.))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(attribute,attribute)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(value,value)))))))), Leaf(Dot,Token(.,.))))))
 
- -> Append(List (the_current_input_character, ),the_current_tag_token_'s_tag_name)
+ -> Append(List (the_current_input_character, ),the_current_attribute_'s_value)
 

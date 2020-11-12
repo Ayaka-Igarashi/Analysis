@@ -51,7 +51,7 @@ object Main {
     formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
 
     System.out.println("> parse&convert_start")
-    for (i <- 8 - 1 to stateList.length - 1 - (stateList.length - 8)) {
+    for (i <- 36 - 1 to stateList.length - 1 - (stateList.length - 36)) {
       println(i+1)
       txtOut.println(i+1 + " : " + stateList(i).name)
       for (j <- 0 to stateList(i).trance.length - 1) {
@@ -76,7 +76,7 @@ object Main {
 
         treeList = List()
         treeList2 = List()
-        if (i == 8 - 1 && j == 6)ShowTree.showTree(tagList)
+        if (i == 36 - 1 && j == 1)ShowTree.showTree(tagList)
       }
 
 

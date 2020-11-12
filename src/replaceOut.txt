@@ -198,8 +198,8 @@ Append the current input character to the current tag token's tag name. Append t
  => you Append the current input character to the current tag token's tag name. you Append the current input character to the temporary buffer.
 Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token, and a character token for each of the characters in the temporary buffer  (in the order they were added to the buffer). Reconsume in the script data escaped state.
  => you Emit a UP003C LESS-THAN SIGN character token, a UP002F SOLIDUS character token, and a character token for each of the characters in the temporary buffer  (in the order they were added to the buffer). you Reconsume in the script data escaped state.
-If the temporary buffer is the string "script", then switch to the script data double escaped state. Otherwise, you switch to the script data escaped state. Emit the current input character as a character token.
- => If the temporary buffer is the string "script", then you switch to the script data double escaped state. Otherwise, you you switch to the script data escaped state. you Emit the current input character as a character token.
+If the temporary buffer is the string "script", then switch to the script data double escaped state. Otherwise, switch to the script data escaped state. Emit the current input character as a character token.
+ => If the temporary buffer is the string "script", then you switch to the script data double escaped state. Otherwise, you switch to the script data escaped state. you Emit the current input character as a character token.
 Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the temporary buffer. Emit the current input character as a character token.
  => you Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the temporary buffer. you Emit the current input character as a character token.
 Append the current input character to the temporary buffer. Emit the current input character as a character token.
@@ -255,9 +255,9 @@ Ignore the character.
 Reconsume in the after attribute name state.
  => you Reconsume in the after attribute name state.
 This is an unexpected-equals-sign-before-attribute-name parse error. Start a new attribute in the current tag token. Set that attribute's name to the current input character, and its value to the empty string. Switch to the attribute name state.
- => This is an unexpected-equals-sign-before-attribute-name parse error. Start a new attribute in the current tag token and Set that attribute's name to the current input character, and its value to the empty string. you Switch to the attribute name state.
+ => This is an unexpected-equals-sign-before-attribute-name parse error. Start a new attribute in the current tag token and Set that attribute's's name to the current input character, and its value to the empty string. you Switch to the attribute name state.
 Start a new attribute in the current tag token. Set that attribute name and value to the empty string. Reconsume in the attribute name state.
- => Start a new attribute in the current tag token and Set that attribute name and value to the empty string. you Reconsume in the attribute name state.
+ => Start a new attribute in the current tag token and Set that attribute's name and value to the empty string. you Reconsume in the attribute name state.
 Reconsume in the after attribute name state.
  => you Reconsume in the after attribute name state.
 Switch to the before attribute value state.
@@ -281,11 +281,11 @@ Switch to the data state. Emit the current tag token.
 This is an eof-in-tag parse error. Emit an end-of-file token.
  => This is an eof-in-tag parse error. you Emit an end-of-file token.
 Start a new attribute in the current tag token. Set that attribute name and value to the empty string. Reconsume in the attribute name state.
- => Start a new attribute in the current tag token and Set that attribute name and value to the empty string. you Reconsume in the attribute name state.
+ => Start a new attribute in the current tag token and Set that attribute's name and value to the empty string. you Reconsume in the attribute name state.
 Ignore the character.
  => Ignore the character.
 Switch to the attribute value (double-quoted) state.
- => you Switch to the attribute value (double-quoted) state.
+ => you Switch to the [attribute value (double-quoted) state].
 you Switch to the attribute value (single-quoted) state.
  => you you Switch to the attribute value (single-quoted) state.
 This is a missing-attribute-value parse error. Switch to the data state. Emit the current tag token.
@@ -295,7 +295,7 @@ you Reconsume in the attribute value (unquoted) state.
 Switch to the after attribute value (quoted) state.
  => you Switch to the after attribute value (quoted) state.
 Set the return state to the attribute value (double-quoted) state. Switch to the character reference state.
- => Set the return state to the attribute value (double-quoted) state. you Switch to the character reference state.
+ => Set the return state to the [attribute value (double-quoted) state]. you Switch to the character reference state.
 This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current attribute's value.
  => This is an unexpected-null-character parse error. you Append a UPFFFD REPLACEMENT CHARACTER character to the current attribute's value.
 This is an eof-in-tag parse error. Emit an end-of-file token.
@@ -453,7 +453,7 @@ Append the lowercase version of the current input character (add 0x0020 to the c
 This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's name.
  => This is an unexpected-null-character parse error. you Append a UPFFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's name.
 This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
- => This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
+ => This is an eof-in-doctype parse error and Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
 Append the current input character to the current DOCTYPE token's name.
  => you Append the current input character to the current DOCTYPE token's name.
 Ignore the character.
@@ -461,21 +461,21 @@ Ignore the character.
 Switch to the data state. Emit the current DOCTYPE token.
  => you Switch to the data state. you Emit the current DOCTYPE token.
 This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
- => This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
+ => This is an eof-in-doctype parse error and Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
  If the six characters starting from the current input character are an ASCII case-insensitive match for the word "PUBLIC", then consume those characters and switch to the after DOCTYPE public keyword state. Otherwise, if the six characters starting from the current input character are an ASCII case-insensitive match for the word "SYSTEM", then consume those characters and switch to the after DOCTYPE system keyword state. Otherwise, this is an invalid-character-sequence-after-doctype-name parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state. 
- =>  If the six characters starting from the current input character are an ASCII case-insensitive match for the word "PUBLIC", then consume those characters and you switch to the after DOCTYPE public keyword state. Otherwise, if the six characters starting from the current input character are an ASCII case-insensitive match for the word "SYSTEM", then consume those characters and you switch to the after DOCTYPE system keyword state. Otherwise, this is an invalid-character-sequence-after-doctype-name parse error. Set the DOCTYPE token's force-quirks flag to on. you Reconsume in the bogus DOCTYPE state. 
+ =>  If the six characters starting from the current input character are an ASCII case-insensitive match for the word "PUBLIC", then consume those characters and you switch to the after DOCTYPE public keyword state. Otherwise, if the six characters starting from the current input character are an ASCII case-insensitive match for the word "SYSTEM", then consume those characters and you switch to the after DOCTYPE system keyword state. Otherwise, this is an invalid-character-sequence-after-doctype-name parse error and Set the DOCTYPE token's force-quirks flag to on. you Reconsume in the bogus DOCTYPE state. 
 Switch to the before DOCTYPE public identifier state.
  => you Switch to the before DOCTYPE public identifier state.
 This is a missing-whitespace-after-doctype-public-keyword parse error. Set the DOCTYPE token's public identifier to the empty string (not missing), then switch to the DOCTYPE public identifier (double-quoted) state.
- => This is a missing-whitespace-after-doctype-public-keyword parse error. Set the DOCTYPE token's public identifier to the empty string (not missing), then you switch to the DOCTYPE public identifier (double-quoted) state.
+ => This is a missing-whitespace-after-doctype-public-keyword parse error and Set the DOCTYPE token's public identifier to the empty string (not missing), then you switch to the DOCTYPE public identifier (double-quoted) state.
 This is a missing-whitespace-after-doctype-public-keyword parse error. Set the DOCTYPE token's public identifier to the empty string (not missing), then switch to the DOCTYPE public identifier (single-quoted) state.
- => This is a missing-whitespace-after-doctype-public-keyword parse error. Set the DOCTYPE token's public identifier to the empty string (not missing), then you switch to the DOCTYPE public identifier (single-quoted) state.
+ => This is a missing-whitespace-after-doctype-public-keyword parse error and Set the DOCTYPE token's public identifier to the empty string (not missing), then you switch to the DOCTYPE public identifier (single-quoted) state.
 This is a missing-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
- => This is a missing-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
+ => This is a missing-doctype-public-identifier parse error and Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
 This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
- => This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
+ => This is an eof-in-doctype parse error and Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
 This is a missing-quote-before-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state.
- => This is a missing-quote-before-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. you Reconsume in the bogus DOCTYPE state.
+ => This is a missing-quote-before-doctype-public-identifier parse error and Set the DOCTYPE token's force-quirks flag to on. you Reconsume in the bogus DOCTYPE state.
 Ignore the character.
  => Ignore the character.
 Set the DOCTYPE token's public identifier to the empty string (not missing), then switch to the DOCTYPE public identifier (double-quoted) state.
@@ -483,19 +483,19 @@ Set the DOCTYPE token's public identifier to the empty string (not missing), the
 Set the DOCTYPE token's public identifier to the empty string (not missing), then switch to the DOCTYPE public identifier (single-quoted) state.
  => Set the DOCTYPE token's public identifier to the empty string (not missing), then you switch to the DOCTYPE public identifier (single-quoted) state.
 This is a missing-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
- => This is a missing-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
+ => This is a missing-doctype-public-identifier parse error and Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
 This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
- => This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
+ => This is an eof-in-doctype parse error and Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
 This is a missing-quote-before-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state.
- => This is a missing-quote-before-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. you Reconsume in the bogus DOCTYPE state.
+ => This is a missing-quote-before-doctype-public-identifier parse error and Set the DOCTYPE token's force-quirks flag to on. you Reconsume in the bogus DOCTYPE state.
 Switch to the after DOCTYPE public identifier state.
  => you Switch to the after DOCTYPE public identifier state.
 This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's public identifier.
  => This is an unexpected-null-character parse error. you Append a UPFFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's public identifier.
 This is an abrupt-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
- => This is an abrupt-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
+ => This is an abrupt-doctype-public-identifier parse error and Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
 This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
- => This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
+ => This is an eof-in-doctype parse error and Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
 Append the current input character to the current DOCTYPE token's public identifier.
  => you Append the current input character to the current DOCTYPE token's public identifier.
 Switch to the after DOCTYPE public identifier state.
@@ -503,9 +503,9 @@ Switch to the after DOCTYPE public identifier state.
 This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's public identifier.
  => This is an unexpected-null-character parse error. you Append a UPFFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's public identifier.
 This is an abrupt-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
- => This is an abrupt-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
+ => This is an abrupt-doctype-public-identifier parse error and Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
 This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
- => This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
+ => This is an eof-in-doctype parse error and Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
 Append the current input character to the current DOCTYPE token's public identifier.
  => you Append the current input character to the current DOCTYPE token's public identifier.
 Switch to the between DOCTYPE public and system identifiers state.
@@ -513,13 +513,13 @@ Switch to the between DOCTYPE public and system identifiers state.
 Switch to the data state. Emit the current DOCTYPE token.
  => you Switch to the data state. you Emit the current DOCTYPE token.
 This is a missing-whitespace-between-doctype-public-and-system-identifiers parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE system identifier (double-quoted) state.
- => This is a missing-whitespace-between-doctype-public-and-system-identifiers parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then you switch to the DOCTYPE system identifier (double-quoted) state.
+ => This is a missing-whitespace-between-doctype-public-and-system-identifiers parse error and Set the DOCTYPE token's system identifier to the empty string (not missing), then you switch to the DOCTYPE system identifier (double-quoted) state.
 This is a missing-whitespace-between-doctype-public-and-system-identifiers parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE system identifier (single-quoted) state.
- => This is a missing-whitespace-between-doctype-public-and-system-identifiers parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then you switch to the DOCTYPE system identifier (single-quoted) state.
+ => This is a missing-whitespace-between-doctype-public-and-system-identifiers parse error and Set the DOCTYPE token's system identifier to the empty string (not missing), then you switch to the DOCTYPE system identifier (single-quoted) state.
 This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
- => This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
+ => This is an eof-in-doctype parse error and Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
 This is a missing-quote-before-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state.
- => This is a missing-quote-before-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. you Reconsume in the bogus DOCTYPE state.
+ => This is a missing-quote-before-doctype-system-identifier parse error and Set the DOCTYPE token's force-quirks flag to on. you Reconsume in the bogus DOCTYPE state.
 Ignore the character.
  => Ignore the character.
 Switch to the data state. Emit the current DOCTYPE token.
@@ -529,21 +529,21 @@ Set the DOCTYPE token's system identifier to the empty string (not missing), the
 Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE system identifier (single-quoted) state.
  => Set the DOCTYPE token's system identifier to the empty string (not missing), then you switch to the DOCTYPE system identifier (single-quoted) state.
 This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
- => This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
+ => This is an eof-in-doctype parse error and Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
 This is a missing-quote-before-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state.
- => This is a missing-quote-before-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. you Reconsume in the bogus DOCTYPE state.
+ => This is a missing-quote-before-doctype-system-identifier parse error and Set the DOCTYPE token's force-quirks flag to on. you Reconsume in the bogus DOCTYPE state.
 Switch to the before DOCTYPE system identifier state.
  => you Switch to the before DOCTYPE system identifier state.
 This is a missing-whitespace-after-doctype-system-keyword parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE system identifier (double-quoted) state.
- => This is a missing-whitespace-after-doctype-system-keyword parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then you switch to the DOCTYPE system identifier (double-quoted) state.
+ => This is a missing-whitespace-after-doctype-system-keyword parse error and Set the DOCTYPE token's system identifier to the empty string (not missing), then you switch to the DOCTYPE system identifier (double-quoted) state.
 This is a missing-whitespace-after-doctype-system-keyword parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE system identifier (single-quoted) state.
- => This is a missing-whitespace-after-doctype-system-keyword parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then you switch to the DOCTYPE system identifier (single-quoted) state.
+ => This is a missing-whitespace-after-doctype-system-keyword parse error and Set the DOCTYPE token's system identifier to the empty string (not missing), then you switch to the DOCTYPE system identifier (single-quoted) state.
 This is a missing-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
- => This is a missing-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
+ => This is a missing-doctype-system-identifier parse error and Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
 This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
- => This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
+ => This is an eof-in-doctype parse error and Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
 This is a missing-quote-before-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state.
- => This is a missing-quote-before-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. you Reconsume in the bogus DOCTYPE state.
+ => This is a missing-quote-before-doctype-system-identifier parse error and Set the DOCTYPE token's force-quirks flag to on. you Reconsume in the bogus DOCTYPE state.
 Ignore the character.
  => Ignore the character.
 Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE system identifier (double-quoted) state.
@@ -551,19 +551,19 @@ Set the DOCTYPE token's system identifier to the empty string (not missing), the
 Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE system identifier (single-quoted) state.
  => Set the DOCTYPE token's system identifier to the empty string (not missing), then you switch to the DOCTYPE system identifier (single-quoted) state.
 This is a missing-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
- => This is a missing-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
+ => This is a missing-doctype-system-identifier parse error and Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
 This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
- => This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
+ => This is an eof-in-doctype parse error and Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
 This is a missing-quote-before-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state.
- => This is a missing-quote-before-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. you Reconsume in the bogus DOCTYPE state.
+ => This is a missing-quote-before-doctype-system-identifier parse error and Set the DOCTYPE token's force-quirks flag to on. you Reconsume in the bogus DOCTYPE state.
 Switch to the after DOCTYPE system identifier state.
  => you Switch to the after DOCTYPE system identifier state.
 This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's system identifier.
  => This is an unexpected-null-character parse error. you Append a UPFFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's system identifier.
 This is an abrupt-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
- => This is an abrupt-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
+ => This is an abrupt-doctype-system-identifier parse error and Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
 This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
- => This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
+ => This is an eof-in-doctype parse error and Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
 Append the current input character to the current DOCTYPE token's system identifier.
  => you Append the current input character to the current DOCTYPE token's system identifier.
 Switch to the after DOCTYPE system identifier state.
@@ -571,9 +571,9 @@ Switch to the after DOCTYPE system identifier state.
 This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's system identifier.
  => This is an unexpected-null-character parse error. you Append a UPFFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's system identifier.
 This is an abrupt-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
- => This is an abrupt-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
+ => This is an abrupt-doctype-system-identifier parse error and Set the DOCTYPE token's force-quirks flag to on. you Switch to the data state. you Emit that DOCTYPE token.
 This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
- => This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
+ => This is an eof-in-doctype parse error and Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
 Append the current input character to the current DOCTYPE token's system identifier.
  => you Append the current input character to the current DOCTYPE token's system identifier.
 Ignore the character.
@@ -581,7 +581,7 @@ Ignore the character.
 Switch to the data state. Emit the current DOCTYPE token.
  => you Switch to the data state. you Emit the current DOCTYPE token.
 This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
- => This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
+ => This is an eof-in-doctype parse error and Set the DOCTYPE token's force-quirks flag to on. you Emit that DOCTYPE token. you Emit an end-of-file token.
 This is an unexpected-character-after-doctype-system-identifier parse error. Reconsume in the bogus DOCTYPE state. (This does not set the DOCTYPE token's force-quirks flag to on.)
  => This is an unexpected-character-after-doctype-system-identifier parse error. you Reconsume in the bogus DOCTYPE state. (This does not set the DOCTYPE token's force-quirks flag to on.)
 Switch to the data state. Emit the DOCTYPE token.

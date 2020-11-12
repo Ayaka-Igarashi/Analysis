@@ -24,10 +24,13 @@ object Replacement {
 //    s = s.replace("and then", ", then")
 //    s = s.replace("and Otherwise and", ". Otherwise,")
 //    s = s.replace("error and", "error.")
+    s = s.replace("that attribute", "that attribute's")
 
     // (, ) => '
 //    s = s.replace("(", "'")
 //    s = s.replace(")", "'")
+
+    s = s.replace("attribute value (double-quoted) state", "[attribute value (double-quoted) state]")
 
     replace_out.println(" => " + s)
     s
