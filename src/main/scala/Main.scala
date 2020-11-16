@@ -28,7 +28,9 @@ object Main {
   def main(args: Array[String]) = {
     // HTMLのパーサー
     parseHtml()
-    IOUtils.closeIgnoringExceptions(replace_out)
+
+    Replacement.replaceState = Replacement.replaceState.tail
+    replace_out.println(Replacement.replaceState)
 
     // 入力ファイル
     if (args.length > 0) {
@@ -57,8 +59,10 @@ object Main {
       for (j <- 0 to stateList(i).trance.length - 1) {
         txtOut.println( "-- chara: "+stateList(i).trance(j).character + " --")
         // 入力ファイルを解析する
-        val str: String = stateList(i).trance(j).process
+        var str: String = stateList(i).trance(j).process
         txtOut.println(str)
+        str = Replacement.replace(str)
+
         analysis(str)
 
         var tagList: List[Tag] = List()
@@ -69,7 +73,7 @@ object Main {
           tagList :+= tag
           txtOut.println(tag)
         }
-        val commandList = toCommand(tagList)
+        val commandList = TagToCommand.toCommand(tagList)
         txtOut.println("")
         for (c <- commandList) {txtOut.println(" -> " + c)}
         txtOut.println("")
@@ -86,6 +90,7 @@ object Main {
     System.out.println("時間 = " + formatter.format(endtime - start))
     // ファイルを閉じる
     IOUtils.closeIgnoringExceptions(txtOut)
+    IOUtils.closeIgnoringExceptions(replace_out)
 
   }
 }

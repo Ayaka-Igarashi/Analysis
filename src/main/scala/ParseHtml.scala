@@ -60,7 +60,11 @@ object ParseHtml {
     val children: List[Node] = node.childNodes().asScala.toList
     for (child <- children) {
       if (child.nodeName() == "dfn") {
-        state.name = getLeave(child)
+        val stateName = getLeave(child)
+        state.name = stateName.replace(" ", "_").replace("-","_")
+          .replace("(", "").replace(")", "")
+        val komoji: String = stateName(0).toLower + stateName.tail
+        Replacement.replaceState += ("|" + stateName.replace("(", "\\(").replace(")", "\\)") + "|" + komoji.replace("(", "\\(").replace(")", "\\)"))
       }
     }
   }
@@ -76,7 +80,7 @@ object ParseHtml {
       case "dd" => {
         var leave = getLeave(node)
         leave = leave.replace("\n", "")
-        leave = Replacement.replace(leave)
+        //leave = Replacement.replace(leave)
         for (c <- charas) {
           state.trance :+= Trans(c, leave)
         }

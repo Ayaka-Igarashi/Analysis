@@ -1,7 +1,10 @@
 import java.io.{BufferedWriter, File, FileWriter, PrintWriter}
 
 object Replacement {
+  // 置き換え結果出力
   val replace_out = new PrintWriter(new BufferedWriter(new FileWriter(new File("src/replaceOut.txt"))))
+  var replaceState: String = ""
+
   // 自然言語処理しやすいように、文字の置き換えを行う
   def replace(str: String): String = {
     var s = str
@@ -24,13 +27,19 @@ object Replacement {
 //    s = s.replace("and then", ", then")
 //    s = s.replace("and Otherwise and", ". Otherwise,")
 //    s = s.replace("error and", "error.")
+    // 参照関係
     s = s.replace("that attribute", "that attribute's")
 
     // (, ) => '
 //    s = s.replace("(", "'")
 //    s = s.replace(")", "'")
 
-    s = s.replace("attribute value (double-quoted) state", "[attribute value (double-quoted) state]")
+    // 状態名を1つのtokenにする
+    val rr = replaceState.r
+    s = rr.replaceAllIn(s, m => {
+      m.toString().replace(" ", "_").replace("-","_")
+        .replace("(", "").replace(")", "")
+    })
 
     replace_out.println(" => " + s)
     s
