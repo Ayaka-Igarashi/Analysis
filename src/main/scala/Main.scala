@@ -53,7 +53,7 @@ object Main {
     formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
 
     System.out.println("> parse&convert_start")
-    for (i <- 36 - 1 to stateList.length - 1 - (stateList.length - 36)) {
+    for (i <- 1 - 1 to stateList.length - 1 - (stateList.length - 79)) {
       println(i+1)
       txtOut.println(i+1 + " : " + stateList(i).name)
       for (j <- 0 to stateList(i).trance.length - 1) {
@@ -62,7 +62,7 @@ object Main {
         var str: String = stateList(i).trance(j).process
         txtOut.println(str)
         str = Replacement.replace(str)
-
+        txtOut.println("  | "+str)
         analysis(str)
 
         var tagList: List[Tag] = List()
@@ -80,10 +80,8 @@ object Main {
 
         treeList = List()
         treeList2 = List()
-        if (i == 36 - 1 && j == 1)ShowTree.showTree(tagList)
+        //if (i == 25 - 1 && j == 5)ShowTree.showTree(tagList)
       }
-
-
 
     }
     var endtime = System.currentTimeMillis

@@ -10,36 +10,35 @@ object Replacement {
     var s = str
     replace_out.println(s)
 
+    // 状態名を1つのtokenにする
+    val re1 = replaceState.r
+    s = re1.replaceAllIn(s, m => {
+      val m2 = m.toString().replace(" ", "_").replace("-","_")
+        .replace("(", "").replace(")", "")
+      m2(0).toUpper + m2.tail
+    })
+
+    s = s.replace("-", "_")
+
     // U+xxxx => UPxxxx
-    val re =  "(U\\+[0-9A-F][0-9A-F][0-9A-F][0-9A-F])".r
-    s = re.replaceAllIn(s, m => "UP" + m.toString().substring(2,6))
+    val re2 =  "(U\\+[0-9A-F][0-9A-F][0-9A-F][0-9A-F])".r
+    s = re2.replaceAllIn(s, m => "UP" + m.toString().substring(2,6))
     // switch => you switch
-    val re2 = "([sS]witch|[rR]econsume|[eE]mit|[fF]lush|[aA]ppend)".r
-    s = re2.replaceAllIn(s, m => "you " + m.toString())
+    val re3 = "([sS]witch|[rR]econsume|[eE]mit|[fF]lush|[aA]ppend|[aA]dd)".r
+    s = re3.replaceAllIn(s, m => "you " + m.toString())
     s = s.replace("Multiply", "multiply")
     // ! => -EXC-
-    val re3 = "(\\!)".r
-    s = re3.replaceAllIn(s, m => "-EXC-")
+    val re4 = "(\\!)".r
+    s = re4.replaceAllIn(s, m => "EXC")
     // ",", "." => " and"
-    val re4 = "(\\.|\\,) [sS]et".r
-    s = re4.replaceAllIn(s, m => " and" + m.toString().tail)
+    val re5 = "(\\.|\\,) [sS]et".r
+    s = re5.replaceAllIn(s, m => " and" + m.toString().tail)
 //    s = s.replace("and and", "and")
 //    s = s.replace("and then", ", then")
 //    s = s.replace("and Otherwise and", ". Otherwise,")
-//    s = s.replace("error and", "error.")
+    s = s.replace("error and", "error.")
     // 参照関係
     s = s.replace("that attribute", "that attribute's")
-
-    // (, ) => '
-//    s = s.replace("(", "'")
-//    s = s.replace(")", "'")
-
-    // 状態名を1つのtokenにする
-    val rr = replaceState.r
-    s = rr.replaceAllIn(s, m => {
-      m.toString().replace(" ", "_").replace("-","_")
-        .replace("(", "").replace(")", "")
-    })
 
     replace_out.println(" => " + s)
     s

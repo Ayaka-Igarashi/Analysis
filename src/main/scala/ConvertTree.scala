@@ -44,8 +44,15 @@ object ConvertTree {
 
       case "NML" => Node(NML,toStruct(tree))
       case "FRAG" => Node(FRAG,toStruct(tree))
-      case "PRN" => Node(PRN,toStruct(tree)) // カッコの要素を除くならnullにする
+      case "PRN" => {
+        val c = tree.getChild(0)
+        val c2 = tree.getChild(tree.numChildren() - 1)
+        if ((c.value() == "(" || c.value() == "-LRB-") && (c2.value() == ")" || c2.value() == "-RRB-")) null // カッコの要素を除く
+        else Node(PRN,toStruct(tree))
+      }
       case "INTJ" => Node(INTJ,toStruct(tree))
+      case "UCP" => Node(UCP,toStruct(tree))
+      case "QP" => Node(QP,toStruct(tree))
 
       // pos tag
       case "CC" => Leaf(CC,toToken(tree))
@@ -88,7 +95,7 @@ object ConvertTree {
       // pos tag(記号)
       case "#" => Leaf(Pound,toToken(tree))
       case "$" => Leaf(Dollar,toToken(tree))
-      case "." => Leaf(Dot,toToken(tree))
+      case "." => null//Leaf(Dot,toToken(tree))
       case "," => Leaf(Comma,toToken(tree))
       case ":" => Leaf(Colon,toToken(tree))
       case "(" | "-LRB-" => Leaf(LBracket,toToken(tree))

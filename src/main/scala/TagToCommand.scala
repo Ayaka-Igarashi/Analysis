@@ -24,7 +24,7 @@ object TagToCommand {
       case Node(ROOT, List(Node(S, list))) => {
         commandList ++= STag(Node(S, list))
       }
-      case _ => txtOut.println("error_root")
+      case _ => txtOut.println("### error_root")
     }
     commandList
   }
@@ -34,43 +34,43 @@ object TagToCommand {
     tag match {
       case Node(S, list) => {
         list match {
-          // and
+          // S and ...
           case Node(S, s1) :: Leaf(CC, Token(_, "and")) :: rst => {
             commandList ++= STag(Node(S, s1))
             commandList ++= STag(Node(S, rst))
           }
+          // S ,and ...
           case Node(S, s1) :: Leaf(Comma, _):: Leaf(CC, Token(_, "and")) :: rst => {
             commandList ++= STag(Node(S, s1))
             commandList ++= STag(Node(S, rst))
           }
+          // S ,then ...
           case Node(S, s) :: Leaf(Comma, _) :: Node(ADVP, List(Leaf(RB, Token(_, "then")))) :: rst => {
             commandList ++= STag(Node(S, s))
             commandList ++= STag(Node(S, rst))
           }
-          case Node(S, s) :: Leaf(LBracket, _) :: Node(S, _) :: Leaf(RBracket, _) :: Leaf(Dot, _) :: Nil => {
+          // S (S)
+          case Node(S, s) :: Leaf(LBracket, _) :: Node(S, _) :: Leaf(RBracket, _) :: Nil => {
             commandList ++= STag(Node(S,s))
           }
-          case Node(S, s) :: Leaf(Dot, _) :: Nil => {
-            commandList ++= STag(Node(S,s))
-          }
+          // S
           case Node(S, s) :: Nil => {
             commandList ++= STag(Node(S,s))
           }
 
-
-          // if文
-          case Node(SBAR, List(Leaf(IN, Token(_, "if")), Node(S, l2))) :: Leaf(Comma, _) :: Node(ADVP, List(Leaf(RB, Token(_, "then")))) :: rst => {
+          // if S ,then ...
+          case Node(SBAR, List(Leaf(IN, Token(_, "if")), Node(S, l2))) :: Leaf(Comma, _) :: rst => {
             //commandList :+= If(Bool(getLeave(Node(S, l2))), STag(Node(S, rst)), null)
             val com_list = STag(Node(S, rst))
             ifStack.push(If(Bool(getLeave(Node(S, l2))), com_list, null))
             //txtOut.println(ifStack)
           }
-          // otherwise
+          // otherwise, ...
           case Node(ADVP, List(Leaf(RB, Token(_, "otherwise")))) :: Leaf(Comma, _) :: rst => {
             val com_list = STag(Node(S, rst))
             //println(com_list)
             if (ifStack.length == 0) {
-              txtOut.print("error_otherwise : ");txtOut.println(ifStack)
+              txtOut.print("### error_otherwise : ");txtOut.println(ifStack)
               commandList :+= If(Bool("otherwise"),null,com_list)
             } else {
               val ifbun = ifStack.pop()
@@ -80,31 +80,25 @@ object TagToCommand {
             }
             //println("o")
           }
-          // Error文(old)
-          case Node(NP, List(Leaf(DT, Token(_, "this")))) :: Node(VP, List(Leaf(_, Token(_, "be")), Node(NP, nplist))) :: Leaf(Dot,_) :: Nil => {
-            nplist.last match {
-              case Leaf(NN, Token(_, "error")) => commandList :+= Error(getLeave(Node(NP, nplist)))
-              case _ =>
-            }
-          }
-          // Error
+          // this is ...error
           case Node(NP, List(Leaf(DT, Token(_, "this")))) :: Node(VP, List(Leaf(_, Token(_, "be")), Node(NP, nplist))) :: Nil => {
             nplist.last match {
-              case Leaf(NN, Token(_, "error")) => commandList :+= Error(getLeave(Node(NP, nplist)))
+              case Leaf(NN, Token(_, "error")) => commandList :+= Error(getLeave(removeDT(Node(NP, nplist))))
               case _ =>
             }
           }
-          // 命令文
-          case Node(VP, vp) :: Leaf(Dot,_) :: Nil => {
-            commandList ++= VPTag(Node(VP, vp))
-          }
+          // VP
           case Node(VP, vp) :: Nil => {
             commandList ++= VPTag(Node(VP, vp))
           }
-          case _ => txtOut.print("not match_s : ");txtOut.println(list)
+          // then VP
+          case Node(ADVP, List(Leaf(RB, Token(_, "then")))) :: Node(VP, vp) :: Nil => {
+            commandList ++= VPTag(Node(VP, vp))
+          }
+          case _ => txtOut.print("### not match_s : ");txtOut.println(list)
         }
       }
-      case _ => txtOut.println("error_not_s")
+      case _ => txtOut.println("### error_not_s")
     }
     commandList
   }
@@ -127,14 +121,14 @@ object TagToCommand {
           }
           // switch文
           case List(Leaf(VB, Token(_,"switch")), Node(PP, List(Leaf(IN, _), Node(NP, np)))) => {
-            commandList :+= Switch(getLeave(Node(NP, np)))
+            commandList :+= Switch(getLeave(removeDT(Node(NP, np))))
           }
           // recomsume文
           case List(Leaf(VB, Token(_,"reconsume")), Node(PP, List(Leaf(IN, _), Node(NP, np)))) => {
-            commandList :+= Reconsume(getLeave(Node(NP, np)))
+            commandList :+= Reconsume(getLeave(removeDT(Node(NP, np))))
           }
           case List(Leaf(VB, Token(_,"Reconsume")), Node(PP, List(Leaf(IN, _), Node(NP, np)))) => {
-            commandList :+= Reconsume(getLeave(Node(NP, np)))
+            commandList :+= Reconsume(getLeave(removeDT(Node(NP, np))))
           }
           // set(代入する)
           case List(Leaf(VB, Token(_,"set")), Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2)))) => {
@@ -180,9 +174,13 @@ object TagToCommand {
           case List(Leaf(VB,Token(_,"multiply")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_, "by")), Node(NP, np2)))) => {
             commandList :+= Multiply(NPDistribute(Node(NP,np1)), getLeave(Node(NP, np2)))
           }
-          // add
+          // add_1
           case List(Leaf(VB,Token(_,"add")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_, "to")), Node(NP, np2)))) => {
             commandList :+= Add(NPDistribute(Node(NP,np1)), getLeave(Node(NP, np2)))
+          }
+          // add_2
+          case Leaf(VB, Token(_, "add")) :: Node(NP, List(Node(NP, np1), Node(PP, List(Leaf(IN, Token(_, "to")), Node(NP, np2))))) :: Nil => {
+            commandList :+= Add(NPDistribute(Node(NP, np1)), getLeave(Node(NP, np2)))
           }
           // start
           case List(Leaf(VB,Token(_,"start")), Node(NP,_), Node(PP, _)) => {
@@ -200,14 +198,19 @@ object TagToCommand {
           case Leaf(VB, Token(_, "append")) :: Node(NP, np1) :: Node(PP, List(Leaf(IN, _), Node(NP, np2))) :: Nil => {
             commandList :+= Append(NPDistribute(Node(NP, np1)), getLeave(Node(NP, np2)))
           }
-          // append_カッコ付き
-          case Leaf(VB, Token(_, "append")) :: Node(NP, np1) :: Node(PRN, _) :: Node(PP, List(Leaf(IN, _), Node(NP, np2))) :: Nil => {
+          // append_2
+          case Leaf(VB, Token(_, "append")) :: Node(NP, List(Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2))))) :: Nil => {
             commandList :+= Append(NPDistribute(Node(NP, np1)), getLeave(Node(NP, np2)))
           }
-          case _ => txtOut.print("dont match_vp : ");txtOut.println(list)
+//          // append_カッコ付き
+//          case Leaf(VB, Token(_, "append")) :: Node(NP, np1) :: Node(PRN, _) :: Node(PP, List(Leaf(IN, _), Node(NP, np2))) :: Nil => {
+//            commandList :+= Append(NPDistribute(Node(NP, np1)), getLeave(Node(NP, np2)))
+//            println("prn")
+//          }
+          case _ => txtOut.print("### dont match_vp : ");txtOut.println(list)
         }
       }
-      case _ => txtOut.println("error_not_vp")
+      case _ => txtOut.println("### error_not_vp")
     }
     commandList
   }
@@ -219,21 +222,21 @@ object TagToCommand {
       case Node(NP, list) => {
         list match {
           case Node(NP, np1) :: Leaf(Comma, _) :: Leaf(CC, Token(_, "and")) :: rst => {
-            taglist :+= Node(NP, np1)
+            taglist :+= removeDT(Node(NP, np1))
             taglist = taglist ++ NPTag(Node(NP, rst))
           }
           case Node(NP, np1) :: Leaf(Comma, _) :: rst => {
-            taglist :+= Node(NP, np1)
+            taglist :+= removeDT(Node(NP, np1))
             taglist = taglist ++ NPTag(Node(NP, rst))
           }
           case Node(NP, np1) :: Leaf(CC, Token(_, "and")) :: rst => {
-            taglist ++= NPTag(Node(NP, np1))
+            taglist :+= removeDT(Node(NP, np1))
             taglist = taglist ++ NPTag(Node(NP, rst))
           }
-          case _ => taglist :+= tag
+          case _ => taglist :+= removeDT(tag)
         }
       }
-      case _ => println("NpTag error")
+      case _ => txtOut.println("### NpTag error")
     }
     taglist
   }
@@ -247,6 +250,20 @@ object TagToCommand {
       str += ", "
     }
     //println(str)
-    str + ")"
+    str + ") "
   }
+  def removeDT(tag: Tag): Tag = {
+    //println(tag)
+    tag match {
+      case Node(NP, rst) => {
+        //println(rst.head)
+        rst.head match {
+          case Leaf(DT, _) => Node(NP, rst.tail)
+          case _ => tag
+        }
+      }
+      case _ => tag
+    }
+  }
+
 }

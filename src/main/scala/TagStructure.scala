@@ -33,6 +33,8 @@ object TagStructure {
   case object FRAG extends NodeType
   case object PRN extends NodeType
   case object INTJ extends NodeType
+  case object UCP extends NodeType
+  case object QP extends NodeType
 
   // POS tagset (word)
   case object CC extends LeafType
@@ -185,7 +187,7 @@ object TagStructure {
     tag match {
       case Node(_, list) => {
         for (n <- list) {
-          if (str.length > 0 && str.last != '_') str += "_"
+          if (str.length > 0 && str.last != ' ') str += " "
           str += getLeave_(n)
         }
       }
