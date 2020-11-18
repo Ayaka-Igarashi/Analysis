@@ -10,10 +10,24 @@ object TagToCommand {
 
   var tag_list: List[Tag] = List()
 
+  var state_if: Int = 0 //0: None, 1: then phrase, 2: otherwise phrase
+
   def toCommand(tagList: List[Tag]): List[Command] = {
+    state_if = 0
     var commandList: List[Command] = List()
     for (tag <- tagList) {
-      commandList ++= RootTag(tag)
+      val state = state_if
+      val com = RootTag(tag)
+      if (state == 0) commandList ++= com
+      else if (state == 1) {
+        commandList ++= com
+//        if (ifStack.length == 0) {txtOut.print("### error_rr : ");txtOut.println(ifStack) }
+//        else {
+//          val ifbun = ifStack.pop()
+//          ifbun.T ++= com
+//          ifStack.push(ifbun)
+//        }
+      } else commandList ++= com
     }
     commandList
   }
@@ -35,19 +49,61 @@ object TagToCommand {
       case Node(S, list) => {
         list match {
           // S and ...
-          case Node(S, s1) :: Leaf(CC, Token(_, "and")) :: rst => {
-            commandList ++= STag(Node(S, s1))
-            commandList ++= STag(Node(S, rst))
+          case Node(S, s) :: Leaf(CC, Token(_, "and")) :: rst => {
+            commandList ++= STag(Node(S, s))
+            if (state_if == 1) {
+              if (ifStack.length == 0) {
+                val com = STag(Node(S, rst))
+                commandList ++= com
+              }else {
+                val ifbun = ifStack.pop()
+                val com = STag(Node(S, rst))
+                ifbun.T ++= com
+                ifStack.push(ifbun)
+              }
+            }
+            else {
+              val com = STag(Node(S, rst))
+              commandList ++= com
+            }
           }
           // S ,and ...
-          case Node(S, s1) :: Leaf(Comma, _):: Leaf(CC, Token(_, "and")) :: rst => {
-            commandList ++= STag(Node(S, s1))
-            commandList ++= STag(Node(S, rst))
+          case Node(S, s) :: Leaf(Comma, _):: Leaf(CC, Token(_, "and")) :: rst => {
+            commandList ++= STag(Node(S, s))
+            if (state_if == 1) {
+              if (ifStack.length == 0) {
+                val com = STag(Node(S, rst))
+                commandList ++= com
+              } else {
+                val ifbun = ifStack.pop()
+                val com = STag(Node(S, rst))
+                ifbun.T ++= com
+                ifStack.push(ifbun)
+              }
+            }
+            else {
+              val com = STag(Node(S, rst))
+              commandList ++= com
+            }
           }
           // S ,then ...
           case Node(S, s) :: Leaf(Comma, _) :: Node(ADVP, List(Leaf(RB, Token(_, "then")))) :: rst => {
             commandList ++= STag(Node(S, s))
-            commandList ++= STag(Node(S, rst))
+            if (state_if == 1) {
+              if (ifStack.length == 0) {
+                val com = STag(Node(S, rst))
+                commandList ++= com
+              }else {
+                val ifbun = ifStack.pop()
+                val com = STag(Node(S, rst))
+                ifbun.T ++= com
+                ifStack.push(ifbun)
+              }
+            }
+            else {
+              val com = STag(Node(S, rst))
+              commandList ++= com
+            }
           }
           // S (S)
           case Node(S, s) :: Leaf(LBracket, _) :: Node(S, _) :: Leaf(RBracket, _) :: Nil => {
@@ -60,25 +116,27 @@ object TagToCommand {
 
           // if S ,then ...
           case Node(SBAR, List(Leaf(IN, Token(_, "if")), Node(S, l2))) :: Leaf(Comma, _) :: rst => {
-            //commandList :+= If(Bool(getLeave(Node(S, l2))), STag(Node(S, rst)), null)
+            state_if = 1
             val com_list = STag(Node(S, rst))
             ifStack.push(If(Bool(getLeave(Node(S, l2))), com_list, null))
             //txtOut.println(ifStack)
           }
           // otherwise, ...
           case Node(ADVP, List(Leaf(RB, Token(_, "otherwise")))) :: Leaf(Comma, _) :: rst => {
-            val com_list = STag(Node(S, rst))
+            state_if = 2
+
             //println(com_list)
             if (ifStack.length == 0) {
               txtOut.print("### error_otherwise : ");txtOut.println(ifStack)
+              val com_list = STag(Node(S, rst))
               commandList :+= If(Bool("otherwise"),null,com_list)
             } else {
               val ifbun = ifStack.pop()
+              val com_list = STag(Node(S, rst))
               ifbun.F = com_list
-              tag_list :+= Node(S, rst)
+              //tag_list :+= Node(S, rst)
               commandList :+= ifbun
             }
-            //println("o")
           }
           // this is ...error
           case Node(NP, List(Leaf(DT, Token(_, "this")))) :: Node(VP, List(Leaf(_, Token(_, "be")), Node(NP, nplist))) :: Nil => {

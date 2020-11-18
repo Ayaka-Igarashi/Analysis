@@ -37,7 +37,7 @@ object CommandStructure {
   // Append a U+FFFD REPLACEMENT CHARACTER character to the current tag token's tag name.
   case class Append(obj: String, to: String) extends Command
 
-  case class If(bool: Bool, T: List[Command], var F: List[Command]) extends Command
+  case class If(bool: Bool, var T: List[Command], var F: List[Command]) extends Command
 
 
 

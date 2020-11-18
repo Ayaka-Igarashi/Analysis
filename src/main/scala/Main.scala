@@ -80,7 +80,7 @@ object Main {
 
         treeList = List()
         treeList2 = List()
-        //if (i == 25 - 1 && j == 5)ShowTree.showTree(tagList)
+        //if (i == 14 - 1 && j == 5)ShowTree.showTree(tagList)
       }
 
     }

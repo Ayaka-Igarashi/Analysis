@@ -3129,10 +3129,8 @@ Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))),
 Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(DOCTYPE,doctype)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(JJ,Token(force_quirks,force_quirks)), Leaf(NN,Token(flag,flag)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(PP,List(Leaf(IN,Token(on,on))))))))))))
 Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Bogus_DOCTYPE_state,Bogus_DOCTYPE_state))))))))))))
 
- -> Switch(After_DOCTYPE_public_keyword_state)
- -> If(Bool(the six characters starting from the current input character are an ASCII case_insensitive match for the word " SYSTEM "),List(Consume(List (characters, ) )),List())
- -> Switch(After_DOCTYPE_system_keyword_state)
- -> If(Bool(the six characters starting from the current input character are an ASCII case_insensitive match for the word " PUBLIC "),List(Consume(List (characters, ) )),List(Error(invalid_character_sequence_after_doctype_name parse error)))
+ -> If(Bool(the six characters starting from the current input character are an ASCII case_insensitive match for the word " PUBLIC "),List(Consume(List (characters, ) ), Switch(After_DOCTYPE_public_keyword_state)),List())
+ -> If(Bool(the six characters starting from the current input character are an ASCII case_insensitive match for the word " SYSTEM "),List(Consume(List (characters, ) ), Switch(After_DOCTYPE_system_keyword_state)),List(Error(invalid_character_sequence_after_doctype_name parse error)))
  -> Set(the DOCTYPE token 's force_quirks flag,on)
  -> Reconsume(Bogus_DOCTYPE_state)
 
