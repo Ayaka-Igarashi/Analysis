@@ -1,4 +1,5 @@
 import CommandStructure._
+import Environment._
 import StateProcessedStructure.pState
 
 import scala.collection.immutable.ListMap
@@ -9,9 +10,17 @@ object Implement {
   var nextState: String = "Data_state"
   var inputCharStream: String = "aa"
 
+  var Env: Map[String, Val] = Map(
+    "currentState" -> Val("Data_state"),
+    "nextState" -> Val("Data_state"),
+    "inputCharStream" -> Val("aa")
+
+  )
+
   // インタープリタ
-  def interpret(definition: ListMap[String, pState]) = { // env(環境)も引数に入れる,返り値もenvにする
+  def interpret(env: Map[String, Val], definition: ListMap[String, pState]) = { // env(環境)も引数に入れる,返り値もenvにする
     // 最初の処理書く
+    env updated ("currentState", env("nextState"))
     currentState = nextState
 
     // 状態のマッチ
@@ -32,7 +41,7 @@ object Implement {
 
         // Commandを1つずつ処理する
         for (command <- commandList) {
-
+          interpretCommand(command)
         }
 
       }

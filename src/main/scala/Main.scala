@@ -64,7 +64,7 @@ object Main {
       println(i+1)
       val stateName = stateList(i).name
       txtOut.println(i+1 + " : " + stateName)
-      var trans_p: ListMap[String, List[Command]] = ListMap()
+      var trans_p: Map[String, List[Command]] = Map()
 
       for (j <- 0 to stateList(i).trans.length - 1) {
         val character = stateList(i).trans(j).character
@@ -89,17 +89,28 @@ object Main {
         for (c <- commandList) {txtOut.println(" -> " + c)}
         txtOut.println("")
 
-        trans_p += (character -> commandList)
+        // Anything elseの時は例外の処理扱いする
+        if (character == "Anything else") {
+          trans_p = trans_p.withDefaultValue(commandList)
+        } else {
+          trans_p += (character -> commandList)
+        }
+
 
         treeList = List()
         treeList2 = List()
         //if (i == 14 - 1 && j == 5)ShowTree.showTree(tagList)
       }
+
       val state_p = pState(stateName, List(), trans_p)
       pStateMap += (stateName -> state_p)
 
     }
     txtOut.println(pStateMap)
+    pStateMap.get("Data_state") match {
+      case Some(pState(n,p,t)) => { txtOut.println(t("a"))}
+      case _ =>txtOut.println("eee")
+    }
 
     var endtime = System.currentTimeMillis
     System.out.println("時間 = " + formatter.format(endtime - start))
