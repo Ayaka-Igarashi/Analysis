@@ -3,7 +3,6 @@ object CommandStructure {
   trait Command
 
   case class Switch(state: String) extends Command
-
   case class Reconsume(state: String) extends Command
 
   /**

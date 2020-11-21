@@ -17,17 +17,21 @@ object TagToCommand {
     var commandList: List[Command] = List()
     for (tag <- tagList) {
       val state = state_if
-      val com = RootTag(tag)
-      if (state == 0) commandList ++= com
-      else if (state == 1) {
-        commandList ++= com
-//        if (ifStack.length == 0) {txtOut.print("### error_rr : ");txtOut.println(ifStack) }
+//      val com = RootTag(tag)
+      if (state == 1) {
+        commandList ++= RootTag(tag)
+
+//        if (ifStack.length == 0) {txtOut.print("### error_rr : ");commandList ++= RootTag(tag) }
 //        else {
 //          val ifbun = ifStack.pop()
+//          val com = RootTag(tag)
 //          ifbun.T ++= com
 //          ifStack.push(ifbun)
 //        }
-      } else commandList ++= com
+      } else {
+        val com = RootTag(tag)
+        commandList ++= com
+      }
     }
     commandList
   }

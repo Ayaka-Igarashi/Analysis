@@ -22,7 +22,7 @@ object Replacement {
 
     // U+xxxx => UPxxxx
     val re2 =  "(U\\+[0-9A-F][0-9A-F][0-9A-F][0-9A-F])".r
-    s = re2.replaceAllIn(s, m => "UP" + m.toString().substring(2,6))
+    s = re2.replaceAllIn(s, m => "U_" + m.toString().substring(2,6))
     // switch => you switch
     val re3 = "([sS]witch|[rR]econsume|[eE]mit|[fF]lush|[aA]ppend|[aA]dd)".r
     s = re3.replaceAllIn(s, m => "you " + m.toString())
@@ -39,6 +39,7 @@ object Replacement {
     s = s.replace("error and", "error.")
     // 参照関係
     s = s.replace("that attribute", "that attribute's")
+    s = s.replace("'s's", "'s")
 
     replace_out.println(" => " + s)
     s
