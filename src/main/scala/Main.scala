@@ -2,15 +2,22 @@ import java.io.{BufferedWriter, File, FileWriter, PrintWriter}
 import java.text.SimpleDateFormat
 import java.util.TimeZone
 
+import CommandStructure.Command
 import SpecificationAnalysis.{analysis, treeList, treeList2}
 import ConvertTree.{convert, makeLeafMap, tokenList, tokenList2}
 import ParseHtml.{parseHtml, stateList}
 import Replacement.replace_out
+import StateProcessedStructure.pState
 import TagStructure._
 import TagToCommand.{tag_list, toCommand}
 import edu.stanford.nlp.io.IOUtils
 
+import scala.collection.immutable.ListMap
+
 object Main {
+  var pStateMap: ListMap[String, pState] = ListMap()
+
+  // 木を表示させるための
   var tag_list: List[Tag] = null
 
   // ファイル
@@ -53,13 +60,17 @@ object Main {
     formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
 
     System.out.println("> parse&convert_start")
-    for (i <- 1 - 1 to stateList.length - 1 - (stateList.length - 79)) {
+    for (i <- 1 - 1 to stateList.length - 1 - (stateList.length - 10)) {
       println(i+1)
-      txtOut.println(i+1 + " : " + stateList(i).name)
-      for (j <- 0 to stateList(i).trance.length - 1) {
-        txtOut.println( "-- chara: "+stateList(i).trance(j).character + " --")
+      val stateName = stateList(i).name
+      txtOut.println(i+1 + " : " + stateName)
+      var trans_p: ListMap[String, List[Command]] = ListMap()
+
+      for (j <- 0 to stateList(i).trans.length - 1) {
+        val character = stateList(i).trans(j).character
+        txtOut.println( "-- chara: "+ character + " --")
         // 入力ファイルを解析する
-        var str: String = stateList(i).trance(j).process
+        var str: String = stateList(i).trans(j).process
         txtOut.println(str)
         str = Replacement.replace(str)
         txtOut.println("  | "+str)
@@ -78,12 +89,18 @@ object Main {
         for (c <- commandList) {txtOut.println(" -> " + c)}
         txtOut.println("")
 
+        trans_p += (character -> commandList)
+
         treeList = List()
         treeList2 = List()
         //if (i == 14 - 1 && j == 5)ShowTree.showTree(tagList)
       }
+      val state_p = pState(stateName, List(), trans_p)
+      pStateMap += (stateName -> state_p)
 
     }
+    txtOut.println(pStateMap)
+
     var endtime = System.currentTimeMillis
     System.out.println("時間 = " + formatter.format(endtime - start))
     // ファイルを閉じる

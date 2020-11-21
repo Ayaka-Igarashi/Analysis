@@ -82,7 +82,7 @@ object ParseHtml {
         leave = leave.replace("\n", "")
         //leave = Replacement.replace(leave)
         for (c <- charas) {
-          state.trance :+= Trans(c, leave)
+          state.trans :+= Trans(c, leave)
         }
         //state.trance :+= Trance(chara, leave)
         charas = List()
