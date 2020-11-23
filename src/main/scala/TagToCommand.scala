@@ -119,10 +119,10 @@ object TagToCommand {
           }
 
           // if S ,then ...
-          case Node(SBAR, List(Leaf(IN, Token(_, "if")), Node(S, l2))) :: Leaf(Comma, _) :: rst => {
+          case Node(SBAR, List(Leaf(IN, Token(_, "if")), Node(S, bool))) :: Leaf(Comma, _) :: rst => {
             state_if = 1
             val com_list = STag(Node(S, rst))
-            ifStack.push(If(Bool(getLeave(Node(S, l2))), com_list, null))
+            ifStack.push(If(convertBool(Node(S, bool)), com_list, null))
             //txtOut.println(ifStack)
           }
           // otherwise, ...
@@ -133,7 +133,7 @@ object TagToCommand {
             if (ifStack.length == 0) {
               txtOut.print("### error_otherwise : ");txtOut.println(ifStack)
               val com_list = STag(Node(S, rst))
-              commandList :+= If(Bool("otherwise"),null,com_list)
+              commandList :+= If(UNDEF("otherwise"),null,com_list)
             } else {
               val ifbun = ifStack.pop()
               val com_list = STag(Node(S, rst))
@@ -308,11 +308,16 @@ object TagToCommand {
     var str = "List ("
     val taglist = NPTag(tag)
     for(t <- taglist) {
-      str += getLeave(t)
+      str += toSimpleToken(getLeave(t))
       str += ", "
     }
     //println(str)
     str + ") "
+  }
+
+  def toSimpleToken(token: String): String = {
+    val re =  "(U_[0-9A-F][0-9A-F][0-9A-F][0-9A-F]) (.*) character token".r
+    re.replaceAllIn(token, m => m.toString().substring(0,6))
   }
   def removeDT(tag: Tag): Tag = {
     //println(tag)
@@ -325,6 +330,35 @@ object TagToCommand {
         }
       }
       case _ => tag
+    }
+  }
+
+  def convertBool(tag: Tag): Bool = {
+    tag match {
+      case Node(S, list) => {
+        list match {
+          case Node(S, s1) :: Leaf(CC, Token(_, "and")) :: Node(S, s2) :: Nil => {
+            And(convertBool(Node(S, s1)), convertBool(Node(S, s2)))
+          }
+          case Node(S, s1) :: Leaf(CC, Token(_, "or")) :: Node(S, s2) :: Nil => {
+            Or(convertBool(Node(S, s1)), convertBool(Node(S, s2)))
+          }
+          case Node(NP, List(Leaf(EX, Token(_, "there")))) :: Node(VP, List(Leaf(VB, Token(_, "be")), Node(NP, np))) :: Nil => {
+            IsExist(getLeave(Node(NP, np)))
+          }
+          case Node(NP, np1) :: Node(VP, List(Leaf(VB, Token(_, "be")), Node(NP, np2))) :: Nil => {
+            IsEqual(getLeave(Node(NP, np1)), getLeave(Node(NP, np2)))
+          }
+          case Node(NP, List(Leaf(EX, Token(_, "there")))) :: Node(VP, List(Leaf(VB, Token(_, "be")), Leaf(RB, Token(_, "not")),Node(NP, np))) :: Nil => {
+            Not(IsExist(getLeave(Node(NP, np))))
+          }
+          case Node(NP, np1) :: Node(VP, List(Leaf(VB, Token(_, "be")), Leaf(RB, Token(_, "not")), Node(NP, np2))) :: Nil => {
+            Not(IsEqual(getLeave(Node(NP, np1)), getLeave(Node(NP, np2))))
+          }
+          case _ => UNDEF(getLeave(tag))
+        }
+      }
+      case _ => UNDEF(getLeave(tag))
     }
   }
 

@@ -60,7 +60,7 @@ object Main {
     formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
 
     System.out.println("> parse&convert_start")
-    for (i <- 1 - 1 to stateList.length - 1 - (stateList.length - 10)) {
+    for (i <- 29 - 1 to stateList.length - 1 - (stateList.length - 29)) {
       println(i+1)
       val stateName = stateList(i).name
       txtOut.println(i+1 + " : " + stateName)
@@ -99,7 +99,7 @@ object Main {
 
         treeList = List()
         treeList2 = List()
-        //if (i == 14 - 1 && j == 5)ShowTree.showTree(tagList)
+        if (i == 29 - 1 && j == 1)ShowTree.showTree(tagList)
       }
 
       val state_p = pState(stateName, List(), trans_p)
@@ -107,10 +107,10 @@ object Main {
 
     }
     txtOut.println(pStateMap)
-    pStateMap.get("Data_state") match {
-      case Some(pState(n,p,t)) => { txtOut.println(t("a"))}
-      case _ =>txtOut.println("eee")
-    }
+//    pStateMap.get("Data_state") match {
+//      case Some(pState(n,p,t)) => { txtOut.println(t("a"))}
+//      case _ =>txtOut.println("eee")
+//    }
 
     var endtime = System.currentTimeMillis
     System.out.println("時間 = " + formatter.format(endtime - start))

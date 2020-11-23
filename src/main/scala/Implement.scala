@@ -71,4 +71,16 @@ object Implement {
       case _ => println("undefined command error : " + command)
     }
   }
+
+  def implementBool(bool: Bool): Boolean = { // env(環境)も引数に入れる
+    bool match {
+      case And(b1, b2) => implementBool(b1) && implementBool(b2)
+      case Or(b1, b2) => implementBool(b1) || implementBool(b2)
+      case Not(b) => !implementBool(b)
+        // 途中
+      case IsEqual(a, b) => true
+      case IsExist(a) => true
+      case UNDEF(str) => false //
+    }
+  }
 }

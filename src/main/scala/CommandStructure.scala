@@ -67,12 +67,16 @@ object CommandStructure {
   // the temporary buffer is the string "script"
   // there is an adjusted current node and it is not an element in the HTML namespace
   // the character reference was consumed as part of an attribute
-  case class Bool(str: String)
-
-  /*
-  trait Bool extends Command
-
-  case class ConsumedAsAttribute() extends Bool
+  /**
+   * Boolean
    */
+  trait Bool
+
+  case class And(a: Bool, b: Bool) extends Bool
+  case class Or(a: Bool, b: Bool) extends Bool
+  case class Not(a: Bool) extends Bool
+  case class IsEqual(a: String, b: String) extends Bool
+  case class IsExist(a: String) extends Bool
+  case class UNDEF(str: String) extends Bool
 
 }

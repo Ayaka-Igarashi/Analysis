@@ -1,450 +1,68 @@
-1 : Data_state
--- chara: U+0026 AMPERSAND (&amp;) --
-Set the return state to the data state. Switch to the character reference state.
-  | Set the return state to the Data_state. you Switch to the Character_reference_state.
+29 : Script_data_double_escaped_dash_dash_state
+-- chara: U+002D HYPHEN-MINUS (-) --
+Emit a U+002D HYPHEN-MINUS character token.
+  | you Emit a U_002D HYPHEN_MINUS character token.
 List()
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(return,return)), Leaf(NN,Token(state,state)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Data_state,Data_state))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Character_reference_state,Character_reference_state))))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Leaf(NNP,Token(U_002D,u_002d)), Leaf(NNP,Token(HYPHEN_MINUS,hyphen_minus)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))
 
- -> Set(the return state,the Data_state)
- -> Switch(Character_reference_state)
+ -> Emit(List (U_002D, ) )
 
 -- chara: U+003C LESS-THAN SIGN (&lt;) --
-Switch to the tag open state.
-  | you Switch to the Tag_open_state.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Tag_open_state,tag_open_state))))))))))))
-
- -> Switch(Tag_open_state)
-
--- chara: U+0000 NULL --
-This is an unexpected-null-character parse error. Emit the current input character as a character token.
-  | This is an unexpected_null_character parse error. you Emit the current input character as a character token.
-List()
-List()
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(unexpected_null_character,unexpected_null_character)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))))
-
- -> Error(unexpected_null_character parse error)
- -> Emit(List (current input character, ) _as a character token)
-
--- chara: EOF --
-Emit an end-of-file token.
-  | you Emit an end_of_file token.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(end_of_file,end_of_file)), Leaf(NN,Token(token,token))))))))))
-
- -> Emit(List (end_of_file token, ) )
-
--- chara: Anything else --
-Emit the current input character as a character token.
-  | you Emit the current input character as a character token.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))))
-
- -> Emit(List (current input character, ) _as a character token)
-
-2 : RCDATA_state
--- chara: U+0026 AMPERSAND (&amp;) --
-Set the return state to the RCDATA state. Switch to the character reference state.
-  | Set the return state to the RCDATA_state. you Switch to the Character_reference_state.
-List()
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(return,return)), Leaf(NN,Token(state,state)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA_state,RCDATA_state))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Character_reference_state,Character_reference_state))))))))))))
-
- -> Set(the return state,the RCDATA_state)
- -> Switch(Character_reference_state)
-
--- chara: U+003C LESS-THAN SIGN (&lt;) --
-Switch to the RCDATA less-than sign state.
-  | you Switch to the RCDATA_less_than_sign_state.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA_less_than_sign_state,RCDATA_less_than_sign_state))))))))))))
-
- -> Switch(RCDATA_less_than_sign_state)
-
--- chara: U+0000 NULL --
-This is an unexpected-null-character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
-  | This is an unexpected_null_character parse error. you Emit a U_FFFD REPLACEMENT CHARACTER character token.
-List()
-List()
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(unexpected_null_character,unexpected_null_character)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(U_FFFD,U_FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NN,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))
-
- -> Error(unexpected_null_character parse error)
- -> Emit(List (U_FFFD REPLACEMENT CHARACTER character token, ) )
-
--- chara: EOF --
-Emit an end-of-file token.
-  | you Emit an end_of_file token.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(end_of_file,end_of_file)), Leaf(NN,Token(token,token))))))))))
-
- -> Emit(List (end_of_file token, ) )
-
--- chara: Anything else --
-Emit the current input character as a character token.
-  | you Emit the current input character as a character token.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))))
-
- -> Emit(List (current input character, ) _as a character token)
-
-3 : RAWTEXT_state
--- chara: U+003C LESS-THAN SIGN (&lt;) --
-Switch to the RAWTEXT less-than sign state.
-  | you Switch to the RAWTEXT_less_than_sign_state.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RAWTEXT_less_than_sign_state,rawtext_less_than_sign_state))))))))))))
-
- -> Switch(RAWTEXT_less_than_sign_state)
-
--- chara: U+0000 NULL --
-This is an unexpected-null-character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
-  | This is an unexpected_null_character parse error. you Emit a U_FFFD REPLACEMENT CHARACTER character token.
-List()
-List()
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(unexpected_null_character,unexpected_null_character)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(U_FFFD,U_FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NN,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))
-
- -> Error(unexpected_null_character parse error)
- -> Emit(List (U_FFFD REPLACEMENT CHARACTER character token, ) )
-
--- chara: EOF --
-Emit an end-of-file token.
-  | you Emit an end_of_file token.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(end_of_file,end_of_file)), Leaf(NN,Token(token,token))))))))))
-
- -> Emit(List (end_of_file token, ) )
-
--- chara: Anything else --
-Emit the current input character as a character token.
-  | you Emit the current input character as a character token.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))))
-
- -> Emit(List (current input character, ) _as a character token)
-
-4 : Script_data_state
--- chara: U+003C LESS-THAN SIGN (&lt;) --
-Switch to the script data less-than sign state.
-  | you Switch to the Script_data_less_than_sign_state.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Script_data_less_than_sign_state,script_data_less_than_sign_state))))))))))))
-
- -> Switch(Script_data_less_than_sign_state)
-
--- chara: U+0000 NULL --
-This is an unexpected-null-character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
-  | This is an unexpected_null_character parse error. you Emit a U_FFFD REPLACEMENT CHARACTER character token.
-List()
-List()
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(unexpected_null_character,unexpected_null_character)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(U_FFFD,U_FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NN,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))
-
- -> Error(unexpected_null_character parse error)
- -> Emit(List (U_FFFD REPLACEMENT CHARACTER character token, ) )
-
--- chara: EOF --
-Emit an end-of-file token.
-  | you Emit an end_of_file token.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(end_of_file,end_of_file)), Leaf(NN,Token(token,token))))))))))
-
- -> Emit(List (end_of_file token, ) )
-
--- chara: Anything else --
-Emit the current input character as a character token.
-  | you Emit the current input character as a character token.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))))
-
- -> Emit(List (current input character, ) _as a character token)
-
-5 : PLAINTEXT_state
--- chara: U+0000 NULL --
-This is an unexpected-null-character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
-  | This is an unexpected_null_character parse error. you Emit a U_FFFD REPLACEMENT CHARACTER character token.
-List()
-List()
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(unexpected_null_character,unexpected_null_character)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(U_FFFD,U_FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NN,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))
-
- -> Error(unexpected_null_character parse error)
- -> Emit(List (U_FFFD REPLACEMENT CHARACTER character token, ) )
-
--- chara: EOF --
-Emit an end-of-file token.
-  | you Emit an end_of_file token.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(end_of_file,end_of_file)), Leaf(NN,Token(token,token))))))))))
-
- -> Emit(List (end_of_file token, ) )
-
--- chara: Anything else --
-Emit the current input character as a character token.
-  | you Emit the current input character as a character token.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))))
-
- -> Emit(List (current input character, ) _as a character token)
-
-6 : Tag_open_state
--- chara: U+0021 EXCLAMATION MARK (!) --
-Switch to the markup declaration open state.
-  | you Switch to the Markup_declaration_open_state.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Markup_declaration_open_state,Markup_declaration_open_state))))))))))))
-
- -> Switch(Markup_declaration_open_state)
-
--- chara: U+002F SOLIDUS (/) --
-Switch to the end tag open state.
-  | you Switch to the End_tag_open_state.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(End_tag_open_state,end_tag_open_state))))))))))))
-
- -> Switch(End_tag_open_state)
-
--- chara: ASCII alpha --
-Create a new start tag token and set its tag name to the empty string. Reconsume in the tag name state. 
-  | Create a new start tag token and set its tag name to the empty string. you Reconsume in the Tag_name_state. 
-List((1,CHAIN1-["a new start tag token" in sentence 1, "its" in sentence 1]))
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(NN,Token(start,start)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))))), Leaf(CC,Token(and,and)), Node(VP,List(Leaf(VB,Token(set,set)), Node(NP,List(Leaf(PRPD,Token(its,its)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(empty,empty)), Leaf(NN,Token(string,string))))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Tag_name_state,tag_name_state))))))))))))
-
- -> Create(List (new start tag token, ) )
- -> Set(its tag name,the empty string)
- -> Reconsume(Tag_name_state)
-
--- chara: U+003F QUESTION MARK (?) --
-This is an unexpected-question-mark-instead-of-tag-name parse error. Create a comment token whose data is the empty string. Reconsume in the bogus comment state.
-  | This is an unexpected_question_mark_instead_of_tag_name parse error. Create a comment token whose data is the empty string. you Reconsume in the Bogus_comment_state.
-List()
-List()
-List()
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(unexpected_question_mark_instead_of_tag_name,unexpected_question_mark_instead_of_tag_name)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(token,token)))), Node(SBAR,List(Node(WHNP,List(Leaf(WPD,Token(whose,whose)), Node(NML,List(Leaf(NNS,Token(data,datum)))))), Node(S,List(Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(empty,empty)), Leaf(NN,Token(string,string))))))))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Bogus_comment_state,Bogus_comment_state))))))))))))
-
- -> Error(unexpected_question_mark_instead_of_tag_name parse error)
- -> Create(List (a comment token whose data is the empty string, ) )
- -> Reconsume(Bogus_comment_state)
-
--- chara: EOF --
-This is an eof-before-tag-name parse error. Emit a U+003C LESS-THAN SIGN character token and an end-of-file token.
-  | This is an eof_before_tag_name parse error. you Emit a U_003C LESS_THAN SIGN character token and an end_of_file token.
-List()
-List()
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(eof_before_tag_name,eof_before_tag_name)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Leaf(NNP,Token(U_003C,u_003c)), Leaf(NNP,Token(LESS_THAN,LESS_THAN)), Leaf(NNP,Token(SIGN,SIGN)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))), Leaf(CC,Token(and,and)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(end_of_file,end_of_file)), Leaf(NN,Token(token,token))))))))))))
-
- -> Error(eof_before_tag_name parse error)
- -> Emit(List (U_003C LESS_THAN SIGN character token, an end_of_file token, ) )
-
--- chara: Anything else --
-This is an invalid-first-character-of-tag-name parse error. Emit a U+003C LESS-THAN SIGN character token. Reconsume in the data state.
-  | This is an invalid_first_character_of_tag_name parse error. you Emit a U_003C LESS_THAN SIGN character token. you Reconsume in the Data_state.
-List()
-List((5,CHAIN5-["you" in sentence 2]))
-List((5,CHAIN5-["you" in sentence 3]))
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(invalid_first_character_of_tag_name,invalid_first_character_of_tag_name)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Leaf(NNP,Token(U_003C,u_003c)), Leaf(NNP,Token(LESS_THAN,LESS_THAN)), Leaf(NNP,Token(SIGN,SIGN)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Data_state,Data_state))))))))))))
-
- -> Error(invalid_first_character_of_tag_name parse error)
- -> Emit(List (U_003C LESS_THAN SIGN character token, ) )
- -> Reconsume(Data_state)
-
-7 : End_tag_open_state
--- chara: ASCII alpha --
-Create a new end tag token, set its tag name to the empty string. Reconsume in the tag name state. 
-  | Create a new end tag token and set its tag name to the empty string. you Reconsume in the Tag_name_state. 
-List((1,CHAIN1-["a new end tag token" in sentence 1, "its" in sentence 1]))
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))))), Leaf(CC,Token(and,and)), Node(VP,List(Leaf(VB,Token(set,set)), Node(NP,List(Leaf(PRPD,Token(its,its)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(empty,empty)), Leaf(NN,Token(string,string))))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Tag_name_state,tag_name_state))))))))))))
-
- -> Create(List (new end tag token, ) )
- -> Set(its tag name,the empty string)
- -> Reconsume(Tag_name_state)
-
--- chara: U+003E GREATER-THAN SIGN (&gt;) --
-This is a missing-end-tag-name parse error. Switch to the data state.
-  | This is a missing_end_tag_name parse error. you Switch to the Data_state.
-List()
-List()
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(missing_end_tag_name,missing_end_tag_name)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Data_state,Data_state))))))))))))
-
- -> Error(missing_end_tag_name parse error)
- -> Switch(Data_state)
-
--- chara: EOF --
-This is an eof-before-tag-name parse error. Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token and an end-of-file token. 
-  | This is an eof_before_tag_name parse error. you Emit a U_003C LESS_THAN SIGN character token, a U_002F SOLIDUS character token and an end_of_file token. 
-List()
-List()
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(eof_before_tag_name,eof_before_tag_name)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Leaf(NNP,Token(U_003C,u_003c)), Leaf(NNP,Token(LESS_THAN,LESS_THAN)), Leaf(NNP,Token(SIGN,SIGN)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))), Leaf(Comma,Token(,,,)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Leaf(NNP,Token(U_002F,u_002f)), Leaf(NNP,Token(SOLIDUS,SOLIDUS)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))), Leaf(CC,Token(and,and)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(end_of_file,end_of_file)), Leaf(NN,Token(token,token))))))))))))
-
- -> Error(eof_before_tag_name parse error)
- -> Emit(List (U_003C LESS_THAN SIGN character token, U_002F SOLIDUS character token, an end_of_file token, ) )
-
--- chara: Anything else --
-This is an invalid-first-character-of-tag-name parse error. Create a comment token whose data is the empty string. Reconsume in the bogus comment state.
-  | This is an invalid_first_character_of_tag_name parse error. Create a comment token whose data is the empty string. you Reconsume in the Bogus_comment_state.
-List()
-List()
-List()
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(invalid_first_character_of_tag_name,invalid_first_character_of_tag_name)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(token,token)))), Node(SBAR,List(Node(WHNP,List(Leaf(WPD,Token(whose,whose)), Node(NML,List(Leaf(NNS,Token(data,datum)))))), Node(S,List(Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(empty,empty)), Leaf(NN,Token(string,string))))))))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Bogus_comment_state,Bogus_comment_state))))))))))))
-
- -> Error(invalid_first_character_of_tag_name parse error)
- -> Create(List (a comment token whose data is the empty string, ) )
- -> Reconsume(Bogus_comment_state)
-
-8 : Tag_name_state
--- chara: U+0009 CHARACTER TABULATION (tab) --
-Switch to the before attribute name state.
-  | you Switch to the Before_attribute_name_state.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Before_attribute_name_state,before_attribute_name_state))))))))))))
-
- -> Switch(Before_attribute_name_state)
-
--- chara: U+000A LINE FEED (LF) --
-Switch to the before attribute name state.
-  | you Switch to the Before_attribute_name_state.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Before_attribute_name_state,before_attribute_name_state))))))))))))
-
- -> Switch(Before_attribute_name_state)
-
--- chara: U+000C FORM FEED (FF) --
-Switch to the before attribute name state.
-  | you Switch to the Before_attribute_name_state.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Before_attribute_name_state,before_attribute_name_state))))))))))))
-
- -> Switch(Before_attribute_name_state)
-
--- chara: U+0020 SPACE --
-Switch to the before attribute name state.
-  | you Switch to the Before_attribute_name_state.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Before_attribute_name_state,before_attribute_name_state))))))))))))
-
- -> Switch(Before_attribute_name_state)
-
--- chara: U+002F SOLIDUS (/) --
-Switch to the self-closing start tag state.
-  | you Switch to the Self_closing_start_tag_state.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Self_closing_start_tag_state,self_closing_start_tag_state))))))))))))
-
- -> Switch(Self_closing_start_tag_state)
-
--- chara: U+003E GREATER-THAN SIGN (&gt;) --
-Switch to the data state. Emit the current tag token.
-  | you Switch to the Data_state. you Emit the current tag token.
-List((5,CHAIN5-["you" in sentence 1]))
-List((5,CHAIN5-["you" in sentence 2]))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Data_state,Data_state))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token))))))))))
-
- -> Switch(Data_state)
- -> Emit(List (current tag token, ) )
-
--- chara: ASCII upper alpha --
-Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name.
-  | you Append the lowercase version of the current input character (you add 0x0020 to the character's code point) to the current tag token's tag name.
-List((6,CHAIN6-["you" in sentence 1, "you" in sentence 1]), (7,CHAIN7-["the current input character" in sentence 1, "the character 's" in sentence 1]))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(lowercase,lowercase)), Leaf(NN,Token(version,version)))), Node(PP,List(Leaf(IN,Token(of,of)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))))))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name))))))))))))
-
- -> Append(List (the lowercase version of the current input character, ) ,the current tag token 's tag name)
-
--- chara: U+0000 NULL --
-This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current tag token's tag name.
-  | This is an unexpected_null_character parse error. you Append a U_FFFD REPLACEMENT CHARACTER character to the current tag token's tag name.
-List()
-List()
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(unexpected_null_character,unexpected_null_character)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(U_FFFD,U_FFFD)), Node(NML,List(Leaf(NN,Token(REPLACEMENT,REPLACEMENT)), Leaf(NN,Token(CHARACTER,CHARACTER)))), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name))))))))))))
-
- -> Error(unexpected_null_character parse error)
- -> Append(List (U_FFFD REPLACEMENT CHARACTER character, ) ,the current tag token 's tag name)
-
--- chara: EOF --
-This is an eof-in-tag parse error. Emit an end-of-file token.
-  | This is an eof_in_tag parse error. you Emit an end_of_file token.
-List()
-List()
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(VB,Token(eof_in_tag,eof_in_tag)), Node(NML,List(Node(S,List(Node(VP,List(Leaf(VB,Token(parse,parse)))))))), Leaf(NN,Token(error,error))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(end_of_file,end_of_file)), Leaf(NN,Token(token,token))))))))))
-
- -> Error(eof_in_tag parse error)
- -> Emit(List (end_of_file token, ) )
-
--- chara: Anything else --
-Append the current input character to the current tag token's tag name.
-  | you Append the current input character to the current tag token's tag name.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name))))))))))))
-
- -> Append(List (current input character, ) ,the current tag token 's tag name)
-
-9 : RCDATA_less_than_sign_state
--- chara: U+002F SOLIDUS (/) --
-Set the temporary buffer to the empty string. Switch to the RCDATA end tag open state.
-  | Set the temporary buffer to the empty string. you Switch to the RCDATA_end_tag_open_state.
-List()
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(temporary,temporary)), Leaf(NN,Token(buffer,buffer)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(empty,empty)), Leaf(NN,Token(string,string))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA_end_tag_open_state,RCDATA_end_tag_open_state))))))))))))
-
- -> Set(the temporary buffer,the empty string)
- -> Switch(RCDATA_end_tag_open_state)
-
--- chara: Anything else --
-Emit a U+003C LESS-THAN SIGN character token. Reconsume in the RCDATA state.
-  | you Emit a U_003C LESS_THAN SIGN character token. you Reconsume in the RCDATA_state.
-List((3,CHAIN3-["you" in sentence 1]))
-List((3,CHAIN3-["you" in sentence 2]))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Leaf(NNP,Token(U_003C,u_003c)), Leaf(NNP,Token(LESS_THAN,LESS_THAN)), Leaf(NNP,Token(SIGN,SIGN)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA_state,RCDATA_state))))))))))))
-
- -> Emit(List (U_003C LESS_THAN SIGN character token, ) )
- -> Reconsume(RCDATA_state)
-
-10 : RCDATA_end_tag_open_state
--- chara: ASCII alpha --
-Create a new end tag token, set its tag name to the empty string. Reconsume in the RCDATA end tag name state. 
-  | Create a new end tag token and set its tag name to the empty string. you Reconsume in the RCDATA_end_tag_name_state. 
-List((1,CHAIN1-["a new end tag token" in sentence 1, "its" in sentence 1]))
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Node(VP,List(Leaf(VB,Token(Create,create)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(new,new)), Leaf(NN,Token(end,end)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(token,token)))))), Leaf(CC,Token(and,and)), Node(VP,List(Leaf(VB,Token(set,set)), Node(NP,List(Leaf(PRPD,Token(its,its)), Leaf(NN,Token(tag,tag)), Leaf(NN,Token(name,name)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(empty,empty)), Leaf(NN,Token(string,string))))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA_end_tag_name_state,RCDATA_end_tag_name_state))))))))))))
-
- -> Create(List (new end tag token, ) )
- -> Set(its tag name,the empty string)
- -> Reconsume(RCDATA_end_tag_name_state)
-
--- chara: Anything else --
-Emit a U+003C LESS-THAN SIGN character token and a U+002F SOLIDUS character token. Reconsume in the RCDATA state.
-  | you Emit a U_003C LESS_THAN SIGN character token and a U_002F SOLIDUS character token. you Reconsume in the RCDATA_state.
+Switch to the script data double escaped less-than sign state. Emit a U+003C LESS-THAN SIGN character token.
+  | you Switch to the Script_data_double_escaped_less_than_sign_state. you Emit a U_003C LESS_THAN SIGN character token.
 List((4,CHAIN4-["you" in sentence 1]))
 List((4,CHAIN4-["you" in sentence 2]))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Leaf(NNP,Token(U_003C,u_003c)), Leaf(NNP,Token(LESS_THAN,LESS_THAN)), Leaf(NNP,Token(SIGN,SIGN)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token)))), Leaf(CC,Token(and,and)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Leaf(NNP,Token(U_002F,u_002f)), Leaf(NNP,Token(SOLIDUS,SOLIDUS)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(RCDATA_state,RCDATA_state))))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Script_data_double_escaped_less_than_sign_state,script_data_double_escaped_less_than_sign_state))))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Leaf(NNP,Token(U_003C,u_003c)), Leaf(NNP,Token(LESS_THAN,LESS_THAN)), Leaf(NNP,Token(SIGN,SIGN)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))
 
- -> Emit(List (U_003C LESS_THAN SIGN character token, a U_002F SOLIDUS character token, ) )
- -> Reconsume(RCDATA_state)
+ -> Switch(Script_data_double_escaped_less_than_sign_state)
+ -> Emit(List (U_003C, ) )
 
-ListMap(Data_state -> pState(Data_state,List(),Map(U+0026 AMPERSAND (&amp;) -> List(Set(the return state,the Data_state), Switch(Character_reference_state)), U+003C LESS-THAN SIGN (&lt;) -> List(Switch(Tag_open_state)), U+0000 NULL -> List(Error(unexpected_null_character parse error), Emit(List (current input character, ) _as a character token)), EOF -> List(Emit(List (end_of_file token, ) )))), RCDATA_state -> pState(RCDATA_state,List(),Map(U+0026 AMPERSAND (&amp;) -> List(Set(the return state,the RCDATA_state), Switch(Character_reference_state)), U+003C LESS-THAN SIGN (&lt;) -> List(Switch(RCDATA_less_than_sign_state)), U+0000 NULL -> List(Error(unexpected_null_character parse error), Emit(List (U_FFFD REPLACEMENT CHARACTER character token, ) )), EOF -> List(Emit(List (end_of_file token, ) )))), RAWTEXT_state -> pState(RAWTEXT_state,List(),Map(U+003C LESS-THAN SIGN (&lt;) -> List(Switch(RAWTEXT_less_than_sign_state)), U+0000 NULL -> List(Error(unexpected_null_character parse error), Emit(List (U_FFFD REPLACEMENT CHARACTER character token, ) )), EOF -> List(Emit(List (end_of_file token, ) )))), Script_data_state -> pState(Script_data_state,List(),Map(U+003C LESS-THAN SIGN (&lt;) -> List(Switch(Script_data_less_than_sign_state)), U+0000 NULL -> List(Error(unexpected_null_character parse error), Emit(List (U_FFFD REPLACEMENT CHARACTER character token, ) )), EOF -> List(Emit(List (end_of_file token, ) )))), PLAINTEXT_state -> pState(PLAINTEXT_state,List(),Map(U+0000 NULL -> List(Error(unexpected_null_character parse error), Emit(List (U_FFFD REPLACEMENT CHARACTER character token, ) )), EOF -> List(Emit(List (end_of_file token, ) )))), Tag_open_state -> pState(Tag_open_state,List(),Map(U+003F QUESTION MARK (?) -> List(Error(unexpected_question_mark_instead_of_tag_name parse error), Create(List (a comment token whose data is the empty string, ) ), Reconsume(Bogus_comment_state)), U+0021 EXCLAMATION MARK (!) -> List(Switch(Markup_declaration_open_state)), ASCII alpha -> List(Create(List (new start tag token, ) ), Set(its tag name,the empty string), Reconsume(Tag_name_state)), EOF -> List(Error(eof_before_tag_name parse error), Emit(List (U_003C LESS_THAN SIGN character token, an end_of_file token, ) )), U+002F SOLIDUS (/) -> List(Switch(End_tag_open_state)))), End_tag_open_state -> pState(End_tag_open_state,List(),Map(ASCII alpha -> List(Create(List (new end tag token, ) ), Set(its tag name,the empty string), Reconsume(Tag_name_state)), U+003E GREATER-THAN SIGN (&gt;) -> List(Error(missing_end_tag_name parse error), Switch(Data_state)), EOF -> List(Error(eof_before_tag_name parse error), Emit(List (U_003C LESS_THAN SIGN character token, U_002F SOLIDUS character token, an end_of_file token, ) )))), Tag_name_state -> pState(Tag_name_state,List(),Map(U+000A LINE FEED (LF) -> List(Switch(Before_attribute_name_state)), U+0009 CHARACTER TABULATION (tab) -> List(Switch(Before_attribute_name_state)), U+0020 SPACE -> List(Switch(Before_attribute_name_state)), U+000C FORM FEED (FF) -> List(Switch(Before_attribute_name_state)), U+002F SOLIDUS (/) -> List(Switch(Self_closing_start_tag_state)), ASCII upper alpha -> List(Append(List (the lowercase version of the current input character, ) ,the current tag token 's tag name)), U+0000 NULL -> List(Error(unexpected_null_character parse error), Append(List (U_FFFD REPLACEMENT CHARACTER character, ) ,the current tag token 's tag name)), EOF -> List(Error(eof_in_tag parse error), Emit(List (end_of_file token, ) )), U+003E GREATER-THAN SIGN (&gt;) -> List(Switch(Data_state), Emit(List (current tag token, ) )))), RCDATA_less_than_sign_state -> pState(RCDATA_less_than_sign_state,List(),Map(U+002F SOLIDUS (/) -> List(Set(the temporary buffer,the empty string), Switch(RCDATA_end_tag_open_state)))), RCDATA_end_tag_open_state -> pState(RCDATA_end_tag_open_state,List(),Map(ASCII alpha -> List(Create(List (new end tag token, ) ), Set(its tag name,the empty string), Reconsume(RCDATA_end_tag_name_state)))))
-List(Emit(List (current input character, ) _as a character token))
+-- chara: U+003E GREATER-THAN SIGN (&gt;) --
+Switch to the script data state. Emit a U+003E GREATER-THAN SIGN character token.
+  | you Switch to the Script_data_state. you Emit a U_003E GREATER_THAN SIGN character token.
+List((4,CHAIN4-["you" in sentence 1]))
+List((4,CHAIN4-["you" in sentence 2]))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Script_data_state,script_data_state))))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Leaf(NNP,Token(U_003E,u_003e)), Leaf(NNP,Token(GREATER_THAN,GREATER_THAN)), Leaf(NNP,Token(SIGN,SIGN)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))
+
+ -> Switch(Script_data_state)
+ -> Emit(List (U_003E, ) )
+
+-- chara: U+0000 NULL --
+This is an unexpected-null-character parse error. Switch to the script data double escaped state. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+  | This is an unexpected_null_character parse error. you Switch to the Script_data_double_escaped_state. you Emit a U_FFFD REPLACEMENT CHARACTER character token.
+List()
+List((6,CHAIN6-["you" in sentence 2]))
+List((6,CHAIN6-["you" in sentence 3]))
+Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(unexpected_null_character,unexpected_null_character)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Script_data_double_escaped_state,script_data_double_escaped_state))))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(U_FFFD,U_FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NN,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))
+
+ -> Error(unexpected_null_character parse error)
+ -> Switch(Script_data_double_escaped_state)
+ -> Emit(List (U_FFFD, ) )
+
+-- chara: EOF --
+This is an eof-in-script-html-comment-like-text parse error. Emit an end-of-file token.
+  | This is an eof_in_script_html_comment_like_text parse error. you Emit an end_of_file token.
+List()
+List()
+Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(eof_in_script_html_comment_like_text,eof_in_script_html_comment_like_text)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(end_of_file,end_of_file)), Leaf(NN,Token(token,token))))))))))
+
+ -> Error(eof_in_script_html_comment_like_text parse error)
+ -> Emit(List (end_of_file token, ) )
+
+-- chara: Anything else --
+Switch to the script data double escaped state. Emit the current input character as a character token.
+  | you Switch to the Script_data_double_escaped_state. you Emit the current input character as a character token.
+List((6,CHAIN6-["you" in sentence 1]))
+List((6,CHAIN6-["you" in sentence 2]))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Script_data_double_escaped_state,script_data_double_escaped_state))))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))))
+
+ -> Switch(Script_data_double_escaped_state)
+ -> Emit(List (current input character, ) _as a character token)
+
+ListMap(Script_data_double_escaped_dash_dash_state -> pState(Script_data_double_escaped_dash_dash_state,List(),Map(U+0000 NULL -> List(Error(unexpected_null_character parse error), Switch(Script_data_double_escaped_state), Emit(List (U_FFFD, ) )), U+003C LESS-THAN SIGN (&lt;) -> List(Switch(Script_data_double_escaped_less_than_sign_state), Emit(List (U_003C, ) )), U+002D HYPHEN-MINUS (-) -> List(Emit(List (U_002D, ) )), EOF -> List(Error(eof_in_script_html_comment_like_text parse error), Emit(List (end_of_file token, ) )), U+003E GREATER-THAN SIGN (&gt;) -> List(Switch(Script_data_state), Emit(List (U_003E, ) )))))
