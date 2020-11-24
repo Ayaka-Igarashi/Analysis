@@ -117,10 +117,21 @@ object ConvertTree {
   def toStruct(tree: Tree): List[Tag] = {
     val treeList = tree.getChildrenAsList.asScala.toList
     var list: List[Tag] = List()
+
+    var isInBracket: Boolean = false
+    var bracketContent: List[Tag] = List()
+
     for(t <- treeList){
       val tag = convert(t)
-      if (tag != null) list :+= tag
+      tag match {
+        case Leaf(LBracket,_) => {isInBracket = true;bracketContent :+= tag}
+        case Leaf(RBracket,_) => {isInBracket = false;bracketContent = List()}
+        case null =>
+        case _ => {if(isInBracket) {bracketContent :+= tag} else list :+= tag}
+      }
+      //if (tag != null) list :+= tag
     }
+    if (isInBracket) {list ++= bracketContent;println("not close")}//カッコが閉じられなかった場合
     list
   }
   // 補助関数(Leaf)

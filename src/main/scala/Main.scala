@@ -60,7 +60,7 @@ object Main {
     formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
 
     System.out.println("> parse&convert_start")
-    for (i <- 56 - 1 to stateList.length - 1 - (stateList.length - 56)) {
+    for (i <- 1 - 1 to stateList.length - 1 - (stateList.length - 79)) {
       println(i+1)
       val stateName = stateList(i).name
       txtOut.println(i+1 + " : " + stateName)
@@ -99,7 +99,7 @@ object Main {
 
         treeList = List()
         treeList2 = List()
-        if (i == 51 - 1 && j == 4)ShowTree.showTree(tagList)
+        //if (i == 11 - 1 && j == 8)ShowTree.showTree(tagList)
       }
 
       val state_p = pState(stateName, List(), trans_p)

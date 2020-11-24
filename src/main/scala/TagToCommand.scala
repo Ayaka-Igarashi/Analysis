@@ -2,8 +2,6 @@ import CommandStructure._
 import Main.txtOut
 import TagStructure._
 
-import scala.collection.mutable
-
 // TagのリストからCommand型に変換する
 object TagToCommand {
   //val ifStack: mutable.Stack[If] = mutable.Stack()
@@ -67,7 +65,7 @@ object TagToCommand {
           }
           // otherwise, ...
           case Node(ADVP, List(Leaf(RB, Token(_, "otherwise")))) :: Leaf(Comma, _) :: rst => {
-            commandList :+= OTHERWISE()
+            commandList :+= OTHERWISE_()
             commandList ++= STag(Node(S, rst))
           }
           // this is ...error
@@ -85,6 +83,7 @@ object TagToCommand {
           case Node(ADVP, List(Leaf(RB, Token(_, "then")))) :: Node(VP, vp) :: Nil => {
             commandList ++= VPTag(Node(VP, vp))
           }
+          case Nil =>
           case _ => txtOut.print("### not match_s : ");txtOut.println(list)
         }
       }
@@ -251,7 +250,7 @@ object TagToCommand {
     //println(tag)
     tag match {
       case Node(NP, rst) => {
-        println(rst.head)
+        //println(rst.head)
         rst.head match {
           case Leaf(DT, _) => Node(NP, rst.tail)
           case Leaf(CD, Token(_, "two")) => println("aaaa");tag
@@ -291,6 +290,7 @@ object TagToCommand {
     }
   }
 
+  // IF文をまとめる
   def uniteIf(commandList: List[Command]): List[Command] = { //listlistにしたい
     var newCommandList: List[Command] = List()
     commandList match {
@@ -311,7 +311,7 @@ object TagToCommand {
     var otherwiseFlag: Boolean = false
     for (command <- commandList) {
       command match {
-        case OTHERWISE() => if(otherwiseFlag) f :+= command else otherwiseFlag = true
+        case OTHERWISE_() => if(otherwiseFlag) f :+= command else otherwiseFlag = true
         case _ => if(otherwiseFlag) f :+= command else t :+= command
       }
     }

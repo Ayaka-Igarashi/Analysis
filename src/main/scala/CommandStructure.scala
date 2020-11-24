@@ -64,9 +64,9 @@ object CommandStructure {
 
   case class If(bool: Bool, var T: List[Command], var F: List[Command]) extends Command
 
-  //
+  // 仮のやつ
   case class IF_(bool: Bool) extends Command
-  case class OTHERWISE() extends Command
+  case class OTHERWISE_() extends Command
 
   // the temporary buffer is the string "script"
   // there is an adjusted current node and it is not an element in the HTML namespace

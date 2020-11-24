@@ -68,6 +68,7 @@ object Implement {
       case Multiply(obj, by) =>
       case Add(obj, to) =>
       case If(bool, t, f) =>
+      case IF_(_) | OTHERWISE_() => println("IF not converted error : " + command)
       case _ => println("undefined command error : " + command)
     }
   }
