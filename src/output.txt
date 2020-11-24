@@ -1,54 +1,78 @@
-51 : Comment_end_state
+56 : After_DOCTYPE_name_state
+-- chara: U+0009 CHARACTER TABULATION (tab) --
+Ignore the character.
+  | Ignore the character.
+List()
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Ignore,ignore)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character))))))))))
+
+ -> Ignore(List (character, ) )
+
+-- chara: U+000A LINE FEED (LF) --
+Ignore the character.
+  | Ignore the character.
+List()
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Ignore,ignore)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character))))))))))
+
+ -> Ignore(List (character, ) )
+
+-- chara: U+000C FORM FEED (FF) --
+Ignore the character.
+  | Ignore the character.
+List()
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Ignore,ignore)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character))))))))))
+
+ -> Ignore(List (character, ) )
+
+-- chara: U+0020 SPACE --
+Ignore the character.
+  | Ignore the character.
+List()
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Ignore,ignore)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(character,character))))))))))
+
+ -> Ignore(List (character, ) )
+
 -- chara: U+003E GREATER-THAN SIGN (&gt;) --
-Switch to the data state. Emit the comment token.
-  | you Switch to the Data_state. you Emit the comment token.
-List((4,CHAIN4-["you" in sentence 1]))
-List((4,CHAIN4-["you" in sentence 2]))
+Switch to the data state. Emit the current DOCTYPE token.
+  | you Switch to the Data_state. you Emit the current DOCTYPE token.
+List((6,CHAIN6-["you" in sentence 1]))
+List((6,CHAIN6-["you" in sentence 2]))
 Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Data_state,Data_state))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(token,token))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(JJ,Token(DOCTYPE,doctype)), Leaf(NN,Token(token,token))))))))))
 
  -> Switch(Data_state)
- -> Emit(List (comment token, ) )
-
--- chara: U+0021 EXCLAMATION MARK (!) --
-Switch to the comment end bang state.
-  | you Switch to the Comment_end_bang_state.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Comment_end_bang_state,comment_end_bang_state))))))))))))
-
- -> Switch(Comment_end_bang_state)
-
--- chara: U+002D HYPHEN-MINUS (-) --
-Append a U+002D HYPHEN-MINUS character (-) to the comment token's data.
-  | you Append a U_002D HYPHEN_MINUS character (_) to the comment token's data.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NNP,Token(U_002D,u_002d)), Leaf(NNS,Token(HYPHEN_MINUS,HYPHEN_MINUS)), Leaf(NN,Token(character,character)))), Leaf(LBracket,Token((,()), Leaf(NFP,Token(_,_)), Leaf(RBracket,Token(),))))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NNS,Token(data,datum))))))))))))
-
- -> Append(List (a U_002D HYPHEN_MINUS character ( _ ), ) ,the comment token 's data)
+ -> Emit(List (current DOCTYPE token, ) )
 
 -- chara: EOF --
-This is an eof-in-comment parse error. Emit the comment token. Emit an end-of-file token.
-  | This is an eof_in_comment parse error. you Emit the comment token. you Emit an end_of_file token.
+This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
+  | This is an eof_in_doctype parse error. Set the DOCTYPE token's force_quirks flag to on. you Emit that DOCTYPE token. you Emit an end_of_file token.
 List()
-List((5,CHAIN5-["you" in sentence 2]))
-List((5,CHAIN5-["you" in sentence 3]))
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(eof_in_comment,eof_in_comment)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(token,token))))))))))
+List((8,CHAIN8-["the DOCTYPE token 's" in sentence 2]))
+List((8,CHAIN8-["that DOCTYPE token" in sentence 3]), (9,CHAIN9-["you" in sentence 3]))
+List((9,CHAIN9-["you" in sentence 4]))
+Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(eof_in_doctype,eof_in_doctype)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(DOCTYPE,doctype)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(JJ,Token(force_quirks,force_quirks)), Leaf(NN,Token(flag,flag)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(PP,List(Leaf(IN,Token(on,on))))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(that,that)), Leaf(JJ,Token(DOCTYPE,doctype)), Leaf(NN,Token(token,token))))))))))
 Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(end_of_file,end_of_file)), Leaf(NN,Token(token,token))))))))))
 
- -> Error(eof_in_comment parse error)
- -> Emit(List (comment token, ) )
+ -> Error(eof_in_doctype parse error)
+ -> Set(the DOCTYPE token 's force_quirks flag,on)
+ -> Emit(List (DOCTYPE token, ) )
  -> Emit(List (end_of_file token, ) )
 
 -- chara: Anything else --
-Append two U+002D HYPHEN-MINUS characters (-) to the comment token's data. Reconsume in the comment state.
-  | you Append two U_002D HYPHEN_MINUS characters (_) to the comment token's data. you Reconsume in the Comment_state.
-List((7,CHAIN7-["you" in sentence 1]))
-List((7,CHAIN7-["you" in sentence 2]))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Node(NP,List(Leaf(CD,Token(two,two)), Leaf(NNP,Token(U_002D,u_002d)), Leaf(NN,Token(HYPHEN_MINUS,HYPHEN_MINUS)), Leaf(NNS,Token(characters,character)))), Leaf(LBracket,Token((,()), Leaf(NFP,Token(_,_)), Leaf(RBracket,Token(),))))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NNS,Token(data,datum))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Comment_state,comment_state))))))))))))
+ If the six characters starting from the current input character are an ASCII case-insensitive match for the word "PUBLIC", then consume those characters and switch to the after DOCTYPE public keyword state. Otherwise, if the six characters starting from the current input character are an ASCII case-insensitive match for the word "SYSTEM", then consume those characters and switch to the after DOCTYPE system keyword state. Otherwise, this is an invalid-character-sequence-after-doctype-name parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state. 
+  |  If the six characters starting from the current input character are an ASCII case_insensitive match for the word "PUBLIC", then consume those characters and you switch to the After_DOCTYPE_public_keyword_state. Otherwise, if the six characters starting from the current input character are an ASCII case_insensitive match for the word "SYSTEM", then consume those characters and you switch to the After_DOCTYPE_system_keyword_state. Otherwise, this is an invalid_character_sequence_after_doctype_name parse error. Set the DOCTYPE token's force_quirks flag to on. you Reconsume in the Bogus_DOCTYPE_state. 
+List((20,CHAIN20-["the six characters starting from the current input character" in sentence 1, "those characters" in sentence 1]), (12,CHAIN12-["the current input character" in sentence 1]))
+List((20,CHAIN20-["the six characters starting from the current input character" in sentence 2, "those characters" in sentence 2]), (12,CHAIN12-["the current input character" in sentence 2]))
+List((20,CHAIN20-["this" in sentence 3]))
+List()
+List()
+Node(ROOT,List(Node(S,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(CD,Token(six,six)), Leaf(NNS,Token(characters,character)))), Node(VP,List(Leaf(VB,Token(starting,start)), Node(PP,List(Leaf(IN,Token(from,from)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))))))))), Node(VP,List(Leaf(VB,Token(are,be)), Node(NP,List(Node(NP,List(Leaf(DT,Token(an,a)), Leaf(NNP,Token(ASCII,ascii)), Leaf(NN,Token(case_insensitive,case_insensitive)), Leaf(NN,Token(match,match)))), Node(PP,List(Leaf(IN,Token(for,for)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(word,word)), Leaf(LDoubleQuote,Token(",")), Leaf(NNP,Token(PUBLIC,PUBLIC)), Leaf(RDoubleQuote,Token(",")))))))))))))), Leaf(Comma,Token(,,,)), Node(ADVP,List(Leaf(RB,Token(then,then)))), Node(VP,List(Leaf(VB,Token(consume,consume)), Node(NP,List(Leaf(DT,Token(those,those)), Leaf(NNS,Token(characters,character)))))))), Leaf(CC,Token(and,and)), Node(S,List(Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(After_DOCTYPE_public_keyword_state,after_doctype_public_keyword_state))))))))))))))
+Node(ROOT,List(Node(S,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(SBAR,List(Leaf(IN,Token(if,if)), Node(S,List(Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(CD,Token(six,six)), Leaf(NNS,Token(characters,character)))), Node(VP,List(Leaf(VB,Token(starting,start)), Node(PP,List(Leaf(IN,Token(from,from)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))))))))), Node(VP,List(Leaf(VB,Token(are,be)), Node(NP,List(Node(NP,List(Leaf(DT,Token(an,a)), Leaf(NNP,Token(ASCII,ascii)), Leaf(NN,Token(case_insensitive,case_insensitive)), Leaf(NN,Token(match,match)))), Node(PP,List(Leaf(IN,Token(for,for)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(word,word)), Leaf(LDoubleQuote,Token(",")), Leaf(NNP,Token(SYSTEM,system)), Leaf(RDoubleQuote,Token(",")))))))))))))), Leaf(Comma,Token(,,,)), Node(ADVP,List(Leaf(RB,Token(then,then)))), Node(VP,List(Leaf(VB,Token(consume,consume)), Node(NP,List(Leaf(DT,Token(those,those)), Leaf(NNS,Token(characters,character)))))))), Leaf(CC,Token(and,and)), Node(S,List(Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(After_DOCTYPE_system_keyword_state,after_doctype_system_keyword_state))))))))))))))
+Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(NP,List(Leaf(DT,Token(this,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(invalid_character_sequence_after_doctype_name,invalid_character_sequence_after_doctype_name)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Set,set)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(DOCTYPE,doctype)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(JJ,Token(force_quirks,force_quirks)), Leaf(NN,Token(flag,flag)))), Node(PP,List(Leaf(IN,Token(to,to)), Node(PP,List(Leaf(IN,Token(on,on))))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Bogus_DOCTYPE_state,Bogus_DOCTYPE_state))))))))))))
 
- -> Append(List (two U_002D HYPHEN_MINUS characters ( _ ), ) ,the comment token 's data)
- -> Reconsume(Comment_state)
+ -> If(IsEqual(the six characters starting from the current input character,an ASCII case_insensitive match for the word " PUBLIC "),List(Consume(List (characters, ) ), Switch(After_DOCTYPE_public_keyword_state)),List(If(IsEqual(the six characters starting from the current input character,an ASCII case_insensitive match for the word " SYSTEM "),List(Consume(List (characters, ) ), Switch(After_DOCTYPE_system_keyword_state)),List(Error(invalid_character_sequence_after_doctype_name parse error), Set(the DOCTYPE token 's force_quirks flag,on), Reconsume(Bogus_DOCTYPE_state)))))
 
-ListMap(Comment_end_state -> pState(Comment_end_state,List(),Map(U+003E GREATER-THAN SIGN (&gt;) -> List(Switch(Data_state), Emit(List (comment token, ) )), U+0021 EXCLAMATION MARK (!) -> List(Switch(Comment_end_bang_state)), U+002D HYPHEN-MINUS (-) -> List(Append(List (a U_002D HYPHEN_MINUS character ( _ ), ) ,the comment token 's data)), EOF -> List(Error(eof_in_comment parse error), Emit(List (comment token, ) ), Emit(List (end_of_file token, ) )))))
+ListMap(After_DOCTYPE_name_state -> pState(After_DOCTYPE_name_state,List(),Map(U+000A LINE FEED (LF) -> List(Ignore(List (character, ) )), U+0009 CHARACTER TABULATION (tab) -> List(Ignore(List (character, ) )), U+0020 SPACE -> List(Ignore(List (character, ) )), U+000C FORM FEED (FF) -> List(Ignore(List (character, ) )), EOF -> List(Error(eof_in_doctype parse error), Set(the DOCTYPE token 's force_quirks flag,on), Emit(List (DOCTYPE token, ) ), Emit(List (end_of_file token, ) )), U+003E GREATER-THAN SIGN (&gt;) -> List(Switch(Data_state), Emit(List (current DOCTYPE token, ) )))))

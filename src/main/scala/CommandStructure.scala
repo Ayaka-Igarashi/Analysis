@@ -65,7 +65,7 @@ object CommandStructure {
   case class If(bool: Bool, var T: List[Command], var F: List[Command]) extends Command
 
   //
-  case class IF(bool: Bool) extends Command
+  case class IF_(bool: Bool) extends Command
   case class OTHERWISE() extends Command
 
   // the temporary buffer is the string "script"
