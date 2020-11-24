@@ -36,7 +36,6 @@ object CommandStructure {
   // Append a U+FFFD REPLACEMENT CHARACTER character to the current tag token's tag name.
   case class Append(obj: String, to: String) extends Command
 
-  case class If(bool: Bool, var T: List[Command], var F: List[Command]) extends Command
 
 
 
@@ -63,6 +62,11 @@ object CommandStructure {
   // Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0037 from the character's code point) to the character reference code.
   case class Add(obj: String, to: String) extends Command
 
+  case class If(bool: Bool, var T: List[Command], var F: List[Command]) extends Command
+
+  //
+  case class IF(bool: Bool) extends Command
+  case class OTHERWISE() extends Command
 
   // the temporary buffer is the string "script"
   // there is an adjusted current node and it is not an element in the HTML namespace

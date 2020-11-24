@@ -81,6 +81,7 @@ object Implement {
       case IsEqual(a, b) => true
       case IsExist(a) => true
       case UNDEF(str) => false //
+      case _ => println("undefined bool error : " + bool);false
     }
   }
 }

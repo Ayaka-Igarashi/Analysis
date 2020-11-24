@@ -1,68 +1,54 @@
-29 : Script_data_double_escaped_dash_dash_state
--- chara: U+002D HYPHEN-MINUS (-) --
-Emit a U+002D HYPHEN-MINUS character token.
-  | you Emit a U_002D HYPHEN_MINUS character token.
-List()
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Leaf(NNP,Token(U_002D,u_002d)), Leaf(NNP,Token(HYPHEN_MINUS,hyphen_minus)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))
-
- -> Emit(List (U_002D, ) )
-
--- chara: U+003C LESS-THAN SIGN (&lt;) --
-Switch to the script data double escaped less-than sign state. Emit a U+003C LESS-THAN SIGN character token.
-  | you Switch to the Script_data_double_escaped_less_than_sign_state. you Emit a U_003C LESS_THAN SIGN character token.
-List((4,CHAIN4-["you" in sentence 1]))
-List((4,CHAIN4-["you" in sentence 2]))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Script_data_double_escaped_less_than_sign_state,script_data_double_escaped_less_than_sign_state))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Leaf(NNP,Token(U_003C,u_003c)), Leaf(NNP,Token(LESS_THAN,LESS_THAN)), Leaf(NNP,Token(SIGN,SIGN)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))
-
- -> Switch(Script_data_double_escaped_less_than_sign_state)
- -> Emit(List (U_003C, ) )
-
+51 : Comment_end_state
 -- chara: U+003E GREATER-THAN SIGN (&gt;) --
-Switch to the script data state. Emit a U+003E GREATER-THAN SIGN character token.
-  | you Switch to the Script_data_state. you Emit a U_003E GREATER_THAN SIGN character token.
+Switch to the data state. Emit the comment token.
+  | you Switch to the Data_state. you Emit the comment token.
 List((4,CHAIN4-["you" in sentence 1]))
 List((4,CHAIN4-["you" in sentence 2]))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Script_data_state,script_data_state))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Node(NML,List(Leaf(NNP,Token(U_003E,u_003e)), Leaf(NNP,Token(GREATER_THAN,GREATER_THAN)), Leaf(NNP,Token(SIGN,SIGN)))), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Data_state,Data_state))))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(token,token))))))))))
 
- -> Switch(Script_data_state)
- -> Emit(List (U_003E, ) )
+ -> Switch(Data_state)
+ -> Emit(List (comment token, ) )
 
--- chara: U+0000 NULL --
-This is an unexpected-null-character parse error. Switch to the script data double escaped state. Emit a U+FFFD REPLACEMENT CHARACTER character token.
-  | This is an unexpected_null_character parse error. you Switch to the Script_data_double_escaped_state. you Emit a U_FFFD REPLACEMENT CHARACTER character token.
+-- chara: U+0021 EXCLAMATION MARK (!) --
+Switch to the comment end bang state.
+  | you Switch to the Comment_end_bang_state.
 List()
-List((6,CHAIN6-["you" in sentence 2]))
-List((6,CHAIN6-["you" in sentence 3]))
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(unexpected_null_character,unexpected_null_character)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Script_data_double_escaped_state,script_data_double_escaped_state))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(JJ,Token(U_FFFD,U_FFFD)), Leaf(NNP,Token(REPLACEMENT,REPLACEMENT)), Leaf(NN,Token(CHARACTER,CHARACTER)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Comment_end_bang_state,comment_end_bang_state))))))))))))
 
- -> Error(unexpected_null_character parse error)
- -> Switch(Script_data_double_escaped_state)
- -> Emit(List (U_FFFD, ) )
+ -> Switch(Comment_end_bang_state)
+
+-- chara: U+002D HYPHEN-MINUS (-) --
+Append a U+002D HYPHEN-MINUS character (-) to the comment token's data.
+  | you Append a U_002D HYPHEN_MINUS character (_) to the comment token's data.
+List()
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NNP,Token(U_002D,u_002d)), Leaf(NNS,Token(HYPHEN_MINUS,HYPHEN_MINUS)), Leaf(NN,Token(character,character)))), Leaf(LBracket,Token((,()), Leaf(NFP,Token(_,_)), Leaf(RBracket,Token(),))))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NNS,Token(data,datum))))))))))))
+
+ -> Append(List (a U_002D HYPHEN_MINUS character ( _ ), ) ,the comment token 's data)
 
 -- chara: EOF --
-This is an eof-in-script-html-comment-like-text parse error. Emit an end-of-file token.
-  | This is an eof_in_script_html_comment_like_text parse error. you Emit an end_of_file token.
+This is an eof-in-comment parse error. Emit the comment token. Emit an end-of-file token.
+  | This is an eof_in_comment parse error. you Emit the comment token. you Emit an end_of_file token.
 List()
-List()
-Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(eof_in_script_html_comment_like_text,eof_in_script_html_comment_like_text)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
+List((5,CHAIN5-["you" in sentence 2]))
+List((5,CHAIN5-["you" in sentence 3]))
+Node(ROOT,List(Node(S,List(Node(NP,List(Leaf(DT,Token(This,this)))), Node(VP,List(Leaf(VB,Token(is,be)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(eof_in_comment,eof_in_comment)), Leaf(NN,Token(parse,parse)), Leaf(NN,Token(error,error))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(token,token))))))))))
 Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(an,a)), Leaf(JJ,Token(end_of_file,end_of_file)), Leaf(NN,Token(token,token))))))))))
 
- -> Error(eof_in_script_html_comment_like_text parse error)
+ -> Error(eof_in_comment parse error)
+ -> Emit(List (comment token, ) )
  -> Emit(List (end_of_file token, ) )
 
 -- chara: Anything else --
-Switch to the script data double escaped state. Emit the current input character as a character token.
-  | you Switch to the Script_data_double_escaped_state. you Emit the current input character as a character token.
-List((6,CHAIN6-["you" in sentence 1]))
-List((6,CHAIN6-["you" in sentence 2]))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Script_data_double_escaped_state,script_data_double_escaped_state))))))))))))
-Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))))
+Append two U+002D HYPHEN-MINUS characters (-) to the comment token's data. Reconsume in the comment state.
+  | you Append two U_002D HYPHEN_MINUS characters (_) to the comment token's data. you Reconsume in the Comment_state.
+List((7,CHAIN7-["you" in sentence 1]))
+List((7,CHAIN7-["you" in sentence 2]))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Append,append)), Node(NP,List(Node(NP,List(Leaf(CD,Token(two,two)), Leaf(NNP,Token(U_002D,u_002d)), Leaf(NN,Token(HYPHEN_MINUS,HYPHEN_MINUS)), Leaf(NNS,Token(characters,character)))), Leaf(LBracket,Token((,()), Leaf(NFP,Token(_,_)), Leaf(RBracket,Token(),))))), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NN,Token(comment,comment)), Leaf(NN,Token(token,token)), Leaf(POS,Token('s,'s)))), Leaf(NNS,Token(data,datum))))))))))))
+Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Node(PP,List(Leaf(IN,Token(in,in)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Comment_state,comment_state))))))))))))
 
- -> Switch(Script_data_double_escaped_state)
- -> Emit(List (current input character, ) _as a character token)
+ -> Append(List (two U_002D HYPHEN_MINUS characters ( _ ), ) ,the comment token 's data)
+ -> Reconsume(Comment_state)
 
-ListMap(Script_data_double_escaped_dash_dash_state -> pState(Script_data_double_escaped_dash_dash_state,List(),Map(U+0000 NULL -> List(Error(unexpected_null_character parse error), Switch(Script_data_double_escaped_state), Emit(List (U_FFFD, ) )), U+003C LESS-THAN SIGN (&lt;) -> List(Switch(Script_data_double_escaped_less_than_sign_state), Emit(List (U_003C, ) )), U+002D HYPHEN-MINUS (-) -> List(Emit(List (U_002D, ) )), EOF -> List(Error(eof_in_script_html_comment_like_text parse error), Emit(List (end_of_file token, ) )), U+003E GREATER-THAN SIGN (&gt;) -> List(Switch(Script_data_state), Emit(List (U_003E, ) )))))
+ListMap(Comment_end_state -> pState(Comment_end_state,List(),Map(U+003E GREATER-THAN SIGN (&gt;) -> List(Switch(Data_state), Emit(List (comment token, ) )), U+0021 EXCLAMATION MARK (!) -> List(Switch(Comment_end_bang_state)), U+002D HYPHEN-MINUS (-) -> List(Append(List (a U_002D HYPHEN_MINUS character ( _ ), ) ,the comment token 's data)), EOF -> List(Error(eof_in_comment parse error), Emit(List (comment token, ) ), Emit(List (end_of_file token, ) )))))

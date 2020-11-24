@@ -323,9 +323,10 @@ object TagToCommand {
     //println(tag)
     tag match {
       case Node(NP, rst) => {
-        //println(rst.head)
+        println(rst.head)
         rst.head match {
           case Leaf(DT, _) => Node(NP, rst.tail)
+          case Leaf(CD, Token(_, "two")) => println("aaaa");tag
           case _ => tag
         }
       }
