@@ -296,10 +296,8 @@ object TagToCommand {
     commandList match {
       case IF_(b) :: rst => {
         val (t, f, e) = distributeTFE(rst)
-        val t2 = uniteIf(t)
-        val f2 = uniteIf(f)
-        newCommandList :+= If(b, t2, f2)
-        newCommandList ++= uniteIf(e)
+        newCommandList :+= If(b, t, f)
+        newCommandList ++= e
       }
       case command :: rst => newCommandList :+= command;newCommandList ++= uniteIf(rst)
       case Nil =>
@@ -307,14 +305,44 @@ object TagToCommand {
     newCommandList
   }
   def distributeTFE(commandList: List[Command]): (List[Command], List[Command], List[Command]) = {
-    var (t, f, e): (List[Command], List[Command], List[Command]) = (List(), List(), List())
-    var otherwiseFlag: Boolean = false
-    for (command <- commandList) {
-      command match {
-        case OTHERWISE_() => if(otherwiseFlag) f :+= command else otherwiseFlag = true
-        case _ => if(otherwiseFlag) f :+= command else t :+= command
+    commandList.indexOf(OTHERWISE_()) match {
+      case -1 => (commandList, List(), List())
+      case i if (i < commandList.length) => {
+        val t = uniteIf(commandList.slice(0, i))
+        val fe = uniteIf(commandList.slice(i + 1, commandList.length))
+        if (false) {
+          (t, fe, List())
+        } else {
+          (t, fe.slice(0, 1), fe.slice(1, fe.length))
+        }
+
       }
+      case _ => (commandList, List(), List())
     }
-    (t, f, e)
   }
+
+//  def TFDistrubute(commandList: List[Command]): (List[Command], List[Command]) = {
+//    commandList.indexOf(OTHERWISE_()) match {
+//      case -1 => (commandList, List())
+//      case i if (i < commandList.length) => (commandList.slice(0, i - 1), commandList.slice(i, commandList.length))
+//      case _ => (commandList, List())
+//    }
+////    if (!commandList.contains(OTHERWISE_())) {
+////      (commandList, List())
+////    } else {
+////      commandList
+////      var (t, f): (List[Command], List[Command]) = (List(), List())
+////      commandList match {
+////        case OTHERWISE_() :: rst => f ++= rst
+////        case c :: rst => {
+////          t :+= c
+////          val (t2, f2) = TFDistrubute(rst)
+////          t ++= t2
+////          f ++= f2
+////        }
+////        case Nil =>
+////      }
+////      (t, f)
+////    }
+//  }
 }

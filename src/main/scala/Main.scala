@@ -69,7 +69,7 @@ object Main {
     formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
 
     System.out.println("> parse&convert_start")
-    for (i <- 1 - 1 to stateList.length - 1 - (stateList.length - 79)) {
+    for (i <- 26 - 1 to stateList.length - 1 - (stateList.length - 26)) {
       println(i+1)
       val stateName = stateList(i).name
       txtOut.println(i+1 + " : " + stateName)
