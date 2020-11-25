@@ -33,9 +33,18 @@ object Main {
    *
    */
   def main(args: Array[String]) = {
+    val A: Int = "b".codePointAt(0)
+    A match {
+      case 0x0021 => println("?")
+      case 0x002F => println("/")
+      case x if (x >= 0x0041 && x <= 0x005A)||(x >= 0x0061 && x <= 0x007A) => println("ascii alpha")
+      case _ => println("anything else")
+    } // => Mapであらわせない
+
     // HTMLのパーサー
     parseHtml()
 
+    // 状態名の置き換えのための処理
     Replacement.replaceState = Replacement.replaceState.tail
     replace_out.println(Replacement.replaceState)
 

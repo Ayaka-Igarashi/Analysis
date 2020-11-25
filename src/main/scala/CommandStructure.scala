@@ -36,9 +36,6 @@ object CommandStructure {
   // Append a U+FFFD REPLACEMENT CHARACTER character to the current tag token's tag name.
   case class Append(obj: String, to: String) extends Command
 
-
-
-
   // Create a new start tag token, set its tag name to the empty string.
   // create a comment token whose data is the empty string
   // Create a new DOCTYPE token
@@ -47,14 +44,10 @@ object CommandStructure {
   // Ignore the character.
   case class Ignore(obj: String) extends Command
 
-  // Flush code points consumed as a character reference.
-  case class Flush() extends Command
-
   // 1パターンしかないから決め打ちする
-  // treat it as per "the character" entry below.
-  case class Treat() extends Command
-  //Start a new attribute in the current tag token.
-  case class Start() extends Command
+  case class Flush() extends Command // Flush code points consumed as a character reference.
+  case class Treat() extends Command // treat it as per "the character" entry below.
+  case class Start() extends Command //Start a new attribute in the current tag token.
 
   // Multiply the character reference code by 16
   case class Multiply(obj: String, by: String) extends Command

@@ -6,31 +6,34 @@ import scala.collection.immutable.ListMap
 
 object Implement {
 
-  var currentState: String = "Data_state"
-  var nextState: String = "Data_state"
-  var inputCharStream: String = "aa"
+//  var Env1: Map[String, Val] = Map(
+//    "currentState" -> Val("Data_state"),
+//    "nextState" -> Val("Data_state"),
+//    "inputCharStream" -> Val("aa")
+//
+//  )
+  //env updated ("currentState", env("nextState"))
 
-  var Env: Map[String, Val] = Map(
-    "currentState" -> Val("Data_state"),
-    "nextState" -> Val("Data_state"),
-    "inputCharStream" -> Val("aa")
-
-  )
+  var eee: Env = new Env()
 
   // インタープリタ
-  def interpret(env: Map[String, Val], definition: ListMap[String, pState]) = { // env(環境)も引数に入れる,返り値もenvにする
-    // 最初の処理書く
-    env updated ("currentState", env("nextState"))
-    currentState = nextState
+  def interpret(env: Env, definition: ListMap[String, pState]): Env = { // env(環境)も引数に入れる,返り値もenvにする
+    var newEnv: Env = env
+    // 最初の処理
+    val currentState = newEnv.nextState
+    newEnv.currentState = currentState
 
     // 状態のマッチ
     definition.get(currentState) match {
-      case Some(pState(name, prev, trans)) => {
-        var currentInputCharacter = inputCharStream.head.toString
-        inputCharStream = inputCharStream.tail
+      case Some(pState(_, prev, trans)) => {
+        for (command <- prev) {
+          newEnv = interpretCommand(newEnv, command)
+        }
+//        var currentInputCharacter = newEnv.inputText.head.toString
+//        newEnv.inputText = newEnv.inputText.tail
 
         var commandList: List[Command] = null
-        trans.get(currentInputCharacter) match {
+        trans.get(newEnv.currentInputCharacter) match {
           case Some(comList) => {
             commandList = comList
           }
@@ -41,25 +44,42 @@ object Implement {
 
         // Commandを1つずつ処理する
         for (command <- commandList) {
-          interpretCommand(command)
+          newEnv = interpretCommand(newEnv, command)
         }
 
       }
       case None => println("undefined state error : " + currentState)
     }
+    newEnv
   }
 
-  def interpretCommand(command: Command) = { // env(環境)も引数に入れる,返り値もenvにする
+  def interpretCommand(env: Env, command: Command): Env = { // env(環境)も引数に入れる,返り値もenvにする
     command match {
       case Switch(state) => {
-        nextState = state
+        env.nextState = state
       }
-      case Reconsume(state) =>
+      case Reconsume(state) => {
+        env.nextState = state
+        env.inputText = env.currentInputCharacter + env.inputText
+        env.currentInputCharacter = null
+      }
       case Set(obj, to) =>
-      case Consume(character) =>
-      case Emit(characters) =>
+      case Consume(character) => {
+        if (env.inputText.substring(0, character.length) == character) {
+          env.inputText = env.inputText.substring(character.length - 1)
+          env.currentInputCharacter = character
+        } else {
+          println("consume error")
+        }
+      }
+      case Emit(characters) => {
+        //env.emitCharacterList :+= characters // 途中
+      }
       case Append(obj, to) =>
-      case Error(error) =>
+      case Error(error) => {
+        env.errorContent = error
+        //println("Emit : "+error)
+      }
       case Create(token) =>
       case Ignore(obj) =>
       case Flush() =>
@@ -71,6 +91,7 @@ object Implement {
       case IF_(_) | OTHERWISE_() => println("IF not converted error : " + command)
       case _ => println("undefined command error : " + command)
     }
+    env
   }
 
   def implementBool(bool: Bool): Boolean = { // env(環境)も引数に入れる
@@ -81,7 +102,7 @@ object Implement {
         // 途中
       case IsEqual(a, b) => true
       case IsExist(a) => true
-      case UNDEF(str) => false //
+      case UNDEF(str) => println("undefined bool : " + bool);false
       case _ => println("undefined bool error : " + bool);false
     }
   }
