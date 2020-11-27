@@ -17,5 +17,5 @@ object StateParsedStructure {
 
 // Command変換した後の構造体
 object StateProcessedStructure {
-  case class pState(name: String, var prev: List[Command], var trans: Map[String, List[Command]])
+  case class pState(name: String, var prev: List[Command], var trans: List[(String, List[Command])])
 }

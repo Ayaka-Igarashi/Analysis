@@ -9,8 +9,7 @@ Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Nod
 Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Script_data_escaped_state,script_data_escaped_state))))))))))))
 Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))))
 
- -> If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state)))
- -> Emit(List (current input character, ) _as a character token)
+ -> If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token)))
 
 -- chara: U+000A LINE FEED (LF) --
 If the temporary buffer is the string "script", then switch to the script data double escaped state. Otherwise, switch to the script data escaped state. Emit the current input character as a character token.
@@ -22,8 +21,7 @@ Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Nod
 Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Script_data_escaped_state,script_data_escaped_state))))))))))))
 Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))))
 
- -> If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state)))
- -> Emit(List (current input character, ) _as a character token)
+ -> If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token)))
 
 -- chara: U+000C FORM FEED (FF) --
 If the temporary buffer is the string "script", then switch to the script data double escaped state. Otherwise, switch to the script data escaped state. Emit the current input character as a character token.
@@ -35,8 +33,7 @@ Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Nod
 Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Script_data_escaped_state,script_data_escaped_state))))))))))))
 Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))))
 
- -> If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state)))
- -> Emit(List (current input character, ) _as a character token)
+ -> If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token)))
 
 -- chara: U+0020 SPACE --
 If the temporary buffer is the string "script", then switch to the script data double escaped state. Otherwise, switch to the script data escaped state. Emit the current input character as a character token.
@@ -48,8 +45,7 @@ Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Nod
 Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Script_data_escaped_state,script_data_escaped_state))))))))))))
 Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))))
 
- -> If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state)))
- -> Emit(List (current input character, ) _as a character token)
+ -> If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token)))
 
 -- chara: U+002F SOLIDUS (/) --
 If the temporary buffer is the string "script", then switch to the script data double escaped state. Otherwise, switch to the script data escaped state. Emit the current input character as a character token.
@@ -61,8 +57,7 @@ Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Nod
 Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Script_data_escaped_state,script_data_escaped_state))))))))))))
 Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))))
 
- -> If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state)))
- -> Emit(List (current input character, ) _as a character token)
+ -> If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token)))
 
 -- chara: U+003E GREATER-THAN SIGN (&gt;) --
 If the temporary buffer is the string "script", then switch to the script data double escaped state. Otherwise, switch to the script data escaped state. Emit the current input character as a character token.
@@ -74,8 +69,7 @@ Node(ROOT,List(Node(S,List(Node(SBAR,List(Leaf(IN,Token(If,if)), Node(S,List(Nod
 Node(ROOT,List(Node(S,List(Node(ADVP,List(Leaf(RB,Token(Otherwise,otherwise)))), Leaf(Comma,Token(,,,)), Node(VP,List(Leaf(VB,Token(switch,switch)), Node(PP,List(Leaf(IN,Token(to,to)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(NNP,Token(Script_data_escaped_state,script_data_escaped_state))))))))))))
 Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Emit,emit)), Node(NP,List(Leaf(DT,Token(the,the)), Leaf(JJ,Token(current,current)), Leaf(NN,Token(input,input)), Leaf(NN,Token(character,character)))), Node(PP,List(Leaf(IN,Token(as,as)), Node(NP,List(Leaf(DT,Token(a,a)), Leaf(NN,Token(character,character)), Leaf(NN,Token(token,token))))))))))))
 
- -> If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state)))
- -> Emit(List (current input character, ) _as a character token)
+ -> If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token)))
 
 -- chara: ASCII upper alpha --
 Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the temporary buffer. Emit the current input character as a character token.
@@ -107,4 +101,4 @@ Node(ROOT,List(Node(S,List(Node(VP,List(Leaf(VB,Token(Reconsume,reconsume)), Nod
 
  -> Reconsume(Script_data_escaped_state)
 
-ListMap(Script_data_double_escape_start_state -> pState(Script_data_double_escape_start_state,List(),Map(ASCII lower alpha -> List(Append(List (current input character, ) ,the temporary buffer), Emit(List (current input character, ) _as a character token)), U+000A LINE FEED (LF) -> List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state))), Emit(List (current input character, ) _as a character token)), ASCII upper alpha -> List(Append(List (the lowercase version of the current input character, ) ,the temporary buffer), Emit(List (current input character, ) _as a character token)), U+0009 CHARACTER TABULATION (tab) -> List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state))), Emit(List (current input character, ) _as a character token)), U+003E GREATER-THAN SIGN (&gt;) -> List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state))), Emit(List (current input character, ) _as a character token)), U+0020 SPACE -> List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state))), Emit(List (current input character, ) _as a character token)), U+000C FORM FEED (FF) -> List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state))), Emit(List (current input character, ) _as a character token)), U+002F SOLIDUS (/) -> List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state))), Emit(List (current input character, ) _as a character token)))))
+ListMap(Script_data_double_escape_start_state -> pState(Script_data_double_escape_start_state,List(),Map(ASCII lower alpha -> List(Append(List (current input character, ) ,the temporary buffer), Emit(List (current input character, ) _as a character token)), U+000A LINE FEED (LF) -> List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token)))), ASCII upper alpha -> List(Append(List (the lowercase version of the current input character, ) ,the temporary buffer), Emit(List (current input character, ) _as a character token)), U+0009 CHARACTER TABULATION (tab) -> List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token)))), U+003E GREATER-THAN SIGN (&gt;) -> List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token)))), U+0020 SPACE -> List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token)))), U+000C FORM FEED (FF) -> List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token)))), U+002F SOLIDUS (/) -> List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token)))))))

@@ -4,11 +4,7 @@ import TagStructure._
 
 // TagのリストからCommand型に変換する
 object TagToCommand {
-  //val ifStack: mutable.Stack[If] = mutable.Stack()
-
   var tag_list: List[Tag] = List()
-
-  //var state_if: Int = 0 //0: None, 1: then phrase, 2: otherwise phrase
 
   def toCommand(tagList: List[Tag]): List[Command] = {
     var commandList: List[Command] = List()
@@ -310,39 +306,13 @@ object TagToCommand {
       case i if (i < commandList.length) => {
         val t = uniteIf(commandList.slice(0, i))
         val fe = uniteIf(commandList.slice(i + 1, commandList.length))
-        if (false) {
+        if (true) {
           (t, fe, List())
         } else {
           (t, fe.slice(0, 1), fe.slice(1, fe.length))
         }
-
       }
       case _ => (commandList, List(), List())
     }
   }
-
-//  def TFDistrubute(commandList: List[Command]): (List[Command], List[Command]) = {
-//    commandList.indexOf(OTHERWISE_()) match {
-//      case -1 => (commandList, List())
-//      case i if (i < commandList.length) => (commandList.slice(0, i - 1), commandList.slice(i, commandList.length))
-//      case _ => (commandList, List())
-//    }
-////    if (!commandList.contains(OTHERWISE_())) {
-////      (commandList, List())
-////    } else {
-////      commandList
-////      var (t, f): (List[Command], List[Command]) = (List(), List())
-////      commandList match {
-////        case OTHERWISE_() :: rst => f ++= rst
-////        case c :: rst => {
-////          t :+= c
-////          val (t2, f2) = TFDistrubute(rst)
-////          t ++= t2
-////          f ++= f2
-////        }
-////        case Nil =>
-////      }
-////      (t, f)
-////    }
-//  }
 }

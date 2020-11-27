@@ -24,4 +24,10 @@ object Environment {
     // その他
     var env: Map[String, Val] = Map()
   }
+
+  trait Token
+  case class DOCTYPE(name: String, public_identifier: String, system_identifier: String, force_quirks_flag: Boolean) extends Token
+  case class tagToken(name: String, self_closing_flag: Boolean, attributes: List[Attribute]) extends Token
+
+  class Attribute(name: String, value: String)
 }

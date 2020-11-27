@@ -6,12 +6,12 @@ import scala.collection.immutable.ListMap
 
 object Implement {
 
-//  var Env1: Map[String, Val] = Map(
-//    "currentState" -> Val("Data_state"),
-//    "nextState" -> Val("Data_state"),
-//    "inputCharStream" -> Val("aa")
-//
-//  )
+  var Env1: Map[String, Val] = Map(
+    "end_tag_token" -> Val(tagToken("",false,List())),
+    "nextState" -> Val("Data_state"),
+    "inputCharStream" -> Val("aa")
+
+  )
   //env updated ("currentState", env("nextState"))
 
   var eee: Env = new Env()
@@ -31,26 +31,52 @@ object Implement {
         }
 //        var currentInputCharacter = newEnv.inputText.head.toString
 //        newEnv.inputText = newEnv.inputText.tail
-
-        var commandList: List[Command] = null
-        trans.get(newEnv.currentInputCharacter) match {
-          case Some(comList) => {
-            commandList = comList
-          }
-          case None => { // AnythingElse
-
-          }
-        }
-
+        val commandList: List[Command] = characterMatching(newEnv.currentInputCharacter, trans)
         // Commandを1つずつ処理する
         for (command <- commandList) {
           newEnv = interpretCommand(newEnv, command)
         }
-
       }
       case None => println("undefined state error : " + currentState)
     }
     newEnv
+  }
+
+  def characterMatching(currentInputCharacter: String, trans: List[(String, List[Command])]): List[Command] = {
+    trans match {
+      case (character, comList) :: rst => {
+        character match {
+          case "ASCII upper alpha" => {
+            val x = currentInputCharacter.codePointAt(0)
+            if (x >= 0x0041 && x <= 0x005A) comList
+            else characterMatching(currentInputCharacter, rst)
+          }
+          case "ASCII lower alpha" => {
+            val x = currentInputCharacter.codePointAt(0)
+            if (x >= 0x0061 && x <= 0x007A) comList
+            else characterMatching(currentInputCharacter, rst)
+          }
+          case "ASCII alpha" => {
+            val x = currentInputCharacter.codePointAt(0)
+            if ((x >= 0x0041 && x <= 0x005A)||(x >= 0x0061 && x <= 0x007A)) comList
+            else characterMatching(currentInputCharacter, rst)
+          }
+          case "Anything else" => comList
+          case "EOF" => { // 途中
+            comList
+          }
+          case _ => {
+            // 途中
+            if (character == currentInputCharacter) {
+              comList
+            } else {
+              characterMatching(currentInputCharacter, rst)
+            }
+          }
+        }
+      }
+      case Nil => println("match_error"); List()
+    }
   }
 
   def interpretCommand(env: Env, command: Command): Env = { // env(環境)も引数に入れる,返り値もenvにする
