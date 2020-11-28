@@ -29,8 +29,7 @@ object Implement {
         for (command <- prev) {
           newEnv = interpretCommand(newEnv, command)
         }
-//        var currentInputCharacter = newEnv.inputText.head.toString
-//        newEnv.inputText = newEnv.inputText.tail
+        // マッチング
         val commandList: List[Command] = characterMatching(newEnv.currentInputCharacter, trans)
         // Commandを1つずつ処理する
         for (command <- commandList) {
@@ -62,15 +61,21 @@ object Implement {
             else characterMatching(currentInputCharacter, rst)
           }
           case "Anything else" => comList
-          case "EOF" => { // 途中
-            comList
+          case "EOF" => {
+            if (currentInputCharacter == "[EOF]") comList
+            else characterMatching(currentInputCharacter, rst)
           }
-          case _ => {
-            // 途中
-            if (character == currentInputCharacter) {
-              comList
-            } else {
-              characterMatching(currentInputCharacter, rst)
+          case s => {
+            val re =  "(U\\+[0-9A-F][0-9A-F][0-9A-F][0-9A-F])".r
+            re.findFirstIn(s) match {
+              case Some(unicode) => {
+                if (currentInputCharacter.codePointAt(0) == Utility.unicodeToInt(unicode)) {
+                  comList
+                } else {
+                  characterMatching(currentInputCharacter, rst)
+                }
+              }
+              case None =>println("character error : " + s);characterMatching(currentInputCharacter, rst)
             }
           }
         }
@@ -79,23 +84,37 @@ object Implement {
     }
   }
 
-  def interpretCommand(env: Env, command: Command): Env = { // env(環境)も引数に入れる,返り値もenvにする
+  def interpretCommand(env: Env, command: Command): Env = {
+    var newEnv: Env = env
     command match {
       case Switch(state) => {
-        env.nextState = state
+        newEnv.nextState = state
       }
       case Reconsume(state) => {
-        env.nextState = state
-        env.inputText = env.currentInputCharacter + env.inputText
-        env.currentInputCharacter = null
+        newEnv.nextState = state
+        newEnv.inputText = newEnv.currentInputCharacter + newEnv.inputText
+        newEnv.currentInputCharacter = null
       }
       case Set(obj, to) =>
       case Consume(character) => {
-        if (env.inputText.substring(0, character.length) == character) {
-          env.inputText = env.inputText.substring(character.length - 1)
-          env.currentInputCharacter = character
-        } else {
-          println("consume error")
+        character match {
+          case "next input character" => {
+            if (newEnv.inputText.length > 0) {
+              newEnv.currentInputCharacter = newEnv.inputText.head.toString
+              newEnv.inputText = newEnv.inputText.tail
+            } else {
+              newEnv.currentInputCharacter = "[EOF]"
+            }
+          }
+          case _ => {
+            // 途中
+            if (newEnv.inputText.substring(0, character.length) == character) {
+              newEnv.inputText = newEnv.inputText.substring(character.length - 1)
+              newEnv.currentInputCharacter = character
+            } else {
+              println("consume error")
+            }
+          }
         }
       }
       case Emit(characters) => {
@@ -103,7 +122,7 @@ object Implement {
       }
       case Append(obj, to) =>
       case Error(error) => {
-        env.errorContent = error
+        newEnv.errorContent = error
         //println("Emit : "+error)
       }
       case Create(token) =>
@@ -113,11 +132,15 @@ object Implement {
       case Start() =>
       case Multiply(obj, by) =>
       case Add(obj, to) =>
-      case If(bool, t, f) =>
+      case If(bool, t, f) => {
+        var comList: List[Command] = null
+        if (implementBool(bool)) comList = t else comList = f
+        for (c <- comList) newEnv = interpretCommand(newEnv, c)
+      }
       case IF_(_) | OTHERWISE_() => println("IF not converted error : " + command)
       case _ => println("undefined command error : " + command)
     }
-    env
+    newEnv
   }
 
   def implementBool(bool: Bool): Boolean = { // env(環境)も引数に入れる

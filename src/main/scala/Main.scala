@@ -33,14 +33,6 @@ object Main {
    *
    */
   def main(args: Array[String]) = {
-    val A: Int = "b".codePointAt(0)
-    A match {
-      case 0x0021 => println("?")
-      case 0x002F => println("/")
-      case x if (x >= 0x0041 && x <= 0x005A)||(x >= 0x0061 && x <= 0x007A) => println("ascii alpha")
-      case _ => println("anything else")
-    } // => Mapであらわせない
-
     // HTMLのパーサー
     parseHtml()
 
@@ -69,10 +61,13 @@ object Main {
     formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
 
     System.out.println("> parse&convert_start")
-    for (i <- 26 - 1 to stateList.length - 1 - (stateList.length - 26)) {
+    for (i <- 11 - 1 to stateList.length - 1 - (stateList.length - 11)) {
       println(i+1)
       val stateName = stateList(i).name
       txtOut.println(i+1 + " : " + stateName)
+
+      val prevCommand = statementToCommand(stateList(i).prev)
+
       var trans_p: List[(String, List[Command])] = List()
 
       for (j <- 0 to stateList(i).trans.length - 1) {
@@ -80,34 +75,15 @@ object Main {
         txtOut.println( "-- chara: "+ character + " --")
         // 入力ファイルを解析する
         var str: String = stateList(i).trans(j).process
-        txtOut.println(str)
-        str = Replacement.replace(str)
-        txtOut.println("  | "+str)
-        analysis(str)
-
-        var tagList: List[Tag] = List()
-        for (t <- treeList) {
-          makeLeafMap(t._1)
-          tokenList = t._2
-          val tag = convert(t._1)
-          tagList :+= tag
-          txtOut.println(tag)
-        }
-        val commandList = TagToCommand.toCommand(tagList)
-        txtOut.println("")
-        for (c <- commandList) {txtOut.println(" -> " + c)}
-        txtOut.println("")
-
+        val commandList = statementToCommand(str)
         trans_p :+= (character, commandList)
-
-        treeList = List()
-        treeList2 = List()
         //if (i == 11 - 1 && j == 8)ShowTree.showTree(tagList)
       }
 
-      val state_p = pState(stateName, List(), trans_p)
+      val state_p = pState(stateName, prevCommand, trans_p)
       pStateMap += (stateName -> state_p)
 
+      println(Implement.characterMatching("A", trans_p))
     }
     txtOut.println(pStateMap)
 
@@ -117,5 +93,29 @@ object Main {
     IOUtils.closeIgnoringExceptions(txtOut)
     IOUtils.closeIgnoringExceptions(replace_out)
 
+  }
+
+  def statementToCommand(str: String): List[Command] = {
+    txtOut.println(str)
+    val newStr = Replacement.replace(str)
+    txtOut.println("  | "+newStr)
+    analysis(newStr)
+
+    var tagList: List[Tag] = List()
+    for (t <- treeList) {
+      makeLeafMap(t._1)
+      tokenList = t._2
+      val tag = convert(t._1)
+      tagList :+= tag
+      txtOut.println(tag)
+    }
+    val commandList = TagToCommand.toCommand(tagList)
+    txtOut.println("")
+    for (c <- commandList) {txtOut.println(" -> " + c)}
+    txtOut.println("")
+    treeList = List()
+    treeList2 = List()
+
+    commandList
   }
 }

@@ -40,6 +40,7 @@ object Replacement {
     // 参照関係
     s = s.replace("that attribute", "that attribute's")
     s = s.replace("'s's", "'s")
+    s = ":$".r.replaceAllIn(s, ".")
 
     replace_out.println(" => " + s)
     s
