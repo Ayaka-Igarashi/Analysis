@@ -1,0 +1,1564 @@
+======== Data_state ========
+name : Data_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0026 AMPERSAND (&amp;)
+  command : List(Set(the return state,the Data_state), Switch(Character_reference_state))
+
+character : U+003C LESS-THAN SIGN (&lt;)
+  command : List(Switch(Tag_open_state))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Emit(List (current input character, ) _as a character token))
+
+character : EOF
+  command : List(Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Emit(List (current input character, ) _as a character token))
+
+
+======== RCDATA_state ========
+name : RCDATA_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0026 AMPERSAND (&amp;)
+  command : List(Set(the return state,the RCDATA_state), Switch(Character_reference_state))
+
+character : U+003C LESS-THAN SIGN (&lt;)
+  command : List(Switch(RCDATA_less_than_sign_state))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Emit(List (U_FFFD, ) ))
+
+character : EOF
+  command : List(Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Emit(List (current input character, ) _as a character token))
+
+
+======== RAWTEXT_state ========
+name : RAWTEXT_state
+prev : List(Consume(List (next input character, ) ))
+character : U+003C LESS-THAN SIGN (&lt;)
+  command : List(Switch(RAWTEXT_less_than_sign_state))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Emit(List (U_FFFD, ) ))
+
+character : EOF
+  command : List(Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Emit(List (current input character, ) _as a character token))
+
+
+======== Script_data_state ========
+name : Script_data_state
+prev : List(Consume(List (next input character, ) ))
+character : U+003C LESS-THAN SIGN (&lt;)
+  command : List(Switch(Script_data_less_than_sign_state))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Emit(List (U_FFFD, ) ))
+
+character : EOF
+  command : List(Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Emit(List (current input character, ) _as a character token))
+
+
+======== PLAINTEXT_state ========
+name : PLAINTEXT_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Emit(List (U_FFFD, ) ))
+
+character : EOF
+  command : List(Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Emit(List (current input character, ) _as a character token))
+
+
+======== Tag_open_state ========
+name : Tag_open_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0021 EXCLAMATION MARK (!)
+  command : List(Switch(Markup_declaration_open_state))
+
+character : U+002F SOLIDUS (/)
+  command : List(Switch(End_tag_open_state))
+
+character : ASCII alpha
+  command : List(Create(List (new start tag token, ) ), Set(its tag name,the empty string), Reconsume(Tag_name_state))
+
+character : U+003F QUESTION MARK (?)
+  command : List(Error(unexpected_question_mark_instead_of_tag_name parse error), Create(List (a comment token whose data is the empty string, ) ), Reconsume(Bogus_comment_state))
+
+character : EOF
+  command : List(Error(eof_before_tag_name parse error), Emit(List (U_003C, an end_of_file token, ) ))
+
+character : Anything else
+  command : List(Error(invalid_first_character_of_tag_name parse error), Emit(List (U_003C, ) ), Reconsume(Data_state))
+
+
+======== End_tag_open_state ========
+name : End_tag_open_state
+prev : List(Consume(List (next input character, ) ))
+character : ASCII alpha
+  command : List(Create(List (new end tag token, ) ), Set(its tag name,the empty string), Reconsume(Tag_name_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Error(missing_end_tag_name parse error), Switch(Data_state))
+
+character : EOF
+  command : List(Error(eof_before_tag_name parse error), Emit(List (U_003C, U_002F, an end_of_file token, ) ))
+
+character : Anything else
+  command : List(Error(invalid_first_character_of_tag_name parse error), Create(List (a comment token whose data is the empty string, ) ), Reconsume(Bogus_comment_state))
+
+
+======== Tag_name_state ========
+name : Tag_name_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Switch(Before_attribute_name_state))
+
+character : U+000A LINE FEED (LF)
+  command : List(Switch(Before_attribute_name_state))
+
+character : U+000C FORM FEED (FF)
+  command : List(Switch(Before_attribute_name_state))
+
+character : U+0020 SPACE
+  command : List(Switch(Before_attribute_name_state))
+
+character : U+002F SOLIDUS (/)
+  command : List(Switch(Self_closing_start_tag_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Switch(Data_state), Emit(List (current tag token, ) ))
+
+character : ASCII upper alpha
+  command : List(Append(List (the lowercase version of the current input character, ) ,the current tag token 's tag name))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Append(List (U_FFFD REPLACEMENT CHARACTER character, ) ,the current tag token 's tag name))
+
+character : EOF
+  command : List(Error(eof_in_tag parse error), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Append(List (current input character, ) ,the current tag token 's tag name))
+
+
+======== RCDATA_less_than_sign_state ========
+name : RCDATA_less_than_sign_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002F SOLIDUS (/)
+  command : List(Set(the temporary buffer,the empty string), Switch(RCDATA_end_tag_open_state))
+
+character : Anything else
+  command : List(Emit(List (U_003C, ) ), Reconsume(RCDATA_state))
+
+
+======== RCDATA_end_tag_open_state ========
+name : RCDATA_end_tag_open_state
+prev : List(Consume(List (next input character, ) ))
+character : ASCII alpha
+  command : List(Create(List (new end tag token, ) ), Set(its tag name,the empty string), Reconsume(RCDATA_end_tag_name_state))
+
+character : Anything else
+  command : List(Emit(List (U_003C, a U_002F, ) ), Reconsume(RCDATA_state))
+
+
+======== RCDATA_end_tag_name_state ========
+name : RCDATA_end_tag_name_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+000A LINE FEED (LF)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+000C FORM FEED (FF)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+0020 SPACE
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+002F SOLIDUS (/)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Self_closing_start_tag_state)),List(Treat())))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Data_state), Emit(List (current tag token, ) )),List(Treat())))
+
+character : ASCII upper alpha
+  command : List(Append(List (the lowercase version of the current input character, ) ,the current tag token 's tag name), Append(List (current input character, ) ,the temporary buffer))
+
+character : ASCII lower alpha
+  command : List(Append(List (current input character, ) ,the current tag token 's tag name), Append(List (current input character, ) ,the temporary buffer))
+
+character : Anything else
+  command : List(Emit(List (U_003C, U_002F, a character token for each of the characters in the temporary buffer, ) ), Reconsume(RCDATA_state))
+
+
+======== RAWTEXT_less_than_sign_state ========
+name : RAWTEXT_less_than_sign_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002F SOLIDUS (/)
+  command : List(Set(the temporary buffer,the empty string), Switch(RAWTEXT_end_tag_open_state))
+
+character : Anything else
+  command : List(Emit(List (U_003C, ) ), Reconsume(RAWTEXT_state))
+
+
+======== RAWTEXT_end_tag_open_state ========
+name : RAWTEXT_end_tag_open_state
+prev : List(Consume(List (next input character, ) ))
+character : ASCII alpha
+  command : List(Create(List (new end tag token, ) ), Set(its tag name,the empty string), Reconsume(RAWTEXT_end_tag_name_state))
+
+character : Anything else
+  command : List(Emit(List (UP003C LESS_THAN SIGN character token, a UP002F SOLIDUS character token, ) ), Reconsume(RAWTEXT_state))
+
+
+======== RAWTEXT_end_tag_name_state ========
+name : RAWTEXT_end_tag_name_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+000A LINE FEED (LF)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+000C FORM FEED (FF)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+0020 SPACE
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+002F SOLIDUS (/)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Self_closing_start_tag_state)),List(Treat())))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Data_state), Emit(List (current tag token, ) )),List(Treat())))
+
+character : ASCII upper alpha
+  command : List(Append(List (the lowercase version of the current input character, ) ,the current tag token 's tag name), Append(List (current input character, ) ,the temporary buffer))
+
+character : ASCII lower alpha
+  command : List(Append(List (current input character, ) ,the current tag token 's tag name), Append(List (current input character, ) ,the temporary buffer))
+
+character : Anything else
+  command : List(Emit(List (U_003C, U_002F, a character token for each of the characters in the temporary buffer, ) ), Reconsume(RAWTEXT_state))
+
+
+======== Script_data_less_than_sign_state ========
+name : Script_data_less_than_sign_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002F SOLIDUS (/)
+  command : List(Set(the temporary buffer,the empty string), Switch(Script_data_end_tag_open_state))
+
+character : U+0021 EXCLAMATION MARK (!)
+  command : List(Switch(Script_data_escape_start_state), Emit(List (U_003C, a U_0021, ) ))
+
+character : Anything else
+  command : List(Emit(List (U_003C, ) ), Reconsume(Script_data_state))
+
+
+======== Script_data_end_tag_open_state ========
+name : Script_data_end_tag_open_state
+prev : List(Consume(List (next input character, ) ))
+character : ASCII alpha
+  command : List(Create(List (new end tag token, ) ), Set(its tag name,the empty string), Reconsume(Script_data_end_tag_name_state))
+
+character : Anything else
+  command : List(Emit(List (U_003C, a U_002F, ) ), Reconsume(Script_data_state))
+
+
+======== Script_data_end_tag_name_state ========
+name : Script_data_end_tag_name_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+000A LINE FEED (LF)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+000C FORM FEED (FF)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+0020 SPACE
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+002F SOLIDUS (/)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Self_closing_start_tag_state)),List(Treat())))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Data_state), Emit(List (current tag token, ) )),List(Treat())))
+
+character : ASCII upper alpha
+  command : List(Append(List (the lowercase version of the current input character, ) ,the current tag token 's tag name), Append(List (current input character, ) ,the temporary buffer))
+
+character : ASCII lower alpha
+  command : List(Append(List (current input character, ) ,the current tag token 's tag name), Append(List (current input character, ) ,the temporary buffer))
+
+character : Anything else
+  command : List(Emit(List (U_003C, U_002F, a character token for each of the characters in the temporary buffer, ) ), Reconsume(Script_data_state))
+
+
+======== Script_data_escape_start_state ========
+name : Script_data_escape_start_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Switch(Script_data_escape_start_dash_state), Emit(List (U_002D, ) ))
+
+character : Anything else
+  command : List(Reconsume(Script_data_state))
+
+
+======== Script_data_escape_start_dash_state ========
+name : Script_data_escape_start_dash_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Switch(Script_data_escaped_dash_dash_state), Emit(List (U_002D, ) ))
+
+character : Anything else
+  command : List(Reconsume(Script_data_state))
+
+
+======== Script_data_escaped_state ========
+name : Script_data_escaped_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Switch(Script_data_escaped_dash_state), Emit(List (U_002D, ) ))
+
+character : U+003C LESS-THAN SIGN (&lt;)
+  command : List(Switch(Script_data_escaped_less_than_sign_state))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Emit(List (U_FFFD, ) ))
+
+character : EOF
+  command : List(Error(eof_in_script_html_comment_like_text parse error), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Emit(List (current input character, ) _as a character token))
+
+
+======== Script_data_escaped_dash_state ========
+name : Script_data_escaped_dash_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Switch(Script_data_escaped_dash_dash_state), Emit(List (U_002D, ) ))
+
+character : U+003C LESS-THAN SIGN (&lt;)
+  command : List(Switch(Script_data_escaped_less_than_sign_state))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Switch(Script_data_escaped_state), Emit(List (U_FFFD, ) ))
+
+character : EOF
+  command : List(Error(eof_in_script_html_comment_like_text parse error), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token))
+
+
+======== Script_data_escaped_dash_dash_state ========
+name : Script_data_escaped_dash_dash_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Emit(List (U_002D, ) ))
+
+character : U+003C LESS-THAN SIGN (&lt;)
+  command : List(Switch(Script_data_escaped_less_than_sign_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Switch(Script_data_state), Emit(List (U_003E, ) ))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Switch(Script_data_escaped_state), Emit(List (U_FFFD, ) ))
+
+character : EOF
+  command : List(Error(eof_in_script_html_comment_like_text parse error), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token))
+
+
+======== Script_data_escaped_less_than_sign_state ========
+name : Script_data_escaped_less_than_sign_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002F SOLIDUS (/)
+  command : List(Set(the temporary buffer,the empty string), Switch(Script_data_escaped_end_tag_open_state))
+
+character : ASCII alpha
+  command : List(Set(the temporary buffer,the empty string), Emit(List (U_003C, ) ), Reconsume(Script_data_double_escape_start_state))
+
+character : Anything else
+  command : List(Emit(List (U_003C, ) ), Reconsume(Script_data_escaped_state))
+
+
+======== Script_data_escaped_end_tag_open_state ========
+name : Script_data_escaped_end_tag_open_state
+prev : List(Consume(List (next input character, ) ))
+character : ASCII alpha
+  command : List(Create(List (new end tag token, ) ), Set(its tag name,the empty string), Reconsume(Script_data_escaped_end_tag_name_state))
+
+character : Anything else
+  command : List(Emit(List (U_003C, a U_002F, ) ), Reconsume(Script_data_escaped_state))
+
+
+======== Script_data_escaped_end_tag_name_state ========
+name : Script_data_escaped_end_tag_name_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+000A LINE FEED (LF)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+000C FORM FEED (FF)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+0020 SPACE
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Before_attribute_name_state)),List(Treat())))
+
+character : U+002F SOLIDUS (/)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Self_closing_start_tag_state)),List(Treat())))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(If(IsEqual(the current end tag token,an appropriate end tag token),List(Switch(Data_state), Emit(List (current tag token, ) )),List(Treat())))
+
+character : ASCII upper alpha
+  command : List(Append(List (the lowercase version of the current input character, ) ,the current tag token 's tag name), Append(List (current input character, ) ,the temporary buffer))
+
+character : ASCII lower alpha
+  command : List(Append(List (current input character, ) ,the current tag token 's tag name), Append(List (current input character, ) ,the temporary buffer))
+
+character : Anything else
+  command : List(Emit(List (U_003C, U_002F, a character token for each of the characters in the temporary buffer, ) ), Reconsume(Script_data_escaped_state))
+
+
+======== Script_data_double_escape_start_state ========
+name : Script_data_double_escape_start_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token))))
+
+character : U+000A LINE FEED (LF)
+  command : List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token))))
+
+character : U+000C FORM FEED (FF)
+  command : List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token))))
+
+character : U+0020 SPACE
+  command : List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token))))
+
+character : U+002F SOLIDUS (/)
+  command : List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token))))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_double_escaped_state)),List(Switch(Script_data_escaped_state), Emit(List (current input character, ) _as a character token))))
+
+character : ASCII upper alpha
+  command : List(Append(List (the lowercase version of the current input character, ) ,the temporary buffer), Emit(List (current input character, ) _as a character token))
+
+character : ASCII lower alpha
+  command : List(Append(List (current input character, ) ,the temporary buffer), Emit(List (current input character, ) _as a character token))
+
+character : Anything else
+  command : List(Reconsume(Script_data_escaped_state))
+
+
+======== Script_data_double_escaped_state ========
+name : Script_data_double_escaped_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Switch(Script_data_double_escaped_dash_state), Emit(List (U_002D, ) ))
+
+character : U+003C LESS-THAN SIGN (&lt;)
+  command : List(Switch(Script_data_double_escaped_less_than_sign_state), Emit(List (U_003C, ) ))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Emit(List (U_FFFD, ) ))
+
+character : EOF
+  command : List(Error(eof_in_script_html_comment_like_text parse error), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Emit(List (current input character, ) _as a character token))
+
+
+======== Script_data_double_escaped_dash_state ========
+name : Script_data_double_escaped_dash_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Switch(Script_data_double_escaped_dash_dash_state), Emit(List (U_002D, ) ))
+
+character : U+003C LESS-THAN SIGN (&lt;)
+  command : List(Switch(Script_data_double_escaped_less_than_sign_state), Emit(List (U_003C, ) ))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Switch(Script_data_double_escaped_state), Emit(List (U_FFFD, ) ))
+
+character : EOF
+  command : List(Error(eof_in_script_html_comment_like_text parse error), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Switch(Script_data_double_escaped_state), Emit(List (current input character, ) _as a character token))
+
+
+======== Script_data_double_escaped_dash_dash_state ========
+name : Script_data_double_escaped_dash_dash_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Emit(List (U_002D, ) ))
+
+character : U+003C LESS-THAN SIGN (&lt;)
+  command : List(Switch(Script_data_double_escaped_less_than_sign_state), Emit(List (U_003C, ) ))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Switch(Script_data_state), Emit(List (U_003E, ) ))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Switch(Script_data_double_escaped_state), Emit(List (U_FFFD, ) ))
+
+character : EOF
+  command : List(Error(eof_in_script_html_comment_like_text parse error), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Switch(Script_data_double_escaped_state), Emit(List (current input character, ) _as a character token))
+
+
+======== Script_data_double_escaped_less_than_sign_state ========
+name : Script_data_double_escaped_less_than_sign_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002F SOLIDUS (/)
+  command : List(Set(the temporary buffer,the empty string), Switch(Script_data_double_escape_end_state), Emit(List (U_002F, ) ))
+
+character : Anything else
+  command : List(Reconsume(Script_data_double_escaped_state))
+
+
+======== Script_data_double_escape_end_state ========
+name : Script_data_double_escape_end_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_escaped_state)),List(Switch(Script_data_double_escaped_state), Emit(List (current input character, ) _as a character token))))
+
+character : U+000A LINE FEED (LF)
+  command : List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_escaped_state)),List(Switch(Script_data_double_escaped_state), Emit(List (current input character, ) _as a character token))))
+
+character : U+000C FORM FEED (FF)
+  command : List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_escaped_state)),List(Switch(Script_data_double_escaped_state), Emit(List (current input character, ) _as a character token))))
+
+character : U+0020 SPACE
+  command : List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_escaped_state)),List(Switch(Script_data_double_escaped_state), Emit(List (current input character, ) _as a character token))))
+
+character : U+002F SOLIDUS (/)
+  command : List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_escaped_state)),List(Switch(Script_data_double_escaped_state), Emit(List (current input character, ) _as a character token))))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(If(IsEqual(the temporary buffer,the string " script "),List(Switch(Script_data_escaped_state)),List(Switch(Script_data_double_escaped_state), Emit(List (current input character, ) _as a character token))))
+
+character : ASCII upper alpha
+  command : List(Append(List (the lowercase version of the current input character, ) ,the temporary buffer), Emit(List (current input character, ) _as a character token))
+
+character : ASCII lower alpha
+  command : List(Append(List (current input character, ) ,the temporary buffer), Emit(List (current input character, ) _as a character token))
+
+character : Anything else
+  command : List(Reconsume(Script_data_double_escaped_state))
+
+
+======== Before_attribute_name_state ========
+name : Before_attribute_name_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000A LINE FEED (LF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000C FORM FEED (FF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+0020 SPACE
+  command : List(Ignore(List (character, ) ))
+
+character : U+002F SOLIDUS (/)
+  command : List(Reconsume(After_attribute_name_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Reconsume(After_attribute_name_state))
+
+character : EOF
+  command : List(Reconsume(After_attribute_name_state))
+
+character : U+003D EQUALS SIGN (=)
+  command : List(Error(unexpected_equals_sign_before_attribute_name parse error), Start(), Set(that attribute 's name,the current input character), Set(its value,the empty string), Switch(Attribute_name_state))
+
+character : Anything else
+  command : List(Start(), Set(that attribute 's name and value,the empty string), Reconsume(Attribute_name_state))
+
+
+======== Attribute_name_state ========
+name : Attribute_name_state
+prev : List()
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Reconsume(After_attribute_name_state))
+
+character : U+000A LINE FEED (LF)
+  command : List(Reconsume(After_attribute_name_state))
+
+character : U+000C FORM FEED (FF)
+  command : List(Reconsume(After_attribute_name_state))
+
+character : U+0020 SPACE
+  command : List(Reconsume(After_attribute_name_state))
+
+character : U+002F SOLIDUS (/)
+  command : List(Reconsume(After_attribute_name_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Reconsume(After_attribute_name_state))
+
+character : EOF
+  command : List(Reconsume(After_attribute_name_state))
+
+character : U+003D EQUALS SIGN (=)
+  command : List(Switch(Before_attribute_value_state))
+
+character : ASCII upper alpha
+  command : List(Append(List (the lowercase version of the current input character, ) ,the current attribute 's name))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Append(List (U_FFFD REPLACEMENT CHARACTER character, ) ,the current attribute 's name))
+
+character : U+0022 QUOTATION MARK (")
+  command : List(Error(unexpected_character_in_attribute_name parse error), Treat())
+
+character : U+0027 APOSTROPHE (')
+  command : List(Error(unexpected_character_in_attribute_name parse error), Treat())
+
+character : U+003C LESS-THAN SIGN (&lt;)
+  command : List(Error(unexpected_character_in_attribute_name parse error), Treat())
+
+character : Anything else
+  command : List(Append(List (current input character, ) ,the current attribute 's name))
+
+
+======== After_attribute_name_state ========
+name : After_attribute_name_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000A LINE FEED (LF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000C FORM FEED (FF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+0020 SPACE
+  command : List(Ignore(List (character, ) ))
+
+character : U+002F SOLIDUS (/)
+  command : List(Switch(Self_closing_start_tag_state))
+
+character : U+003D EQUALS SIGN (=)
+  command : List(Switch(Before_attribute_value_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Switch(Data_state), Emit(List (current tag token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_tag parse error), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Start(), Set(that attribute 's name and value,the empty string), Reconsume(Attribute_name_state))
+
+
+======== Before_attribute_value_state ========
+name : Before_attribute_value_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000A LINE FEED (LF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000C FORM FEED (FF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+0020 SPACE
+  command : List(Ignore(List (character, ) ))
+
+character : U+0022 QUOTATION MARK (")
+  command : List(Switch(Attribute_value_double_quoted_state))
+
+character : U+0027 APOSTROPHE (')
+  command : List(Switch(Attribute_value_single_quoted_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Error(missing_attribute_value parse error), Switch(Data_state), Emit(List (current tag token, ) ))
+
+character : Anything else
+  command : List(Reconsume(Attribute_value_unquoted_state))
+
+
+======== Attribute_value_double_quoted_state ========
+name : Attribute_value_double_quoted_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0022 QUOTATION MARK (")
+  command : List(Switch(After_attribute_value_quoted_state))
+
+character : U+0026 AMPERSAND (&amp;)
+  command : List(Set(the return state,the Attribute_value_double_quoted_state), Switch(Character_reference_state))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Append(List (U_FFFD REPLACEMENT CHARACTER character, ) ,the current attribute 's value))
+
+character : EOF
+  command : List(Error(eof_in_tag parse error), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Append(List (current input character, ) ,the current attribute 's value))
+
+
+======== Attribute_value_single_quoted_state ========
+name : Attribute_value_single_quoted_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0027 APOSTROPHE (')
+  command : List(Switch(After_attribute_value_quoted_state))
+
+character : U+0026 AMPERSAND (&amp;)
+  command : List(Set(the return state,the Attribute_value_single_quoted_state), Switch(Character_reference_state))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Append(List (U_FFFD REPLACEMENT CHARACTER character, ) ,the current attribute 's value))
+
+character : EOF
+  command : List(Error(eof_in_tag parse error), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Append(List (current input character, ) ,the current attribute 's value))
+
+
+======== Attribute_value_unquoted_state ========
+name : Attribute_value_unquoted_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Switch(Before_attribute_name_state))
+
+character : U+000A LINE FEED (LF)
+  command : List(Switch(Before_attribute_name_state))
+
+character : U+000C FORM FEED (FF)
+  command : List(Switch(Before_attribute_name_state))
+
+character : U+0020 SPACE
+  command : List(Switch(Before_attribute_name_state))
+
+character : U+0026 AMPERSAND (&amp;)
+  command : List(Set(the return state,the Attribute_value_unquoted_state), Switch(Character_reference_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Switch(Data_state), Emit(List (current tag token, ) ))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Append(List (U_FFFD REPLACEMENT CHARACTER character, ) ,the current attribute 's value))
+
+character : U+0022 QUOTATION MARK (")
+  command : List(Error(unexpected_character_in_unquoted_attribute_value parse error), Treat())
+
+character : U+0027 APOSTROPHE (')
+  command : List(Error(unexpected_character_in_unquoted_attribute_value parse error), Treat())
+
+character : U+003C LESS-THAN SIGN (&lt;)
+  command : List(Error(unexpected_character_in_unquoted_attribute_value parse error), Treat())
+
+character : U+003D EQUALS SIGN (=)
+  command : List(Error(unexpected_character_in_unquoted_attribute_value parse error), Treat())
+
+character : U+0060 GRAVE ACCENT (`)
+  command : List(Error(unexpected_character_in_unquoted_attribute_value parse error), Treat())
+
+character : EOF
+  command : List(Error(eof_in_tag parse error), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Append(List (current input character, ) ,the current attribute 's value))
+
+
+======== After_attribute_value_quoted_state ========
+name : After_attribute_value_quoted_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Switch(Before_attribute_name_state))
+
+character : U+000A LINE FEED (LF)
+  command : List(Switch(Before_attribute_name_state))
+
+character : U+000C FORM FEED (FF)
+  command : List(Switch(Before_attribute_name_state))
+
+character : U+0020 SPACE
+  command : List(Switch(Before_attribute_name_state))
+
+character : U+002F SOLIDUS (/)
+  command : List(Switch(Self_closing_start_tag_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Switch(Data_state), Emit(List (current tag token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_tag parse error), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Error(missing_whitespace_between_attributes parse error), Reconsume(Before_attribute_name_state))
+
+
+======== Self_closing_start_tag_state ========
+name : Self_closing_start_tag_state
+prev : List(Consume(List (next input character, ) ))
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Set(the self_closing flag of the current tag token,on), Switch(Data_state), Emit(List (current tag token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_tag parse error), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Error(unexpected_solidus_in_tag parse error), Reconsume(Before_attribute_name_state))
+
+
+======== Bogus_comment_state ========
+name : Bogus_comment_state
+prev : List(Consume(List (next input character, ) ))
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Switch(Data_state), Emit(List (comment token, ) ))
+
+character : EOF
+  command : List(Emit(List (comment, ) ), Emit(List (end_of_file token, ) ))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Append(List (U_FFFD REPLACEMENT CHARACTER character, ) ,the comment token 's data))
+
+character : Anything else
+  command : List(Append(List (current input character, ) ,the comment token 's data))
+
+
+======== Markup_declaration_open_state ========
+name : Markup_declaration_open_state
+prev : List()
+character : Two U+002D HYPHEN-MINUS characters (-)
+  command : List(Consume(List (two characters, ) ), Create(List (a comment token whose data is the empty string, ) ), Switch(Comment_start_state))
+
+character : ASCII case-insensitive match for the word "DOCTYPE"
+  command : List(Consume(List (characters, ) ), Switch(DOCTYPE_state))
+
+character : The string "[CDATA[" (the five uppercase letters "CDATA" with a U+005B LEFT SQUARE BRACKET character before and after)
+  command : List(Consume(List (characters, ) ), If(And(IsExist(an adjusted current node),Not(IsEqual(it,an element in the HTML namespace))),List(Switch(CDATA_section_state)),List(Error(cdata_in_html_content parse error), Create(List (a comment token whose data is the " [ CDATA [ " string, ) ), Switch(Bogus_comment_state))))
+
+character : Anything else
+  command : List(Error(incorrectly_opened_comment parse error), Create(List (a comment token whose data is the empty string, ) ), Switch(Bogus_comment_state))
+
+
+======== Comment_start_state ========
+name : Comment_start_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Switch(Comment_start_dash_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Error(abrupt_closing_of_empty_comment parse error), Switch(Data_state), Emit(List (comment token, ) ))
+
+character : Anything else
+  command : List(Reconsume(Comment_state))
+
+
+======== Comment_start_dash_state ========
+name : Comment_start_dash_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Switch(Comment_end_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Error(abrupt_closing_of_empty_comment parse error), Switch(Data_state), Emit(List (comment token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_comment parse error), Emit(List (comment token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Append(List (a U_002D HYPHEN_MINUS character, ) ,the comment token 's data), Reconsume(Comment_state))
+
+
+======== Comment_state ========
+name : Comment_state
+prev : List(Consume(List (next input character, ) ))
+character : U+003C LESS-THAN SIGN (&lt;)
+  command : List(Append(List (current input character, ) ,the comment token 's data), Switch(Comment_less_than_sign_state))
+
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Switch(Comment_end_dash_state))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Append(List (U_FFFD REPLACEMENT CHARACTER character, ) ,the comment token 's data))
+
+character : EOF
+  command : List(Error(eof_in_comment parse error), Emit(List (comment token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Append(List (current input character, ) ,the comment token 's data))
+
+
+======== Comment_less_than_sign_state ========
+name : Comment_less_than_sign_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0021 EXCLAMATION MARK (!)
+  command : List(Append(List (current input character, ) ,the comment token 's data), Switch(Comment_less_than_sign_bang_state))
+
+character : U+003C LESS-THAN SIGN (&lt;)
+  command : List(Append(List (current input character, ) ,the comment token 's data))
+
+character : Anything else
+  command : List(Reconsume(Comment_state))
+
+
+======== Comment_less_than_sign_bang_state ========
+name : Comment_less_than_sign_bang_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Switch(Comment_less_than_sign_bang_dash_state))
+
+character : Anything else
+  command : List(Reconsume(Comment_state))
+
+
+======== Comment_less_than_sign_bang_dash_state ========
+name : Comment_less_than_sign_bang_dash_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Switch(Comment_less_than_sign_bang_dash_dash_state))
+
+character : Anything else
+  command : List(Reconsume(Comment_end_dash_state))
+
+
+======== Comment_less_than_sign_bang_dash_dash_state ========
+name : Comment_less_than_sign_bang_dash_dash_state
+prev : List(Consume(List (next input character, ) ))
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Reconsume(Comment_end_state))
+
+character : EOF
+  command : List(Reconsume(Comment_end_state))
+
+character : Anything else
+  command : List(Error(nested_comment parse error), Reconsume(Comment_end_state))
+
+
+======== Comment_end_dash_state ========
+name : Comment_end_dash_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Switch(Comment_end_state))
+
+character : EOF
+  command : List(Error(eof_in_comment parse error), Emit(List (comment token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Append(List (a U_002D HYPHEN_MINUS character, ) ,the comment token 's data), Reconsume(Comment_state))
+
+
+======== Comment_end_state ========
+name : Comment_end_state
+prev : List(Consume(List (next input character, ) ))
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Switch(Data_state), Emit(List (comment token, ) ))
+
+character : U+0021 EXCLAMATION MARK (!)
+  command : List(Switch(Comment_end_bang_state))
+
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Append(List (a U_002D HYPHEN_MINUS character, ) ,the comment token 's data))
+
+character : EOF
+  command : List(Error(eof_in_comment parse error), Emit(List (comment token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Append(List (two U_002D HYPHEN_MINUS characters, ) ,the comment token 's data), Reconsume(Comment_state))
+
+
+======== Comment_end_bang_state ========
+name : Comment_end_bang_state
+prev : List(Consume(List (next input character, ) ))
+character : U+002D HYPHEN-MINUS (-)
+  command : List(Append(List (two U_002D HYPHEN_MINUS characters, a U_0021 EXCLAMATION MARK character, ) ,the comment token 's data), Switch(Comment_end_dash_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Error(incorrectly_closed_comment parse error), Switch(Data_state), Emit(List (comment token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_comment parse error), Emit(List (comment token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Append(List (two U_002D HYPHEN_MINUS characters, a U_0021 EXCLAMATION MARK character, ) ,the comment token 's data), Reconsume(Comment_state))
+
+
+======== DOCTYPE_state ========
+name : DOCTYPE_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Switch(Before_DOCTYPE_name_state))
+
+character : U+000A LINE FEED (LF)
+  command : List(Switch(Before_DOCTYPE_name_state))
+
+character : U+000C FORM FEED (FF)
+  command : List(Switch(Before_DOCTYPE_name_state))
+
+character : U+0020 SPACE
+  command : List(Switch(Before_DOCTYPE_name_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Reconsume(Before_DOCTYPE_name_state))
+
+character : EOF
+  command : List(Error(eof_in_doctype parse error), Create(List (new DOCTYPE token, ) ), Set(its force_quirks flag,on), Emit(List (token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Error(missing_whitespace_before_doctype_name parse error), Reconsume(Before_DOCTYPE_name_state))
+
+
+======== Before_DOCTYPE_name_state ========
+name : Before_DOCTYPE_name_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000A LINE FEED (LF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000C FORM FEED (FF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+0020 SPACE
+  command : List(Ignore(List (character, ) ))
+
+character : ASCII upper alpha
+  command : List(Create(List (new DOCTYPE token, ) ), Set(the token 's name,the lowercase version of the current input character), Switch(DOCTYPE_name_state))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Create(List (new DOCTYPE token, ) ), Set(the token 's name,a U_FFFD REPLACEMENT CHARACTER character), Switch(DOCTYPE_name_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Error(missing_doctype_name parse error), Create(List (new DOCTYPE token, ) ), Set(its force_quirks flag,on), Switch(Data_state), Emit(List (token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_doctype parse error), Create(List (new DOCTYPE token, ) ), Set(its force_quirks flag,on), Emit(List (token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Create(List (new DOCTYPE token, ) ), Set(the token 's name,the current input character), Switch(DOCTYPE_name_state))
+
+
+======== DOCTYPE_name_state ========
+name : DOCTYPE_name_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Switch(After_DOCTYPE_name_state))
+
+character : U+000A LINE FEED (LF)
+  command : List(Switch(After_DOCTYPE_name_state))
+
+character : U+000C FORM FEED (FF)
+  command : List(Switch(After_DOCTYPE_name_state))
+
+character : U+0020 SPACE
+  command : List(Switch(After_DOCTYPE_name_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Switch(Data_state), Emit(List (current DOCTYPE token, ) ))
+
+character : ASCII upper alpha
+  command : List(Append(List (the lowercase version of the current input character, ) ,the current DOCTYPE token 's name))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Append(List (U_FFFD REPLACEMENT CHARACTER character, ) ,the current DOCTYPE token 's name))
+
+character : EOF
+  command : List(Error(eof_in_doctype parse error), Set(the DOCTYPE token 's force_quirks flag,on), Emit(List (DOCTYPE token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Append(List (current input character, ) ,the current DOCTYPE token 's name))
+
+
+======== After_DOCTYPE_name_state ========
+name : After_DOCTYPE_name_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000A LINE FEED (LF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000C FORM FEED (FF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+0020 SPACE
+  command : List(Ignore(List (character, ) ))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Switch(Data_state), Emit(List (current DOCTYPE token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_doctype parse error), Set(the DOCTYPE token 's force_quirks flag,on), Emit(List (DOCTYPE token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(If(IsEqual(the six characters starting from the current input character,an ASCII case_insensitive match for the word " PUBLIC "),List(Consume(List (characters, ) ), Switch(After_DOCTYPE_public_keyword_state)),List(If(IsEqual(the six characters starting from the current input character,an ASCII case_insensitive match for the word " SYSTEM "),List(Consume(List (characters, ) ), Switch(After_DOCTYPE_system_keyword_state)),List(Error(invalid_character_sequence_after_doctype_name parse error), Set(the DOCTYPE token 's force_quirks flag,on), Reconsume(Bogus_DOCTYPE_state))))))
+
+
+======== After_DOCTYPE_public_keyword_state ========
+name : After_DOCTYPE_public_keyword_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Switch(Before_DOCTYPE_public_identifier_state))
+
+character : U+000A LINE FEED (LF)
+  command : List(Switch(Before_DOCTYPE_public_identifier_state))
+
+character : U+000C FORM FEED (FF)
+  command : List(Switch(Before_DOCTYPE_public_identifier_state))
+
+character : U+0020 SPACE
+  command : List(Switch(Before_DOCTYPE_public_identifier_state))
+
+character : U+0022 QUOTATION MARK (")
+  command : List(Error(missing_whitespace_after_doctype_public_keyword parse error), Set(the DOCTYPE token 's public identifier,the empty string), Switch(DOCTYPE_public_identifier_double_quoted_state))
+
+character : U+0027 APOSTROPHE (')
+  command : List(Error(missing_whitespace_after_doctype_public_keyword parse error), Set(the DOCTYPE token 's public identifier,the empty string), Switch(DOCTYPE_public_identifier_single_quoted_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Error(missing_doctype_public_identifier parse error), Set(the DOCTYPE token 's force_quirks flag,on), Switch(Data_state), Emit(List (DOCTYPE token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_doctype parse error), Set(the DOCTYPE token 's force_quirks flag,on), Emit(List (DOCTYPE token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Error(missing_quote_before_doctype_public_identifier parse error), Set(the DOCTYPE token 's force_quirks flag,on), Reconsume(Bogus_DOCTYPE_state))
+
+
+======== Before_DOCTYPE_public_identifier_state ========
+name : Before_DOCTYPE_public_identifier_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000A LINE FEED (LF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000C FORM FEED (FF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+0020 SPACE
+  command : List(Ignore(List (character, ) ))
+
+character : U+0022 QUOTATION MARK (")
+  command : List(Set(the DOCTYPE token 's public identifier,the empty string), Switch(DOCTYPE_public_identifier_double_quoted_state))
+
+character : U+0027 APOSTROPHE (')
+  command : List(Set(the DOCTYPE token 's public identifier,the empty string), Switch(DOCTYPE_public_identifier_single_quoted_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Error(missing_doctype_public_identifier parse error), Set(the DOCTYPE token 's force_quirks flag,on), Switch(Data_state), Emit(List (DOCTYPE token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_doctype parse error), Set(the DOCTYPE token 's force_quirks flag,on), Emit(List (DOCTYPE token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Error(missing_quote_before_doctype_public_identifier parse error), Set(the DOCTYPE token 's force_quirks flag,on), Reconsume(Bogus_DOCTYPE_state))
+
+
+======== DOCTYPE_public_identifier_double_quoted_state ========
+name : DOCTYPE_public_identifier_double_quoted_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0022 QUOTATION MARK (")
+  command : List(Switch(After_DOCTYPE_public_identifier_state))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Append(List (U_FFFD REPLACEMENT CHARACTER character, ) ,the current DOCTYPE token 's public identifier))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Error(abrupt_doctype_public_identifier parse error), Set(the DOCTYPE token 's force_quirks flag,on), Switch(Data_state), Emit(List (DOCTYPE token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_doctype parse error), Set(the DOCTYPE token 's force_quirks flag,on), Emit(List (DOCTYPE token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Append(List (current input character, ) ,the current DOCTYPE token 's public identifier))
+
+
+======== DOCTYPE_public_identifier_single_quoted_state ========
+name : DOCTYPE_public_identifier_single_quoted_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0027 APOSTROPHE (')
+  command : List(Switch(After_DOCTYPE_public_identifier_state))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Append(List (U_FFFD REPLACEMENT CHARACTER character, ) ,the current DOCTYPE token 's public identifier))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Error(abrupt_doctype_public_identifier parse error), Set(the DOCTYPE token 's force_quirks flag,on), Switch(Data_state), Emit(List (DOCTYPE token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_doctype parse error), Set(the DOCTYPE token 's force_quirks flag,on), Emit(List (DOCTYPE token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Append(List (current input character, ) ,the current DOCTYPE token 's public identifier))
+
+
+======== After_DOCTYPE_public_identifier_state ========
+name : After_DOCTYPE_public_identifier_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Switch(Between_DOCTYPE_public_and_system_identifiers_state))
+
+character : U+000A LINE FEED (LF)
+  command : List(Switch(Between_DOCTYPE_public_and_system_identifiers_state))
+
+character : U+000C FORM FEED (FF)
+  command : List(Switch(Between_DOCTYPE_public_and_system_identifiers_state))
+
+character : U+0020 SPACE
+  command : List(Switch(Between_DOCTYPE_public_and_system_identifiers_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Switch(Data_state), Emit(List (current DOCTYPE token, ) ))
+
+character : U+0022 QUOTATION MARK (")
+  command : List(Error(missing_whitespace_between_doctype_public_and_system_identifiers parse error), Set(the DOCTYPE token 's system identifier,the empty string), Switch(DOCTYPE_system_identifier_double_quoted_state))
+
+character : U+0027 APOSTROPHE (')
+  command : List(Error(missing_whitespace_between_doctype_public_and_system_identifiers parse error), Set(the DOCTYPE token 's system identifier,the empty string), Switch(DOCTYPE_system_identifier_single_quoted_state))
+
+character : EOF
+  command : List(Error(eof_in_doctype parse error), Set(the DOCTYPE token 's force_quirks flag,on), Emit(List (DOCTYPE token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Error(missing_quote_before_doctype_system_identifier parse error), Set(the DOCTYPE token 's force_quirks flag,on), Reconsume(Bogus_DOCTYPE_state))
+
+
+======== Between_DOCTYPE_public_and_system_identifiers_state ========
+name : Between_DOCTYPE_public_and_system_identifiers_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000A LINE FEED (LF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000C FORM FEED (FF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+0020 SPACE
+  command : List(Ignore(List (character, ) ))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Switch(Data_state), Emit(List (current DOCTYPE token, ) ))
+
+character : U+0022 QUOTATION MARK (")
+  command : List(Set(the DOCTYPE token 's system identifier,the empty string), Switch(DOCTYPE_system_identifier_double_quoted_state))
+
+character : U+0027 APOSTROPHE (')
+  command : List(Set(the DOCTYPE token 's system identifier,the empty string), Switch(DOCTYPE_system_identifier_single_quoted_state))
+
+character : EOF
+  command : List(Error(eof_in_doctype parse error), Set(the DOCTYPE token 's force_quirks flag,on), Emit(List (DOCTYPE token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Error(missing_quote_before_doctype_system_identifier parse error), Set(the DOCTYPE token 's force_quirks flag,on), Reconsume(Bogus_DOCTYPE_state))
+
+
+======== After_DOCTYPE_system_keyword_state ========
+name : After_DOCTYPE_system_keyword_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Switch(Before_DOCTYPE_system_identifier_state))
+
+character : U+000A LINE FEED (LF)
+  command : List(Switch(Before_DOCTYPE_system_identifier_state))
+
+character : U+000C FORM FEED (FF)
+  command : List(Switch(Before_DOCTYPE_system_identifier_state))
+
+character : U+0020 SPACE
+  command : List(Switch(Before_DOCTYPE_system_identifier_state))
+
+character : U+0022 QUOTATION MARK (")
+  command : List(Error(missing_whitespace_after_doctype_system_keyword parse error), Set(the DOCTYPE token 's system identifier,the empty string), Switch(DOCTYPE_system_identifier_double_quoted_state))
+
+character : U+0027 APOSTROPHE (')
+  command : List(Error(missing_whitespace_after_doctype_system_keyword parse error), Set(the DOCTYPE token 's system identifier,the empty string), Switch(DOCTYPE_system_identifier_single_quoted_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Error(missing_doctype_system_identifier parse error), Set(the DOCTYPE token 's force_quirks flag,on), Switch(Data_state), Emit(List (DOCTYPE token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_doctype parse error), Set(the DOCTYPE token 's force_quirks flag,on), Emit(List (DOCTYPE token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Error(missing_quote_before_doctype_system_identifier parse error), Set(the DOCTYPE token 's force_quirks flag,on), Reconsume(Bogus_DOCTYPE_state))
+
+
+======== Before_DOCTYPE_system_identifier_state ========
+name : Before_DOCTYPE_system_identifier_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000A LINE FEED (LF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000C FORM FEED (FF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+0020 SPACE
+  command : List(Ignore(List (character, ) ))
+
+character : U+0022 QUOTATION MARK (")
+  command : List(Set(the DOCTYPE token 's system identifier,the empty string), Switch(DOCTYPE_system_identifier_double_quoted_state))
+
+character : U+0027 APOSTROPHE (')
+  command : List(Set(the DOCTYPE token 's system identifier,the empty string), Switch(DOCTYPE_system_identifier_single_quoted_state))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Error(missing_doctype_system_identifier parse error), Set(the DOCTYPE token 's force_quirks flag,on), Switch(Data_state), Emit(List (DOCTYPE token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_doctype parse error), Set(the DOCTYPE token 's force_quirks flag,on), Emit(List (DOCTYPE token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Error(missing_quote_before_doctype_system_identifier parse error), Set(the DOCTYPE token 's force_quirks flag,on), Reconsume(Bogus_DOCTYPE_state))
+
+
+======== DOCTYPE_system_identifier_double_quoted_state ========
+name : DOCTYPE_system_identifier_double_quoted_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0022 QUOTATION MARK (")
+  command : List(Switch(After_DOCTYPE_system_identifier_state))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Append(List (U_FFFD REPLACEMENT CHARACTER character, ) ,the current DOCTYPE token 's system identifier))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Error(abrupt_doctype_system_identifier parse error), Set(the DOCTYPE token 's force_quirks flag,on), Switch(Data_state), Emit(List (DOCTYPE token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_doctype parse error), Set(the DOCTYPE token 's force_quirks flag,on), Emit(List (DOCTYPE token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Append(List (current input character, ) ,the current DOCTYPE token 's system identifier))
+
+
+======== DOCTYPE_system_identifier_single_quoted_state ========
+name : DOCTYPE_system_identifier_single_quoted_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0027 APOSTROPHE (')
+  command : List(Switch(After_DOCTYPE_system_identifier_state))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Append(List (U_FFFD REPLACEMENT CHARACTER character, ) ,the current DOCTYPE token 's system identifier))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Error(abrupt_doctype_system_identifier parse error), Set(the DOCTYPE token 's force_quirks flag,on), Switch(Data_state), Emit(List (DOCTYPE token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_doctype parse error), Set(the DOCTYPE token 's force_quirks flag,on), Emit(List (DOCTYPE token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Append(List (current input character, ) ,the current DOCTYPE token 's system identifier))
+
+
+======== After_DOCTYPE_system_identifier_state ========
+name : After_DOCTYPE_system_identifier_state
+prev : List(Consume(List (next input character, ) ))
+character : U+0009 CHARACTER TABULATION (tab)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000A LINE FEED (LF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+000C FORM FEED (FF)
+  command : List(Ignore(List (character, ) ))
+
+character : U+0020 SPACE
+  command : List(Ignore(List (character, ) ))
+
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Switch(Data_state), Emit(List (current DOCTYPE token, ) ))
+
+character : EOF
+  command : List(Error(eof_in_doctype parse error), Set(the DOCTYPE token 's force_quirks flag,on), Emit(List (DOCTYPE token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Error(unexpected_character_after_doctype_system_identifier parse error), Reconsume(Bogus_DOCTYPE_state))
+
+
+======== Bogus_DOCTYPE_state ========
+name : Bogus_DOCTYPE_state
+prev : List(Consume(List (next input character, ) ))
+character : U+003E GREATER-THAN SIGN (&gt;)
+  command : List(Switch(Data_state), Emit(List (DOCTYPE token, ) ))
+
+character : U+0000 NULL
+  command : List(Error(unexpected_null_character parse error), Ignore(List (character, ) ))
+
+character : EOF
+  command : List(Emit(List (DOCTYPE token, ) ), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Ignore(List (character, ) ))
+
+
+======== CDATA_section_state ========
+name : CDATA_section_state
+prev : List()
+character : U+005D RIGHT SQUARE BRACKET (])
+  command : List(Switch(CDATA_section_bracket_state))
+
+character : EOF
+  command : List(Error(eof_in_cdata parse error), Emit(List (end_of_file token, ) ))
+
+character : Anything else
+  command : List(Emit(List (current input character, ) _as a character token))
+
+
+======== CDATA_section_bracket_state ========
+name : CDATA_section_bracket_state
+prev : List(Consume(List (next input character, ) ))
+character : U+005D RIGHT SQUARE BRACKET (])
+  command : List(Switch(CDATA_section_end_state))
+
+character : Anything else
+  command : List(Emit(List (U_005D, ) ), Reconsume(CDATA_section_state))
+
+
+======== CDATA_section_end_state ========
+name : CDATA_section_end_state
+prev : List(Consume(List (next input character, ) ))
+character : U+005D RIGHT SQUARE BRACKET (])
+  command : List(Emit(List (U_005D, ) ))
+
+character : U+003E GREATER-THAN SIGN character
+  command : List(Switch(Data_state))
+
+character : Anything else
+  command : List(Emit(List (two U_005Ds, ) ), Reconsume(CDATA_section_state))
+
+
+======== Character_reference_state ========
+name : Character_reference_state
+prev : List(Set(the temporary buffer,the empty string), Append(List (U_0026 AMPERSAND character, ) ,the temporary buffer), Consume(List (next input character, ) ))
+character : ASCII alphanumeric
+  command : List(Reconsume(Named_character_reference_state))
+
+character : U+0023 NUMBER SIGN (#)
+  command : List(Append(List (current input character, ) ,the temporary buffer), Switch(Numeric_character_reference_state))
+
+character : Anything else
+  command : List(Flush(), Reconsume(return state))
+
+
+======== Named_character_reference_state ========
+name : Named_character_reference_state
+prev : List()
+character : If there is a match
+  command : List(If(UNDEF(the character reference was consumed as part of an attribute , and the last character matched is not a U_003B SEMICOLON character ( ;) , and the next input character is either a U_003D EQUALS SIGN character ( =) or an ASCII alphanumeric),List(Switch(return state)),List()))
+
+character : Otherwise
+  command : List(Flush(), Switch(Ambiguous_ampersand_state))
+
+
+======== Ambiguous_ampersand_state ========
+name : Ambiguous_ampersand_state
+prev : List(Consume(List (next input character, ) ))
+character : ASCII alphanumeric
+  command : List(If(UNDEF(the character reference was consumed as part of an attribute),List(Append(List (current input character, ) ,the current attribute 's value)),List(Emit(List (current input character, ) _as a character token))))
+
+character : U+003B SEMICOLON (;)
+  command : List(Error(unknown_named_character_reference parse error), Reconsume(return state))
+
+character : Anything else
+  command : List(Reconsume(return state))
+
+
+======== Numeric_character_reference_state ========
+name : Numeric_character_reference_state
+prev : List(Set(the character reference code,zero), Consume(List (next input character, ) ))
+character : U+0078 LATIN SMALL LETTER X
+  command : List(Append(List (current input character, ) ,the temporary buffer), Switch(Hexadecimal_character_reference_start_state))
+
+character : U+0058 LATIN CAPITAL LETTER X
+  command : List(Append(List (current input character, ) ,the temporary buffer), Switch(Hexadecimal_character_reference_start_state))
+
+character : Anything else
+  command : List(Reconsume(Decimal_character_reference_start_state))
+
+
+======== Hexadecimal_character_reference_start_state ========
+name : Hexadecimal_character_reference_start_state
+prev : List(Consume(List (next input character, ) ))
+character : ASCII hex digit
+  command : List(Reconsume(Hexadecimal_character_reference_state))
+
+character : Anything else
+  command : List(Error(absence_of_digits_in_numeric_character_reference parse error), Flush(), Reconsume(return state))
+
+
+======== Decimal_character_reference_start_state ========
+name : Decimal_character_reference_start_state
+prev : List(Consume(List (next input character, ) ))
+character : ASCII digit
+  command : List(Reconsume(Decimal_character_reference_state))
+
+character : Anything else
+  command : List(Error(absence_of_digits_in_numeric_character_reference parse error), Flush(), Reconsume(return state))
+
+
+======== Hexadecimal_character_reference_state ========
+name : Hexadecimal_character_reference_state
+prev : List(Consume(List (next input character, ) ))
+character : ASCII digit
+  command : List(Multiply(List (character reference code, ) ,16), Add(List (a numeric version of the current input character, ) ,the character reference code))
+
+character : ASCII upper hex digit
+  command : List(Multiply(List (character reference code, ) ,16), Add(List (a numeric version of the current input character as a hexadecimal digit, ) ,the character reference code))
+
+character : ASCII lower hex digit
+  command : List(Multiply(List (character reference code, ) ,16), Add(List (a numeric version of the current input character as a hexadecimal digit, ) ,the character reference code))
+
+character : U+003B SEMICOLON
+  command : List(Switch(numeric character reference end state))
+
+character : Anything else
+  command : List(Error(missing_semicolon_after_character_reference parse error), Reconsume(numeric character reference end state))
+
+
+======== Decimal_character_reference_state ========
+name : Decimal_character_reference_state
+prev : List(Consume(List (next input character, ) ))
+character : ASCII digit
+  command : List(Multiply(List (character reference code, ) ,10), Add(List (a numeric version of the current input character, ) ,the character reference code))
+
+character : U+003B SEMICOLON
+  command : List(Switch(numeric character reference end state))
+
+character : Anything else
+  command : List(Error(missing_semicolon_after_character_reference parse error), Reconsume(numeric character reference end state))
+
+

@@ -13,9 +13,12 @@ object Environment {
 
     // returnStateの値
     var returnState: String = null
+    var currentDOCTYPEToken: DOCTYPEToken = null
+    var currentTagToken: tagToken = null
+    var commentToken: commentToken = null
 
     var currentInputCharacter: String = null
-    var emitCharacterList: List[Char] = List()
+    var emitTokens: List[Token] = List()
     var errorContent: String = null
 
     // 入力文字列
@@ -26,8 +29,11 @@ object Environment {
   }
 
   trait Token
-  case class DOCTYPE(name: String, public_identifier: String, system_identifier: String, force_quirks_flag: Boolean) extends Token
-  case class tagToken(name: String, self_closing_flag: Boolean, attributes: List[Attribute]) extends Token
+  case class DOCTYPEToken(name: String, public_identifier: String, system_identifier: String, force_quirks_flag: Boolean) extends Token
+  case class tagToken(isStart: Boolean, name: String, self_closing_flag: Boolean, var attributes: List[Attribute]) extends Token
+  case class commentToken(data: String) extends Token
+  case class characterToken(data: String) extends Token
+  case class endOfFileToken() extends Token
 
   class Attribute(name: String, value: String)
 }

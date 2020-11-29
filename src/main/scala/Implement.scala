@@ -7,7 +7,7 @@ import scala.collection.immutable.ListMap
 object Implement {
 
   var Env1: Map[String, Val] = Map(
-    "end_tag_token" -> Val(tagToken("",false,List())),
+    "end_tag_token" -> Val(tagToken(true, "",false,List())),
     "nextState" -> Val("Data_state"),
     "inputCharStream" -> Val("aa")
 
@@ -117,21 +117,68 @@ object Implement {
           }
         }
       }
-      case Emit(characters) => {
-        //env.emitCharacterList :+= characters // 途中
+      case Emit(character) => {
+        character match {
+          case "current tag token" => {
+            newEnv.emitTokens :+= newEnv.currentTagToken
+            newEnv.currentTagToken = null
+          }
+          case "DOCTYPE token" => {
+            newEnv.emitTokens :+= newEnv.currentDOCTYPEToken
+            newEnv.currentDOCTYPEToken = null
+          }
+          case "comment token" => {
+            newEnv.emitTokens :+= newEnv.commentToken
+            newEnv.commentToken = null
+          }
+          case "end-of-file token" => newEnv.emitTokens :+= endOfFileToken()
+          case _ => {
+            //
+          }
+        }
       }
       case Append(obj, to) =>
       case Error(error) => {
         newEnv.errorContent = error
-        //println("Emit : "+error)
+        println("ErrorCode : "+error)
       }
-      case Create(token) =>
-      case Ignore(obj) =>
-      case Flush() =>
-      case Treat() =>
-      case Start() =>
-      case Multiply(obj, by) =>
-      case Add(obj, to) =>
+      case Create(token) => {
+        token match {
+          case "new DOCTYPE token" => newEnv.currentDOCTYPEToken = DOCTYPEToken(null, null, null, false)
+          case "new start tag token" => newEnv.currentTagToken = tagToken(true, null, false, List())
+          case "new end tag token" => newEnv.currentTagToken = tagToken(false, null, false, List())
+          case "comment token" =>
+        }
+      }
+      case Ignore(obj) => println("ignore : " + obj) // 何もしない
+      case Flush() => {
+        val flushCommand =  If(IsEqual("character reference", "consumed as part of an attribute"),
+                              List(Append("code point from the buffer", "current attribute's value")),
+                               List(Emit("code point as a character token")))
+        newEnv = interpretCommand(newEnv, flushCommand)
+      }
+      case Treat() => {
+        // AnithingElseのコマンド実行する
+      }
+      case Start() => {
+        // currentTagTokenに新しい属性を追加する
+        newEnv.currentTagToken.attributes :+= new Attribute(null, null)
+      }
+      case Multiply(obj, by) => {
+        obj match {
+          case "character reference code" => {
+            val mutiNum = by.toInt
+          }
+          case _ =>
+        }
+      }
+      case Add(obj, to) => {
+        obj match {
+          case "character reference code" => {
+          }
+          case _ =>
+        }
+      }
       case If(bool, t, f) => {
         var comList: List[Command] = null
         if (implementBool(bool)) comList = t else comList = f
