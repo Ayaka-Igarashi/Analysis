@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream
 import CommandStructure.Command
 import SpecificationAnalysis.{analysis, treeList, treeList2}
 import ConvertTree.{convert, makeLeafMap, tokenList, tokenList2}
+import Environment.Env
+import Implement.interpret
 import ParseHtml.{parseHtml, stateList}
 import Replacement.replace_out
 import StateProcessedStructure.pState
@@ -28,6 +30,7 @@ object Main {
   var inputFileName: String = null
   var txtOut: PrintWriter = null
   var txtOut2 : PrintWriter = null
+  var txtOut3 : PrintWriter = null
   /***
    *
    * @param args ファイル名
@@ -48,8 +51,7 @@ object Main {
       if (args.length > 1) {
         txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
         System.out.println("txtout: " + args(1))
-      }
-      else txtOut = new PrintWriter(System.out)
+      } else txtOut = new PrintWriter(System.out)
 
       parseAndConvert(1, 79)
     }
@@ -58,16 +60,24 @@ object Main {
         txtOut2 = new PrintWriter(args(2))
         System.out.println("txtOut2: " + args(2))
       }
+      txtOut3 = new PrintWriter("src/output3.txt")
 
       //XmlCommandReader.startReading()
       //pStateMap = XmlCommandReader.pStateMap
       PreserveDefinition.read()
       writeDefinition()
+
+      var env: Env = new Env()
+      env.setInputText("abc")
+      env.setNextState("Data_state")
+      env = interpret(env, pStateMap)
+      Environment.printEnv(env, txtOut3)
     }
 
     // ファイルを閉じる
     IOUtils.closeIgnoringExceptions(txtOut)
     IOUtils.closeIgnoringExceptions(txtOut2)
+    IOUtils.closeIgnoringExceptions(txtOut3)
     IOUtils.closeIgnoringExceptions(replace_out)
   }
 

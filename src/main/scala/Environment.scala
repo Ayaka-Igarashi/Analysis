@@ -1,3 +1,5 @@
+import java.io.PrintWriter
+
 object Environment {
   trait Value
   case class IntVal(i: Int) extends Value
@@ -26,6 +28,24 @@ object Environment {
 
     // その他
     var env: Map[String, Val] = Map()
+
+    def setInputText(text: String) = { inputText = text }
+    def setNextState(state: String) = { nextState = state }
+    def addEmitToken(token: Token) = { emitTokens :+= token }
+  }
+
+  def printEnv(env: Env, write: PrintWriter) = {
+    write.println("current state : " + env.currentState)
+    write.println("next state : " + env.nextState)
+    write.println("return state : " + env.returnState)
+    write.println("current DOCTYPE Token : " + env.currentDOCTYPEToken)
+    write.println("current tag Token : " + env.currentTagToken)
+    write.println("comment Token : " + env.commentToken)
+    write.println("current input character : " + env.currentInputCharacter)
+    write.println("emit tokens : " + env.emitTokens)
+    write.println("error content : " + env.errorContent)
+
+    write.println("input text : " + env.inputText)
   }
 
   trait Token

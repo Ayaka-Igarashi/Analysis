@@ -120,18 +120,19 @@ object Implement {
       case Emit(character) => {
         character match {
           case "current tag token" => {
-            newEnv.emitTokens :+= newEnv.currentTagToken
+            newEnv.addEmitToken(newEnv.currentTagToken)
             newEnv.currentTagToken = null
           }
           case "DOCTYPE token" => {
-            newEnv.emitTokens :+= newEnv.currentDOCTYPEToken
+            newEnv.addEmitToken(newEnv.currentDOCTYPEToken)
             newEnv.currentDOCTYPEToken = null
           }
           case "comment token" => {
-            newEnv.emitTokens :+= newEnv.commentToken
+            newEnv.addEmitToken(newEnv.commentToken)
             newEnv.commentToken = null
           }
-          case "end-of-file token" => newEnv.emitTokens :+= endOfFileToken()
+          case "end-of-file token" => newEnv.addEmitToken(endOfFileToken())
+          case "current input character" => newEnv.addEmitToken(characterToken(env.currentInputCharacter))
           case _ => {
             //
           }
