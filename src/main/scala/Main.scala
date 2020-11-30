@@ -7,21 +7,26 @@ import java.io.IOException
 import java.io.ObjectOutputStream
 
 import CommandStructure.Command
-import SpecificationAnalysis.{analysis, treeList, treeList2}
+import SpecificationAnalysis.analysis
 import ConvertTree.{convert, makeLeafMap, tokenList, tokenList2}
 import Environment.Env
 import Implement.interpret
 import ParseHtml.{parseHtml, stateList}
 import Replacement.replace_out
+import StateParsedStructure.{nState, nTrans}
 import StateProcessedStructure.pState
 import TagStructure._
 import TagToCommand.{tag_list, toCommand}
+import edu.stanford.nlp.coref.data.CorefChain
 import edu.stanford.nlp.io.IOUtils
+import edu.stanford.nlp.trees.Tree
 
 import scala.collection.immutable.ListMap
 
 object Main {
   var pStateMap: ListMap[String, pState] = ListMap()
+  var nStateList: List[nState] = List()
+
 
   // 木を表示させるための
   var tag_list: List[Tag] = null
@@ -53,9 +58,17 @@ object Main {
         System.out.println("txtout: " + args(1))
       } else txtOut = new PrintWriter(System.out)
 
-      parseAndConvert(1, 79)
-    }
-    else {
+      parse(1, 79)
+    } else if (false) {
+      // 出力ファイル
+      if (args.length > 1) {
+        txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
+        System.out.println("txtout: " + args(1))
+      } else txtOut = new PrintWriter(System.out)
+      nStateList = PreserveDefinition.read[List[nState]]("src/parsed.dat")
+
+      tagConvert()
+    } else {
       if (args.length > 2) {
         txtOut2 = new PrintWriter(args(2))
         System.out.println("txtOut2: " + args(2))
@@ -64,7 +77,7 @@ object Main {
 
       //XmlCommandReader.startReading()
       //pStateMap = XmlCommandReader.pStateMap
-      PreserveDefinition.read()
+      pStateMap = PreserveDefinition.read[ListMap[String, pState]]("src/definition.dat")
       writeDefinition()
 
       var env: Env = new Env()
@@ -81,7 +94,7 @@ object Main {
     IOUtils.closeIgnoringExceptions(replace_out)
   }
 
-  def parseAndConvert(begin: Int, end: Int) = {
+  def parse(begin: Int, end: Int) = {
     // 時間を計測
     var start = System.currentTimeMillis
     val formatter = new SimpleDateFormat("mm:ss.SSS")
@@ -94,60 +107,104 @@ object Main {
     Replacement.replaceState = Replacement.replaceState.tail
     replace_out.println(Replacement.replaceState)
 
-    System.out.println("> parse&convert_start")
+    var test: nState = null
+
+    System.out.println("> parse_start")
     for (i <- begin - 1 to stateList.length - 1 - (stateList.length - end)) {
       println(i+1)
       val stateName = stateList(i).name
-      txtOut.println(i+1 + " : " + stateName)
+      //txtOut.println(i+1 + " : " + stateName)
 
-      val prevCommand = statementToCommand(stateList(i).prev)
+      val (prevReplacedStr, prevcoref, prevTreeList) = parseStatementToTag(stateList(i).prev)
 
-      var trans_p: List[(String, List[Command])] = List()
-
+      var trans_n: List[nTrans] = List()
       for (j <- 0 to stateList(i).trans.length - 1) {
         val character = stateList(i).trans(j).character
-        txtOut.println( "-- chara: "+ character + " --")
         // 入力ファイルを解析する
         var str: String = stateList(i).trans(j).process
-        val commandList = statementToCommand(str)
+
+        val (replacedStr, coref, tree_List) = parseStatementToTag(str)
+        trans_n :+= nTrans(character, (str, replacedStr, coref, tree_List))
+      }
+      val state_n = nState(stateName, (stateList(i).prev, prevReplacedStr, prevcoref, prevTreeList), trans_n)
+      nStateList :+= state_n
+
+      test = nState(stateName, (stateList(i).prev, prevReplacedStr, prevcoref, List()), trans_n)
+    }
+
+    PreserveDefinition.preserve[List[nState]](nStateList, "src/parsed.dat")
+
+    var endtime = System.currentTimeMillis
+    System.out.println("parse time = " + formatter.format(endtime - start))
+  }
+
+  def tagConvert() = {
+    // 時間を計測
+    var start = System.currentTimeMillis
+    val formatter = new SimpleDateFormat("mm:ss.SSS")
+    formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
+
+    System.out.println("> convert_start")
+
+    var i = 1
+    for (n_state <- nStateList) {
+      val stateName = n_state.name
+      txtOut.println(i + " : " + stateName)
+      val (pstr, rpstr, prevCoref, prevTagList) = n_state.prev
+      txtOut.println(pstr)
+      txtOut.println("  | "+rpstr)
+      txtOut.println(prevCoref)
+      val prevCommand = tagToCommand(prevTagList)
+
+      var trans_p: List[(String, List[Command])] = List()
+      for (n_trans <- n_state.trans) {
+        val character = n_trans.character
+        txtOut.println( "-- chara: "+ character + " --")
+        val (str, rstr, coref, tagList) = n_trans.process
+        txtOut.println(str)
+        txtOut.println("  | "+rstr)
+        txtOut.println(coref)
+        val commandList = tagToCommand(tagList)
         trans_p :+= (character, commandList)
         //if (i == 11 - 1 && j == 8)ShowTree.showTree(tagList)
       }
-
       val state_p = pState(stateName, prevCommand, trans_p)
       pStateMap += (stateName -> state_p)
 
       //println(Implement.characterMatching("A", trans_p))
+
+      i = i + 1
     }
 
     txtOut.println(pStateMap)
     //XmlOutput.makeXml(pStateMap)
-    PreserveDefinition.preserve()
+    PreserveDefinition.preserve(pStateMap, "src/definition.dat")
 
     var endtime = System.currentTimeMillis
-    System.out.println("時間 = " + formatter.format(endtime - start))
+    System.out.println("convert time = " + formatter.format(endtime - start))
   }
 
-  def statementToCommand(str: String): List[Command] = {
-    txtOut.println(str)
+  def parseStatementToTag(str: String): (String, List[List[(Integer, CorefChain)]], List[Tag]) = {
     val newStr = Replacement.replace(str)
-    txtOut.println("  | "+newStr)
-    analysis(newStr)
+    val (coref, tree_List) = analysis(newStr)
 
     var tagList: List[Tag] = List()
-    for (t <- treeList) {
+    for (t <- tree_List) {
       makeLeafMap(t._1)
       tokenList = t._2
       val tag = convert(t._1)
       tagList :+= tag
-      txtOut.println(tag)
     }
+
+    (newStr, coref, tagList)
+  }
+
+  def tagToCommand(tagList: List[Tag]): List[Command] = {
+    for (tag <- tagList) txtOut.println(tag)
     val commandList = TagToCommand.toCommand(tagList)
     txtOut.println("")
     for (c <- commandList) {txtOut.println(" -> " + c)}
     txtOut.println("")
-    treeList = List()
-    treeList2 = List()
 
     commandList
   }

@@ -1,5 +1,4 @@
 import Extract.{pos_tag, pos_tagList}
-import SpecificationAnalysis.treeList
 import edu.stanford.nlp.trees.Tree
 
 import scala.collection.JavaConverters._

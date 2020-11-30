@@ -1,5 +1,8 @@
 import CommandStructure.Command
 import TagStructure.Tag
+import edu.stanford.nlp.coref.data.CorefChain
+import edu.stanford.nlp.simple.Token
+import edu.stanford.nlp.trees.Tree
 
 import scala.collection.immutable.ListMap
 
@@ -9,10 +12,10 @@ object StateStructure {
   case class Trans(character: String, process: String)
 }
 
-// 自然言語処理した後の構造体(使わない)
+// 自然言語処理した後の構造体(中間保存用)
 object StateParsedStructure {
-  case class State_p(var name: String, var prev: List[Tag], var trans: List[Trans_p])
-  case class Trans_p(character: String, process: List[Tag])
+  case class nState(var name: String, var prev: (String, String, List[List[(Integer, CorefChain)]], List[Tag]), var trans: List[nTrans])
+  case class nTrans(character: String, process: (String, String, List[List[(Integer, CorefChain)]], List[Tag]))
 }
 
 // Command変換した後の構造体

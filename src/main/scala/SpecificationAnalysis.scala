@@ -4,6 +4,7 @@ import java.util
 import java.util.{ArrayList, Date, Locale, Properties, TimeZone}
 
 import Main.txtOut
+import edu.stanford.nlp.coref.data.CorefChain
 import edu.stanford.nlp.simple._
 import edu.stanford.nlp.io.IOUtils
 import edu.stanford.nlp.pipeline.{Annotation, Annotator, AnnotatorImplementations, CoreDocument, CoreSentence, ProtobufAnnotationSerializer, StanfordCoreNLP}
@@ -15,14 +16,11 @@ import edu.stanford.nlp.util.CoreMap
 import scala.collection.JavaConverters._
 
 object SpecificationAnalysis {
-  var treeList: List[(Tree, List[Token])] = List()
-  var treeList2: List[(Tree, List[CoreLabel])] = List()
-
   var pipeline: StanfordCoreNLP = null
 
   // 入力ファイルを解析する
   @throws[IOException]
-  def analysis(str: String): Unit = {
+  def analysis(str: String): (List[List[(Integer, CorefChain)]], List[(Tree, List[Token])]) = {
     /** Core NLP */
     //coreNlpParse(str)
 
@@ -31,7 +29,8 @@ object SpecificationAnalysis {
   }
 
   @throws[IOException]
-  def coreNlpParse(str: String) = {
+  def coreNlpParse(str: String): List[(Tree, List[CoreLabel])] = {
+    var tree_List: List[(Tree, List[CoreLabel])] = List()
     // パイプライン設定
     if (pipeline == null) {
       /**
@@ -102,40 +101,31 @@ object SpecificationAnalysis {
     for(sent: CoreSentence <- sentences) {
       val tokens: List[CoreLabel] = sent.tokens().asScala.toList
       val parse: Tree = sent.constituencyParse()
-      treeList2 :+= (parse, tokens)
+      tree_List :+= (parse, tokens)
     }
     //pipeline.prettyPrint(annotation, out)
     //if (xmlOut != null) pipeline.xmlPrint(annotation, xmlOut)
-
+    tree_List
   }
 
-  def simpleParse(str: String) = {
+  def simpleParse(str: String): (List[List[(Integer, CorefChain)]], List[(Tree, List[Token])]) = {
+    var tree_List: List[(Tree, List[Token])] = List()
 
-//    val formatter = new SimpleDateFormat("mm:ss.SSS")
-//    formatter.setTimeZone(TimeZone.getTimeZone("GMT"))
-//    var start = System.currentTimeMillis
     // parseのみ解析
     val doc: Document = new Document(str)
     val sentences = doc.sentences().asScala.toList
-    //var endtime = System.currentTimeMillis
-    //System.out.println("時間1 = " + formatter.format(endtime - start))
 
+    var corefList: List[List[(Integer, CorefChain)]] = List()
 
     for(sent: Sentence <- sentences) {
-      //start = System.currentTimeMillis
       // System.out.println("The second word of the sentence '" + sent + "' is " + sent.word(1))
       val tokens: List[Token] = sent.tokens().asScala.toList
-      //val lemmas: List[String] = sent.lemmas().asScala.toList
-//      start = System.currentTimeMillis
-//      endtime = System.currentTimeMillis
-      //System.out.println("時間2 = " + formatter.format(endtime - start))
       val parse: Tree = sent.parse
-//      endtime = System.currentTimeMillis
-      //System.out.println("時間3 = " + formatter.format(endtime - start))
-      treeList :+= (parse, tokens)
+      tree_List :+= (parse, tokens)
 
       val coref = sent.coref().asScala.toList
-      txtOut.println(coref)
+      corefList :+= coref
+      //txtOut.println(coref)
 //      import edu.stanford.nlp.coref.CorefCoreAnnotations
 //      import edu.stanford.nlp.ling.CoreAnnotations
 //      for (sentence <- coref) {
@@ -148,6 +138,7 @@ object SpecificationAnalysis {
 //      }
 
     }
+    (corefList, tree_List)
 
   }
 }
