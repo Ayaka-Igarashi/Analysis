@@ -110,14 +110,10 @@ object Main {
     Replacement.replaceState = Replacement.replaceState.tail
     replace_out.println(Replacement.replaceState)
 
-    var test: nState = null
-
     System.out.println("> parse_start")
     for (i <- begin - 1 to stateList.length - 1 - (stateList.length - end)) {
       println(i+1)
       val stateName = stateList(i).name
-      //txtOut.println(i+1 + " : " + stateName)
-
       val (prevReplacedStr, prevcoref, prevTreeList) = parseStatementToTag(stateList(i).prev)
 
       var trans_n: List[nTrans] = List()
@@ -125,14 +121,11 @@ object Main {
         val character = stateList(i).trans(j).character
         // 入力ファイルを解析する
         var str: String = stateList(i).trans(j).process
-
         val (replacedStr, coref, tree_List) = parseStatementToTag(str)
         trans_n :+= nTrans(character, (str, replacedStr, coref, tree_List))
       }
       val state_n = nState(stateName, (stateList(i).prev, prevReplacedStr, prevcoref, prevTreeList), trans_n)
       nStateList :+= state_n
-
-      test = nState(stateName, (stateList(i).prev, prevReplacedStr, prevcoref, List()), trans_n)
     }
 
     PreserveDefinition.preserve[List[nState]](nStateList, "src/parsed.dat")

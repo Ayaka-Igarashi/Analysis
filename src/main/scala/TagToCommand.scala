@@ -1,4 +1,5 @@
 import CommandStructure._
+import Environment.characterToken
 import Main.txtOut
 import TagStructure._
 
@@ -141,11 +142,13 @@ object TagToCommand {
           }
           // emit
           case List(Leaf(VB,Token(_,"emit")), Node(NP,np)) => {
-            for (n <- NPDistribute(Node(NP, np))) commandList :+= Emit(n)
+            for (n <- NPDistribute(Node(NP, np))) {
+              commandList :+= Emit(n)
+            }
           }
           // emit2(途中)
           case List(Leaf(VB,Token(_,"emit")), Node(NP,np), Node(PP, pp)) => {
-            for (n <- NPDistribute(Node(NP, np))) commandList :+= Emit(n)
+            for (n <- NPDistribute(Node(NP, np))) commandList :+= Emit(n + " " + getLeave(Node(PP, pp)))
           }
           // ignore
           case List(Leaf(VB,Token(_,"ignore")), Node(NP,np)) => {

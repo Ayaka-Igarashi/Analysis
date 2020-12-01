@@ -1,0 +1,40 @@
+command : List(Consume(next input character)) , List(Emit(current input character as a character token))
+1 : =====================================
+current state : Data_state
+next state : Data_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+comment Token : null
+current input character : a
+emit tokens : List(characterToken(a))
+error content : null
+input text : <
+
+command : List(Consume(next input character)) , List(Switch(Tag_open_state))
+2 : =====================================
+current state : Data_state
+next state : Tag_open_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+comment Token : null
+current input character : <
+emit tokens : List()
+error content : null
+input text : 
+
+emit errorU_003C
+command : List(Consume(next input character)) , List(Error(eof_before_tag_name parse error), Emit(U_003C), Emit(an end_of_file token))
+3 : =====================================
+current state : Tag_open_state
+next state : Tag_open_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+comment Token : null
+current input character : [EOF]
+emit tokens : List(characterToken(U_003C), endOfFileToken())
+error content : eof_before_tag_name parse error
+input text : 
+

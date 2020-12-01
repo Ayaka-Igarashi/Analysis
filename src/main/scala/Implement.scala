@@ -11,7 +11,6 @@ object Implement {
     "end_tag_token" -> Val(tagToken(true, "",false,List())),
     "nextState" -> Val("Data_state"),
     "inputCharStream" -> Val("aa")
-
   )
   //env updated ("currentState", env("nextState"))
 
@@ -123,37 +122,46 @@ object Implement {
         }
       }
       case Emit(character) => {
-        character match {
-          case "current tag token" => {
-            newEnv.addEmitToken(newEnv.currentTagToken)
-            newEnv.currentTagToken = null
-          }
-          case "DOCTYPE token" => {
-            newEnv.addEmitToken(newEnv.currentDOCTYPEToken)
-            newEnv.currentDOCTYPEToken = null
-          }
-          case "comment token" => {
-            newEnv.addEmitToken(newEnv.commentToken)
-            newEnv.commentToken = null
-          }
-          case "end_of_file token" => newEnv.addEmitToken(endOfFileToken())
-          case "current input character" => newEnv.addEmitToken(characterToken(env.currentInputCharacter))
-          case _ => {
+        if (character.contains("current tag token")) {
+          newEnv.addEmitToken(newEnv.currentTagToken)
+          newEnv.currentTagToken = null
+        } else if (character.contains("DOCTYPE token")) {
+          newEnv.addEmitToken(newEnv.currentDOCTYPEToken)
+          newEnv.currentDOCTYPEToken = null
+        } else if (character.contains("comment token")) {
+          newEnv.addEmitToken(newEnv.commentToken)
+          newEnv.commentToken = null
+        } else if (character.contains("end_of_file")) {
+          newEnv.addEmitToken(endOfFileToken())
+        } else if ("""(.+) (as a character token)""".r.matches(character)){
+          val re2 = """(.+) (as a character token)""".r
+          val re2(c, _) = character
+          if (c.contains("current input character")) {
+            newEnv.addEmitToken(characterToken(env.currentInputCharacter))
+          } else {
             newEnv.addEmitToken(characterToken(character))
           }
+        } else {
+          newEnv.addEmitToken(characterToken(character))
+          txtOut3.println("emit error" + character)
         }
       }
       case Append(obj, to) =>
       case Error(error) => {
         newEnv.errorContent = error
-        println("ErrorCode : "+error)
+        //println("ErrorCode : "+error)
       }
       case Create(token) => {
-        token match {
-          case "new DOCTYPE token" => newEnv.currentDOCTYPEToken = DOCTYPEToken(null, null, null, false)
-          case "new start tag token" => newEnv.currentTagToken = tagToken(true, null, false, List())
-          case "new end tag token" => newEnv.currentTagToken = tagToken(false, null, false, List())
-          case "comment token" =>
+        if (token.contains("start tag token")) {
+          newEnv.currentTagToken = tagToken(true, "", false, List())
+        } else if (token.contains("end tag token")) {
+          newEnv.currentTagToken = tagToken(false, "", false, List())
+        } else if (token.contains("DOCTYPE token")) {
+          newEnv.currentDOCTYPEToken = DOCTYPEToken("", null, null, false)
+        } else if (token.contains("comment token")) {
+          newEnv.commentToken = commentToken("")
+        } else {
+          println("create error" + token)
         }
       }
       case Ignore(obj) => println("ignore : " + obj) // 何もしない
