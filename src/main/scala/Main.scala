@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream
 import CommandStructure.Command
 import SpecificationAnalysis.analysis
 import ConvertTree.{convert, makeLeafMap, tokenList, tokenList2}
-import Environment.Env
+import Environment.{Env, endOfFileToken}
 import Implement.interpret
 import ParseHtml.{parseHtml, stateList}
 import Replacement.replace_out
@@ -26,7 +26,6 @@ import scala.collection.immutable.ListMap
 object Main {
   var pStateMap: ListMap[String, pState] = ListMap()
   var nStateList: List[nState] = List()
-
 
   // 木を表示させるための
   var tag_list: List[Tag] = null
@@ -59,14 +58,15 @@ object Main {
       } else txtOut = new PrintWriter(System.out)
 
       parse(1, 79)
+      tagConvert()
     } else if (false) {
       // 出力ファイル
       if (args.length > 1) {
         txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
         System.out.println("txtout: " + args(1))
       } else txtOut = new PrintWriter(System.out)
-      nStateList = PreserveDefinition.read[List[nState]]("src/parsed.dat")
 
+      nStateList = PreserveDefinition.read[List[nState]]("src/parsed.dat")
       tagConvert()
     } else {
       if (args.length > 2) {
@@ -75,16 +75,18 @@ object Main {
       }
       txtOut3 = new PrintWriter("src/output3.txt")
 
-      //XmlCommandReader.startReading()
-      //pStateMap = XmlCommandReader.pStateMap
       pStateMap = PreserveDefinition.read[ListMap[String, pState]]("src/definition.dat")
-      writeDefinition()
+      //writeDefinition(txtOut2)
 
       var env: Env = new Env()
-      env.setInputText("abc")
+      env.setInputText("a<")
       env.setNextState("Data_state")
-      env = interpret(env, pStateMap)
-      Environment.printEnv(env, txtOut3)
+      var i = 1
+      while (!env.emitTokens.contains(endOfFileToken()) && i <= 20) {
+        env = interpret(env, pStateMap)
+        Environment.printEnv(env, txtOut3, i)
+        i = i + 1
+      }
     }
 
     // ファイルを閉じる
@@ -94,6 +96,7 @@ object Main {
     IOUtils.closeIgnoringExceptions(replace_out)
   }
 
+  // tagにする
   def parse(begin: Int, end: Int) = {
     // 時間を計測
     var start = System.currentTimeMillis
@@ -138,6 +141,7 @@ object Main {
     System.out.println("parse time = " + formatter.format(endtime - start))
   }
 
+  // Commandにする
   def tagConvert() = {
     // 時間を計測
     var start = System.currentTimeMillis
@@ -209,17 +213,17 @@ object Main {
     commandList
   }
 
-  def writeDefinition() = {
+  def writeDefinition(writer: PrintWriter) = {
     for (p <- pStateMap) {
-      txtOut2.println("======== " + p._1 + " ========")
-      txtOut2.println("name : " + p._2.name)
-      txtOut2.println("prev : " + p._2.prev)
+      writer.println("======== " + p._1 + " ========")
+      writer.println("name : " + p._2.name)
+      writer.println("prev : " + p._2.prev)
       for (t <- p._2.trans) {
-        txtOut2.println("character : " + t._1)
-        txtOut2.println("  command : " + t._2)
-        txtOut2.println("")
+        writer.println("character : " + t._1)
+        writer.println("  command : " + t._2)
+        writer.println("")
       }
-      txtOut2.println("")
+      writer.println("")
     }
   }
 }

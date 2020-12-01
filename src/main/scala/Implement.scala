@@ -1,5 +1,6 @@
 import CommandStructure._
 import Environment._
+import Main.{txtOut2, txtOut3}
 import StateProcessedStructure.pState
 
 import scala.collection.immutable.ListMap
@@ -22,6 +23,9 @@ object Implement {
     // 最初の処理
     val currentState = newEnv.nextState
     newEnv.currentState = currentState
+    newEnv.emitTokens = List()
+    newEnv.currentInputCharacter = null
+    newEnv.errorContent = null
 
     // 状態のマッチ
     definition.get(currentState) match {
@@ -35,6 +39,7 @@ object Implement {
         for (command <- commandList) {
           newEnv = interpretCommand(newEnv, command)
         }
+        txtOut3.println("command : "+ prev + " , " + commandList)
       }
       case None => println("undefined state error : " + currentState)
     }
@@ -131,10 +136,10 @@ object Implement {
             newEnv.addEmitToken(newEnv.commentToken)
             newEnv.commentToken = null
           }
-          case "end-of-file token" => newEnv.addEmitToken(endOfFileToken())
+          case "end_of_file token" => newEnv.addEmitToken(endOfFileToken())
           case "current input character" => newEnv.addEmitToken(characterToken(env.currentInputCharacter))
           case _ => {
-            //
+            newEnv.addEmitToken(characterToken(character))
           }
         }
       }

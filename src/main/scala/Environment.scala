@@ -34,7 +34,8 @@ object Environment {
     def addEmitToken(token: Token) = { emitTokens :+= token }
   }
 
-  def printEnv(env: Env, write: PrintWriter) = {
+  def printEnv(env: Env, write: PrintWriter, num: Int) = {
+    write.println(num + " : =====================================")
     write.println("current state : " + env.currentState)
     write.println("next state : " + env.nextState)
     write.println("return state : " + env.returnState)
@@ -46,6 +47,8 @@ object Environment {
     write.println("error content : " + env.errorContent)
 
     write.println("input text : " + env.inputText)
+
+    write.println("")
   }
 
   trait Token
