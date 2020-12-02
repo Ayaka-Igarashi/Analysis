@@ -9,6 +9,8 @@ import scala.collection.JavaConverters._
 // CoreNLPのTree型からTag型へ変換する
 object ConvertTree {
   var tokenList: List[edu.stanford.nlp.simple.Token] = null
+  var corefMap: Map[Int, Int] = null
+
   var tokenList2: List[CoreLabel] = null
   var leafDict: Map[Tree, Int] = null
 
@@ -139,8 +141,10 @@ object ConvertTree {
     if (tree.numChildren() != 1) System.out.println("not leaf error")
     val child = tree.firstChild()
     leafDict.get(child) match {
-      case Some(i) => Token(child.value(), tokenList(i).lemma())
-      case None => Token(child.value(), null) // error
+      case Some(i) => {
+        Token(corefMap(i), child.value(), tokenList(i).lemma())
+      }
+      case None => Token(-2, child.value(), null) // error
     }
   }
 

@@ -2,6 +2,7 @@ import java.io.PrintWriter
 
 object Environment {
   trait Value
+  case class TokenVal(token: Token) extends Value
   case class IntVal(i: Int) extends Value
   case class BoolVal(b: Boolean) extends Value
   case class StringVal(s: String) extends Value
@@ -15,9 +16,9 @@ object Environment {
 
     // returnStateの値
     var returnState: String = null
-    var currentDOCTYPEToken: DOCTYPEToken = null
-    var currentTagToken: tagToken = null
-    var commentToken: commentToken = null
+    var currentDOCTYPEToken: String = null
+    var currentTagToken: String = null
+    var commentToken: String = null
 
     var currentInputCharacter: String = null
     var emitTokens: List[Token] = List()
@@ -27,15 +28,18 @@ object Environment {
     var inputText: String = null
 
     // その他
-    var env: Map[String, Val] = Map()
+    var env: Map[String, Value] = Map()
+    var mapID : Int = 0
 
     def setInputText(text: String) = { inputText = text }
     def setNextState(state: String) = { nextState = state }
     def addEmitToken(token: Token) = { emitTokens :+= token }
+    def addMap(key: String, value: Value) = { env += (key -> value)}
+    def getID(): Int = {val id = mapID; mapID += 1; id}
   }
 
   def printEnv(env: Env, write: PrintWriter, num: Int) = {
-    write.println(num + " : =====================================")
+    write.println("------------------------------------------")
     write.println("current state : " + env.currentState)
     write.println("next state : " + env.nextState)
     write.println("return state : " + env.returnState)
@@ -47,7 +51,7 @@ object Environment {
     write.println("error content : " + env.errorContent)
 
     write.println("input text : " + env.inputText)
-
+    write.println("------------------------------------------")
     write.println("")
   }
 

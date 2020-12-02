@@ -1,5 +1,7 @@
+1 : ===============================================
 command : List(Consume(next input character)) , List(Emit(current input character as a character token))
-1 : =====================================
+
+------------------------------------------
 current state : Data_state
 next state : Data_state
 return state : null
@@ -9,10 +11,16 @@ comment Token : null
 current input character : a
 emit tokens : List(characterToken(a))
 error content : null
-input text : <
+input text : <bc>b</kj>
+------------------------------------------
 
+|
+V
+
+2 : ===============================================
 command : List(Consume(next input character)) , List(Switch(Tag_open_state))
-2 : =====================================
+
+------------------------------------------
 current state : Data_state
 next state : Tag_open_state
 return state : null
@@ -22,19 +30,237 @@ comment Token : null
 current input character : <
 emit tokens : List()
 error content : null
-input text : 
+input text : bc>b</kj>
+------------------------------------------
 
-emit errorU_003C
-command : List(Consume(next input character)) , List(Error(eof_before_tag_name parse error), Emit(U_003C), Emit(an end_of_file token))
-3 : =====================================
+|
+V
+
+3 : ===============================================
+command : List(Consume(next input character)) , List(Create(new start tag token), Set(its tag name,the empty string), Reconsume(Tag_name_state))
+
+------------------------------------------
 current state : Tag_open_state
+next state : Tag_name_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : start_tag_token_0
+comment Token : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : bc>b</kj>
+------------------------------------------
+
+|
+V
+
+4 : ===============================================
+command : List(Consume(next input character)) , List(Append(current input character,the current tag token 's tag name))
+
+------------------------------------------
+current state : Tag_name_state
+next state : Tag_name_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : start_tag_token_0
+comment Token : null
+current input character : b
+emit tokens : List()
+error content : null
+input text : c>b</kj>
+------------------------------------------
+
+|
+V
+
+5 : ===============================================
+command : List(Consume(next input character)) , List(Append(current input character,the current tag token 's tag name))
+
+------------------------------------------
+current state : Tag_name_state
+next state : Tag_name_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : start_tag_token_0
+comment Token : null
+current input character : c
+emit tokens : List()
+error content : null
+input text : >b</kj>
+------------------------------------------
+
+|
+V
+
+6 : ===============================================
+command : List(Consume(next input character)) , List(Switch(Data_state), Emit(current tag token))
+
+------------------------------------------
+current state : Tag_name_state
+next state : Data_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : start_tag_token_0
+comment Token : null
+current input character : >
+emit tokens : List(tagToken(true,,false,List()))
+error content : null
+input text : b</kj>
+------------------------------------------
+
+|
+V
+
+7 : ===============================================
+command : List(Consume(next input character)) , List(Emit(current input character as a character token))
+
+------------------------------------------
+current state : Data_state
+next state : Data_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : start_tag_token_0
+comment Token : null
+current input character : b
+emit tokens : List(characterToken(b))
+error content : null
+input text : </kj>
+------------------------------------------
+
+|
+V
+
+8 : ===============================================
+command : List(Consume(next input character)) , List(Switch(Tag_open_state))
+
+------------------------------------------
+current state : Data_state
 next state : Tag_open_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : null
+current tag Token : start_tag_token_0
+comment Token : null
+current input character : <
+emit tokens : List()
+error content : null
+input text : /kj>
+------------------------------------------
+
+|
+V
+
+9 : ===============================================
+command : List(Consume(next input character)) , List(Switch(End_tag_open_state))
+
+------------------------------------------
+current state : Tag_open_state
+next state : End_tag_open_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : start_tag_token_0
+comment Token : null
+current input character : /
+emit tokens : List()
+error content : null
+input text : kj>
+------------------------------------------
+
+|
+V
+
+10 : ===============================================
+command : List(Consume(next input character)) , List(Create(new end tag token), Set(its tag name,the empty string), Reconsume(Tag_name_state))
+
+------------------------------------------
+current state : End_tag_open_state
+next state : Tag_name_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : end_tag_token_1
+comment Token : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : kj>
+------------------------------------------
+
+|
+V
+
+11 : ===============================================
+command : List(Consume(next input character)) , List(Append(current input character,the current tag token 's tag name))
+
+------------------------------------------
+current state : Tag_name_state
+next state : Tag_name_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : end_tag_token_1
+comment Token : null
+current input character : k
+emit tokens : List()
+error content : null
+input text : j>
+------------------------------------------
+
+|
+V
+
+12 : ===============================================
+command : List(Consume(next input character)) , List(Append(current input character,the current tag token 's tag name))
+
+------------------------------------------
+current state : Tag_name_state
+next state : Tag_name_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : end_tag_token_1
+comment Token : null
+current input character : j
+emit tokens : List()
+error content : null
+input text : >
+------------------------------------------
+
+|
+V
+
+13 : ===============================================
+command : List(Consume(next input character)) , List(Switch(Data_state), Emit(current tag token))
+
+------------------------------------------
+current state : Tag_name_state
+next state : Data_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : end_tag_token_1
+comment Token : null
+current input character : >
+emit tokens : List(tagToken(false,,false,List()))
+error content : null
+input text : 
+------------------------------------------
+
+|
+V
+
+14 : ===============================================
+command : List(Consume(next input character)) , List(Emit(end_of_file token))
+
+------------------------------------------
+current state : Data_state
+next state : Data_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : end_tag_token_1
 comment Token : null
 current input character : [EOF]
-emit tokens : List(characterToken(U_003C), endOfFileToken())
-error content : eof_before_tag_name parse error
+emit tokens : List(endOfFileToken())
+error content : null
 input text : 
+------------------------------------------
+
+|
+V
 

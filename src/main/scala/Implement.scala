@@ -8,9 +8,7 @@ import scala.collection.immutable.ListMap
 object Implement {
 
   var Env1: Map[String, Val] = Map(
-    "end_tag_token" -> Val(tagToken(true, "",false,List())),
-    "nextState" -> Val("Data_state"),
-    "inputCharStream" -> Val("aa")
+    "end_tag_token_1" -> Val(tagToken(true, "",false,List()))
   )
   //env updated ("currentState", env("nextState"))
 
@@ -123,14 +121,20 @@ object Implement {
       }
       case Emit(character) => {
         if (character.contains("current tag token")) {
-          newEnv.addEmitToken(newEnv.currentTagToken)
-          newEnv.currentTagToken = null
+          newEnv.env.get(newEnv.currentTagToken) match {
+            case Some(TokenVal(t)) => newEnv.addEmitToken(t)
+            case None => println("cant find tag token")
+          }
         } else if (character.contains("DOCTYPE token")) {
-          newEnv.addEmitToken(newEnv.currentDOCTYPEToken)
-          newEnv.currentDOCTYPEToken = null
+          newEnv.env.get(newEnv.currentDOCTYPEToken) match {
+            case Some(TokenVal(t)) => newEnv.addEmitToken(t)
+            case None => println("cant find DOCTYPE token")
+          }
         } else if (character.contains("comment token")) {
-          newEnv.addEmitToken(newEnv.commentToken)
-          newEnv.commentToken = null
+          newEnv.env.get(newEnv.commentToken) match {
+            case Some(TokenVal(t)) => newEnv.addEmitToken(t)
+            case None => println("cant find comment token")
+          }
         } else if (character.contains("end_of_file")) {
           newEnv.addEmitToken(endOfFileToken())
         } else if ("""(.+) (as a character token)""".r.matches(character)){
@@ -153,13 +157,21 @@ object Implement {
       }
       case Create(token) => {
         if (token.contains("start tag token")) {
-          newEnv.currentTagToken = tagToken(true, "", false, List())
+          val key = "start_tag_token_" + newEnv.getID()
+          newEnv.addMap(key, TokenVal(tagToken(true, "", false, List())))
+          newEnv.currentTagToken = key
         } else if (token.contains("end tag token")) {
-          newEnv.currentTagToken = tagToken(false, "", false, List())
+          val key = "end_tag_token_" + newEnv.getID()
+          newEnv.addMap(key, TokenVal(tagToken(false, "", false, List())))
+          newEnv.currentTagToken = key
         } else if (token.contains("DOCTYPE token")) {
-          newEnv.currentDOCTYPEToken = DOCTYPEToken("", null, null, false)
+          val key = "DOCTYPE_token_" + newEnv.getID()
+          newEnv.addMap(key, TokenVal(DOCTYPEToken("", null, null, false)))
+          newEnv.currentDOCTYPEToken = key
         } else if (token.contains("comment token")) {
-          newEnv.commentToken = commentToken("")
+          val key = "comment_token_" + newEnv.getID()
+          newEnv.addMap(key, TokenVal(commentToken("")))
+          newEnv.commentToken = key
         } else {
           println("create error" + token)
         }
@@ -176,7 +188,7 @@ object Implement {
       }
       case Start() => {
         // currentTagTokenに新しい属性を追加する
-        newEnv.currentTagToken.attributes :+= new Attribute(null, null)
+        //newEnv.currentTagToken.attributes :+= new Attribute(null, null)
       }
       case Multiply(obj, by) => {
         obj match {

@@ -6,9 +6,10 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.ObjectOutputStream
 
+import scala.collection.JavaConverters._
 import CommandStructure.Command
 import SpecificationAnalysis.analysis
-import ConvertTree.{convert, makeLeafMap, tokenList, tokenList2}
+import ConvertTree.{convert, corefMap, makeLeafMap, tokenList, tokenList2}
 import Environment.{Env, endOfFileToken}
 import Implement.interpret
 import ParseHtml.{parseHtml, stateList}
@@ -59,7 +60,7 @@ object Main {
 
       parse(1, 79)
       tagConvert()
-    } else if (false) {
+    } else if (true) {
       // 出力ファイル
       if (args.length > 1) {
         txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
@@ -79,12 +80,15 @@ object Main {
       //writeDefinition(txtOut2)
 
       var env: Env = new Env()
-      env.setInputText("a<")
+      env.setInputText("a<bc>b</kj>")
       env.setNextState("Data_state")
       var i = 1
       while (!env.emitTokens.contains(endOfFileToken()) && i <= 20) {
+        txtOut3.println(i + " : ===============================================")
         env = interpret(env, pStateMap)
+        txtOut3.println("")
         Environment.printEnv(env, txtOut3, i)
+        txtOut3.println("|\nV\n")
         i = i + 1
       }
     }
@@ -143,8 +147,10 @@ object Main {
 
     System.out.println("> convert_start")
 
+    val list = nStateList
+
     var i = 1
-    for (n_state <- nStateList) {
+    for (n_state <- list) {
       val stateName = n_state.name
       txtOut.println(i + " : " + stateName)
       val (pstr, rpstr, prevCoref, prevTagList) = n_state.prev
@@ -158,6 +164,7 @@ object Main {
         val character = n_trans.character
         txtOut.println( "-- chara: "+ character + " --")
         val (str, rstr, coref, tagList) = n_trans.process
+
         txtOut.println(str)
         txtOut.println("  | "+rstr)
         txtOut.println(coref)
@@ -174,7 +181,6 @@ object Main {
     }
 
     txtOut.println(pStateMap)
-    //XmlOutput.makeXml(pStateMap)
     PreserveDefinition.preserve(pStateMap, "src/definition.dat")
 
     var endtime = System.currentTimeMillis
@@ -186,14 +192,23 @@ object Main {
     val (coref, tree_List) = analysis(newStr)
 
     var tagList: List[Tag] = List()
+    var i = 0
     for (t <- tree_List) {
+      var corefIdx = Map[Int, Int]().withDefaultValue(-1)
+      for (c <- coref(i)) {
+        val order = c._2.getMentionsInTextualOrder.asScala.toList
+        for (o <- order) {corefIdx ++= (o.startIndex - 1 to o.endIndex - 2).toList.map(n => (n, o.corefClusterID))}
+      }
+      ConvertTree.corefMap = corefIdx
+
       makeLeafMap(t._1)
       tokenList = t._2
       val tag = convert(t._1)
       tagList :+= tag
+      i += 1
     }
 
-    (newStr, coref, tagList)
+    (newStr, List(), tagList)
   }
 
   def tagToCommand(tagList: List[Tag]): List[Command] = {

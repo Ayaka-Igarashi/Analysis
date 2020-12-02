@@ -93,7 +93,8 @@ object TagStructure {
   case object GW extends LeafType
 
   // Leaf(とりあえず元の単語と原型両方格納する)
-  case class Token(word: String, lemma: String) extends Tag
+  //case class Token(word: String, lemma: String) extends Tag
+  case class Token(ref: Int, word: String, lemma: String) extends Tag
 
   /*
   //syntactic tagset
@@ -191,7 +192,7 @@ object TagStructure {
           str += getLeave_(n)
         }
       }
-      case Leaf(_, Token(word, lem)) => {
+      case Leaf(_, Token(_, word, lem)) => {
         str = word
       }
 
