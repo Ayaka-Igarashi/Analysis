@@ -1,6 +1,6 @@
 import java.io.{BufferedWriter, File, FileWriter, PrintWriter}
 import java.text.SimpleDateFormat
-import java.util.TimeZone
+import java.util.{Scanner, TimeZone}
 import java.io.BufferedOutputStream
 import java.io.FileOutputStream
 import java.io.IOException
@@ -51,6 +51,8 @@ object Main {
       System.out.println("inputfile: " + args(0))
     }
 
+    val scanner = new Scanner(System.in)
+
     if (false) {
       // 出力ファイル
       if (args.length > 1) {
@@ -60,7 +62,7 @@ object Main {
 
       parse(1, 79)
       tagConvert()
-    } else if (true) {
+    } else if (false) {
       // 出力ファイル
       if (args.length > 1) {
         txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
@@ -80,8 +82,8 @@ object Main {
       //writeDefinition(txtOut2)
 
       var env: Env = new Env()
-      env.setInputText("a<bc>b</kj>")
-      env.setNextState("Data_state")
+      env.setInputText("")
+      env.setNextState("DOCTYPE_state")
       var i = 1
       while (!env.emitTokens.contains(endOfFileToken()) && i <= 20) {
         txtOut3.println(i + " : ===============================================")
@@ -208,7 +210,7 @@ object Main {
       i += 1
     }
 
-    (newStr, List(), tagList)
+    (newStr, coref, tagList)
   }
 
   def tagToCommand(tagList: List[Tag]): List[Command] = {

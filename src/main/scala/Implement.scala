@@ -119,7 +119,7 @@ object Implement {
           }
         }
       }
-      case Emit(character) => {
+      case Emit(character, id) => {
         if (character.contains("current tag token")) {
           newEnv.env.get(newEnv.currentTagToken) match {
             case Some(TokenVal(t)) => newEnv.addEmitToken(t)
@@ -146,8 +146,21 @@ object Implement {
             newEnv.addEmitToken(characterToken(character))
           }
         } else {
-          newEnv.addEmitToken(characterToken(character))
-          txtOut3.println("emit error" + character)
+          // てきとう
+          if (id != -1) {
+            newEnv.corefMap.get(id) match {
+              case Some(key) => {
+                newEnv.env.get(key) match {
+                  case Some(TokenVal(t)) => newEnv.addEmitToken(t)
+                  case None => println("cant find token")
+                }
+              }
+              case None => println("cant find token")
+            }
+          } else {
+            newEnv.addEmitToken(characterToken(character))
+            txtOut3.println("emit error" + character)
+          }
         }
       }
       case Append(obj, to) =>
@@ -155,23 +168,27 @@ object Implement {
         newEnv.errorContent = error
         //println("ErrorCode : "+error)
       }
-      case Create(token) => {
+      case Create(token, corefId) => {
         if (token.contains("start tag token")) {
           val key = "start_tag_token_" + newEnv.getID()
           newEnv.addMap(key, TokenVal(tagToken(true, "", false, List())))
           newEnv.currentTagToken = key
+          if (corefId != -1) newEnv.corefMap += (corefId -> key)
         } else if (token.contains("end tag token")) {
           val key = "end_tag_token_" + newEnv.getID()
           newEnv.addMap(key, TokenVal(tagToken(false, "", false, List())))
           newEnv.currentTagToken = key
+          if (corefId != -1) newEnv.corefMap += (corefId -> key)
         } else if (token.contains("DOCTYPE token")) {
           val key = "DOCTYPE_token_" + newEnv.getID()
           newEnv.addMap(key, TokenVal(DOCTYPEToken("", null, null, false)))
           newEnv.currentDOCTYPEToken = key
+          if (corefId != -1) newEnv.corefMap += (corefId -> key)
         } else if (token.contains("comment token")) {
           val key = "comment_token_" + newEnv.getID()
           newEnv.addMap(key, TokenVal(commentToken("")))
           newEnv.commentToken = key
+          if (corefId != -1) newEnv.corefMap += (corefId -> key)
         } else {
           println("create error" + token)
         }
@@ -180,7 +197,7 @@ object Implement {
       case Flush() => {
         val flushCommand =  If(IsEqual("character reference", "consumed as part of an attribute"),
                               List(Append("code point from the buffer", "current attribute's value")),
-                               List(Emit("code point as a character token")))
+                               List(Emit("code point as a character token", -1)))
         newEnv = interpretCommand(newEnv, flushCommand)
       }
       case Treat() => {

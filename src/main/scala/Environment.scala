@@ -31,6 +31,8 @@ object Environment {
     var env: Map[String, Value] = Map()
     var mapID : Int = 0
 
+    var corefMap: Map[Int, String] = Map()
+
     def setInputText(text: String) = { inputText = text }
     def setNextState(state: String) = { nextState = state }
     def addEmitToken(token: Token) = { emitTokens :+= token }

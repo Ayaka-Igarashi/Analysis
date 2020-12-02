@@ -200,4 +200,11 @@ object TagStructure {
     }
     str
   }
+
+  def getCorefId(tag: Tag): Int = {
+    tag match {
+      case Node(_, list) => getCorefId(list.head)
+      case Leaf(_, Token(id, _, _)) => id
+    }
+  }
 }

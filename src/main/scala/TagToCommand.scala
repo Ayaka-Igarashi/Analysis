@@ -138,37 +138,37 @@ object TagToCommand {
           }
           // consume
           case List(Leaf(VB,Token(_,_,"consume")), Node(NP,np)) => {
-            for (n <- NPDistribute(Node(NP, np))) commandList :+= CommandStructure.Consume(n)
+            for (n <- NPDistribute(Node(NP, np))) commandList :+= CommandStructure.Consume(n._1)
           }
           // emit
           case List(Leaf(VB,Token(_,_,"emit")), Node(NP,np)) => {
             for (n <- NPDistribute(Node(NP, np))) {
-              commandList :+= Emit(n)
+              commandList :+= Emit(n._1, n._2)
             }
           }
           // emit2(途中)
           case List(Leaf(VB,Token(_,_,"emit")), Node(NP,np), Node(PP, pp)) => {
-            for (n <- NPDistribute(Node(NP, np))) commandList :+= Emit(n + " " + getLeave(Node(PP, pp)))
+            for (n <- NPDistribute(Node(NP, np))) commandList :+= Emit(n._1 + " " + getLeave(Node(PP, pp)), n._2)
           }
           // ignore
           case List(Leaf(VB,Token(_,_,"ignore")), Node(NP,np)) => {
-            for (n <- NPDistribute(Node(NP, np))) commandList :+= Ignore(n)
+            for (n <- NPDistribute(Node(NP, np))) commandList :+= Ignore(n._1)
           }
           // create
           case List(Leaf(VB,Token(_,_,"create")), Node(NP,np)) => {
-            for (n <- NPDistribute(Node(NP, np))) commandList :+= Create(n)
+            for (n <- NPDistribute(Node(NP, np))) commandList :+= Create(n._1, n._2)
           }
           // multiply
           case List(Leaf(VB,Token(_,_,"multiply")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_,_, "by")), Node(NP, np2)))) => {
-            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Multiply(n, getLeave(Node(NP, np2)))
+            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Multiply(n._1, getLeave(Node(NP, np2)))
           }
           // add_1
           case List(Leaf(VB,Token(_,_,"add")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_,_, "to")), Node(NP, np2)))) => {
-            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(n, getLeave(Node(NP, np2)))
+            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(n._1, getLeave(Node(NP, np2)))
           }
           // add_2
           case Leaf(VB, Token(_,_, "add")) :: Node(NP, List(Node(NP, np1), Node(PP, List(Leaf(IN, Token(_,_, "to")), Node(NP, np2))))) :: Nil => {
-            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(n, getLeave(Node(NP, np2)))
+            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(n._1, getLeave(Node(NP, np2)))
           }
           // start
           case List(Leaf(VB,Token(_,_,"start")), Node(NP,_), Node(PP, _)) => {
@@ -184,11 +184,11 @@ object TagToCommand {
           }
           // append_1
           case Leaf(VB, Token(_,_, "append")) :: Node(NP, np1) :: Node(PP, List(Leaf(IN, _), Node(NP, np2))) :: Nil => {
-            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Append(n, getLeave(Node(NP, np2)))
+            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Append(n._1, getLeave(Node(NP, np2)))
           }
           // append_2
           case Leaf(VB, Token(_,_, "append")) :: Node(NP, List(Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2))))) :: Nil => {
-            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Append(n, getLeave(Node(NP, np2)))
+            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Append(n._1, getLeave(Node(NP, np2)))
           }
 //          // append_カッコ付き
 //          case Leaf(VB, Token(_, "append")) :: Node(NP, np1) :: Node(PRN, _) :: Node(PP, List(Leaf(IN, _), Node(NP, np2))) :: Nil => {
@@ -229,12 +229,12 @@ object TagToCommand {
     taglist
   }
 
-  def NPDistribute(tag: Tag): List[String] = {
+  def NPDistribute(tag: Tag): List[(String, Int)] = {
     //println(tag)
-    var strList: List[String] = List()
+    var strList: List[(String, Int)] = List()
     val taglist = NPTag(tag)
     for(t <- taglist) {
-      strList :+= toSimpleToken(getLeave(t))
+      strList :+= (toSimpleToken(getLeave(t)), getCorefId(t))
     }
     strList
   }

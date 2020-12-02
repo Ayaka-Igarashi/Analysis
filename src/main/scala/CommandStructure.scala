@@ -29,7 +29,7 @@ object CommandStructure {
    * 複数ある場合はEmit自体を複数作る?
    * Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token, and a character token for each of the characters in the temporary buffer (in the order they were added to the buffer).
    * */
-  case class Emit(token: String) extends Command
+  case class Emit(token: String, corefId: Int) extends Command
   case class Error(error: String) extends Command
 
   // Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name.
@@ -39,7 +39,7 @@ object CommandStructure {
   // Create a new start tag token, set its tag name to the empty string.
   // create a comment token whose data is the empty string
   // Create a new DOCTYPE token
-  case class Create(token: String) extends Command
+  case class Create(token: String, corefId: Int) extends Command
 
   // Ignore the character.
   case class Ignore(obj: String) extends Command
