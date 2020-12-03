@@ -3,6 +3,7 @@ import java.io.PrintWriter
 object Environment {
   trait Value
   case class TokenVal(token: Token) extends Value
+  case class AttributeVal(attribute: Attribute) extends Value
   case class IntVal(i: Int) extends Value
   case class BoolVal(b: Boolean) extends Value
   case class StringVal(s: String) extends Value
@@ -60,6 +61,7 @@ object Environment {
   trait Token
   case class DOCTYPEToken(name: String, public_identifier: String, system_identifier: String, force_quirks_flag: Boolean) extends Token
   case class tagToken(isStart: Boolean, name: String, self_closing_flag: Boolean, var attributes: List[Attribute]) extends Token
+  case class tagToken_(isStart: Boolean, name: String, self_closing_flag: Boolean, var attributesKey: List[String]) extends Token
   case class commentToken(data: String) extends Token
   case class characterToken(data: String) extends Token
   case class endOfFileToken() extends Token

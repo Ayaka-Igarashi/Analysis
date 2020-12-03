@@ -54,15 +54,19 @@ object Main {
     val scanner = new Scanner(System.in)
 
     if (false) {
-      // 出力ファイル
-      if (args.length > 1) {
-        txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
-        System.out.println("txtout: " + args(1))
-      } else txtOut = new PrintWriter(System.out)
+      print("> parse start?(put yes or no) : ")
+      val scan = scanner.next()
+      if (scan == "yes") {
+        // 出力ファイル
+        if (args.length > 1) {
+          txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
+          System.out.println("txtout: " + args(1))
+        } else txtOut = new PrintWriter(System.out)
 
-      parse(1, 79)
-      tagConvert()
-    } else if (false) {
+        parse(1, 79)
+        tagConvert()
+      }
+    } else if (true) {
       // 出力ファイル
       if (args.length > 1) {
         txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
@@ -80,19 +84,7 @@ object Main {
 
       pStateMap = PreserveDefinition.read[ListMap[String, pState]]("src/definition.dat")
       //writeDefinition(txtOut2)
-
-      var env: Env = new Env()
-      env.setInputText("")
-      env.setNextState("DOCTYPE_state")
-      var i = 1
-      while (!env.emitTokens.contains(endOfFileToken()) && i <= 20) {
-        txtOut3.println(i + " : ===============================================")
-        env = interpret(env, pStateMap)
-        txtOut3.println("")
-        Environment.printEnv(env, txtOut3, i)
-        txtOut3.println("|\nV\n")
-        i = i + 1
-      }
+      implement()
     }
 
     // ファイルを閉じる
@@ -100,6 +92,21 @@ object Main {
     IOUtils.closeIgnoringExceptions(txtOut2)
     IOUtils.closeIgnoringExceptions(txtOut3)
     IOUtils.closeIgnoringExceptions(replace_out)
+  }
+
+  def implement() = {
+    var env: Env = new Env()
+    env.setInputText("")
+    env.setNextState("DOCTYPE_state")
+    var i = 1
+    while (!env.emitTokens.contains(endOfFileToken()) && i <= 20) {
+      txtOut3.println(i + " : ===============================================")
+      env = interpret(env, pStateMap)
+      txtOut3.println("")
+      Environment.printEnv(env, txtOut3, i)
+      txtOut3.println("|\nV\n")
+      i = i + 1
+    }
   }
 
   // tagにする

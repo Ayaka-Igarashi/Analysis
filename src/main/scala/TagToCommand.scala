@@ -118,21 +118,21 @@ object TagToCommand {
           }
           // set(代入する)
           case List(Leaf(VB, Token(_,_,"set")), Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2)))) => {
-            commandList :+= CommandStructure.Set(getLeave(Node(NP, np1)), getLeave(Node(NP, np2)))
+            commandList :+= CommandStructure.Set((getLeave(Node(NP, np1)), getCorefId(Node(NP, np1))), getLeave(Node(NP, np2)))
           }
           // set2(状態を変更)
           case List(Leaf(VB, Token(_,_,"set")), Node(NP, np), Node(PP, List(Leaf(IN, _), Node(PP, pp)))) => {
-            commandList :+= CommandStructure.Set(getLeave(Node(NP, np)), getLeave(Node(PP, pp)))
+            commandList :+= CommandStructure.Set((getLeave(Node(NP, np)), getCorefId(Node(NP, np))), getLeave(Node(PP, pp)))
           }
           // set3(状態を変更_PPが省略されてるもの)
           case List(Leaf(VB, Token(_,_,"set")), Node(NP, np)) => {
             np match {
               // Set that attribute's name to the current input character, and its value to the empty string.(仮)
               case Node(NP, List(Node(NP, np1_1), Leaf(TO, _), Node(NP, np1_2))) :: Leaf(Comma,_)::Leaf(CC, _)::Node(NP, List(Node(NP, np2_1), Node(PP, List(Leaf(IN, _), Node(NP, np2_2)))))::Nil => {
-                commandList :+= CommandStructure.Set(getLeave(Node(NP, np1_1)), getLeave(Node(NP, np1_2)))
-                commandList :+= CommandStructure.Set(getLeave(Node(NP, np2_1)), getLeave(Node(NP, np2_2)))
+                commandList :+= CommandStructure.Set((getLeave(Node(NP, np1_1)), getCorefId(Node(NP, np1_1))), getLeave(Node(NP, np1_2)))
+                commandList :+= CommandStructure.Set((getLeave(Node(NP, np2_1)), getCorefId(Node(NP, np2_1))), getLeave(Node(NP, np2_2)))
               }
-              case _ => commandList :+= CommandStructure.Set(getLeave(Node(NP, np)), "on")
+              case _ => commandList :+= CommandStructure.Set((getLeave(Node(NP, np)), getCorefId(Node(NP, np))), "on")
             }
 
           }
@@ -172,7 +172,7 @@ object TagToCommand {
           }
           // start
           case List(Leaf(VB,Token(_,_,"start")), Node(NP,_), Node(PP, _)) => {
-            commandList :+= Start()
+            commandList :+= Start(-1)///////////////////////////////////////////////
           }
           // treat
           case List(Leaf(VB, Token(_,_, "treat")), Node(NP, _), Node(PP, _), Node(ADVP, _)) | List(Leaf(VB, Token(_,_, "treat")), Node(NP, _), Node(ADVP, _)) => {

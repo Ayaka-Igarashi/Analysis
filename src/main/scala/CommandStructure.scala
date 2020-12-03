@@ -15,7 +15,7 @@ object CommandStructure {
    * stateのパターン
    *  Set the return state to the data state
    */
-  case class Set(obj: String, to: String) extends Command
+  case class Set(obj: (String, Int), to: String) extends Command
 
 
   // Consume those two characters
@@ -47,7 +47,7 @@ object CommandStructure {
   // 1パターンしかないから決め打ちする
   case class Flush() extends Command // Flush code points consumed as a character reference.
   case class Treat() extends Command // treat it as per "the character" entry below.
-  case class Start() extends Command //Start a new attribute in the current tag token.
+  case class Start(corefId: Int) extends Command //Start a new attribute in the current tag token.
 
   // Multiply the character reference code by 16
   case class Multiply(obj: String, by: String) extends Command

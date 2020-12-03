@@ -97,7 +97,9 @@ object Implement {
         newEnv.inputText = newEnv.currentInputCharacter + newEnv.inputText
         newEnv.currentInputCharacter = null
       }
-      case Set(obj, to) =>
+      case Set((obj, id), to) => {
+
+      }
       case Consume(character) => {
         character match {
           case "next input character" => {
@@ -122,7 +124,15 @@ object Implement {
       case Emit(character, id) => {
         if (character.contains("current tag token")) {
           newEnv.env.get(newEnv.currentTagToken) match {
-            case Some(TokenVal(t)) => newEnv.addEmitToken(t)
+            case Some(TokenVal(tagToken_(b,n,f,list))) => {
+              val l = list.map(key => {
+                newEnv.env.get(key) match {
+                  case AttributeVal(attribute) => attribute
+                  case _ => {println("cant find attribute");new Attribute(null,null)}
+                }
+              })
+              newEnv.addEmitToken(tagToken(b,n,f,l))
+            }
             case None => println("cant find tag token")
           }
         } else if (character.contains("DOCTYPE token")) {
@@ -171,12 +181,12 @@ object Implement {
       case Create(token, corefId) => {
         if (token.contains("start tag token")) {
           val key = "start_tag_token_" + newEnv.getID()
-          newEnv.addMap(key, TokenVal(tagToken(true, "", false, List())))
+          newEnv.addMap(key, TokenVal(tagToken_(true, "", false, List())))
           newEnv.currentTagToken = key
           if (corefId != -1) newEnv.corefMap += (corefId -> key)
         } else if (token.contains("end tag token")) {
           val key = "end_tag_token_" + newEnv.getID()
-          newEnv.addMap(key, TokenVal(tagToken(false, "", false, List())))
+          newEnv.addMap(key, TokenVal(tagToken_(false, "", false, List())))
           newEnv.currentTagToken = key
           if (corefId != -1) newEnv.corefMap += (corefId -> key)
         } else if (token.contains("DOCTYPE token")) {
@@ -203,8 +213,19 @@ object Implement {
       case Treat() => {
         // AnithingElseのコマンド実行する
       }
-      case Start() => {
+      case Start(corefId) => {
         // currentTagTokenに新しい属性を追加する
+        val key = "tag_token_attribute_" + newEnv.getID()
+        val newAttribute = new Attribute(null, null)
+        newEnv.env.get(newEnv.currentTagToken) match {
+          case Some(TokenVal(tagToken_(b, s, f, attributes))) => {
+            val newTagToken = tagToken_(b, s, f, attributes :+ key)
+            newEnv.addMap(newEnv.currentTagToken, TokenVal(newTagToken))
+          }
+          case None => println("cant find tag token")
+        }
+        newEnv.addMap(key, AttributeVal(newAttribute))
+        if (corefId != -1) newEnv.corefMap += (corefId -> key)
         //newEnv.currentTagToken.attributes :+= new Attribute(null, null)
       }
       case Multiply(obj, by) => {
