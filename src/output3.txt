@@ -19,7 +19,7 @@ map :
 V
 
 2 : ===============================================
-command : List(Consume(next input character)) , List(Create(new DOCTYPE token,x_33703), Set((the token 's name,-1),the current input character), Switch(DOCTYPE_name_state))
+command : List(Consume(next input character)) , List(Create(DOCTYPEToken(,null,null,false),x_33703), Set((the token 's name,33703),the current input character), Switch(DOCTYPE_name_state))
 
 ------------------------------------------
 current state : Before_DOCTYPE_name_state
@@ -82,7 +82,7 @@ map :
 V
 
 5 : ===============================================
-command : List(Consume(next input character)) , List(Error(eof_in_doctype parse error), Set((the DOCTYPE token 's force_quirks flag,34608),on), Emit(DOCTYPE token,34608), Emit(end_of_file token,-1))
+command : List(Consume(next input character)) , List(Error(eof_in_doctype parse error), Set((the DOCTYPE token 's force_quirks flag,34608),on), Emit(DOCTYPE token,34608), Emit(end_of_file,-1))
 
 ------------------------------------------
 current state : DOCTYPE_name_state

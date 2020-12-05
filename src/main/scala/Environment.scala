@@ -4,10 +4,10 @@ object Environment {
   trait Value
   case class TokenVal(token: Token) extends Value
   case class AttributeVal(attribute: Attribute) extends Value
-  case class IntVal(i: Int) extends Value
-  case class BoolVal(b: Boolean) extends Value
-  case class StringVal(s: String) extends Value
-  case class Val(var v: Any)
+//  case class IntVal(i: Int) extends Value
+//  case class BoolVal(b: Boolean) extends Value
+//  case class StringVal(s: String) extends Value
+  //case class Val(var v: Any)
 
   class Env {
     // 現在の状態
@@ -67,6 +67,9 @@ object Environment {
   case class commentToken(data: String) extends Token
   case class characterToken(data: String) extends Token
   case class endOfFileToken() extends Token
+
+  trait VariableOrToken
+  case class Variable(variable: String) extends VariableOrToken
 
   class Attribute(name: String, value: String)
 }

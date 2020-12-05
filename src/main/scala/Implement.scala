@@ -7,9 +7,7 @@ import scala.collection.immutable.ListMap
 
 object Implement {
 
-  var Env1: Map[String, Val] = Map(
-    "end_tag_token_1" -> Val(tagToken(true, "",false,List()))
-  )
+
   //env updated ("currentState", env("nextState"))
 
   var eee: Env = new Env()
@@ -179,29 +177,48 @@ object Implement {
         //println("ErrorCode : "+error)
       }
       case Create(token, corefKey) => {
-        if (token.contains("start tag token")) {
-          val key = if (corefKey == "") "start_tag_token_" + newEnv.getID() else corefKey
-          newEnv.addMap(key, TokenVal(tagToken_(true, "", false, List())))
-          newEnv.currentTagToken = key
-          //if (corefKey != -1) newEnv.corefMap += (corefKey -> key)
-        } else if (token.contains("end tag token")) {
-          val key = if (corefKey == "") "end_tag_token_" + newEnv.getID() else corefKey
-          newEnv.addMap(key, TokenVal(tagToken_(false, "", false, List())))
-          newEnv.currentTagToken = key
-          //if (corefKey != -1) newEnv.corefMap += (corefKey -> key)
-        } else if (token.contains("DOCTYPE token")) {
-          val key = if (corefKey == "") "DOCTYPE_token_" + newEnv.getID() else corefKey
-          newEnv.addMap(key, TokenVal(DOCTYPEToken("", null, null, false)))
-          newEnv.currentDOCTYPEToken = key
-          //if (corefId != -1) newEnv.corefMap += (corefId -> key)
-        } else if (token.contains("comment token")) {
-          val key = if (corefKey == "") "comment_token_" + newEnv.getID() else corefKey
-          newEnv.addMap(key, TokenVal(commentToken("")))
-          newEnv.commentToken = key
-          //if (corefKey != -1) newEnv.corefMap += (corefKey -> key)
-        } else {
-          println("create error" + token)
+        val key = if (corefKey == "") "token_" + newEnv.getID() else corefKey
+        newEnv.addMap(key, TokenVal(token))
+        token match {
+          case tagToken_(_,_,_,_) => newEnv.currentTagToken = key
+          case DOCTYPEToken(_,_,_,_) => newEnv.currentDOCTYPEToken = key
+          case commentToken(_) => newEnv.commentToken = key
+          case _ => println("error")
         }
+
+//        token match {
+//          case "start tag token" => {
+//            newEnv.addMap(key, TokenVal(tagToken_(true, "", false, List())))
+//            newEnv.currentTagToken = key
+//          }
+//          case "end tag token" =>
+//          case "DOCTYPE token" =>
+//          case "comment token" =>
+//          case _ =>
+//        }
+//        if (token.contains("start tag token")) {
+//          val key = if (corefKey == "") "start_tag_token_" + newEnv.getID() else corefKey
+//          newEnv.addMap(key, TokenVal(tagToken_(true, "", false, List())))
+//          newEnv.currentTagToken = key
+//          //if (corefKey != -1) newEnv.corefMap += (corefKey -> key)
+//        } else if (token.contains("end tag token")) {
+//          val key = if (corefKey == "") "end_tag_token_" + newEnv.getID() else corefKey
+//          newEnv.addMap(key, TokenVal(tagToken_(false, "", false, List())))
+//          newEnv.currentTagToken = key
+//          //if (corefKey != -1) newEnv.corefMap += (corefKey -> key)
+//        } else if (token.contains("DOCTYPE token")) {
+//          val key = if (corefKey == "") "DOCTYPE_token_" + newEnv.getID() else corefKey
+//          newEnv.addMap(key, TokenVal(DOCTYPEToken("", null, null, false)))
+//          newEnv.currentDOCTYPEToken = key
+//          //if (corefId != -1) newEnv.corefMap += (corefId -> key)
+//        } else if (token.contains("comment token")) {
+//          val key = if (corefKey == "") "comment_token_" + newEnv.getID() else corefKey
+//          newEnv.addMap(key, TokenVal(commentToken("")))
+//          newEnv.commentToken = key
+//          //if (corefKey != -1) newEnv.corefMap += (corefKey -> key)
+//        } else {
+//          println("create error" + token)
+//        }
       }
       case Ignore(obj) => println("ignore : " + obj) // 何もしない
       case Flush() => {

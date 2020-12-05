@@ -40,7 +40,7 @@ object CommandStructure {
   // Create a new start tag token, set its tag name to the empty string.
   // create a comment token whose data is the empty string
   // Create a new DOCTYPE token
-  case class Create(token: String, valueKey: String) extends Command
+  case class Create(token: Environment.Token, valueKey: String) extends Command
 
   // Ignore the character.
   case class Ignore(obj: String) extends Command

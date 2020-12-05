@@ -143,7 +143,14 @@ object TagToCommand {
           // emit
           case List(Leaf(VB,Token(_,_,"emit")), Node(NP,np)) => {
             for (n <- NPDistribute(Node(NP, np))) {
-              commandList :+= Emit(n._1, n._2)
+              val key = if (n._2 == -1) "" else "x_" + n._2.toString
+              var token = ""
+              if (n._1.contains("current tag token")) token = "current tag token"
+              else if (n._1.contains("DOCTYPE token")) token = "DOCTYPE token"
+              else if (n._1.contains("comment token")) token = "comment token"
+              else if (n._1.contains("end_of_file")) token = "end_of_file"
+              else token = n._1
+              commandList :+= Emit(token, n._2)
             }
           }
           // emit2(途中)
@@ -158,7 +165,13 @@ object TagToCommand {
           case List(Leaf(VB,Token(_,_,"create")), Node(NP,np)) => {
             for (n <- NPDistribute(Node(NP, np))) {
               val key = if (n._2 == -1) "" else "x_" + n._2.toString
-              commandList :+= Create(n._1, key)
+              var token: Environment.Token = null
+              if (n._1.contains("start tag token")) token = Environment.tagToken_(true, "", false, List())
+              else if (n._1.contains("end tag token")) token = Environment.tagToken_(false, "", false, List())
+              else if (n._1.contains("DOCTYPE token")) token = Environment.DOCTYPEToken("", null, null, false)
+              else if (n._1.contains("comment token")) token = Environment.commentToken("")
+              else println("create_error : " + n._1)
+              commandList :+= Create(token, key)
             }
           }
           // multiply
