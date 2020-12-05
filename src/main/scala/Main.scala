@@ -64,9 +64,10 @@ object Main {
         } else txtOut = new PrintWriter(System.out)
 
         parse(1, 79)
+        PreserveDefinition.preserve[List[nState]](nStateList, "src/parsed.dat")
         tagConvert()
       }
-    } else if (true) {
+    } else if (false) {
       // 出力ファイル
       if (args.length > 1) {
         txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
@@ -96,7 +97,7 @@ object Main {
 
   def implement() = {
     var env: Env = new Env()
-    env.setInputText("")
+    env.setInputText("aaa")
     env.setNextState("DOCTYPE_state")
     var i = 1
     while (!env.emitTokens.contains(endOfFileToken()) && i <= 20) {
@@ -140,8 +141,6 @@ object Main {
       val state_n = nState(stateName, (stateList(i).prev, prevReplacedStr, prevcoref, prevTreeList), trans_n)
       nStateList :+= state_n
     }
-
-    PreserveDefinition.preserve[List[nState]](nStateList, "src/parsed.dat")
 
     var endtime = System.currentTimeMillis
     System.out.println("parse time = " + formatter.format(endtime - start))
@@ -196,6 +195,7 @@ object Main {
     System.out.println("convert time = " + formatter.format(endtime - start))
   }
 
+  var uniqueId = 0
   def parseStatementToTag(str: String): (String, List[List[(Integer, CorefChain)]], List[Tag]) = {
     val newStr = Replacement.replace(str)
     val (coref, tree_List) = analysis(newStr)
@@ -206,7 +206,9 @@ object Main {
       var corefIdx = Map[Int, Int]().withDefaultValue(-1)
       for (c <- coref(i)) {
         val order = c._2.getMentionsInTextualOrder.asScala.toList
-        for (o <- order) {corefIdx ++= (o.startIndex - 1 to o.endIndex - 2).toList.map(n => (n, o.corefClusterID))}
+        for (o <- order) {
+          //println((o.startIndex-1) + " ~ " + (o.endIndex-2))
+          corefIdx ++= (o.startIndex - 1 to o.endIndex - 2).toList.map(n => (n, o.corefClusterID + uniqueId*100))}
       }
       ConvertTree.corefMap = corefIdx
 
@@ -216,6 +218,7 @@ object Main {
       tagList :+= tag
       i += 1
     }
+    uniqueId += 1
 
     (newStr, coref, tagList)
   }

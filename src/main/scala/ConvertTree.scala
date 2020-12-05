@@ -14,9 +14,10 @@ object ConvertTree {
   var tokenList2: List[CoreLabel] = null
   var leafDict: Map[Tree, Int] = null
 
+  var leafIdx: Int = 0
+
   // TreeからTag構造体に変換
   def convert(tree: Tree): Tag = {
-
     // 元のTree型のLeafからの距離が1だったら、Leafを作成し
     // それより大きかったらNodeを作成するという風なmatch文にすればより簡潔?(面倒くさい?)
     tree.value() match {
@@ -26,7 +27,7 @@ object ConvertTree {
       case "ADVP" => Node(ADVP,toStruct(tree))
       case "NP" => {
         val c = tree.getChild(0)
-        if (c.value() == "PRP" && c.getChild(0).value() == "you") null // "you"を取り除く
+        if (c.value() == "PRP" && c.getChild(0).value() == "you") {leafIdx+=1;null} // "you"を取り除く
         else Node(NP,toStruct(tree))
       }
       case "PP" => Node(PP,toStruct(tree))
@@ -49,7 +50,9 @@ object ConvertTree {
       case "PRN" => {
         val c = tree.getChild(0)
         val c2 = tree.getChild(tree.numChildren() - 1)
-        if ((c.value() == "(" || c.value() == "-LRB-") && (c2.value() == ")" || c2.value() == "-RRB-")) null // カッコの要素を除く
+        if ((c.value() == "(" || c.value() == "-LRB-") && (c2.value() == ")" || c2.value() == "-RRB-")) {
+          leafIdx += tree.getLeaves().size()
+          null} // カッコの要素を除く
         else Node(PRN,toStruct(tree))
       }
       case "INTJ" => Node(INTJ,toStruct(tree))
@@ -97,7 +100,7 @@ object ConvertTree {
       // pos tag(記号)
       case "#" => Leaf(Pound,toToken(tree))
       case "$" => Leaf(Dollar,toToken(tree))
-      case "." => null//Leaf(Dot,toToken(tree))
+      case "." => {leafIdx += 1; null}//Leaf(Dot,toToken(tree))
       case "," => Leaf(Comma,toToken(tree))
       case ":" => Leaf(Colon,toToken(tree))
       case "(" | "-LRB-" => Leaf(LBracket,toToken(tree))
@@ -113,7 +116,6 @@ object ConvertTree {
 
     }
   }
-
 
   // 補助関数(Node)
   def toStruct(tree: Tree): List[Tag] = {
@@ -140,9 +142,12 @@ object ConvertTree {
   def toToken(tree: Tree): Token = {
     if (tree.numChildren() != 1) System.out.println("not leaf error")
     val child = tree.firstChild()
+
     leafDict.get(child) match {
       case Some(i) => {
-        Token(corefMap(i), child.value(), tokenList(i).lemma())
+        //println(leafIdx + " : " + i)
+        leafIdx += 1
+        Token(corefMap(leafIdx), child.value(), tokenList(leafIdx).lemma())
       }
       case None => Token(-2, child.value(), null) // error
     }
@@ -150,10 +155,12 @@ object ConvertTree {
 
   // lemmaツリーを作るのに使う関数
   def makeLeafMap(tree: Tree) = {
+    leafIdx = -1
     leafDict = Map()
     var i = 0
     val leaveList: List[Tree] = tree.getLeaves().asScala.toList
     for (leaf <- leaveList) {
+      //println(leaf.nodeNumber(rootTree))
       leafDict += (leaf -> i)
       i += 1
     }

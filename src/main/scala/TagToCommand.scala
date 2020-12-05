@@ -156,7 +156,10 @@ object TagToCommand {
           }
           // create
           case List(Leaf(VB,Token(_,_,"create")), Node(NP,np)) => {
-            for (n <- NPDistribute(Node(NP, np))) commandList :+= Create(n._1, n._2)
+            for (n <- NPDistribute(Node(NP, np))) {
+              val key = if (n._2 == -1) "" else "x_" + n._2.toString
+              commandList :+= Create(n._1, key)
+            }
           }
           // multiply
           case List(Leaf(VB,Token(_,_,"multiply")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_,_, "by")), Node(NP, np2)))) => {

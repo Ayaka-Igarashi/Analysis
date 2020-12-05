@@ -54,6 +54,8 @@ object Environment {
     write.println("error content : " + env.errorContent)
 
     write.println("input text : " + env.inputText)
+    write.println("map : ")
+    for (m <- env.env) write.println(" " + m)
     write.println("------------------------------------------")
     write.println("")
   }

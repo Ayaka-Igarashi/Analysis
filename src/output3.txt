@@ -1,17 +1,102 @@
 1 : ===============================================
-command : List(Consume(next input character)) , List(Error(eof_in_doctype parse error), Create(new DOCTYPE token,5), Set(its force_quirks flag,on), Emit(token,5), Emit(end_of_file token,-1))
+command : List(Consume(next input character)) , List(Error(missing_whitespace_before_doctype_name parse error), Reconsume(Before_DOCTYPE_name_state))
 
 ------------------------------------------
 current state : DOCTYPE_state
-next state : DOCTYPE_state
+next state : Before_DOCTYPE_name_state
 return state : null
-current DOCTYPE Token : DOCTYPE_token_0
+current DOCTYPE Token : null
+current tag Token : null
+comment Token : null
+current input character : null
+emit tokens : List()
+error content : missing_whitespace_before_doctype_name parse error
+input text : aaa
+map : 
+------------------------------------------
+
+|
+V
+
+2 : ===============================================
+command : List(Consume(next input character)) , List(Create(new DOCTYPE token,x_33703), Set((the token 's name,-1),the current input character), Switch(DOCTYPE_name_state))
+
+------------------------------------------
+current state : Before_DOCTYPE_name_state
+next state : DOCTYPE_name_state
+return state : null
+current DOCTYPE Token : x_33703
+current tag Token : null
+comment Token : null
+current input character : a
+emit tokens : List()
+error content : null
+input text : aa
+map : 
+ (x_33703,TokenVal(DOCTYPEToken(,null,null,false)))
+------------------------------------------
+
+|
+V
+
+3 : ===============================================
+command : List(Consume(next input character)) , List(Append(current input character,the current DOCTYPE token 's name))
+
+------------------------------------------
+current state : DOCTYPE_name_state
+next state : DOCTYPE_name_state
+return state : null
+current DOCTYPE Token : x_33703
+current tag Token : null
+comment Token : null
+current input character : a
+emit tokens : List()
+error content : null
+input text : a
+map : 
+ (x_33703,TokenVal(DOCTYPEToken(,null,null,false)))
+------------------------------------------
+
+|
+V
+
+4 : ===============================================
+command : List(Consume(next input character)) , List(Append(current input character,the current DOCTYPE token 's name))
+
+------------------------------------------
+current state : DOCTYPE_name_state
+next state : DOCTYPE_name_state
+return state : null
+current DOCTYPE Token : x_33703
+current tag Token : null
+comment Token : null
+current input character : a
+emit tokens : List()
+error content : null
+input text : 
+map : 
+ (x_33703,TokenVal(DOCTYPEToken(,null,null,false)))
+------------------------------------------
+
+|
+V
+
+5 : ===============================================
+command : List(Consume(next input character)) , List(Error(eof_in_doctype parse error), Set((the DOCTYPE token 's force_quirks flag,34608),on), Emit(DOCTYPE token,34608), Emit(end_of_file token,-1))
+
+------------------------------------------
+current state : DOCTYPE_name_state
+next state : DOCTYPE_name_state
+return state : null
+current DOCTYPE Token : x_33703
 current tag Token : null
 comment Token : null
 current input character : [EOF]
 emit tokens : List(DOCTYPEToken(,null,null,false), endOfFileToken())
 error content : eof_in_doctype parse error
 input text : 
+map : 
+ (x_33703,TokenVal(DOCTYPEToken(,null,null,false)))
 ------------------------------------------
 
 |

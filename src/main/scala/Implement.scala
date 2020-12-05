@@ -127,7 +127,7 @@ object Implement {
             case Some(TokenVal(tagToken_(b,n,f,list))) => {
               val l = list.map(key => {
                 newEnv.env.get(key) match {
-                  case AttributeVal(attribute) => attribute
+                  case Some(AttributeVal(attribute)) => attribute
                   case _ => {println("cant find attribute");new Attribute(null,null)}
                 }
               })
@@ -178,27 +178,27 @@ object Implement {
         newEnv.errorContent = error
         //println("ErrorCode : "+error)
       }
-      case Create(token, corefId) => {
+      case Create(token, corefKey) => {
         if (token.contains("start tag token")) {
-          val key = "start_tag_token_" + newEnv.getID()
+          val key = if (corefKey == "") "start_tag_token_" + newEnv.getID() else corefKey
           newEnv.addMap(key, TokenVal(tagToken_(true, "", false, List())))
           newEnv.currentTagToken = key
-          if (corefId != -1) newEnv.corefMap += (corefId -> key)
+          //if (corefKey != -1) newEnv.corefMap += (corefKey -> key)
         } else if (token.contains("end tag token")) {
-          val key = "end_tag_token_" + newEnv.getID()
+          val key = if (corefKey == "") "end_tag_token_" + newEnv.getID() else corefKey
           newEnv.addMap(key, TokenVal(tagToken_(false, "", false, List())))
           newEnv.currentTagToken = key
-          if (corefId != -1) newEnv.corefMap += (corefId -> key)
+          //if (corefKey != -1) newEnv.corefMap += (corefKey -> key)
         } else if (token.contains("DOCTYPE token")) {
-          val key = "DOCTYPE_token_" + newEnv.getID()
+          val key = if (corefKey == "") "DOCTYPE_token_" + newEnv.getID() else corefKey
           newEnv.addMap(key, TokenVal(DOCTYPEToken("", null, null, false)))
           newEnv.currentDOCTYPEToken = key
-          if (corefId != -1) newEnv.corefMap += (corefId -> key)
+          //if (corefId != -1) newEnv.corefMap += (corefId -> key)
         } else if (token.contains("comment token")) {
-          val key = "comment_token_" + newEnv.getID()
+          val key = if (corefKey == "") "comment_token_" + newEnv.getID() else corefKey
           newEnv.addMap(key, TokenVal(commentToken("")))
           newEnv.commentToken = key
-          if (corefId != -1) newEnv.corefMap += (corefId -> key)
+          //if (corefKey != -1) newEnv.corefMap += (corefKey -> key)
         } else {
           println("create error" + token)
         }
