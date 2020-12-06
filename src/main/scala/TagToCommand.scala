@@ -155,7 +155,7 @@ object TagToCommand {
               commandList :+= Emit(token)
             }
           }
-          // emit2(途中)
+          // emit2
           case List(Leaf(VB,Token(_,_,"emit")), Node(NP,np), Node(PP, pp)) => {
             for (n <- NPDistribute(Node(NP, np))) {
               var token: ImplementValue = null
@@ -195,8 +195,8 @@ object TagToCommand {
             for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(n._1, getLeave(Node(NP, np2)))
           }
           // start
-          case List(Leaf(VB,Token(_,_,"start")), Node(NP,_), Node(PP, _)) => {
-            commandList :+= Start(-1)///////////////////////////////////////////////
+          case List(Leaf(VB,Token(_,_,"start")), Node(NP,np), Node(PP, _)) => {
+            commandList :+= Start("x_" + getCorefId(Node(NP,np)))
           }
           // treat
           case List(Leaf(VB, Token(_,_, "treat")), Node(NP, _), Node(PP, _), Node(ADVP, _)) | List(Leaf(VB, Token(_,_, "treat")), Node(NP, _), Node(ADVP, _)) => {

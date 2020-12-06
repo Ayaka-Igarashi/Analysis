@@ -1,19 +1,191 @@
 1 : ===============================================
-command : List(Consume(next input character)) , List(Error(eof_in_doctype parse error), Create(DOCTYPEToken(,null,null,false),x_33605), Set((its force_quirks flag,33605),on), Emit(Variable(x_33605)), Emit(EndOfFileToken))
+command : List(Consume(next input character)) , List(Switch(Tag_open_state))
 
 ------------------------------------------
-current state : Before_DOCTYPE_name_state
-next state : Before_DOCTYPE_name_state
+current state : Data_state
+next state : Tag_open_state
 return state : null
-current DOCTYPE Token : x_33605
+current DOCTYPE Token : null
 current tag Token : null
 comment Token : null
-current input character : [EOF]
-emit tokens : List(DOCTYPEToken(,null,null,false), endOfFileToken())
-error content : eof_in_doctype parse error
+current input character : <
+emit tokens : List()
+error content : null
+input text : a =b>
+map : 
+------------------------------------------
+
+|
+V
+
+2 : ===============================================
+command : List(Consume(next input character)) , List(Create(tagToken_(true,,false,List()),x_2901), Set((its tag name,2901),the empty string), Reconsume(Tag_name_state))
+
+------------------------------------------
+current state : Tag_open_state
+next state : Tag_name_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_2901
+comment Token : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : a =b>
+map : 
+ (x_2901,TokenVal(tagToken_(true,,false,List())))
+------------------------------------------
+
+|
+V
+
+3 : ===============================================
+command : List(Consume(next input character)) , List(Append(current input character,the current tag token 's tag name))
+
+------------------------------------------
+current state : Tag_name_state
+next state : Tag_name_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_2901
+comment Token : null
+current input character : a
+emit tokens : List()
+error content : null
+input text :  =b>
+map : 
+ (x_2901,TokenVal(tagToken_(true,,false,List())))
+------------------------------------------
+
+|
+V
+
+4 : ===============================================
+command : List(Consume(next input character)) , List(Switch(Before_attribute_name_state))
+
+------------------------------------------
+current state : Tag_name_state
+next state : Before_attribute_name_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_2901
+comment Token : null
+current input character :  
+emit tokens : List()
+error content : null
+input text : =b>
+map : 
+ (x_2901,TokenVal(tagToken_(true,,false,List())))
+------------------------------------------
+
+|
+V
+
+5 : ===============================================
+command : List(Consume(next input character)) , List(Error(unexpected_equals_sign_before_attribute_name parse error), Start(x_19009), Set((that attribute 's name,19009),the current input character), Set((its value,19009),the empty string), Switch(Attribute_name_state))
+
+------------------------------------------
+current state : Before_attribute_name_state
+next state : Attribute_name_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_2901
+comment Token : null
+current input character : =
+emit tokens : List()
+error content : unexpected_equals_sign_before_attribute_name parse error
+input text : b>
+map : 
+ (x_2901,TokenVal(tagToken_(true,,false,List(x_19009))))
+ (x_19009,AttributeVal(Environment$Attribute@7ce6a65d))
+------------------------------------------
+
+|
+V
+
+6 : ===============================================
+command : List(Consume(next input character)) , List(Append(current input character,the current attribute 's name))
+
+------------------------------------------
+current state : Attribute_name_state
+next state : Attribute_name_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_2901
+comment Token : null
+current input character : b
+emit tokens : List()
+error content : null
+input text : >
+map : 
+ (x_2901,TokenVal(tagToken_(true,,false,List(x_19009))))
+ (x_19009,AttributeVal(Environment$Attribute@7ce6a65d))
+------------------------------------------
+
+|
+V
+
+7 : ===============================================
+command : List(Consume(next input character)) , List(Reconsume(After_attribute_name_state))
+
+------------------------------------------
+current state : Attribute_name_state
+next state : After_attribute_name_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_2901
+comment Token : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : >
+map : 
+ (x_2901,TokenVal(tagToken_(true,,false,List(x_19009))))
+ (x_19009,AttributeVal(Environment$Attribute@7ce6a65d))
+------------------------------------------
+
+|
+V
+
+8 : ===============================================
+command : List(Consume(next input character)) , List(Switch(Data_state), Emit(CurrentTagToken))
+
+------------------------------------------
+current state : After_attribute_name_state
+next state : Data_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_2901
+comment Token : null
+current input character : >
+emit tokens : List(tagToken(true,,false,List(Environment$Attribute@7ce6a65d)))
+error content : null
 input text : 
 map : 
- (x_33605,TokenVal(DOCTYPEToken(,null,null,false)))
+ (x_2901,TokenVal(tagToken_(true,,false,List(x_19009))))
+ (x_19009,AttributeVal(Environment$Attribute@7ce6a65d))
+------------------------------------------
+
+|
+V
+
+9 : ===============================================
+command : List(Consume(next input character)) , List(Emit(EndOfFileToken))
+
+------------------------------------------
+current state : Data_state
+next state : Data_state
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_2901
+comment Token : null
+current input character : [EOF]
+emit tokens : List(endOfFileToken())
+error content : null
+input text : 
+map : 
+ (x_2901,TokenVal(tagToken_(true,,false,List(x_19009))))
+ (x_19009,AttributeVal(Environment$Attribute@7ce6a65d))
 ------------------------------------------
 
 |

@@ -13,6 +13,8 @@ object ParseHtml {
   var state: State = State(null, "", List())
   var charas: List[String] = List()
 
+  var haveReadTrans: Boolean = false
+
   var htmlOut: PrintWriter = null
 
   def parseHtml() = {
@@ -35,12 +37,15 @@ object ParseHtml {
 
   def readHtml(node: Node): Unit = {
     node.nodeName() match {
-      case "h5" => stateName(node)
+      case "h5" => {haveReadTrans = false; stateName(node)}
       case "p" => {
-        val leave = getLeave(node)
-        state.prev += leave
+        if (!haveReadTrans) {
+          val leave = getLeave(node)
+          state.prev += leave
+        }
       }
       case "dl" => {
+        haveReadTrans = true
         trans(node)
         stateList :+= state
         htmlOut.println(state)

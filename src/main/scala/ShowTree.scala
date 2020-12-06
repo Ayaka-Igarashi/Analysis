@@ -44,7 +44,7 @@ object ShowTree extends JFXApp{
           treeItem.children.add(nodes(l))
         }
       }
-      case Leaf(n, Token(w, t)) => {
+      case Leaf(n, Token(_,w, t)) => {
         treeItem = new TreeItem[String](n.toString)
         treeItem.children = Seq(new TreeItem[String](w))
       }

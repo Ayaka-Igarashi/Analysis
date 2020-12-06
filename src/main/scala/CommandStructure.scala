@@ -46,7 +46,7 @@ object CommandStructure {
   // 1パターンしかないから決め打ちする
   case class Flush() extends Command // Flush code points consumed as a character reference.
   case class Treat() extends Command // treat it as per "the character" entry below.
-  case class Start(corefId: Int) extends Command //Start a new attribute in the current tag token.
+  case class Start(corefId: String) extends Command //Start a new attribute in the current tag token.
 
   // Multiply the character reference code by 16
   case class Multiply(obj: String, by: String) extends Command
@@ -84,6 +84,9 @@ object CommandStructure {
   case class CharacterToken(chara: String) extends ImplementValue
   case class Variable(variable: String) extends ImplementValue
   case object CurrentInputCharacter extends ImplementValue
+  case class NameOf(variable: Variable) extends ImplementValue
+  case class ValueOf(variable: Variable) extends ImplementValue
+  case class FlagOf(variable: Variable) extends ImplementValue
   case class Non(str :String) extends ImplementValue
 
 }
