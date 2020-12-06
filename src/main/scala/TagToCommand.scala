@@ -143,19 +143,27 @@ object TagToCommand {
           // emit
           case List(Leaf(VB,Token(_,_,"emit")), Node(NP,np)) => {
             for (n <- NPDistribute(Node(NP, np))) {
-              val key = if (n._2 == -1) "" else "x_" + n._2.toString
-              var token = ""
-              if (n._1.contains("current tag token")) token = "current tag token"
-              else if (n._1.contains("DOCTYPE token")) token = "DOCTYPE token"
-              else if (n._1.contains("comment token")) token = "comment token"
-              else if (n._1.contains("end_of_file")) token = "end_of_file"
-              else token = n._1
-              commandList :+= Emit(token, n._2)
+              //val key = if (n._2 == -1) "" else "x_" + n._2.toString
+              var token: ImplementValue = null
+              if (n._1.contains("current tag token")) token = CurrentTagToken
+              else if (n._1.contains("DOCTYPE token")) token = CurrentDOCTYPEToken
+              else if (n._1.contains("comment token")) token = CommentToken
+              else if (n._1.contains("end_of_file")) token = EndOfFileToken
+              else if (n._1.contains("current input character")) token = CurrentInputCharacter
+              else if (n._2 != -1) token = Variable("x_" + n._2.toString)
+              else token = Non(n._1)
+              commandList :+= Emit(token)
             }
           }
           // emit2(途中)
           case List(Leaf(VB,Token(_,_,"emit")), Node(NP,np), Node(PP, pp)) => {
-            for (n <- NPDistribute(Node(NP, np))) commandList :+= Emit(n._1 + " " + getLeave(Node(PP, pp)), n._2)
+            for (n <- NPDistribute(Node(NP, np))) {
+              var token: ImplementValue = null
+              if (n._1.contains("current input character")) token = CurrentInputCharacter
+              else if (n._2 != -1) token = Variable("x_" + n._2.toString)
+              else token = CommandStructure.CharacterToken(n._1)
+              commandList :+= Emit(token)
+            }
           }
           // ignore
           case List(Leaf(VB,Token(_,_,"ignore")), Node(NP,np)) => {

@@ -119,57 +119,72 @@ object Implement {
           }
         }
       }
-      case Emit(character, id) => {
-        if (character.contains("current tag token")) {
-          newEnv.env.get(newEnv.currentTagToken) match {
-            case Some(TokenVal(tagToken_(b,n,f,list))) => {
-              val l = list.map(key => {
-                newEnv.env.get(key) match {
-                  case Some(AttributeVal(attribute)) => attribute
-                  case _ => {println("cant find attribute");new Attribute(null,null)}
-                }
-              })
-              newEnv.addEmitToken(tagToken(b,n,f,l))
-            }
-            case None => println("cant find tag token")
-          }
-        } else if (character.contains("DOCTYPE token")) {
-          newEnv.env.get(newEnv.currentDOCTYPEToken) match {
-            case Some(TokenVal(t)) => newEnv.addEmitToken(t)
-            case None => println("cant find DOCTYPE token")
-          }
-        } else if (character.contains("comment token")) {
-          newEnv.env.get(newEnv.commentToken) match {
-            case Some(TokenVal(t)) => newEnv.addEmitToken(t)
-            case None => println("cant find comment token")
-          }
-        } else if (character.contains("end_of_file")) {
-          newEnv.addEmitToken(endOfFileToken())
-        } else if ("""(.+) (as a character token)""".r.matches(character)){
-          val re2 = """(.+) (as a character token)""".r
-          val re2(c, _) = character
-          if (c.contains("current input character")) {
-            newEnv.addEmitToken(characterToken(env.currentInputCharacter))
-          } else {
-            newEnv.addEmitToken(characterToken(character))
-          }
-        } else {
-          // てきとう
-          if (id != -1) {
-            newEnv.corefMap.get(id) match {
-              case Some(key) => {
-                newEnv.env.get(key) match {
-                  case Some(TokenVal(t)) => newEnv.addEmitToken(t)
-                  case None => println("cant find token")
-                }
+      case Emit(character) => {
+        character match {
+          case CommandStructure.CurrentTagToken => {
+            newEnv.env.get(newEnv.currentTagToken) match {
+              case Some(TokenVal(tagToken_(b,n,f,list))) => {
+                val l = getTagTokenAttribute(newEnv, list)
+                newEnv.addEmitToken(tagToken(b,n,f,l))
               }
-              case None => println("cant find token")
+              case None => println("cant find tag token")
             }
-          } else {
-            newEnv.addEmitToken(characterToken(character))
+          }
+          case CommandStructure.CurrentDOCTYPEToken => {
+            newEnv.env.get(newEnv.currentDOCTYPEToken) match {
+              case Some(TokenVal(t)) => newEnv.addEmitToken(t)
+              case None => println("cant find DOCTYPE token")
+            }
+          }
+          case CommandStructure.CommentToken => {
+            newEnv.env.get(newEnv.commentToken) match {
+              case Some(TokenVal(t)) => newEnv.addEmitToken(t)
+              case None => println("cant find comment token")
+            }
+          }
+          case CommandStructure.EndOfFileToken => newEnv.addEmitToken(endOfFileToken())
+          case CommandStructure.CharacterToken(c) => newEnv.addEmitToken(characterToken(c))
+          case CommandStructure.CurrentInputCharacter => newEnv.addEmitToken(characterToken(newEnv.currentInputCharacter))
+          case CommandStructure.Variable(x) => {
+            newEnv.env.get(x) match {
+              case Some(TokenVal(tagToken_(b,n,f,list))) => {
+                val l = getTagTokenAttribute(newEnv, list)
+                newEnv.addEmitToken(tagToken(b,n,f,l))
+              }
+              case Some(TokenVal(t)) => newEnv.addEmitToken(t)
+              case None => println("cant find token : " + x)
+            }
+          }
+          case _ => {
+            newEnv.addEmitToken(characterToken(null))
             txtOut3.println("emit error" + character)
           }
         }
+//        if ("""(.+) (as a character token)""".r.matches(character)){
+//          val re2 = """(.+) (as a character token)""".r
+//          val re2(c, _) = character
+//          if (c.contains("current input character")) {
+//            newEnv.addEmitToken(characterToken(env.currentInputCharacter))
+//          } else {
+//            newEnv.addEmitToken(characterToken(character))
+//          }
+//        } else {
+//          // てきとう
+//          if (id != -1) {
+//            newEnv.corefMap.get(id) match {
+//              case Some(key) => {
+//                newEnv.env.get(key) match {
+//                  case Some(TokenVal(t)) => newEnv.addEmitToken(t)
+//                  case None => println("cant find token")
+//                }
+//              }
+//              case None => println("cant find token")
+//            }
+//          } else {
+//            newEnv.addEmitToken(characterToken(character))
+//            txtOut3.println("emit error" + character)
+//          }
+//        }
       }
       case Append(obj, to) =>
       case Error(error) => {
@@ -224,7 +239,7 @@ object Implement {
       case Flush() => {
         val flushCommand =  If(IsEqual("character reference", "consumed as part of an attribute"),
                               List(Append("code point from the buffer", "current attribute's value")),
-                               List(Emit("code point as a character token", -1)))
+                               List(Emit(CommandStructure.CharacterToken("code point"))))
         newEnv = interpretCommand(newEnv, flushCommand)
       }
       case Treat() => {
@@ -282,5 +297,14 @@ object Implement {
       case UNDEF(str) => println("undefined bool : " + bool);false
       case _ => println("undefined bool error : " + bool);false
     }
+  }
+
+  def getTagTokenAttribute(env: Env, attributeList: List[String]): List[Attribute] = {
+    attributeList.map(key => {
+      env.env.get(key) match {
+        case Some(AttributeVal(attribute)) => attribute
+        case _ => {println("cant find attribute");new Attribute(null,null)}
+      }
+    })
   }
 }

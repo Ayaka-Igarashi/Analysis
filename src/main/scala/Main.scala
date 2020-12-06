@@ -97,8 +97,8 @@ object Main {
 
   def implement() = {
     var env: Env = new Env()
-    env.setInputText("aaa")
-    env.setNextState("DOCTYPE_state")
+    env.setInputText("")
+    env.setNextState("Before_DOCTYPE_name_state")
     var i = 1
     while (!env.emitTokens.contains(endOfFileToken()) && i <= 20) {
       txtOut3.println(i + " : ===============================================")

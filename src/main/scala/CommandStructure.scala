@@ -29,7 +29,7 @@ object CommandStructure {
    * 複数ある場合はEmit自体を複数作る?
    * Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token, and a character token for each of the characters in the temporary buffer (in the order they were added to the buffer).
    * */
-  case class Emit(token: String, corefId: Int) extends Command
+  case class Emit(token: ImplementValue) extends Command
 
   case class Error(error: String) extends Command
 
@@ -37,9 +37,7 @@ object CommandStructure {
   // Append a U+FFFD REPLACEMENT CHARACTER character to the current tag token's tag name.
   case class Append(obj: String, to: String) extends Command
 
-  // Create a new start tag token, set its tag name to the empty string.
   // create a comment token whose data is the empty string
-  // Create a new DOCTYPE token
   case class Create(token: Environment.Token, valueKey: String) extends Command
 
   // Ignore the character.
@@ -76,5 +74,16 @@ object CommandStructure {
   case class IsEqual(a: String, b: String) extends Bool
   case class IsExist(a: String) extends Bool
   case class UNDEF(str: String) extends Bool
+
+  trait ImplementValue
+  case object ReturnState extends ImplementValue
+  case object CurrentTagToken extends ImplementValue
+  case object CurrentDOCTYPEToken extends ImplementValue
+  case object CommentToken extends ImplementValue
+  case object EndOfFileToken extends ImplementValue
+  case class CharacterToken(chara: String) extends ImplementValue
+  case class Variable(variable: String) extends ImplementValue
+  case object CurrentInputCharacter extends ImplementValue
+  case class Non(str :String) extends ImplementValue
 
 }
