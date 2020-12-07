@@ -100,6 +100,7 @@ object Main {
     env.setInputText("<a =b>")
     env.setNextState("Data_state")
     var i = 1
+    txtOut3.println("input : " + env.inputText + "\n")
     while (!env.emitTokens.contains(endOfFileToken()) && i <= 20) {
       txtOut3.println(i + " : ===============================================")
       env = interpret(env, pStateMap)

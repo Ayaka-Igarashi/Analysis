@@ -21,7 +21,7 @@ object Environment {
     var currentTagToken: String = null
     var commentToken: String = null
 
-    var currentInputCharacter: String = null
+    var currentInputCharacter: InputCharacter = null
     var emitTokens: List[Token] = List()
     var errorContent: String = null
 
@@ -68,8 +68,14 @@ object Environment {
   case class characterToken(data: String) extends Token
   case class endOfFileToken() extends Token
 
-  trait VariableOrToken
-  case class Variable(variable: String) extends VariableOrToken
+//  trait VariableOrToken
+//  case class Variable(variable: String) extends VariableOrToken
 
   class Attribute(name: String, value: String)
+
+
+  trait InputCharacter
+  case class CharInput(char: Char) extends InputCharacter
+  case class StrInput(string: String) extends InputCharacter
+  case object EOF extends InputCharacter
 }

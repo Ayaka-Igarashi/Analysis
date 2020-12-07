@@ -1,3 +1,5 @@
+input : <a =b>
+
 1 : ===============================================
 command : List(Consume(next input character)) , List(Switch(Tag_open_state))
 
@@ -8,7 +10,7 @@ return state : null
 current DOCTYPE Token : null
 current tag Token : null
 comment Token : null
-current input character : <
+current input character : CharInput(<)
 emit tokens : List()
 error content : null
 input text : a =b>
@@ -28,7 +30,7 @@ return state : null
 current DOCTYPE Token : null
 current tag Token : x_2901
 comment Token : null
-current input character : null
+current input character : CharInput(a)
 emit tokens : List()
 error content : null
 input text : a =b>
@@ -49,7 +51,7 @@ return state : null
 current DOCTYPE Token : null
 current tag Token : x_2901
 comment Token : null
-current input character : a
+current input character : CharInput(a)
 emit tokens : List()
 error content : null
 input text :  =b>
@@ -70,7 +72,7 @@ return state : null
 current DOCTYPE Token : null
 current tag Token : x_2901
 comment Token : null
-current input character :  
+current input character : CharInput( )
 emit tokens : List()
 error content : null
 input text : =b>
@@ -91,13 +93,13 @@ return state : null
 current DOCTYPE Token : null
 current tag Token : x_2901
 comment Token : null
-current input character : =
+current input character : CharInput(=)
 emit tokens : List()
 error content : unexpected_equals_sign_before_attribute_name parse error
 input text : b>
 map : 
  (x_2901,TokenVal(tagToken_(true,,false,List(x_19009))))
- (x_19009,AttributeVal(Environment$Attribute@7ce6a65d))
+ (x_19009,AttributeVal(Environment$Attribute@29b5cd00))
 ------------------------------------------
 
 |
@@ -113,13 +115,13 @@ return state : null
 current DOCTYPE Token : null
 current tag Token : x_2901
 comment Token : null
-current input character : b
+current input character : CharInput(b)
 emit tokens : List()
 error content : null
 input text : >
 map : 
  (x_2901,TokenVal(tagToken_(true,,false,List(x_19009))))
- (x_19009,AttributeVal(Environment$Attribute@7ce6a65d))
+ (x_19009,AttributeVal(Environment$Attribute@29b5cd00))
 ------------------------------------------
 
 |
@@ -135,13 +137,13 @@ return state : null
 current DOCTYPE Token : null
 current tag Token : x_2901
 comment Token : null
-current input character : null
+current input character : CharInput(>)
 emit tokens : List()
 error content : null
 input text : >
 map : 
  (x_2901,TokenVal(tagToken_(true,,false,List(x_19009))))
- (x_19009,AttributeVal(Environment$Attribute@7ce6a65d))
+ (x_19009,AttributeVal(Environment$Attribute@29b5cd00))
 ------------------------------------------
 
 |
@@ -157,13 +159,13 @@ return state : null
 current DOCTYPE Token : null
 current tag Token : x_2901
 comment Token : null
-current input character : >
-emit tokens : List(tagToken(true,,false,List(Environment$Attribute@7ce6a65d)))
+current input character : CharInput(>)
+emit tokens : List(tagToken(true,,false,List(Environment$Attribute@29b5cd00)))
 error content : null
 input text : 
 map : 
  (x_2901,TokenVal(tagToken_(true,,false,List(x_19009))))
- (x_19009,AttributeVal(Environment$Attribute@7ce6a65d))
+ (x_19009,AttributeVal(Environment$Attribute@29b5cd00))
 ------------------------------------------
 
 |
@@ -179,13 +181,13 @@ return state : null
 current DOCTYPE Token : null
 current tag Token : x_2901
 comment Token : null
-current input character : [EOF]
+current input character : EOF
 emit tokens : List(endOfFileToken())
 error content : null
 input text : 
 map : 
  (x_2901,TokenVal(tagToken_(true,,false,List(x_19009))))
- (x_19009,AttributeVal(Environment$Attribute@7ce6a65d))
+ (x_19009,AttributeVal(Environment$Attribute@29b5cd00))
 ------------------------------------------
 
 |

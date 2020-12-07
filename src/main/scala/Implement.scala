@@ -6,11 +6,7 @@ import StateProcessedStructure.pState
 import scala.collection.immutable.ListMap
 
 object Implement {
-
-
   //env updated ("currentState", env("nextState"))
-
-  var eee: Env = new Env()
 
   // インタープリタ
   def interpret(env: Env, definition: ListMap[String, pState]): Env = { // env(環境)も引数に入れる,返り値もenvにする
@@ -41,38 +37,58 @@ object Implement {
     newEnv
   }
 
-  def characterMatching(currentInputCharacter: String, trans: List[(String, List[Command])]): List[Command] = {
+  def characterMatching(currentInputCharacter: InputCharacter, trans: List[(String, List[Command])]): List[Command] = {
+    currentInputCharacter match {
+      case CharInput(c) =>
+      case StrInput(str) =>
+      case EOF =>
+    }
+
     trans match {
       case (character, comList) :: rst => {
         character match {
           case "ASCII upper alpha" => {
-            val x = currentInputCharacter.codePointAt(0)
-            if (x >= 0x0041 && x <= 0x005A) comList
-            else characterMatching(currentInputCharacter, rst)
+            currentInputCharacter match {
+              case CharInput(c) => {
+                if (c >= 0x0041 && c <= 0x005A) comList
+                else characterMatching(currentInputCharacter, rst)
+              }
+              case _ => characterMatching(currentInputCharacter, rst)
+            }
           }
           case "ASCII lower alpha" => {
-            val x = currentInputCharacter.codePointAt(0)
-            if (x >= 0x0061 && x <= 0x007A) comList
-            else characterMatching(currentInputCharacter, rst)
+            currentInputCharacter match {
+              case CharInput(c) => {
+                if (c >= 0x0061 && c <= 0x007A) comList
+                else characterMatching(currentInputCharacter, rst)
+              }
+              case _ => characterMatching(currentInputCharacter, rst)
+            }
           }
           case "ASCII alpha" => {
-            val x = currentInputCharacter.codePointAt(0)
-            if ((x >= 0x0041 && x <= 0x005A)||(x >= 0x0061 && x <= 0x007A)) comList
-            else characterMatching(currentInputCharacter, rst)
+            currentInputCharacter match {
+              case CharInput(c) => {
+                if ((c >= 0x0041 && c <= 0x005A)||(c >= 0x0061 && c <= 0x007A)) comList
+                else characterMatching(currentInputCharacter, rst)
+              }
+              case _ => characterMatching(currentInputCharacter, rst)
+            }
           }
           case "Anything else" => comList
           case "EOF" => {
-            if (currentInputCharacter == "[EOF]") comList
+            if (currentInputCharacter == EOF) comList
             else characterMatching(currentInputCharacter, rst)
           }
           case s => {
             val re =  "(U\\+[0-9A-F][0-9A-F][0-9A-F][0-9A-F])".r
             re.findFirstIn(s) match {
               case Some(unicode) => {
-                if (currentInputCharacter.codePointAt(0) == Utility.unicodeToInt(unicode)) {
-                  comList
-                } else {
-                  characterMatching(currentInputCharacter, rst)
+                currentInputCharacter match {
+                  case CharInput(c) => {
+                    if (c == Utility.unicodeToInt(unicode)) comList
+                    else characterMatching(currentInputCharacter, rst)
+                  }
+                  case _ => characterMatching(currentInputCharacter, rst)
                 }
               }
               case None =>println("character error : " + s);characterMatching(currentInputCharacter, rst)
@@ -92,8 +108,12 @@ object Implement {
       }
       case Reconsume(state) => {
         newEnv.nextState = state
-        if (newEnv.currentInputCharacter != "[EOF]") newEnv.inputText = newEnv.currentInputCharacter + newEnv.inputText
-        newEnv.currentInputCharacter = null
+        newEnv.currentInputCharacter match {
+          case CharInput(c) => newEnv.inputText = c + newEnv.inputText
+          case StrInput(string) => newEnv.inputText = string + newEnv.inputText
+          case EOF =>
+        }
+        //newEnv.currentInputCharacter = null
       }
       case Set((obj, id), to) => {
 
@@ -102,17 +122,17 @@ object Implement {
         character match {
           case "next input character" => {
             if (newEnv.inputText.length > 0) {
-              newEnv.currentInputCharacter = newEnv.inputText.head.toString
+              newEnv.currentInputCharacter = CharInput(newEnv.inputText.head)
               newEnv.inputText = newEnv.inputText.tail
             } else {
-              newEnv.currentInputCharacter = "[EOF]"
+              newEnv.currentInputCharacter = EOF
             }
           }
           case _ => {
             // 途中
             if (newEnv.inputText.substring(0, character.length) == character) {
               newEnv.inputText = newEnv.inputText.substring(character.length - 1)
-              newEnv.currentInputCharacter = character
+              newEnv.currentInputCharacter = StrInput(character)
             } else {
               println("consume error")
             }
@@ -144,7 +164,13 @@ object Implement {
           }
           case CommandStructure.EndOfFileToken => newEnv.addEmitToken(endOfFileToken())
           case CommandStructure.CharacterToken(c) => newEnv.addEmitToken(characterToken(c))
-          case CommandStructure.CurrentInputCharacter => newEnv.addEmitToken(characterToken(newEnv.currentInputCharacter))
+          case CommandStructure.CurrentInputCharacter => {
+            newEnv.currentInputCharacter match {
+              case CharInput(c) => newEnv.addEmitToken(characterToken(c.toString))
+              case StrInput(string) => newEnv.addEmitToken(characterToken(string))
+              case _ =>
+            }
+          }
           case CommandStructure.Variable(x) => {
             newEnv.env.get(x) match {
               case Some(TokenVal(tagToken_(b,n,f,list))) => {
@@ -189,7 +215,6 @@ object Implement {
       case Start(corefId) => {
         // currentTagTokenに新しい属性を追加する
         val key = if (corefId == "x_-1") "tag_token_attribute_" + newEnv.getID() else corefId
-        //val key = "tag_token_attribute_" + newEnv.getID()
         val newAttribute = new Attribute(null, null)
         newEnv.env.get(newEnv.currentTagToken) match {
           case Some(TokenVal(tagToken_(b, s, f, attributes))) => {
@@ -199,7 +224,6 @@ object Implement {
           case None => println("cant find current tag token")
         }
         newEnv.addMap(key, AttributeVal(newAttribute))
-        //if (corefId != -1) newEnv.corefMap += (corefId -> key)
         //newEnv.currentTagToken.attributes :+= new Attribute(null, null)
       }
       case Multiply(obj, by) => {
