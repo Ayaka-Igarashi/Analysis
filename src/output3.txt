@@ -1,7 +1,7 @@
-input : <a =b>
+input : <abar>
 
 1 : ===============================================
-command : List(Consume(next input character)) , List(Switch(Tag_open_state))
+command : List(Consume(next input character)) , List(Switch(StateName(Tag_open_state)))
 
 ------------------------------------------
 current state : Data_state
@@ -10,10 +10,11 @@ return state : null
 current DOCTYPE Token : null
 current tag Token : null
 comment Token : null
+temporary buffer : null
 current input character : CharInput(<)
 emit tokens : List()
 error content : null
-input text : a =b>
+input text : abar>
 map : 
 ------------------------------------------
 
@@ -21,7 +22,7 @@ map :
 V
 
 2 : ===============================================
-command : List(Consume(next input character)) , List(Create(tagToken_(true,,false,List()),x_2901), Set((its tag name,2901),the empty string), Reconsume(Tag_name_state))
+command : List(Consume(next input character)) , List(Create(tagToken_(true,null,false,List()),x_2901), Set(NameOf(Variable(x_2901)),Mojiretu()), Reconsume(Tag_name_state))
 
 ------------------------------------------
 current state : Tag_open_state
@@ -30,10 +31,11 @@ return state : null
 current DOCTYPE Token : null
 current tag Token : x_2901
 comment Token : null
+temporary buffer : null
 current input character : CharInput(a)
 emit tokens : List()
 error content : null
-input text : a =b>
+input text : abar>
 map : 
  (x_2901,TokenVal(tagToken_(true,,false,List())))
 ------------------------------------------
@@ -42,7 +44,7 @@ map :
 V
 
 3 : ===============================================
-command : List(Consume(next input character)) , List(Append(current input character,the current tag token 's tag name))
+command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,NameOf(CurrentTagToken)))
 
 ------------------------------------------
 current state : Tag_name_state
@@ -51,127 +53,107 @@ return state : null
 current DOCTYPE Token : null
 current tag Token : x_2901
 comment Token : null
+temporary buffer : null
 current input character : CharInput(a)
 emit tokens : List()
 error content : null
-input text :  =b>
+input text : bar>
 map : 
- (x_2901,TokenVal(tagToken_(true,,false,List())))
+ (x_2901,TokenVal(tagToken_(true,a,false,List())))
 ------------------------------------------
 
 |
 V
 
 4 : ===============================================
-command : List(Consume(next input character)) , List(Switch(Before_attribute_name_state))
+command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,NameOf(CurrentTagToken)))
 
 ------------------------------------------
 current state : Tag_name_state
-next state : Before_attribute_name_state
+next state : Tag_name_state
 return state : null
 current DOCTYPE Token : null
 current tag Token : x_2901
 comment Token : null
-current input character : CharInput( )
+temporary buffer : null
+current input character : CharInput(b)
 emit tokens : List()
 error content : null
-input text : =b>
+input text : ar>
 map : 
- (x_2901,TokenVal(tagToken_(true,,false,List())))
+ (x_2901,TokenVal(tagToken_(true,ab,false,List())))
 ------------------------------------------
 
 |
 V
 
 5 : ===============================================
-command : List(Consume(next input character)) , List(Error(unexpected_equals_sign_before_attribute_name parse error), Start(x_19009), Set((that attribute 's name,19009),the current input character), Set((its value,19009),the empty string), Switch(Attribute_name_state))
+command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,NameOf(CurrentTagToken)))
 
 ------------------------------------------
-current state : Before_attribute_name_state
-next state : Attribute_name_state
+current state : Tag_name_state
+next state : Tag_name_state
 return state : null
 current DOCTYPE Token : null
 current tag Token : x_2901
 comment Token : null
-current input character : CharInput(=)
+temporary buffer : null
+current input character : CharInput(a)
 emit tokens : List()
-error content : unexpected_equals_sign_before_attribute_name parse error
-input text : b>
+error content : null
+input text : r>
 map : 
- (x_2901,TokenVal(tagToken_(true,,false,List(x_19009))))
- (x_19009,AttributeVal(Environment$Attribute@29b5cd00))
+ (x_2901,TokenVal(tagToken_(true,aba,false,List())))
 ------------------------------------------
 
 |
 V
 
 6 : ===============================================
-command : List(Consume(next input character)) , List(Append(current input character,the current attribute 's name))
+command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,NameOf(CurrentTagToken)))
 
 ------------------------------------------
-current state : Attribute_name_state
-next state : Attribute_name_state
+current state : Tag_name_state
+next state : Tag_name_state
 return state : null
 current DOCTYPE Token : null
 current tag Token : x_2901
 comment Token : null
-current input character : CharInput(b)
+temporary buffer : null
+current input character : CharInput(r)
 emit tokens : List()
 error content : null
 input text : >
 map : 
- (x_2901,TokenVal(tagToken_(true,,false,List(x_19009))))
- (x_19009,AttributeVal(Environment$Attribute@29b5cd00))
+ (x_2901,TokenVal(tagToken_(true,abar,false,List())))
 ------------------------------------------
 
 |
 V
 
 7 : ===============================================
-command : List(Consume(next input character)) , List(Reconsume(After_attribute_name_state))
+command : List(Consume(next input character)) , List(Switch(StateName(Data_state)), Emit(CurrentTagToken))
 
 ------------------------------------------
-current state : Attribute_name_state
-next state : After_attribute_name_state
+current state : Tag_name_state
+next state : Data_state
 return state : null
 current DOCTYPE Token : null
 current tag Token : x_2901
 comment Token : null
+temporary buffer : null
 current input character : CharInput(>)
-emit tokens : List()
+emit tokens : List(tagToken(true,abar,false,List()))
 error content : null
-input text : >
+input text : 
 map : 
- (x_2901,TokenVal(tagToken_(true,,false,List(x_19009))))
- (x_19009,AttributeVal(Environment$Attribute@29b5cd00))
+ (x_2901,TokenVal(tagToken_(true,abar,false,List())))
 ------------------------------------------
 
 |
 V
 
 8 : ===============================================
-command : List(Consume(next input character)) , List(Switch(Data_state), Emit(CurrentTagToken))
-
-------------------------------------------
-current state : After_attribute_name_state
-next state : Data_state
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_2901
-comment Token : null
-current input character : CharInput(>)
-emit tokens : List(tagToken(true,,false,List(Environment$Attribute@29b5cd00)))
-error content : null
-input text : 
-map : 
- (x_2901,TokenVal(tagToken_(true,,false,List(x_19009))))
- (x_19009,AttributeVal(Environment$Attribute@29b5cd00))
-------------------------------------------
-
-|
-V
-
-9 : ===============================================
 command : List(Consume(next input character)) , List(Emit(EndOfFileToken))
 
 ------------------------------------------
@@ -181,13 +163,13 @@ return state : null
 current DOCTYPE Token : null
 current tag Token : x_2901
 comment Token : null
+temporary buffer : null
 current input character : EOF
 emit tokens : List(endOfFileToken())
 error content : null
 input text : 
 map : 
- (x_2901,TokenVal(tagToken_(true,,false,List(x_19009))))
- (x_19009,AttributeVal(Environment$Attribute@29b5cd00))
+ (x_2901,TokenVal(tagToken_(true,abar,false,List())))
 ------------------------------------------
 
 |

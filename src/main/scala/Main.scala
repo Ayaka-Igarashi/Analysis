@@ -67,15 +67,18 @@ object Main {
         PreserveDefinition.preserve[List[nState]](nStateList, "src/parsed.dat")
         tagConvert()
       }
-    } else if (false) {
+    } else if (true) {
       // 出力ファイル
       if (args.length > 1) {
         txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
         System.out.println("txtout: " + args(1))
       } else txtOut = new PrintWriter(System.out)
+      txtOut3 = new PrintWriter("src/output3.txt")
 
       nStateList = PreserveDefinition.read[List[nState]]("src/parsed.dat")
       tagConvert()
+
+      implement()
     } else {
       if (args.length > 2) {
         txtOut2 = new PrintWriter(args(2))
@@ -97,7 +100,7 @@ object Main {
 
   def implement() = {
     var env: Env = new Env()
-    env.setInputText("<a =b>")
+    env.setInputText("<abar>")
     env.setNextState("Data_state")
     var i = 1
     txtOut3.println("input : " + env.inputText + "\n")

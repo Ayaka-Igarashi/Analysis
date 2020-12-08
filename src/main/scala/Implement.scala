@@ -38,12 +38,6 @@ object Implement {
   }
 
   def characterMatching(currentInputCharacter: InputCharacter, trans: List[(String, List[Command])]): List[Command] = {
-    currentInputCharacter match {
-      case CharInput(c) =>
-      case StrInput(str) =>
-      case EOF =>
-    }
-
     trans match {
       case (character, comList) :: rst => {
         character match {
@@ -69,6 +63,15 @@ object Implement {
             currentInputCharacter match {
               case CharInput(c) => {
                 if ((c >= 0x0041 && c <= 0x005A)||(c >= 0x0061 && c <= 0x007A)) comList
+                else characterMatching(currentInputCharacter, rst)
+              }
+              case _ => characterMatching(currentInputCharacter, rst)
+            }
+          }
+          case "ASCII alphanumeric" => {
+            currentInputCharacter match {
+              case CharInput(c) => {
+                if ((c >= 0x0030 && c <= 0x0039)||(c >= 0x0041 && c <= 0x005A)||(c >= 0x0061 && c <= 0x007A)) comList
                 else characterMatching(currentInputCharacter, rst)
               }
               case _ => characterMatching(currentInputCharacter, rst)
@@ -104,10 +107,16 @@ object Implement {
     var newEnv: Env = env
     command match {
       case Switch(state) => {
-        newEnv.nextState = state
+        state match {
+          case ReturnState => newEnv.nextState = newEnv.returnState
+          case StateName(name) => newEnv.nextState = name
+        }
+//        if (state == ReturnState) newEnv.nextState = newEnv.returnState
+//        else newEnv.nextState = state
       }
       case Reconsume(state) => {
-        newEnv.nextState = state
+        if (state == "return state") newEnv.nextState = newEnv.returnState
+        else newEnv.nextState = state
         newEnv.currentInputCharacter match {
           case CharInput(c) => newEnv.inputText = c + newEnv.inputText
           case StrInput(string) => newEnv.inputText = string + newEnv.inputText
@@ -115,8 +124,42 @@ object Implement {
         }
         //newEnv.currentInputCharacter = null
       }
-      case Set((obj, id), to) => {
-
+      case Set(obj, to) => {
+        obj match {
+          case ReturnState => {
+            to match {
+              case StateName(s) => newEnv.returnState = s
+              case _ =>
+            }
+          }
+          case TemporaryBuffer => {
+            to match {
+              case Mojiretu(string) => newEnv.temporaryBuffer = string
+              case _ =>
+            }
+          }
+          case NameOf(token) => {
+            var name: String = null
+            to match {
+              case Mojiretu(string) => name = string
+              case _ =>
+            }
+            var key: String = null
+            token match {
+              case Variable(v) => key = v
+              case CurrentTagToken => key = newEnv.currentTagToken
+              case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
+              case _ =>
+            }
+            newEnv.env.get(key) match {
+              case Some(TokenVal(tagToken_(b,_,f,a))) => newEnv.addMap(key, TokenVal(tagToken_(b,name,f,a)))
+              case Some(TokenVal(DOCTYPEToken(_,f1,f2,a))) => newEnv.addMap(key, TokenVal(DOCTYPEToken(name,f1,f2,a)))
+              case _ => println("")
+            }
+          }
+          case ValueOf(Variable(v)) =>
+          case _ =>
+        }
       }
       case Consume(character) => {
         character match {
@@ -144,7 +187,7 @@ object Implement {
           case CommandStructure.CurrentTagToken => {
             newEnv.env.get(newEnv.currentTagToken) match {
               case Some(TokenVal(tagToken_(b,n,f,list))) => {
-                val l = getTagTokenAttribute(newEnv, list)
+                val l = getAttributeFromKey(newEnv, list)
                 newEnv.addEmitToken(tagToken(b,n,f,l))
               }
               case None => println("cant find current tag token")
@@ -174,7 +217,7 @@ object Implement {
           case CommandStructure.Variable(x) => {
             newEnv.env.get(x) match {
               case Some(TokenVal(tagToken_(b,n,f,list))) => {
-                val l = getTagTokenAttribute(newEnv, list)
+                val l = getAttributeFromKey(newEnv, list)
                 newEnv.addEmitToken(tagToken(b,n,f,l))
               }
               case Some(TokenVal(t)) => newEnv.addEmitToken(t)
@@ -187,10 +230,42 @@ object Implement {
           }
         }
       }
-      case Append(obj, to) =>
+      case Append(obj, to) => {
+        to match {
+          case TemporaryBuffer => {
+
+          }
+          case NameOf(token) => {
+            var name: String = null
+            obj match {
+              case Mojiretu(string) => name = string
+              case CurrentInputCharacter => {
+                name = newEnv.currentInputCharacter match {
+                  case CharInput(c) => c.toString
+                  case StrInput(s) => s
+                  case _ => null
+                }
+              }
+              case _ =>
+            }
+            var key: String = null
+            token match {
+              case Variable(v) => key = v
+              case CurrentTagToken => key = newEnv.currentTagToken
+              case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
+              case _ =>
+            }
+            newEnv.env.get(key) match {
+              case Some(TokenVal(tagToken_(b,n,f,a))) => newEnv.addMap(key, TokenVal(tagToken_(b,n + name,f,a)))
+              case Some(TokenVal(DOCTYPEToken(n,f1,f2,a))) => newEnv.addMap(key, TokenVal(DOCTYPEToken(n + name,f1,f2,a)))
+              case _ => println("")
+            }
+          }
+          case _ =>
+        }
+      }
       case Error(error) => {
-        newEnv.errorContent = error
-        //println("ErrorCode : "+error)
+        newEnv.errorContent = error //println("ErrorCode : "+error)
       }
       case Create(token, corefKey) => {
         val key = if (corefKey == "") "token_" + newEnv.getID() else corefKey
@@ -205,8 +280,9 @@ object Implement {
       case Ignore(obj) => println("ignore : " + obj) // 何もしない
       case Flush() => {
         val flushCommand =  If(IsEqual("character reference", "consumed as part of an attribute"),
-                              List(Append("code point from the buffer", "current attribute's value")),
+                              List(Append(TemporaryBuffer, ValueOf(Variable(newEnv.currentAttribute)))),
                                List(Emit(CommandStructure.CharacterToken("code point"))))
+        //"code point from the buffer"
         newEnv = interpretCommand(newEnv, flushCommand)
       }
       case Treat() => {
@@ -224,6 +300,7 @@ object Implement {
           case None => println("cant find current tag token")
         }
         newEnv.addMap(key, AttributeVal(newAttribute))
+        newEnv.currentAttribute = key
         //newEnv.currentTagToken.attributes :+= new Attribute(null, null)
       }
       case Multiply(obj, by) => {
@@ -265,7 +342,7 @@ object Implement {
     }
   }
 
-  def getTagTokenAttribute(env: Env, attributeList: List[String]): List[Attribute] = {
+  def getAttributeFromKey(env: Env, attributeList: List[String]): List[Attribute] = {
     attributeList.map(key => {
       env.env.get(key) match {
         case Some(AttributeVal(attribute)) => attribute

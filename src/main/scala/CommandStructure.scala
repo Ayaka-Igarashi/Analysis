@@ -2,7 +2,7 @@
 object CommandStructure {
   trait Command
 
-  case class Switch(state: String) extends Command
+  case class Switch(state: StateVal) extends Command
   case class Reconsume(state: String) extends Command
 
   /**
@@ -15,8 +15,7 @@ object CommandStructure {
    * stateのパターン
    *  Set the return state to the data state
    */
-  case class Set(obj: (String, Int), to: String) extends Command
-
+  case class Set(obj: ImplementValue, to: ImplementValue) extends Command
 
   // Consume those two characters
   // Consume the next input character
@@ -35,7 +34,7 @@ object CommandStructure {
 
   // Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name.
   // Append a U+FFFD REPLACEMENT CHARACTER character to the current tag token's tag name.
-  case class Append(obj: String, to: String) extends Command
+  case class Append(obj: ImplementValue, to: ImplementValue) extends Command
 
   // create a comment token whose data is the empty string
   case class Create(token: Environment.Token, valueKey: String) extends Command
@@ -76,7 +75,10 @@ object CommandStructure {
   case class UNDEF(str: String) extends Bool
 
   trait ImplementValue
-  case object ReturnState extends ImplementValue
+  trait StateVal extends ImplementValue
+  case class StateName(state: String) extends StateVal
+  case object ReturnState extends StateVal
+  case object TemporaryBuffer extends ImplementValue
   case object CurrentTagToken extends ImplementValue
   case object CurrentDOCTYPEToken extends ImplementValue
   case object CommentToken extends ImplementValue
@@ -84,9 +86,10 @@ object CommandStructure {
   case class CharacterToken(chara: String) extends ImplementValue
   case class Variable(variable: String) extends ImplementValue
   case object CurrentInputCharacter extends ImplementValue
-  case class NameOf(variable: Variable) extends ImplementValue
-  case class ValueOf(variable: Variable) extends ImplementValue
+  case class NameOf(token: ImplementValue) extends ImplementValue
+  case class ValueOf(token: ImplementValue) extends ImplementValue
   case class FlagOf(variable: Variable) extends ImplementValue
+  case class Mojiretu(string: String) extends ImplementValue
   case class Non(str :String) extends ImplementValue
 
 }

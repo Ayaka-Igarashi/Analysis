@@ -107,7 +107,10 @@ object TagToCommand {
           }
           // switch文
           case List(Leaf(VB, Token(_,_,"switch")), Node(PP, List(Leaf(IN, _), Node(NP, np)))) => {
-            commandList :+= Switch(getLeave(removeDT(Node(NP, np))))
+            getLeave(removeDT(Node(NP, np))) match {
+              case "return state" => commandList :+= Switch(ReturnState)
+              case state => commandList :+= Switch(StateName(state))
+            }
           }
           // recomsume文
           case List(Leaf(VB, Token(_,_,"reconsume")), Node(PP, List(Leaf(IN, _), Node(NP, np)))) => {
@@ -118,40 +121,53 @@ object TagToCommand {
           }
           // set(代入する)
           case List(Leaf(VB, Token(_,_,"set")), Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2)))) => {
-            commandList :+= CommandStructure.Set((getLeave(Node(NP, np1)), getCorefId(Node(NP, np1))), getLeave(Node(NP, np2)))
+            val i1 = nptagToImplementValue(Node(NP, np1))
+            val i2 = nptagToImplementValue(Node(NP, np2))
+            commandList :+= CommandStructure.Set(i1, i2)
           }
           // set2(状態を変更)
           case List(Leaf(VB, Token(_,_,"set")), Node(NP, np), Node(PP, List(Leaf(IN, _), Node(PP, pp)))) => {
-            commandList :+= CommandStructure.Set((getLeave(Node(NP, np)), getCorefId(Node(NP, np))), getLeave(Node(PP, pp)))
+            val i1 = nptagToImplementValue(Node(NP, np))
+            val i2 = nptagToImplementValue(Node(NP, pp))
+            commandList :+= CommandStructure.Set(i1, i2)
           }
           // set3(状態を変更_PPが省略されてるもの)
           case List(Leaf(VB, Token(_,_,"set")), Node(NP, np)) => {
             np match {
               // Set that attribute's name to the current input character, and its value to the empty string.(仮)
               case Node(NP, List(Node(NP, np1_1), Leaf(TO, _), Node(NP, np1_2))) :: Leaf(Comma,_)::Leaf(CC, _)::Node(NP, List(Node(NP, np2_1), Node(PP, List(Leaf(IN, _), Node(NP, np2_2)))))::Nil => {
-                commandList :+= CommandStructure.Set((getLeave(Node(NP, np1_1)), getCorefId(Node(NP, np1_1))), getLeave(Node(NP, np1_2)))
-                commandList :+= CommandStructure.Set((getLeave(Node(NP, np2_1)), getCorefId(Node(NP, np2_1))), getLeave(Node(NP, np2_2)))
-              }
-              case _ => commandList :+= CommandStructure.Set((getLeave(Node(NP, np)), getCorefId(Node(NP, np))), "on")
-            }
+                val i1 = nptagToImplementValue(Node(NP, np1_1))
+                val i2 = nptagToImplementValue(Node(NP, np1_2))
+                val i3 = nptagToImplementValue(Node(NP, np2_1))
+                val i4 = nptagToImplementValue(Node(NP, np2_2))
 
+                commandList :+= CommandStructure.Set(i1, i2)
+                commandList :+= CommandStructure.Set(i3, i4)
+              }
+              case _ =>{
+                val i1 = nptagToImplementValue(Node(NP, np))
+                commandList :+= CommandStructure.Set(i1, Non("on"))
+              }
+            }
           }
           // consume
           case List(Leaf(VB,Token(_,_,"consume")), Node(NP,np)) => {
-            for (n <- NPDistribute(Node(NP, np))) commandList :+= CommandStructure.Consume(n._1)
+            for (n <- NPDistribute(Node(NP, np))) commandList :+= CommandStructure.Consume(getLeave(n._1))
           }
           // emit
           case List(Leaf(VB,Token(_,_,"emit")), Node(NP,np)) => {
             for (n <- NPDistribute(Node(NP, np))) {
-              //val key = if (n._2 == -1) "" else "x_" + n._2.toString
               var token: ImplementValue = null
-              if (n._1.contains("current tag token")) token = CurrentTagToken
-              else if (n._1.contains("DOCTYPE token")) token = CurrentDOCTYPEToken
-              else if (n._1.contains("comment token")) token = CommentToken
-              else if (n._1.contains("end_of_file")) token = EndOfFileToken
-              else if (n._1.contains("current input character")) token = CurrentInputCharacter
+              val str = getLeave(n._1)
+              if (str.contains("current tag")) token = CurrentTagToken
+              else if (str.contains("DOCTYPE")) token = CurrentDOCTYPEToken
+              else if (str.contains("comment")) token = CommentToken
+              else if (str.contains("end_of_file")) token = EndOfFileToken
+              else if (str.contains("current input character")) token = CurrentInputCharacter
+              else if (str.contains("character token")) token = CommandStructure.CharacterToken(str)
               else if (n._2 != -1) token = Variable("x_" + n._2.toString)
-              else token = Non(n._1)
+              else token = Non(str)
+
               commandList :+= Emit(token)
             }
           }
@@ -159,40 +175,41 @@ object TagToCommand {
           case List(Leaf(VB,Token(_,_,"emit")), Node(NP,np), Node(PP, pp)) => {
             for (n <- NPDistribute(Node(NP, np))) {
               var token: ImplementValue = null
-              if (n._1.contains("current input character")) token = CurrentInputCharacter
+              if (getLeave(n._1).contains("current input character")) token = CurrentInputCharacter
               else if (n._2 != -1) token = Variable("x_" + n._2.toString)
-              else token = CommandStructure.CharacterToken(n._1)
+              else token = CommandStructure.CharacterToken(getLeave(n._1))
               commandList :+= Emit(token)
             }
           }
           // ignore
           case List(Leaf(VB,Token(_,_,"ignore")), Node(NP,np)) => {
-            for (n <- NPDistribute(Node(NP, np))) commandList :+= Ignore(n._1)
+            for (n <- NPDistribute(Node(NP, np))) commandList :+= Ignore(getLeave(n._1))
           }
           // create
           case List(Leaf(VB,Token(_,_,"create")), Node(NP,np)) => {
             for (n <- NPDistribute(Node(NP, np))) {
               val key = if (n._2 == -1) "" else "x_" + n._2.toString
               var token: Environment.Token = null
-              if (n._1.contains("start tag token")) token = Environment.tagToken_(true, "", false, List())
-              else if (n._1.contains("end tag token")) token = Environment.tagToken_(false, "", false, List())
-              else if (n._1.contains("DOCTYPE token")) token = Environment.DOCTYPEToken("", null, null, false)
-              else if (n._1.contains("comment token")) token = Environment.commentToken("")
+              val str = getLeave(n._1)
+              if (str.contains("start tag")) token = Environment.tagToken_(true, null, false, List())
+              else if (str.contains("end tag")) token = Environment.tagToken_(false, null, false, List())
+              else if (str.contains("DOCTYPE")) token = Environment.DOCTYPEToken(null, null, null, false)
+              else if (str.contains("comment")) token = Environment.commentToken("")
               else println("create_error : " + n._1)
               commandList :+= Create(token, key)
             }
           }
           // multiply
           case List(Leaf(VB,Token(_,_,"multiply")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_,_, "by")), Node(NP, np2)))) => {
-            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Multiply(n._1, getLeave(Node(NP, np2)))
+            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(getLeave(n._1), getLeave(Node(NP, np2)))
           }
           // add_1
           case List(Leaf(VB,Token(_,_,"add")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_,_, "to")), Node(NP, np2)))) => {
-            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(n._1, getLeave(Node(NP, np2)))
+            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(getLeave(n._1), getLeave(Node(NP, np2)))
           }
           // add_2
           case Leaf(VB, Token(_,_, "add")) :: Node(NP, List(Node(NP, np1), Node(PP, List(Leaf(IN, Token(_,_, "to")), Node(NP, np2))))) :: Nil => {
-            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(n._1, getLeave(Node(NP, np2)))
+            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(getLeave(n._1), getLeave(Node(NP, np2)))
           }
           // start
           case List(Leaf(VB,Token(_,_,"start")), Node(NP,np), Node(PP, _)) => {
@@ -208,17 +225,20 @@ object TagToCommand {
           }
           // append_1
           case Leaf(VB, Token(_,_, "append")) :: Node(NP, np1) :: Node(PP, List(Leaf(IN, _), Node(NP, np2))) :: Nil => {
-            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Append(n._1, getLeave(Node(NP, np2)))
+            val i2 = nptagToImplementValue(Node(NP, np2))
+            for (n <- NPDistribute(Node(NP, np1))) {
+              val i1 = nptagToImplementValue(n._1)
+              commandList :+= Append(i1, i2)
+            }
           }
           // append_2
           case Leaf(VB, Token(_,_, "append")) :: Node(NP, List(Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2))))) :: Nil => {
-            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Append(n._1, getLeave(Node(NP, np2)))
+            val i2 = nptagToImplementValue(Node(NP, np2))
+            for (n <- NPDistribute(Node(NP, np1))) {
+              val i1 = nptagToImplementValue(n._1)
+              commandList :+= Append(i1, i2)
+            }
           }
-//          // append_カッコ付き
-//          case Leaf(VB, Token(_, "append")) :: Node(NP, np1) :: Node(PRN, _) :: Node(PP, List(Leaf(IN, _), Node(NP, np2))) :: Nil => {
-//            commandList :+= Append(NPDistribute(Node(NP, np1)), getLeave(Node(NP, np2)))
-//            println("prn")
-//          }
           case _ => txtOut.print("### dont match_vp : ");txtOut.println(list)
         }
       }
@@ -253,12 +273,13 @@ object TagToCommand {
     taglist
   }
 
-  def NPDistribute(tag: Tag): List[(String, Int)] = {
+  def NPDistribute(tag: Tag): List[(Tag, Int)] = {
     //println(tag)
-    var strList: List[(String, Int)] = List()
+    var strList: List[(Tag, Int)] = List()
     val taglist = NPTag(tag)
     for(t <- taglist) {
-      strList :+= (toSimpleToken(getLeave(t)), getCorefId(t))
+      //strList :+= (toSimpleToken(getLeave(t)), getCorefId(t))
+      strList :+= (t, getCorefId(t))
     }
     strList
   }
@@ -339,5 +360,29 @@ object TagToCommand {
       }
       case _ => (commandList, List(), List())
     }
+  }
+
+  def nptagToImplementValue(nptag: Tag): ImplementValue = {
+    val str = getLeave(removeDT(nptag))
+    val id = getCorefId(nptag)
+
+    if (str.contains("return state")) ReturnState
+    else if (str.contains("temporary buffer")) TemporaryBuffer
+    else if(str.contains("_state")) StateName(str)
+    else if (str.contains("current tag")) {
+      if (str.contains("name")) NameOf(CurrentTagToken)
+      else CurrentTagToken
+    }
+    else if (str.contains("DOCTYPE")) {
+      if (str.contains("name")) NameOf(CurrentDOCTYPEToken)
+      else CurrentDOCTYPEToken
+    }
+    else if (str.contains("comment")) CommentToken
+    else if (str.contains("end_of_file")) EndOfFileToken
+    else if (str.contains("current input character")) CurrentInputCharacter
+    else if (str.contains("character token")) CommandStructure.CharacterToken(str)
+    else if (str.contains("empty string")) Mojiretu("")
+    else if (str.contains("name") && id != -1) NameOf(Variable("x_" + id))
+    else Non(str)
   }
 }

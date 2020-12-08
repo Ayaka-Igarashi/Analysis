@@ -17,9 +17,11 @@ object Environment {
 
     // returnStateの値
     var returnState: String = null
+    var temporaryBuffer: String = null
     var currentDOCTYPEToken: String = null
     var currentTagToken: String = null
     var commentToken: String = null
+    var currentAttribute: String = null
 
     var currentInputCharacter: InputCharacter = null
     var emitTokens: List[Token] = List()
@@ -49,6 +51,7 @@ object Environment {
     write.println("current DOCTYPE Token : " + env.currentDOCTYPEToken)
     write.println("current tag Token : " + env.currentTagToken)
     write.println("comment Token : " + env.commentToken)
+    write.println("temporary buffer : " + env.temporaryBuffer)
     write.println("current input character : " + env.currentInputCharacter)
     write.println("emit tokens : " + env.emitTokens)
     write.println("error content : " + env.errorContent)
