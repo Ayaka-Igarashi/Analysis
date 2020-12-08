@@ -100,18 +100,22 @@ object Main {
 
   def implement() = {
     var env: Env = new Env()
-    env.setInputText("<abar>")
+    env.setInputText("<abar d=kl>tyu</huj>")
+    val length = env.inputText.length
     env.setNextState("Data_state")
     var i = 1
     txtOut3.println("input : " + env.inputText + "\n")
-    while (!env.emitTokens.contains(endOfFileToken()) && i <= 20) {
+    var emitTokens: List[Environment.Token] = List()
+    while (!env.emitTokens.contains(endOfFileToken()) && i <= length * 2) {
       txtOut3.println(i + " : ===============================================")
       env = interpret(env, pStateMap)
       txtOut3.println("")
       Environment.printEnv(env, txtOut3, i)
+      emitTokens ++= env.emitTokens
       txtOut3.println("|\nV\n")
       i = i + 1
     }
+    txtOut3.println(emitTokens)
   }
 
   // tagにする

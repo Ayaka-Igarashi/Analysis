@@ -50,6 +50,7 @@ object Environment {
     write.println("return state : " + env.returnState)
     write.println("current DOCTYPE Token : " + env.currentDOCTYPEToken)
     write.println("current tag Token : " + env.currentTagToken)
+    write.println("current attribute : " + env.currentAttribute)
     write.println("comment Token : " + env.commentToken)
     write.println("temporary buffer : " + env.temporaryBuffer)
     write.println("current input character : " + env.currentInputCharacter)
@@ -74,7 +75,7 @@ object Environment {
 //  trait VariableOrToken
 //  case class Variable(variable: String) extends VariableOrToken
 
-  class Attribute(name: String, value: String)
+  case class Attribute(name: String, value: String)
 
 
   trait InputCharacter

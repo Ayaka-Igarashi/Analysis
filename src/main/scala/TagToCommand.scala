@@ -1,5 +1,4 @@
 import CommandStructure._
-import Environment.characterToken
 import Main.txtOut
 import TagStructure._
 
@@ -46,10 +45,6 @@ object TagToCommand {
             commandList ++= STag(Node(S, s))
             commandList ++= STag(Node(S, rst))
           }
-          // S (S)
-          case Node(S, s) :: Leaf(LBracket, _) :: Node(S, _) :: Leaf(RBracket, _) :: Nil => {
-            commandList ++= STag(Node(S,s))
-          }
           // S
           case Node(S, s) :: Nil => {
             commandList ++= STag(Node(S,s))
@@ -94,7 +89,7 @@ object TagToCommand {
     tag match {
       case Node(VP, list) => {
         list match {
-          // &文(途中?)
+          // &文
           case Node(VP, vp1) :: Leaf(CC,Token(_,_,"and")) :: rst => {
             commandList ++= VPTag(Node(VP, vp1))
             commandList ++= STag(Node(S, rst))
@@ -102,9 +97,9 @@ object TagToCommand {
           // コンマで繋がっている文
           case Node(VP, vp1) :: Leaf(Comma, _) :: rst => {
             commandList ++= VPTag(Node(VP, vp1))
-            //println(rst)
             commandList ++= STag(Node(S, rst))
           }
+
           // switch文
           case List(Leaf(VB, Token(_,_,"switch")), Node(PP, List(Leaf(IN, _), Node(NP, np)))) => {
             getLeave(removeDT(Node(NP, np))) match {
@@ -157,18 +152,17 @@ object TagToCommand {
           // emit
           case List(Leaf(VB,Token(_,_,"emit")), Node(NP,np)) => {
             for (n <- NPDistribute(Node(NP, np))) {
-              var token: ImplementValue = null
-              val str = getLeave(n._1)
-              if (str.contains("current tag")) token = CurrentTagToken
-              else if (str.contains("DOCTYPE")) token = CurrentDOCTYPEToken
-              else if (str.contains("comment")) token = CommentToken
-              else if (str.contains("end_of_file")) token = EndOfFileToken
-              else if (str.contains("current input character")) token = CurrentInputCharacter
-              else if (str.contains("character token")) token = CommandStructure.CharacterToken(str)
-              else if (n._2 != -1) token = Variable("x_" + n._2.toString)
-              else token = Non(str)
-
-              commandList :+= Emit(token)
+//              var token: ImplementValue = null
+//              val str = getLeave(n._1)
+//              if (str.contains("current tag")) token = CurrentTagToken
+//              else if (str.contains("DOCTYPE")) token = CurrentDOCTYPEToken
+//              else if (str.contains("comment")) token = CommentToken
+//              else if (str.contains("end_of_file")) token = EndOfFileToken
+//              else if (str.contains("current input character")) token = CurrentInputCharacter
+//              else if (str.contains("character token")) token = CommandStructure.CharacterToken(str)
+//              else if (n._2 != -1) token = Variable("x_" + n._2.toString)
+//              else token = Non(str)
+              commandList :+= Emit(nptagToImplementValue(n._1))
             }
           }
           // emit2
@@ -383,6 +377,7 @@ object TagToCommand {
     else if (str.contains("character token")) CommandStructure.CharacterToken(str)
     else if (str.contains("empty string")) Mojiretu("")
     else if (str.contains("name") && id != -1) NameOf(Variable("x_" + id))
+    else if (id != -1) Variable("x_" + id)
     else Non(str)
   }
 }

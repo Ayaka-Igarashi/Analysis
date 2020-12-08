@@ -154,6 +154,7 @@ object Implement {
             newEnv.env.get(key) match {
               case Some(TokenVal(tagToken_(b,_,f,a))) => newEnv.addMap(key, TokenVal(tagToken_(b,name,f,a)))
               case Some(TokenVal(DOCTYPEToken(_,f1,f2,a))) => newEnv.addMap(key, TokenVal(DOCTYPEToken(name,f1,f2,a)))
+              case Some(AttributeVal(Attribute(n, v))) => newEnv.addMap(key, AttributeVal(Attribute(name, v)))
               case _ => println("")
             }
           }
@@ -182,8 +183,8 @@ object Implement {
           }
         }
       }
-      case Emit(character) => {
-        character match {
+      case Emit(token) => {
+        token match {
           case CommandStructure.CurrentTagToken => {
             newEnv.env.get(newEnv.currentTagToken) match {
               case Some(TokenVal(tagToken_(b,n,f,list))) => {
@@ -226,7 +227,7 @@ object Implement {
           }
           case _ => {
             newEnv.addEmitToken(characterToken(null))
-            txtOut3.println("emit error" + character)
+            txtOut3.println("emit error" + token)
           }
         }
       }
