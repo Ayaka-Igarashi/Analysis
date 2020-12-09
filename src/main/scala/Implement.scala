@@ -149,6 +149,7 @@ object Implement {
               case Variable(v) => key = v
               case CurrentTagToken => key = newEnv.currentTagToken
               case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
+              case CurrentAttribute => key = newEnv.currentAttribute
               case _ =>
             }
             newEnv.env.get(key) match {
@@ -158,7 +159,25 @@ object Implement {
               case _ => println("")
             }
           }
-          case ValueOf(Variable(v)) =>
+          case ValueOf(token) => {
+            var name: String = null
+            to match {
+              case Mojiretu(string) => name = string
+              case _ =>
+            }
+            var key: String = null
+            token match {
+              case Variable(v) => key = v
+              case CurrentTagToken => key = newEnv.currentTagToken
+              case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
+              case CurrentAttribute => key = newEnv.currentAttribute
+              case _ =>
+            }
+            newEnv.env.get(key) match {
+              case Some(AttributeVal(Attribute(n, _))) => newEnv.addMap(key, AttributeVal(Attribute(n, name)))
+              case _ => println("")
+            }
+          }
           case _ =>
         }
       }
@@ -254,11 +273,39 @@ object Implement {
               case Variable(v) => key = v
               case CurrentTagToken => key = newEnv.currentTagToken
               case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
+              case CurrentAttribute => key = newEnv.currentAttribute
               case _ =>
             }
             newEnv.env.get(key) match {
               case Some(TokenVal(tagToken_(b,n,f,a))) => newEnv.addMap(key, TokenVal(tagToken_(b,n + name,f,a)))
               case Some(TokenVal(DOCTYPEToken(n,f1,f2,a))) => newEnv.addMap(key, TokenVal(DOCTYPEToken(n + name,f1,f2,a)))
+              case Some(AttributeVal(Attribute(n,v))) => newEnv.addMap(key, AttributeVal(Attribute(n + name, v)))
+              case _ => println("")
+            }
+          }
+          case ValueOf(token) => {
+            var name: String = null
+            obj match {
+              case Mojiretu(string) => name = string
+              case CurrentInputCharacter => {
+                name = newEnv.currentInputCharacter match {
+                  case CharInput(c) => c.toString
+                  case StrInput(s) => s
+                  case _ => null
+                }
+              }
+              case _ =>
+            }
+            var key: String = null
+            token match {
+              case Variable(v) => key = v
+              case CurrentTagToken => key = newEnv.currentTagToken
+              case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
+              case CurrentAttribute => key = newEnv.currentAttribute
+              case _ =>
+            }
+            newEnv.env.get(key) match {
+              case Some(AttributeVal(Attribute(n, v))) => newEnv.addMap(key, AttributeVal(Attribute(n, name + v)))
               case _ => println("")
             }
           }

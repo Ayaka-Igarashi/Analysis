@@ -8,18 +8,14 @@ object TagToCommand {
 
   def toCommand(tagList: List[Tag]): List[Command] = {
     var commandList: List[Command] = List()
-    for (tag <- tagList) {
-      commandList ++= RootTag(tag)
-    }
+    for (tag <- tagList) { commandList ++= RootTag(tag) }
     uniteIf(commandList)
   }
 
   def RootTag(tag: Tag): List[Command] = {
     var commandList: List[Command] = List()
     tag match {
-      case Node(ROOT, List(Node(S, list))) => {
-        commandList ++= STag(Node(S, list))
-      }
+      case Node(ROOT, List(Node(S, list))) => { commandList ++= STag(Node(S, list)) }
       case _ => txtOut.println("### error_root")
     }
     commandList
@@ -116,9 +112,11 @@ object TagToCommand {
           }
           // set(代入する)
           case List(Leaf(VB, Token(_,_,"set")), Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2)))) => {
-            val i1 = nptagToImplementValue(Node(NP, np1))
             val i2 = nptagToImplementValue(Node(NP, np2))
-            commandList :+= CommandStructure.Set(i1, i2)
+            for (n1 <- NPTag(Node(NP, np1))) {
+              val i1 = nptagToImplementValue(n1)
+              commandList :+= CommandStructure.Set(i1, i2)
+            }
           }
           // set2(状態を変更)
           case List(Leaf(VB, Token(_,_,"set")), Node(NP, np), Node(PP, List(Leaf(IN, _), Node(PP, pp)))) => {
@@ -259,6 +257,10 @@ object TagToCommand {
             taglist :+= removeDT(Node(NP, np1))
             taglist = taglist ++ NPTag(Node(NP, rst))
           }
+          case Node(NP, np) :: Leaf(NN, nn1) :: Leaf(CC, Token(_,_,"and")) :: Leaf(NN, nn2) :: r => {
+            taglist :+= Node(NP, List(Node(NP, np), Leaf(NN, nn1)))
+            taglist :+= Node(NP, List(Node(NP, np), Leaf(NN, nn2)))
+          }
           case _ => taglist :+= removeDT(tag)
         }
       }
@@ -268,7 +270,6 @@ object TagToCommand {
   }
 
   def NPDistribute(tag: Tag): List[(Tag, Int)] = {
-    //println(tag)
     var strList: List[(Tag, Int)] = List()
     val taglist = NPTag(tag)
     for(t <- taglist) {
@@ -283,10 +284,8 @@ object TagToCommand {
     re.replaceAllIn(token, m => m.toString().substring(0,6))
   }
   def removeDT(tag: Tag): Tag = {
-    //println(tag)
     tag match {
       case Node(NP, rst) => {
-        //println(rst.head)
         rst.head match {
           case Leaf(DT, _) => Node(NP, rst.tail)
           case Leaf(CD, Token(_,_, "two")) => println("aaaa");tag
@@ -371,12 +370,18 @@ object TagToCommand {
       if (str.contains("name")) NameOf(CurrentDOCTYPEToken)
       else CurrentDOCTYPEToken
     }
+    else if (str.contains("current attribute")) {
+      if (str.contains("name")) NameOf(CurrentAttribute)
+      else if (str.contains("value")) ValueOf(CurrentAttribute)
+      else CurrentAttribute
+    }
     else if (str.contains("comment")) CommentToken
     else if (str.contains("end_of_file")) EndOfFileToken
     else if (str.contains("current input character")) CurrentInputCharacter
     else if (str.contains("character token")) CommandStructure.CharacterToken(str)
     else if (str.contains("empty string")) Mojiretu("")
     else if (str.contains("name") && id != -1) NameOf(Variable("x_" + id))
+    else if (str.contains("value") && id != -1) ValueOf(Variable("x_" + id))
     else if (id != -1) Variable("x_" + id)
     else Non(str)
   }

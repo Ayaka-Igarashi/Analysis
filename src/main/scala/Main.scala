@@ -100,7 +100,7 @@ object Main {
 
   def implement() = {
     var env: Env = new Env()
-    env.setInputText("<abar d=kl>tyu</huj>")
+    env.setInputText("<abar d=kl rt=hhh>tyu</huj>")
     val length = env.inputText.length
     env.setNextState("Data_state")
     var i = 1
@@ -163,7 +163,7 @@ object Main {
 
     System.out.println("> convert_start")
 
-    val list = nStateList
+    val list = nStateList//List(nStateList(31))
 
     var i = 1
     for (n_state <- list) {

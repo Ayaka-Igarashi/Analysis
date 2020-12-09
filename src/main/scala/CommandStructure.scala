@@ -81,6 +81,7 @@ object CommandStructure {
   case object TemporaryBuffer extends ImplementValue
   case object CurrentTagToken extends ImplementValue
   case object CurrentDOCTYPEToken extends ImplementValue
+  case object CurrentAttribute extends ImplementValue
   case object CommentToken extends ImplementValue
   case object EndOfFileToken extends ImplementValue
   case class CharacterToken(chara: String) extends ImplementValue
