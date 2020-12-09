@@ -9,7 +9,7 @@ object Implement {
   //env updated ("currentState", env("nextState"))
 
   // インタープリタ
-  def interpret(env: Env, definition: ListMap[String, pState]): Env = { // env(環境)も引数に入れる,返り値もenvにする
+  def interpret(env: Env, definition: ListMap[String, pState]): Env = {
     var newEnv: Env = env
     // 最初の処理
     val currentState = newEnv.nextState
@@ -111,8 +111,6 @@ object Implement {
           case ReturnState => newEnv.nextState = newEnv.returnState
           case StateName(name) => newEnv.nextState = name
         }
-//        if (state == ReturnState) newEnv.nextState = newEnv.returnState
-//        else newEnv.nextState = state
       }
       case Reconsume(state) => {
         if (state == "return state") newEnv.nextState = newEnv.returnState
@@ -244,6 +242,10 @@ object Implement {
               case None => println("cant find token : " + x)
             }
           }
+          case TemporaryBuffer => {
+            newEnv.addEmitToken(characterToken(newEnv.temporaryBuffer))
+            newEnv.temporaryBuffer = ""
+          }
           case _ => {
             newEnv.addEmitToken(characterToken(null))
             txtOut3.println("emit error" + token)
@@ -251,23 +253,21 @@ object Implement {
         }
       }
       case Append(obj, to) => {
-        to match {
-          case TemporaryBuffer => {
-
-          }
-          case NameOf(token) => {
-            var name: String = null
-            obj match {
-              case Mojiretu(string) => name = string
-              case CurrentInputCharacter => {
-                name = newEnv.currentInputCharacter match {
-                  case CharInput(c) => c.toString
-                  case StrInput(s) => s
-                  case _ => null
-                }
+        val appendStr: String =
+          obj match {
+            case Mojiretu(string) => string
+            case CurrentInputCharacter => {
+              newEnv.currentInputCharacter match {
+                case CharInput(c) => c.toString
+                case StrInput(s) => s
+                case _ => ""
               }
-              case _ =>
             }
+            case _ => null
+          }
+        to match {
+          case TemporaryBuffer => { newEnv.temporaryBuffer += appendStr }
+          case NameOf(token) => {
             var key: String = null
             token match {
               case Variable(v) => key = v
@@ -277,25 +277,13 @@ object Implement {
               case _ =>
             }
             newEnv.env.get(key) match {
-              case Some(TokenVal(tagToken_(b,n,f,a))) => newEnv.addMap(key, TokenVal(tagToken_(b,n + name,f,a)))
-              case Some(TokenVal(DOCTYPEToken(n,f1,f2,a))) => newEnv.addMap(key, TokenVal(DOCTYPEToken(n + name,f1,f2,a)))
-              case Some(AttributeVal(Attribute(n,v))) => newEnv.addMap(key, AttributeVal(Attribute(n + name, v)))
+              case Some(TokenVal(tagToken_(b,n,f,a))) => newEnv.addMap(key, TokenVal(tagToken_(b,n + appendStr,f,a)))
+              case Some(TokenVal(DOCTYPEToken(n,f1,f2,a))) => newEnv.addMap(key, TokenVal(DOCTYPEToken(n + appendStr,f1,f2,a)))
+              case Some(AttributeVal(Attribute(n,v))) => newEnv.addMap(key, AttributeVal(Attribute(n + appendStr, v)))
               case _ => println("")
             }
           }
           case ValueOf(token) => {
-            var name: String = null
-            obj match {
-              case Mojiretu(string) => name = string
-              case CurrentInputCharacter => {
-                name = newEnv.currentInputCharacter match {
-                  case CharInput(c) => c.toString
-                  case StrInput(s) => s
-                  case _ => null
-                }
-              }
-              case _ =>
-            }
             var key: String = null
             token match {
               case Variable(v) => key = v
@@ -305,16 +293,14 @@ object Implement {
               case _ =>
             }
             newEnv.env.get(key) match {
-              case Some(AttributeVal(Attribute(n, v))) => newEnv.addMap(key, AttributeVal(Attribute(n, name + v)))
+              case Some(AttributeVal(Attribute(n, v))) => newEnv.addMap(key, AttributeVal(Attribute(n, appendStr + v)))
               case _ => println("")
             }
           }
           case _ =>
         }
       }
-      case Error(error) => {
-        newEnv.errorContent = error //println("ErrorCode : "+error)
-      }
+      case Error(error) => newEnv.errorContent = error //println("ErrorCode : "+error)
       case Create(token, corefKey) => {
         val key = if (corefKey == "") "token_" + newEnv.getID() else corefKey
         newEnv.addMap(key, TokenVal(token))
@@ -325,12 +311,11 @@ object Implement {
           case _ => println("error")
         }
       }
-      case Ignore(obj) => println("ignore : " + obj) // 何もしない
+      case Ignore(_) => println("ignore") // 何もしない
       case Flush() => {
-        val flushCommand =  If(IsEqual("character reference", "consumed as part of an attribute"),
+        val flushCommand =  If(CharacterReferenceConsumedAsAttributeVal(),
                               List(Append(TemporaryBuffer, ValueOf(Variable(newEnv.currentAttribute)))),
-                               List(Emit(CommandStructure.CharacterToken("code point"))))
-        //"code point from the buffer"
+                               List(Emit(TemporaryBuffer)))
         newEnv = interpretCommand(newEnv, flushCommand)
       }
       case Treat() => {
@@ -368,7 +353,7 @@ object Implement {
       }
       case If(bool, t, f) => {
         var comList: List[Command] = null
-        if (implementBool(bool)) comList = t else comList = f
+        if (implementBool(newEnv, bool)) comList = t else comList = f
         for (c <- comList) newEnv = interpretCommand(newEnv, c)
       }
       case IF_(_) | OTHERWISE_() => println("IF not converted error : " + command)
@@ -377,11 +362,18 @@ object Implement {
     newEnv
   }
 
-  def implementBool(bool: Bool): Boolean = { // env(環境)も引数に入れる
+  def implementBool(env: Env, bool: Bool): Boolean = { // env(環境)も引数に入れる
     bool match {
-      case And(b1, b2) => implementBool(b1) && implementBool(b2)
-      case Or(b1, b2) => implementBool(b1) || implementBool(b2)
-      case Not(b) => !implementBool(b)
+      case And(b1, b2) => implementBool(env, b1) && implementBool(env, b2)
+      case Or(b1, b2) => implementBool(env, b1) || implementBool(env, b2)
+      case Not(b) => !implementBool(env, b)
+      case CharacterReferenceConsumedAsAttributeVal() => {
+        env.returnState match {
+          case "Attribute_value_double_quoted_state" | "Attribute_value_single_quoted_state"
+               | "Attribute_value_unquoted_state" => true
+          case _ => false
+        }
+      }
         // 途中
       case IsEqual(a, b) => true
       case IsExist(a) => true
@@ -394,7 +386,7 @@ object Implement {
     attributeList.map(key => {
       env.env.get(key) match {
         case Some(AttributeVal(attribute)) => attribute
-        case _ => {println("cant find attribute");new Attribute(null,null)}
+        case _ => {println("cant find attribute");Attribute(null,null)}
       }
     })
   }

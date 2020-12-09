@@ -70,6 +70,7 @@ object CommandStructure {
   case class And(a: Bool, b: Bool) extends Bool
   case class Or(a: Bool, b: Bool) extends Bool
   case class Not(a: Bool) extends Bool
+  case class CharacterReferenceConsumedAsAttributeVal() extends Bool
   case class IsEqual(a: String, b: String) extends Bool
   case class IsExist(a: String) extends Bool
   case class UNDEF(str: String) extends Bool
@@ -87,6 +88,7 @@ object CommandStructure {
   case class CharacterToken(chara: String) extends ImplementValue
   case class Variable(variable: String) extends ImplementValue
   case object CurrentInputCharacter extends ImplementValue
+  case object NextInputCharacter extends ImplementValue
   case class NameOf(token: ImplementValue) extends ImplementValue
   case class ValueOf(token: ImplementValue) extends ImplementValue
   case class FlagOf(variable: Variable) extends ImplementValue

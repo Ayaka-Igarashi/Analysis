@@ -297,6 +297,7 @@ object TagToCommand {
   }
 
   def convertBool(tag: Tag): Bool = {
+
     tag match {
       case Node(S, list) => {
         list match {
@@ -318,7 +319,10 @@ object TagToCommand {
           case Node(NP, np1) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Leaf(RB, Token(_,_, "not")), Node(NP, np2))) :: Nil => {
             Not(IsEqual(getLeave(Node(NP, np1)), getLeave(Node(NP, np2))))
           }
-          case _ => UNDEF(getLeave(tag))
+          case _ => {
+            if (getLeave(tag).contains("character reference was consumed as part of an attribute")) CharacterReferenceConsumedAsAttributeVal()
+            else UNDEF(getLeave(tag))
+          }
         }
       }
       case _ => UNDEF(getLeave(tag))
