@@ -47,7 +47,6 @@ object Main {
    *
    */
   def main(args: Array[String]) = {
-    TestFormatter.format()
     // 入力ファイル
     if (args.length > 0) {
       inputFileName = args(0)
