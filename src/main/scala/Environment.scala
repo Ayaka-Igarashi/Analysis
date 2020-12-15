@@ -17,7 +17,7 @@ object Environment {
 
     // returnStateの値
     var returnState: String = null
-    var temporaryBuffer: String = null
+    var temporaryBuffer: String = ""
     var currentDOCTYPEToken: String = null
     var currentTagToken: String = null
     var commentToken: String = null
@@ -31,15 +31,13 @@ object Environment {
     var inputText: String = null
 
     // その他
-    var env: Map[String, Value] = Map()
+    var map: Map[String, Value] = Map()
     var mapID : Int = 0
-
-    var corefMap: Map[Int, String] = Map()
 
     def setInputText(text: String) = { inputText = text }
     def setNextState(state: String) = { nextState = state }
     def addEmitToken(token: Token) = { emitTokens :+= token }
-    def addMap(key: String, value: Value) = { env += (key -> value)}
+    def addMap(key: String, value: Value) = { map += (key -> value)}
     def getID(): Int = {val id = mapID; mapID += 1; id}
   }
 
@@ -59,7 +57,7 @@ object Environment {
 
     write.println("input text : " + env.inputText)
     write.println("map : ")
-    for (m <- env.env) write.println(" " + m)
+    for (m <- env.map) write.println(" " + m)
     write.println("------------------------------------------")
     write.println("")
   }
@@ -72,11 +70,7 @@ object Environment {
   case class characterToken(data: String) extends Token
   case class endOfFileToken() extends Token
 
-//  trait VariableOrToken
-//  case class Variable(variable: String) extends VariableOrToken
-
   case class Attribute(name: String, value: String)
-
 
   trait InputCharacter
   case class CharInput(char: Char) extends InputCharacter

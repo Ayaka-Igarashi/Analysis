@@ -11,7 +11,7 @@ current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(<)
 emit tokens : List()
 error content : null
@@ -23,23 +23,23 @@ map :
 V
 
 2 : ===============================================
-command : List(Consume(next input character)) , List(Create(tagToken_(true,null,false,List()),x_2901), Set(NameOf(Variable(x_2901)),Mojiretu()), Reconsume(Tag_name_state))
+command : List(Consume(next input character)) , List(Create(tagToken_(true,null,false,List()),x_1), Set(NameOf(Variable(x_1)),Mojiretu()), Reconsume(StateName(Tag_name_state)))
 
 ------------------------------------------
 current state : Tag_open_state
 next state : Tag_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
+current tag Token : x_13
 current attribute : null
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(a)
 emit tokens : List()
 error content : null
 input text : abar d=kl rt=hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,,false,List())))
+ (x_13,TokenVal(tagToken_(true,,false,List())))
 ------------------------------------------
 
 |
@@ -53,16 +53,16 @@ current state : Tag_name_state
 next state : Tag_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
+current tag Token : x_13
 current attribute : null
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(a)
 emit tokens : List()
 error content : null
 input text : bar d=kl rt=hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,a,false,List())))
+ (x_13,TokenVal(tagToken_(true,a,false,List())))
 ------------------------------------------
 
 |
@@ -76,16 +76,16 @@ current state : Tag_name_state
 next state : Tag_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
+current tag Token : x_13
 current attribute : null
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(b)
 emit tokens : List()
 error content : null
 input text : ar d=kl rt=hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,ab,false,List())))
+ (x_13,TokenVal(tagToken_(true,ab,false,List())))
 ------------------------------------------
 
 |
@@ -99,16 +99,16 @@ current state : Tag_name_state
 next state : Tag_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
+current tag Token : x_13
 current attribute : null
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(a)
 emit tokens : List()
 error content : null
 input text : r d=kl rt=hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,aba,false,List())))
+ (x_13,TokenVal(tagToken_(true,aba,false,List())))
 ------------------------------------------
 
 |
@@ -122,16 +122,16 @@ current state : Tag_name_state
 next state : Tag_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
+current tag Token : x_13
 current attribute : null
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(r)
 emit tokens : List()
 error content : null
 input text :  d=kl rt=hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List())))
+ (x_13,TokenVal(tagToken_(true,abar,false,List())))
 ------------------------------------------
 
 |
@@ -145,40 +145,40 @@ current state : Tag_name_state
 next state : Before_attribute_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
+current tag Token : x_13
 current attribute : null
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput( )
 emit tokens : List()
 error content : null
 input text : d=kl rt=hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List())))
+ (x_13,TokenVal(tagToken_(true,abar,false,List())))
 ------------------------------------------
 
 |
 V
 
 8 : ===============================================
-command : List(Consume(next input character)) , List(Start(x_19103), Set(NameOf(Variable(x_19103)),Mojiretu()), Set(ValueOf(Variable(x_19103)),Mojiretu()), Reconsume(Attribute_name_state))
+command : List(Consume(next input character)) , List(Start(x_3), Set(NameOf(Variable(x_3)),Mojiretu()), Set(ValueOf(Variable(x_3)),Mojiretu()), Reconsume(StateName(Attribute_name_state)))
 
 ------------------------------------------
 current state : Before_attribute_name_state
 next state : Attribute_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_39
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(d)
 emit tokens : List()
 error content : null
 input text : d=kl rt=hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103))))
- (x_19103,AttributeVal(Attribute(,)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39))))
+ (x_39,AttributeVal(Attribute(,)))
 ------------------------------------------
 
 |
@@ -192,17 +192,17 @@ current state : Attribute_name_state
 next state : Attribute_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_39
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(d)
 emit tokens : List()
 error content : null
 input text : =kl rt=hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103))))
- (x_19103,AttributeVal(Attribute(d,)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39))))
+ (x_39,AttributeVal(Attribute(d,)))
 ------------------------------------------
 
 |
@@ -216,41 +216,41 @@ current state : Attribute_name_state
 next state : Before_attribute_value_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_39
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(=)
 emit tokens : List()
 error content : null
 input text : kl rt=hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103))))
- (x_19103,AttributeVal(Attribute(d,)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39))))
+ (x_39,AttributeVal(Attribute(d,)))
 ------------------------------------------
 
 |
 V
 
 11 : ===============================================
-command : List(Consume(next input character)) , List(Reconsume(Attribute_value_unquoted_state))
+command : List(Consume(next input character)) , List(Reconsume(StateName(Attribute_value_unquoted_state)))
 
 ------------------------------------------
 current state : Before_attribute_value_state
 next state : Attribute_value_unquoted_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_39
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(k)
 emit tokens : List()
 error content : null
 input text : kl rt=hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103))))
- (x_19103,AttributeVal(Attribute(d,)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39))))
+ (x_39,AttributeVal(Attribute(d,)))
 ------------------------------------------
 
 |
@@ -264,17 +264,17 @@ current state : Attribute_value_unquoted_state
 next state : Attribute_value_unquoted_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_39
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(k)
 emit tokens : List()
 error content : null
 input text : l rt=hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103))))
- (x_19103,AttributeVal(Attribute(d,k)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39))))
+ (x_39,AttributeVal(Attribute(d,k)))
 ------------------------------------------
 
 |
@@ -288,17 +288,17 @@ current state : Attribute_value_unquoted_state
 next state : Attribute_value_unquoted_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_39
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(l)
 emit tokens : List()
 error content : null
 input text :  rt=hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103))))
- (x_19103,AttributeVal(Attribute(d,lk)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39))))
+ (x_39,AttributeVal(Attribute(d,lk)))
 ------------------------------------------
 
 |
@@ -312,41 +312,42 @@ current state : Attribute_value_unquoted_state
 next state : Before_attribute_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_39
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput( )
 emit tokens : List()
 error content : null
 input text : rt=hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103))))
- (x_19103,AttributeVal(Attribute(d,lk)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39))))
+ (x_39,AttributeVal(Attribute(d,lk)))
 ------------------------------------------
 
 |
 V
 
 15 : ===============================================
-command : List(Consume(next input character)) , List(Start(x_19103), Set(NameOf(Variable(x_19103)),Mojiretu()), Set(ValueOf(Variable(x_19103)),Mojiretu()), Reconsume(Attribute_name_state))
+command : List(Consume(next input character)) , List(Start(x_3), Set(NameOf(Variable(x_3)),Mojiretu()), Set(ValueOf(Variable(x_3)),Mojiretu()), Reconsume(StateName(Attribute_name_state)))
 
 ------------------------------------------
 current state : Before_attribute_name_state
 next state : Attribute_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(r)
 emit tokens : List()
 error content : null
 input text : rt=hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(,)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(,)))
 ------------------------------------------
 
 |
@@ -360,17 +361,18 @@ current state : Attribute_name_state
 next state : Attribute_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(r)
 emit tokens : List()
 error content : null
 input text : t=hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(r,)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(r,)))
 ------------------------------------------
 
 |
@@ -384,17 +386,18 @@ current state : Attribute_name_state
 next state : Attribute_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(t)
 emit tokens : List()
 error content : null
 input text : =hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,)))
 ------------------------------------------
 
 |
@@ -408,41 +411,43 @@ current state : Attribute_name_state
 next state : Before_attribute_value_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(=)
 emit tokens : List()
 error content : null
 input text : hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,)))
 ------------------------------------------
 
 |
 V
 
 19 : ===============================================
-command : List(Consume(next input character)) , List(Reconsume(Attribute_value_unquoted_state))
+command : List(Consume(next input character)) , List(Reconsume(StateName(Attribute_value_unquoted_state)))
 
 ------------------------------------------
 current state : Before_attribute_value_state
 next state : Attribute_value_unquoted_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(h)
 emit tokens : List()
 error content : null
 input text : hhh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,)))
 ------------------------------------------
 
 |
@@ -456,17 +461,18 @@ current state : Attribute_value_unquoted_state
 next state : Attribute_value_unquoted_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(h)
 emit tokens : List()
 error content : null
 input text : hh>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,h)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,h)))
 ------------------------------------------
 
 |
@@ -480,17 +486,18 @@ current state : Attribute_value_unquoted_state
 next state : Attribute_value_unquoted_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(h)
 emit tokens : List()
 error content : null
 input text : h>tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,hh)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,hh)))
 ------------------------------------------
 
 |
@@ -504,17 +511,18 @@ current state : Attribute_value_unquoted_state
 next state : Attribute_value_unquoted_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(h)
 emit tokens : List()
 error content : null
 input text : >tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,hhh)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,hhh)))
 ------------------------------------------
 
 |
@@ -528,17 +536,18 @@ current state : Attribute_value_unquoted_state
 next state : Data_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(>)
-emit tokens : List(tagToken(true,abar,false,List(Attribute(rt,hhh), Attribute(rt,hhh))))
+emit tokens : List(tagToken(true,abar,false,List(Attribute(d,lk), Attribute(rt,hhh))))
 error content : null
 input text : tyu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,hhh)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,hhh)))
 ------------------------------------------
 
 |
@@ -552,17 +561,18 @@ current state : Data_state
 next state : Data_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(t)
 emit tokens : List(characterToken(t))
 error content : null
 input text : yu</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,hhh)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,hhh)))
 ------------------------------------------
 
 |
@@ -576,17 +586,18 @@ current state : Data_state
 next state : Data_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(y)
 emit tokens : List(characterToken(y))
 error content : null
 input text : u</huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,hhh)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,hhh)))
 ------------------------------------------
 
 |
@@ -600,17 +611,18 @@ current state : Data_state
 next state : Data_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(u)
 emit tokens : List(characterToken(u))
 error content : null
 input text : </huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,hhh)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,hhh)))
 ------------------------------------------
 
 |
@@ -624,17 +636,18 @@ current state : Data_state
 next state : Tag_open_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(<)
 emit tokens : List()
 error content : null
 input text : /huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,hhh)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,hhh)))
 ------------------------------------------
 
 |
@@ -648,42 +661,44 @@ current state : Tag_open_state
 next state : End_tag_open_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_2901
-current attribute : x_19103
+current tag Token : x_13
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(/)
 emit tokens : List()
 error content : null
 input text : huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,hhh)))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,hhh)))
 ------------------------------------------
 
 |
 V
 
 29 : ===============================================
-command : List(Consume(next input character)) , List(Create(tagToken_(false,null,false,List()),x_3401), Set(NameOf(Variable(x_3401)),Mojiretu()), Reconsume(Tag_name_state))
+command : List(Consume(next input character)) , List(Create(tagToken_(false,null,false,List()),x_1), Set(NameOf(Variable(x_1)),Mojiretu()), Reconsume(StateName(Tag_name_state)))
 
 ------------------------------------------
 current state : End_tag_open_state
 next state : Tag_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_3401
-current attribute : x_19103
+current tag Token : x_130
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(h)
 emit tokens : List()
 error content : null
 input text : huj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,hhh)))
- (x_3401,TokenVal(tagToken_(false,,false,List())))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,hhh)))
+ (x_130,TokenVal(tagToken_(false,,false,List())))
 ------------------------------------------
 
 |
@@ -697,18 +712,19 @@ current state : Tag_name_state
 next state : Tag_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_3401
-current attribute : x_19103
+current tag Token : x_130
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(h)
 emit tokens : List()
 error content : null
 input text : uj>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,hhh)))
- (x_3401,TokenVal(tagToken_(false,h,false,List())))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,hhh)))
+ (x_130,TokenVal(tagToken_(false,h,false,List())))
 ------------------------------------------
 
 |
@@ -722,18 +738,19 @@ current state : Tag_name_state
 next state : Tag_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_3401
-current attribute : x_19103
+current tag Token : x_130
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(u)
 emit tokens : List()
 error content : null
 input text : j>
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,hhh)))
- (x_3401,TokenVal(tagToken_(false,hu,false,List())))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,hhh)))
+ (x_130,TokenVal(tagToken_(false,hu,false,List())))
 ------------------------------------------
 
 |
@@ -747,18 +764,19 @@ current state : Tag_name_state
 next state : Tag_name_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_3401
-current attribute : x_19103
+current tag Token : x_130
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(j)
 emit tokens : List()
 error content : null
 input text : >
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,hhh)))
- (x_3401,TokenVal(tagToken_(false,huj,false,List())))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,hhh)))
+ (x_130,TokenVal(tagToken_(false,huj,false,List())))
 ------------------------------------------
 
 |
@@ -772,18 +790,19 @@ current state : Tag_name_state
 next state : Data_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_3401
-current attribute : x_19103
+current tag Token : x_130
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : CharInput(>)
 emit tokens : List(tagToken(false,huj,false,List()))
 error content : null
 input text : 
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,hhh)))
- (x_3401,TokenVal(tagToken_(false,huj,false,List())))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,hhh)))
+ (x_130,TokenVal(tagToken_(false,huj,false,List())))
 ------------------------------------------
 
 |
@@ -797,21 +816,22 @@ current state : Data_state
 next state : Data_state
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_3401
-current attribute : x_19103
+current tag Token : x_130
+current attribute : x_316
 comment Token : null
-temporary buffer : null
+temporary buffer : 
 current input character : EOF
 emit tokens : List(endOfFileToken())
 error content : null
 input text : 
 map : 
- (x_2901,TokenVal(tagToken_(true,abar,false,List(x_19103, x_19103))))
- (x_19103,AttributeVal(Attribute(rt,hhh)))
- (x_3401,TokenVal(tagToken_(false,huj,false,List())))
+ (x_13,TokenVal(tagToken_(true,abar,false,List(x_39, x_316))))
+ (x_39,AttributeVal(Attribute(d,lk)))
+ (x_316,AttributeVal(Attribute(rt,hhh)))
+ (x_130,TokenVal(tagToken_(false,huj,false,List())))
 ------------------------------------------
 
 |
 V
 
-List(tagToken(true,abar,false,List(Attribute(rt,hhh), Attribute(rt,hhh))), characterToken(t), characterToken(y), characterToken(u), tagToken(false,huj,false,List()), endOfFileToken())
+List(tagToken(true,abar,false,List(Attribute(d,lk), Attribute(rt,hhh))), characterToken(t), characterToken(y), characterToken(u), tagToken(false,huj,false,List()), endOfFileToken())

@@ -21,6 +21,8 @@ import TagToCommand.{tag_list, toCommand}
 import edu.stanford.nlp.coref.data.CorefChain
 import edu.stanford.nlp.io.IOUtils
 import edu.stanford.nlp.trees.Tree
+import org.jsoup.parser.HtmlTreeBuilder
+import old.Test
 
 import scala.collection.immutable.ListMap
 
@@ -45,6 +47,7 @@ object Main {
    *
    */
   def main(args: Array[String]) = {
+    TestFormatter.format()
     // 入力ファイル
     if (args.length > 0) {
       inputFileName = args(0)
@@ -216,7 +219,7 @@ object Main {
         val order = c._2.getMentionsInTextualOrder.asScala.toList
         for (o <- order) {
           //println((o.startIndex-1) + " ~ " + (o.endIndex-2))
-          corefIdx ++= (o.startIndex - 1 to o.endIndex - 2).toList.map(n => (n, o.corefClusterID + uniqueId*100))}
+          corefIdx ++= (o.startIndex - 1 to o.endIndex - 2).toList.map(n => (n, o.corefClusterID))}
       }
       ConvertTree.corefMap = corefIdx
 

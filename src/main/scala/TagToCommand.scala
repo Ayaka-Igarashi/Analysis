@@ -105,10 +105,16 @@ object TagToCommand {
           }
           // recomsume文
           case List(Leaf(VB, Token(_,_,"reconsume")), Node(PP, List(Leaf(IN, _), Node(NP, np)))) => {
-            commandList :+= Reconsume(getLeave(removeDT(Node(NP, np))))
+            getLeave(removeDT(Node(NP, np))) match {
+              case "return state" => commandList :+= Reconsume(ReturnState)
+              case state => commandList :+= Reconsume(StateName(state))
+            }
           }
           case List(Leaf(VB, Token(_,_,"Reconsume")), Node(PP, List(Leaf(IN, _), Node(NP, np)))) => {
-            commandList :+= Reconsume(getLeave(removeDT(Node(NP, np))))
+            getLeave(removeDT(Node(NP, np))) match {
+              case "return state" => commandList :+= Reconsume(ReturnState)
+              case state => commandList :+= Reconsume(StateName(state))
+            }
           }
           // set(代入する)
           case List(Leaf(VB, Token(_,_,"set")), Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2)))) => {
@@ -150,16 +156,6 @@ object TagToCommand {
           // emit
           case List(Leaf(VB,Token(_,_,"emit")), Node(NP,np)) => {
             for (n <- NPDistribute(Node(NP, np))) {
-//              var token: ImplementValue = null
-//              val str = getLeave(n._1)
-//              if (str.contains("current tag")) token = CurrentTagToken
-//              else if (str.contains("DOCTYPE")) token = CurrentDOCTYPEToken
-//              else if (str.contains("comment")) token = CommentToken
-//              else if (str.contains("end_of_file")) token = EndOfFileToken
-//              else if (str.contains("current input character")) token = CurrentInputCharacter
-//              else if (str.contains("character token")) token = CommandStructure.CharacterToken(str)
-//              else if (n._2 != -1) token = Variable("x_" + n._2.toString)
-//              else token = Non(str)
               commandList :+= Emit(nptagToImplementValue(n._1))
             }
           }

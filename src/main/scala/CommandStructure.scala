@@ -3,7 +3,7 @@ object CommandStructure {
   trait Command
 
   case class Switch(state: StateVal) extends Command
-  case class Reconsume(state: String) extends Command
+  case class Reconsume(state: StateVal) extends Command
 
   /**
    * Set文はいろんなパターンがある(大体代入をする命令、対象が様々) -> 同じ関数でいいのか？
@@ -92,6 +92,7 @@ object CommandStructure {
   case class NameOf(token: ImplementValue) extends ImplementValue
   case class ValueOf(token: ImplementValue) extends ImplementValue
   case class FlagOf(variable: Variable) extends ImplementValue
+  case class IChar(char: Char) extends ImplementValue
   case class Mojiretu(string: String) extends ImplementValue
   case class Non(str :String) extends ImplementValue
 

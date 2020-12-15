@@ -8,9 +8,11 @@ import scala.collection.immutable.ListMap
 object Implement {
   //env updated ("currentState", env("nextState"))
 
+  var uniqueId: Int = 1
   // インタープリタ
   def interpret(env: Env, definition: ListMap[String, pState]): Env = {
     var newEnv: Env = env
+    uniqueId = (uniqueId+ 1)
     // 最初の処理
     val currentState = newEnv.nextState
     newEnv.currentState = currentState
@@ -113,8 +115,10 @@ object Implement {
         }
       }
       case Reconsume(state) => {
-        if (state == "return state") newEnv.nextState = newEnv.returnState
-        else newEnv.nextState = state
+        state match {
+          case ReturnState => newEnv.nextState = newEnv.returnState
+          case StateName(name) => newEnv.nextState = name
+        }
         newEnv.currentInputCharacter match {
           case CharInput(c) => newEnv.inputText = c + newEnv.inputText
           case StrInput(string) => newEnv.inputText = string + newEnv.inputText
@@ -122,35 +126,35 @@ object Implement {
         }
         //newEnv.currentInputCharacter = null
       }
-      case Set(obj, to) => {
+      case Set(obj, value) => {
         obj match {
           case ReturnState => {
-            to match {
+            value match {
               case StateName(s) => newEnv.returnState = s
               case _ =>
             }
           }
           case TemporaryBuffer => {
-            to match {
+            value match {
               case Mojiretu(string) => newEnv.temporaryBuffer = string
               case _ =>
             }
           }
           case NameOf(token) => {
             var name: String = null
-            to match {
+            value match {
               case Mojiretu(string) => name = string
               case _ =>
             }
             var key: String = null
             token match {
-              case Variable(v) => key = v
+              case Variable(v) => key = v + uniqueId.toString
               case CurrentTagToken => key = newEnv.currentTagToken
               case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
               case CurrentAttribute => key = newEnv.currentAttribute
               case _ =>
             }
-            newEnv.env.get(key) match {
+            newEnv.map.get(key) match {
               case Some(TokenVal(tagToken_(b,_,f,a))) => newEnv.addMap(key, TokenVal(tagToken_(b,name,f,a)))
               case Some(TokenVal(DOCTYPEToken(_,f1,f2,a))) => newEnv.addMap(key, TokenVal(DOCTYPEToken(name,f1,f2,a)))
               case Some(AttributeVal(Attribute(n, v))) => newEnv.addMap(key, AttributeVal(Attribute(name, v)))
@@ -159,19 +163,19 @@ object Implement {
           }
           case ValueOf(token) => {
             var name: String = null
-            to match {
+            value match {
               case Mojiretu(string) => name = string
               case _ =>
             }
             var key: String = null
             token match {
-              case Variable(v) => key = v
+              case Variable(v) => key = v + uniqueId.toString/**  aaaaaaaaaaaaaaaaaa*/
               case CurrentTagToken => key = newEnv.currentTagToken
               case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
               case CurrentAttribute => key = newEnv.currentAttribute
               case _ =>
             }
-            newEnv.env.get(key) match {
+            newEnv.map.get(key) match {
               case Some(AttributeVal(Attribute(n, _))) => newEnv.addMap(key, AttributeVal(Attribute(n, name)))
               case _ => println("")
             }
@@ -203,7 +207,7 @@ object Implement {
       case Emit(token) => {
         token match {
           case CommandStructure.CurrentTagToken => {
-            newEnv.env.get(newEnv.currentTagToken) match {
+            newEnv.map.get(newEnv.currentTagToken) match {
               case Some(TokenVal(tagToken_(b,n,f,list))) => {
                 val l = getAttributeFromKey(newEnv, list)
                 newEnv.addEmitToken(tagToken(b,n,f,l))
@@ -212,13 +216,13 @@ object Implement {
             }
           }
           case CommandStructure.CurrentDOCTYPEToken => {
-            newEnv.env.get(newEnv.currentDOCTYPEToken) match {
+            newEnv.map.get(newEnv.currentDOCTYPEToken) match {
               case Some(TokenVal(t)) => newEnv.addEmitToken(t)
               case None => println("cant find DOCTYPE token")
             }
           }
           case CommandStructure.CommentToken => {
-            newEnv.env.get(newEnv.commentToken) match {
+            newEnv.map.get(newEnv.commentToken) match {
               case Some(TokenVal(t)) => newEnv.addEmitToken(t)
               case None => println("cant find comment token")
             }
@@ -232,8 +236,8 @@ object Implement {
               case _ =>
             }
           }
-          case CommandStructure.Variable(x) => {
-            newEnv.env.get(x) match {
+          case CommandStructure.Variable(x) => {/**  aaaaaaaaaaaaaaaaaa*/
+            newEnv.map.get(x + uniqueId.toString) match {
               case Some(TokenVal(tagToken_(b,n,f,list))) => {
                 val l = getAttributeFromKey(newEnv, list)
                 newEnv.addEmitToken(tagToken(b,n,f,l))
@@ -252,9 +256,9 @@ object Implement {
           }
         }
       }
-      case Append(obj, to) => {
+      case Append(value, obj) => {
         val appendStr: String =
-          obj match {
+          value match {
             case Mojiretu(string) => string
             case CurrentInputCharacter => {
               newEnv.currentInputCharacter match {
@@ -265,18 +269,18 @@ object Implement {
             }
             case _ => null
           }
-        to match {
+        obj match {
           case TemporaryBuffer => { newEnv.temporaryBuffer += appendStr }
           case NameOf(token) => {
             var key: String = null
             token match {
-              case Variable(v) => key = v
+              case Variable(v) => key = v + uniqueId.toString/**  aaaaaaaaaaaaaaaaaa*/
               case CurrentTagToken => key = newEnv.currentTagToken
               case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
               case CurrentAttribute => key = newEnv.currentAttribute
               case _ =>
             }
-            newEnv.env.get(key) match {
+            newEnv.map.get(key) match {
               case Some(TokenVal(tagToken_(b,n,f,a))) => newEnv.addMap(key, TokenVal(tagToken_(b,n + appendStr,f,a)))
               case Some(TokenVal(DOCTYPEToken(n,f1,f2,a))) => newEnv.addMap(key, TokenVal(DOCTYPEToken(n + appendStr,f1,f2,a)))
               case Some(AttributeVal(Attribute(n,v))) => newEnv.addMap(key, AttributeVal(Attribute(n + appendStr, v)))
@@ -286,13 +290,13 @@ object Implement {
           case ValueOf(token) => {
             var key: String = null
             token match {
-              case Variable(v) => key = v
+              case Variable(v) => key = v + uniqueId.toString/**  aaaaaaaaaaaaaaaaaa*/
               case CurrentTagToken => key = newEnv.currentTagToken
               case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
               case CurrentAttribute => key = newEnv.currentAttribute
               case _ =>
             }
-            newEnv.env.get(key) match {
+            newEnv.map.get(key) match {
               case Some(AttributeVal(Attribute(n, v))) => newEnv.addMap(key, AttributeVal(Attribute(n, appendStr + v)))
               case _ => println("")
             }
@@ -301,8 +305,8 @@ object Implement {
         }
       }
       case Error(error) => newEnv.errorContent = error //println("ErrorCode : "+error)
-      case Create(token, corefKey) => {
-        val key = if (corefKey == "") "token_" + newEnv.getID() else corefKey
+      case Create(token, corefKey) => {/**  aaaaaaaaaaaaaaaaaa*/
+        val key = if (corefKey == "") "token_" + newEnv.getID() else corefKey + uniqueId.toString
         newEnv.addMap(key, TokenVal(token))
         token match {
           case tagToken_(_,_,_,_) => newEnv.currentTagToken = key
@@ -323,9 +327,9 @@ object Implement {
       }
       case Start(corefId) => {
         // currentTagTokenに新しい属性を追加する
-        val key = if (corefId == "x_-1") "tag_token_attribute_" + newEnv.getID() else corefId
+        val key = if (corefId == "x_-1") "tag_token_attribute_" + newEnv.getID() else corefId + uniqueId
         val newAttribute = new Attribute(null, null)
-        newEnv.env.get(newEnv.currentTagToken) match {
+        newEnv.map.get(newEnv.currentTagToken) match {
           case Some(TokenVal(tagToken_(b, s, f, attributes))) => {
             val newTagToken = tagToken_(b, s, f, attributes :+ key)
             newEnv.addMap(newEnv.currentTagToken, TokenVal(newTagToken))
@@ -362,7 +366,7 @@ object Implement {
     newEnv
   }
 
-  def implementBool(env: Env, bool: Bool): Boolean = { // env(環境)も引数に入れる
+  def implementBool(env: Env, bool: Bool): Boolean = {
     bool match {
       case And(b1, b2) => implementBool(env, b1) && implementBool(env, b2)
       case Or(b1, b2) => implementBool(env, b1) || implementBool(env, b2)
@@ -384,7 +388,7 @@ object Implement {
 
   def getAttributeFromKey(env: Env, attributeList: List[String]): List[Attribute] = {
     attributeList.map(key => {
-      env.env.get(key) match {
+      env.map.get(key) match {
         case Some(AttributeVal(attribute)) => attribute
         case _ => {println("cant find attribute");Attribute(null,null)}
       }
