@@ -13,12 +13,28 @@ import scala.beans.{BeanProperty, BooleanBeanProperty}
 //remove if not needed
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder(Array("description", "initialStates", "lastStartTag", "input", "output", "errors"))
+@JsonPropertyOrder(Array("description", "input", "output", "errors", "doubleEscaped", "initialStates", "lastStartTag"))
 class TestFormat {
 
   @JsonProperty("description")
   @BeanProperty
   var description: String = _
+
+  @JsonProperty("input")
+  @BeanProperty
+  var input: String = _
+
+  @JsonProperty("output")
+  @BeanProperty
+  var output: List[List[Any]] = null
+
+  @JsonProperty("errors")
+  @BeanProperty
+  var errors: List[Error] = null
+
+  @JsonProperty("doubleEscaped")
+  @BeanProperty
+  var doubleEscaped: java.lang.Boolean = _
 
   @JsonProperty("initialStates")
   @BeanProperty
@@ -28,19 +44,6 @@ class TestFormat {
   @BeanProperty
   var lastStartTag: String = _
 
-  @JsonProperty("input")
-  @BeanProperty
-  var input: String = _
-
-  @JsonProperty("output")
-  @BeanProperty
-  var output: List[List[String]] = null
-
-  @JsonProperty("errors")
-  @BeanProperty
-  var errors: List[Error] = null
-
-  @JsonIgnore
   @BeanProperty
   var additionalProperties: Map[String, Any] = new HashMap[String, Any]()
 

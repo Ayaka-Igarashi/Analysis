@@ -1,96 +1,31 @@
 import java.io.PrintWriter
 import java.util
 
-import CommandStructure.CharacterToken
 import Environment.DOCTYPEToken
 import Main.{implement, pStateMap, txtOut3}
 import StateProcessedStructure.pState
-import com.jsonSchema.{Model, TestFormat}
+import com.jsonSchema.TestFormat
 import edu.stanford.nlp.io.IOUtils
-import old.TestTest
-import org.scalatest.FunSuite
+import org.scalatest.FlatSpec
 
 import scala.collection.JavaConverters._
 import scala.collection.immutable.ListMap
 
-class Test extends FunSuite {
-
+class ImplementTest extends FlatSpec{
   txtOut3 = new PrintWriter("src/output3.txt")
   pStateMap = PreserveDefinition.read[ListMap[String, pState]]("src/definition.dat")
 
-  test("example") {
-    assert(1+2 === 3)
-  }
-  test("contentModelFlags.test") {
-    val model = TestFormatter.format("src/test/testFile/contentModelFlags.test")
-    val test = model.tests.get(4)
-    val env = implement(test.input, "Data_state")
-    println("implement : " + env.emitTokens)
-    println("correct : " + test.output)
-    println("implement : " + env.errorContent)
-    println("correct : " + test.errors.get(0).code)
-    assert(1+2 === 3)
-    finishTest()
-  }
-  test("domjs.test") {
-    val model = TestFormatter.format("src/test/testFile/test3.test")
-    //val test = model.tests.get(1)
-    //assert(1+2 === 3)
-    val tests = model.tests.asScala.toList.slice(3,4)
-    for (test <- tests) doTest(test)
-    finishTest()
-  }
-  test("entities.test") {
-    TestFormatter.format("src/test/testFile/entities.test")
-    assert(1+2 === 3)
-  }
-  test("escapeFlag.test") {
-    TestFormatter.format("src/test/testFile/escapeFlag.test")
-    assert(1+2 === 3)
-  }
-  test("namedEntities.test") {
-    TestFormatter.format("src/test/testFile/namedEntities.test")
-    assert(1+2 === 3)
-  }
-  test("numericEntities.test") {
-    TestFormatter.format("src/test/testFile/numericEntities.test")
-    assert(1+2 === 3)
-  }
-  test("pendingSpecChanges.test") {
-    TestFormatter.format("src/test/testFile/pendingSpecChanges.test")
-    assert(1+2 === 3)
-  }
-  test("test1.test") {
-    TestFormatter.format("src/test/testFile/test1.test")
-    assert(1+2 === 3)
-  }
-  test("test2.test") {
+  "contentModelFlags" should "正しい" in
+    {
+      val model = TestFormatter.format("src/test/testFile/contentModelFlags.test")
+      //val test = model.tests.get(1)
+      //assert(1+2 === 3)
+      val tests = model.tests.asScala.toList.slice(0,4)
+      for (test <- tests) doTest(test)
+      finishTest()
+    }
 
-    TestFormatter.format("src/test/testFile/test2.test")
-    assert(1+2 === 3)
-  }
-  test("test3.test") {
 
-    TestFormatter.format("src/test/testFile/test3.test")
-    assert(1+2 === 3)
-  }
-  test("test4.test") {
-
-    TestFormatter.format("src/test/testFile/test4.test")
-    assert(1+2 === 3)
-  }
-  test("unicodeChars.test") {
-    TestFormatter.format("src/test/testFile/unicodeChars.test")
-    assert(1+2 === 3)
-  }
-  test("unicodeCharsProblematic.test") {
-    TestFormatter.format("src/test/testFile/unicodeCharsProblematic.test")
-    assert(1+2 === 3)
-  }
-  test("xmlViolation.test") {
-    TestFormatter.format("src/test/testFile/xmlViolation.test")
-    assert(1+2 === 3)
-  }
 
   def finishTest() = {
     IOUtils.closeIgnoringExceptions(txtOut3)

@@ -8,5 +8,8 @@ Main.scala 引数 : src/input.txt src/output.txt
 
 stanfordCoreNLP
     
-   html解析：　jsoup　
-   https://jsoup.org/
+   html解析： <a href="https://jsoup.org/">jsoup</a>
+   
+   html字句解析テスト: <a href="https://github.com/html5lib/html5lib-tests/tree/master/tokenizer"><b>html5lib-test</b></a>
+
+テスト作成で使った: <a href="http://www.jsonschema2pojo.org/">jsonschema2pojo</a>

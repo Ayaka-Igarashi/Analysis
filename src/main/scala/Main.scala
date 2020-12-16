@@ -69,7 +69,7 @@ object Main {
         PreserveDefinition.preserve[List[nState]](nStateList, "src/parsed.dat")
         tagConvert()
       }
-    } else if (true) {
+    } else if (false) {
       // 出力ファイル
       if (args.length > 1) {
         txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
@@ -80,7 +80,7 @@ object Main {
       nStateList = PreserveDefinition.read[List[nState]]("src/parsed.dat")
       tagConvert()
 
-      implement()
+      implement("<abar d=kl rt=hhh>tyu</huj>", "Data_state")
     } else {
       if (args.length > 2) {
         txtOut2 = new PrintWriter(args(2))
@@ -90,7 +90,7 @@ object Main {
 
       pStateMap = PreserveDefinition.read[ListMap[String, pState]]("src/definition.dat")
       //writeDefinition(txtOut2)
-      implement()
+      implement("<abar d=kl rt=hhh>tyu</huj>", "Data_state")
     }
 
     // ファイルを閉じる
@@ -100,24 +100,25 @@ object Main {
     IOUtils.closeIgnoringExceptions(replace_out)
   }
 
-  def implement() = {
+  def implement(input: String, initialState: String): Env = {
     var env: Env = new Env()
-    env.setInputText("<abar d=kl rt=hhh>tyu</huj>")
+    env.setInputText(input)
     val length = env.inputText.length
-    env.setNextState("Data_state")
+    env.setNextState(initialState)
     var i = 1
     txtOut3.println("input : " + env.inputText + "\n")
-    var emitTokens: List[Environment.Token] = List()
+    //var emitTokens: List[Environment.Token] = List()
     while (!env.emitTokens.contains(endOfFileToken()) && i <= length * 2) {
       txtOut3.println(i + " : ===============================================")
       env = interpret(env, pStateMap)
       txtOut3.println("")
       Environment.printEnv(env, txtOut3, i)
-      emitTokens ++= env.emitTokens
+      //emitTokens ++= env.emitTokens
       txtOut3.println("|\nV\n")
       i = i + 1
     }
-    txtOut3.println(emitTokens)
+    //txtOut3.println(emitTokens)
+    env
   }
 
   // tagにする

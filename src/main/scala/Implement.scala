@@ -16,7 +16,7 @@ object Implement {
     // 最初の処理
     val currentState = newEnv.nextState
     newEnv.currentState = currentState
-    newEnv.emitTokens = List()
+    //newEnv.emitTokens = List()
     newEnv.currentInputCharacter = null
     newEnv.errorContent = null
 
