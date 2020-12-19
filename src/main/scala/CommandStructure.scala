@@ -80,12 +80,18 @@ object CommandStructure {
   case class StateName(state: String) extends StateVal
   case object ReturnState extends StateVal
   case object TemporaryBuffer extends ImplementValue
+
+  case object NewStartTagToken extends ImplementValue
+  case object NewEndTagToken extends ImplementValue
+  case object NewDOCTYPEToken extends ImplementValue
+
   case object CurrentTagToken extends ImplementValue
   case object CurrentDOCTYPEToken extends ImplementValue
   case object CurrentAttribute extends ImplementValue
   case object CommentToken extends ImplementValue
   case object EndOfFileToken extends ImplementValue
   case class CharacterToken(chara: String) extends ImplementValue
+
   case class Variable(variable: String) extends ImplementValue
   case object CurrentInputCharacter extends ImplementValue
   case object NextInputCharacter extends ImplementValue
