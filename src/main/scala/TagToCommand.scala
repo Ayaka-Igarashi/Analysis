@@ -284,7 +284,7 @@ object TagToCommand {
       case Node(NP, rst) => {
         rst.head match {
           case Leaf(DT, _) => Node(NP, rst.tail)
-          case Leaf(CD, Token(_,_, "two")) => println("aaaa");tag
+          //case Leaf(CD, Token(_,_, "two")) => println("aaaa");tag
           case _ => tag
         }
       }
@@ -356,33 +356,75 @@ object TagToCommand {
   }
 
   def nptagToImplementValue(nptag: Tag): ImplementValue = {
-    val str = getLeave(removeDT(nptag))
+    //val str = getLeave(removeDT(nptag))
     val id = getCorefId(nptag)
 
-    if (str.contains("return state")) ReturnState
-    else if (str.contains("temporary buffer")) TemporaryBuffer
-    else if(str.contains("_state")) StateName(str)
-    else if (str.contains("current tag")) {
-      if (str.contains("name")) NameOf(CurrentTagToken)
-      else CurrentTagToken
+    nptag match {
+      case Node(NP, List(Node(NP, np), Node(PP, List(Leaf(IN, _), Node(NP, np2))))) => {
+        val npstr = getLeave(removeDT(Node(NP, np)))
+        if (npstr.contains("lowercase version")) {
+          LowerCase(nptagToImplementValue(Node(NP, np2)))
+        } else {
+          Non("")
+        }
+      }
+      case Node(NP, List(Node(NP, np), Leaf(NN, Token(_,_,n)))) => {
+        np.last match {
+          case Leaf(POS,Token(_,_,"'s")) => {
+            n match {
+              case "name" => NameOf(nptagToImplementValue(Node(NP, np)))
+              case "value" => ValueOf(nptagToImplementValue(Node(NP, np)))
+              case _ => Non("")
+            }
+          }
+          case _ =>Non("")
+        }
+      }
+      case _ => {
+        val str = getLeave(removeDT(nptag))
+        if (str.contains("return state")) ReturnState
+        else if (str.contains("temporary buffer")) TemporaryBuffer
+        else if(str.contains("_state")) StateName(str)
+        else if (str.matches(".*U_[0-9A-F][0-9A-F][0-9A-F][0-9A-F].* character.*")) {
+          val unicode: String = "U_[0-9A-F][0-9A-F][0-9A-F][0-9A-F]".r.findFirstIn(str) match {
+            case Some(s) => s
+            case None => ""
+          }
+          val char = Utility.unicodeToChar(unicode)
+          var num = 1
+          if (str.contains("two")) num = 2
+          else if (str.contains("three")) num = 3
+
+          var moji  = ""
+          while (num >= 1) {
+            moji += char
+            num += -1
+          }
+          Mojiretu(moji)
+        }
+        else if (str.contains("current tag")) {
+          if (str.contains("name")) NameOf(CurrentTagToken)
+          else CurrentTagToken
+        }
+        else if (str.contains("DOCTYPE")) {
+          if (str.contains("name")) NameOf(CurrentDOCTYPEToken)
+          else CurrentDOCTYPEToken
+        }
+        else if (str.contains("current attribute")) {
+          if (str.contains("name")) NameOf(CurrentAttribute)
+          else if (str.contains("value")) ValueOf(CurrentAttribute)
+          else CurrentAttribute
+        }
+        else if (str.contains("comment")) CommentToken
+        else if (str.contains("end_of_file")) EndOfFileToken
+        else if (str.contains("current input character")) CurrentInputCharacter
+        else if (str.contains("character token")) CommandStructure.CharacterToken(str)
+        else if (str.contains("empty string")) Mojiretu("")
+        else if (str.contains("name") && id != -1) NameOf(Variable("x_" + id))
+        else if (str.contains("value") && id != -1) ValueOf(Variable("x_" + id))
+        else if (id != -1) Variable("x_" + id)
+        else Non(str)
+      }
     }
-    else if (str.contains("DOCTYPE")) {
-      if (str.contains("name")) NameOf(CurrentDOCTYPEToken)
-      else CurrentDOCTYPEToken
-    }
-    else if (str.contains("current attribute")) {
-      if (str.contains("name")) NameOf(CurrentAttribute)
-      else if (str.contains("value")) ValueOf(CurrentAttribute)
-      else CurrentAttribute
-    }
-    else if (str.contains("comment")) CommentToken
-    else if (str.contains("end_of_file")) EndOfFileToken
-    else if (str.contains("current input character")) CurrentInputCharacter
-    else if (str.contains("character token")) CommandStructure.CharacterToken(str)
-    else if (str.contains("empty string")) Mojiretu("")
-    else if (str.contains("name") && id != -1) NameOf(Variable("x_" + id))
-    else if (str.contains("value") && id != -1) ValueOf(Variable("x_" + id))
-    else if (id != -1) Variable("x_" + id)
-    else Non(str)
   }
 }

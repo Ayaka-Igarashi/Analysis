@@ -250,6 +250,9 @@ object Implement {
             newEnv.addEmitToken(characterToken(newEnv.temporaryBuffer))
             newEnv.temporaryBuffer = ""
           }
+          case Mojiretu(s) => {
+            newEnv.addEmitToken(characterToken(s))
+          }
           case _ => {
             newEnv.addEmitToken(characterToken(null))
             txtOut3.println("emit error" + token)
@@ -259,6 +262,17 @@ object Implement {
       case Append(value, obj) => {
         val appendStr: String =
           value match {
+            case LowerCase(iVal) => {
+              iVal match {
+                case CurrentInputCharacter => {
+                  newEnv.currentInputCharacter match {
+                    case CharInput(c) => (c + 0x20).toChar.toString
+                    case _ => ""
+                  }
+                }
+                case _ =>null
+              }
+            }
             case Mojiretu(string) => string
             case CurrentInputCharacter => {
               newEnv.currentInputCharacter match {
@@ -270,6 +284,10 @@ object Implement {
             case _ => null
           }
         obj match {
+          case CommentToken => {newEnv.map.get(newEnv.commentToken) match {
+            case Some(TokenVal(Environment.commentToken(s))) => newEnv.addMap(newEnv.commentToken, TokenVal(Environment.commentToken(s + appendStr)))
+            case _ =>
+          }}
           case TemporaryBuffer => { newEnv.temporaryBuffer += appendStr }
           case NameOf(token) => {
             var key: String = null

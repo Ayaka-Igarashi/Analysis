@@ -38,6 +38,7 @@ object Main {
   var txtOut: PrintWriter = null
   var txtOut2 : PrintWriter = null
   var txtOut3 : PrintWriter = null
+  var txtOut4 : PrintWriter = null
   /***
    *
    * @param args ファイル名
@@ -69,7 +70,7 @@ object Main {
         PreserveDefinition.preserve[List[nState]](nStateList, "src/parsed.dat")
         tagConvert()
       }
-    } else if (false) {
+    } else if (true) {
       // 出力ファイル
       if (args.length > 1) {
         txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
@@ -80,7 +81,7 @@ object Main {
       nStateList = PreserveDefinition.read[List[nState]]("src/parsed.dat")
       tagConvert()
 
-      implement("<abar d=kl rt=hhh>tyu</huj>", "Data_state")
+      //implement("<abar d=kl rt=hhh>tyu</huj>", "Data_state")
     } else {
       if (args.length > 2) {
         txtOut2 = new PrintWriter(args(2))
@@ -101,24 +102,53 @@ object Main {
   }
 
   def implement(input: String, initialState: String): Env = {
+
+    if (input.contains("\r")) txtOut4.println("main:: r")
+    var replacedInput = input.replaceAll("\u000d\u000a", "\u000a")
+    replacedInput = replacedInput.replaceAll("\u000d", "\u000a")
+    replacedInput = replacedInput.replaceAll("\r\n", "\n")
+    replacedInput = replacedInput.replaceAll("\r", "\n")
+
     var env: Env = new Env()
     env.setInputText(input)
     val length = env.inputText.length
     env.setNextState(initialState)
     var i = 1
     txtOut3.println("input : " + env.inputText + "\n")
-    //var emitTokens: List[Environment.Token] = List()
-    while (!env.emitTokens.contains(endOfFileToken()) && i <= length * 2) {
+    while (!env.emitTokens.contains(endOfFileToken()) && i <= length * 2 + 10) {
       txtOut3.println(i + " : ===============================================")
       env = interpret(env, pStateMap)
       txtOut3.println("")
       Environment.printEnv(env, txtOut3, i)
-      //emitTokens ++= env.emitTokens
       txtOut3.println("|\nV\n")
       i = i + 1
     }
-    //txtOut3.println(emitTokens)
     env
+  }
+
+  def combineCharacterToken(tokens: List[Environment.Token]): List[Environment.Token] = {
+    var newTokens: List[Environment.Token] = List()
+    var combinedCharacterToken: Environment.characterToken = Environment.characterToken("")
+    for (t <- tokens) {
+      t match {
+        case Environment.characterToken(c) => {
+          combinedCharacterToken match {
+            case Environment.characterToken(str) => combinedCharacterToken = Environment.characterToken(str + c)
+          }
+        }
+        case _ => {
+          combinedCharacterToken match {
+            case Environment.characterToken("") => newTokens :+= t
+            case Environment.characterToken(str) => {
+              newTokens :+= combinedCharacterToken
+              combinedCharacterToken = Environment.characterToken("")
+              newTokens :+= t
+            }
+          }
+        }
+      }
+    }
+    newTokens
   }
 
   // tagにする

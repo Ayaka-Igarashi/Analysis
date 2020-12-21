@@ -3,7 +3,7 @@ import java.util
 
 import CommandStructure.CharacterToken
 import Environment.DOCTYPEToken
-import Main.{implement, pStateMap, txtOut3}
+import Main.{implement, pStateMap, txtOut4, txtOut3}
 import StateProcessedStructure.pState
 import com.jsonSchema.{Model, TestFormat}
 import edu.stanford.nlp.io.IOUtils
@@ -14,30 +14,35 @@ import scala.collection.JavaConverters._
 import scala.collection.immutable.ListMap
 
 class Test extends FunSuite {
-
-  txtOut3 = new PrintWriter("src/output3.txt")
   pStateMap = PreserveDefinition.read[ListMap[String, pState]]("src/definition.dat")
+  var count: Int = 0
+  var correctCount: Int = 0
 
   test("example") {
     assert(1+2 === 3)
   }
   test("contentModelFlags.test") {
+    startTest()
+    txtOut4.println("contentModelFlags")
     val model = TestFormatter.format("src/test/testFile/contentModelFlags.test")
-    val test = model.tests.get(4)
-    val env = implement(test.input, "Data_state")
-    println("implement : " + env.emitTokens)
-    println("correct : " + test.output)
-    println("implement : " + env.errorContent)
-    println("correct : " + test.errors.get(0).code)
-    assert(1+2 === 3)
+    val tests = model.tests.asScala.toList//.slice(3,4)
+    for (test <- tests) doTest(test)
+//    val test = model.tests.get(4)
+//    val env = implement(test.input, "Data_state")
+//    println("implement : " + env.emitTokens)
+//    println("correct : " + test.output)
+//    println("implement : " + env.errorContent)
+//    println("correct : " + test.errors.get(0).code)
+//    assert(1+2 === 3)
     finishTest()
   }
   test("domjs.test") {
-    val model = TestFormatter.format("src/test/testFile/test3.test")
-    //val test = model.tests.get(1)
-    //assert(1+2 === 3)
-    val tests = model.tests.asScala.toList.slice(3,4)
+    startTest()
+    txtOut4.println("test4")
+    val model = TestFormatter.format("src/test/testFile/test4.test")
+    val tests = model.tests.asScala.toList//.slice(3,4)
     for (test <- tests) doTest(test)
+    println("correct : " + correctCount + "/" + count)
     finishTest()
   }
   test("entities.test") {
@@ -92,7 +97,13 @@ class Test extends FunSuite {
     assert(1+2 === 3)
   }
 
+  def startTest() = {
+    txtOut3 = new PrintWriter("src/output3.txt")
+    txtOut4 = new PrintWriter("src/output4.txt")
+  }
+
   def finishTest() = {
+    IOUtils.closeIgnoringExceptions(txtOut4)
     IOUtils.closeIgnoringExceptions(txtOut3)
   }
 
@@ -187,13 +198,27 @@ class Test extends FunSuite {
     //println(convertedOutput)
 
     val env = implement(test.input, initialState)
-    //    println("implement : " + env.emitTokens)
-    //    println("correct : " + test.output)
 
-    var emitTokens = env.emitTokens
+    var isCorrect = true
+    var emitTokens = Main.combineCharacterToken(env.emitTokens)
     for (correctOutput <- convertedOutput) {
-      assert(emitTokens.head === correctOutput)
-      emitTokens = emitTokens.tail
+      //assert(emitTokens.head === correctOutput)
+      if (emitTokens != Nil) {
+        if (!(emitTokens.head == correctOutput)) {
+          isCorrect = false
+        }
+        emitTokens = emitTokens.tail
+      }
+      else {
+        isCorrect = false
+      }
     }
+    count += 1
+    if (isCorrect) correctCount += 1
+    txtOut4.println("state : " + initialState)
+    txtOut4.println("input : \"" + test.input + "\"")
+    txtOut4.println("implement : " + env.emitTokens)
+    txtOut4.println("correct : " + convertedOutput)
+    txtOut4.println(" -> " + isCorrect + "\n")
   }
 }

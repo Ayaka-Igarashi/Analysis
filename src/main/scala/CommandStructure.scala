@@ -97,6 +97,7 @@ object CommandStructure {
   case object NextInputCharacter extends ImplementValue
   case class NameOf(token: ImplementValue) extends ImplementValue
   case class ValueOf(token: ImplementValue) extends ImplementValue
+  case class LowerCase(token: ImplementValue) extends ImplementValue
   case class FlagOf(variable: Variable) extends ImplementValue
   case class IChar(char: Char) extends ImplementValue
   case class Mojiretu(string: String) extends ImplementValue
