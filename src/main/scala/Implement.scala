@@ -8,6 +8,7 @@ import scala.collection.immutable.ListMap
 object Implement {
   //env updated ("currentState", env("nextState"))
 
+  var anythingElseCommand: List[Command] = List()
   var uniqueId: Int = 1
   // インタープリタ
   def interpret(env: Env, definition: ListMap[String, pState]): Env = {
@@ -28,6 +29,12 @@ object Implement {
         }
         // マッチング
         val commandList: List[Command] = characterMatching(newEnv.currentInputCharacter, trans)
+        // Anything elseの処理とってくる
+        val lastCommand = trans.last
+        if (lastCommand._1 == "Anything else") {
+          anythingElseCommand = lastCommand._2
+        }
+
         // Commandを1つずつ処理する
         for (command <- commandList) {
           newEnv = interpretCommand(newEnv, command)
@@ -36,6 +43,7 @@ object Implement {
       }
       case None => println("undefined state error : " + currentState)
     }
+    anythingElseCommand = List()
     newEnv
   }
 
@@ -143,6 +151,11 @@ object Implement {
           case NameOf(token) => {
             var name: String = null
             value match {
+              case CurrentInputCharacter => name = newEnv.currentInputCharacter match {
+                case CharInput(c) => c.toString
+                case StrInput(s) => s
+                case _ => ""
+              }
               case Mojiretu(string) => name = string
               case _ =>
             }
@@ -333,7 +346,7 @@ object Implement {
           case _ => println("error")
         }
       }
-      case Ignore(_) => println("ignore") // 何もしない
+      case Ignore(_) => //println("ignore") // 何もしない
       case Flush() => {
         val flushCommand =  If(CharacterReferenceConsumedAsAttributeVal(),
                               List(Append(TemporaryBuffer, ValueOf(Variable(newEnv.currentAttribute)))),
@@ -342,6 +355,8 @@ object Implement {
       }
       case Treat() => {
         // AnithingElseのコマンド実行する
+        val comList = anythingElseCommand
+        for (c <- comList) newEnv = interpretCommand(newEnv, c)
       }
       case Start(corefId) => {
         // currentTagTokenに新しい属性を追加する

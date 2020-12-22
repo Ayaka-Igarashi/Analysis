@@ -39,6 +39,8 @@ object Main {
   var txtOut2 : PrintWriter = null
   var txtOut3 : PrintWriter = null
   var txtOut4 : PrintWriter = null
+
+  var testNumber: Int = 1
   /***
    *
    * @param args ファイル名
@@ -114,6 +116,8 @@ object Main {
     val length = env.inputText.length
     env.setNextState(initialState)
     var i = 1
+    txtOut3.println("num :" + testNumber + ";")
+    testNumber += 1
     txtOut3.println("input : " + env.inputText + "\n")
     while (!env.emitTokens.contains(endOfFileToken()) && i <= length * 2 + 10) {
       txtOut3.println(i + " : ===============================================")

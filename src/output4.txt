@@ -1,542 +1,99 @@
-test4
-state : Data_state
-input : "<z/0  <>"
-implement : List(tagToken(true,z,false,List(Attribute(0,), Attribute(,))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(0,), Attribute(<,))), endOfFileToken())
+contentModelFlags
+testnum :1;
+state : PLAINTEXT_state
+input : "<head>&body;"
+implement : List(characterToken(<), characterToken(h), characterToken(e), characterToken(a), characterToken(d), characterToken(>), characterToken(&), characterToken(b), characterToken(o), characterToken(d), characterToken(y), characterToken(;), endOfFileToken())
+correct : List(characterToken(<head>&body;), endOfFileToken())
+ -> true
+
+testnum :2;
+state : PLAINTEXT_state
+input : "</plaintext>&body;"
+implement : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n), characterToken(t), characterToken(e), characterToken(x), characterToken(t), characterToken(>), characterToken(&), characterToken(b), characterToken(o), characterToken(d), characterToken(y), characterToken(;), endOfFileToken())
+correct : List(characterToken(</plaintext>&body;), endOfFileToken())
+ -> true
+
+testnum :3;
+state : RCDATA_state
+input : "foo</xmp>"
+implement : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
+ -> true
+
+testnum :4;
+state : RCDATA_state
+input : "foo</xMp>"
+implement : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
+ -> true
+
+testnum :5;
+state : RCDATA_state
+input : "foo</xmp "
+implement : List(characterToken(f), characterToken(o), characterToken(o), endOfFileToken())
+correct : List(characterToken(foo), endOfFileToken())
+ -> true
+
+testnum :6;
+state : RCDATA_state
+input : "foo</xmp"
+implement : List(characterToken(f), characterToken(o), characterToken(o), characterToken(<), characterToken(/), characterToken(xmp), endOfFileToken())
+correct : List(characterToken(foo</xmp), endOfFileToken())
+ -> true
+
+testnum :7;
+state : RCDATA_state
+input : "foo</xmp/"
+implement : List(characterToken(f), characterToken(o), characterToken(o), endOfFileToken())
+correct : List(characterToken(foo), endOfFileToken())
+ -> true
+
+testnum :8;
+state : RCDATA_state
+input : "foo</xmp<"
+implement : List(characterToken(f), characterToken(o), characterToken(o), characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), endOfFileToken())
+correct : List(characterToken(foo</xmp<), endOfFileToken())
+ -> true
+
+testnum :9;
+state : RCDATA_state
+input : "</foo>bar</xmp>"
+implement : List(tagToken(false,foo,false,List()), characterToken(b), characterToken(a), characterToken(r), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(</foo>bar), tagToken(false,xmp,false,List()), endOfFileToken())
  -> false
 
-state : Data_state
-input : "<z x=<>"
-implement : List(tagToken(true,z,false,List(Attribute(x,))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(x,<))), endOfFileToken())
+testnum :10;
+state : RCDATA_state
+input : "</xmp</xmp</xmp>"
+implement : List(characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), characterToken(/), characterToken(xmp), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(</xmp</xmp), tagToken(false,xmp,false,List()), endOfFileToken())
+ -> true
+
+testnum :11;
+state : RCDATA_state
+input : "</foo>bar</xmpaar>"
+implement : List(tagToken(false,foo,false,List()), characterToken(b), characterToken(a), characterToken(r), tagToken(false,xmpaar,false,List()), endOfFileToken())
+correct : List(characterToken(</foo>bar</xmpaar>), endOfFileToken())
  -> false
 
-state : Data_state
-input : "<z z=z=z>"
-implement : List(tagToken(true,z,false,List(Attribute(z,zz))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(z,z=z))), endOfFileToken())
- -> false
+testnum :12;
+state : RCDATA_state
+input : "foo</xmp></baz>"
+implement : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()), tagToken(false,baz,false,List()), endOfFileToken())
+correct : List(characterToken(foo), tagToken(false,xmp,false,List()), tagToken(false,baz,false,List()), endOfFileToken())
+ -> true
 
-state : Data_state
-input : "<z =>"
-implement : List(tagToken(true,z,false,List(Attribute(null,))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(=,))), endOfFileToken())
- -> false
+testnum :13;
+state : RAWTEXT_state
+input : "&foo;"
+implement : List(characterToken(&), characterToken(f), characterToken(o), characterToken(o), characterToken(;), endOfFileToken())
+correct : List(characterToken(&foo;), endOfFileToken())
+ -> true
 
-state : Data_state
-input : "<z ==>"
-implement : List(tagToken(true,z,false,List(Attribute(null,))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(=,))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<z ===>"
-implement : List(tagToken(true,z,false,List(Attribute(null,))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(=,=))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<z ====>"
-implement : List(tagToken(true,z,false,List(Attribute(null,))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(=,==))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<z z="&">"
-implement : List(tagToken(true,z,false,List(Attribute(z,))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(z,&))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<z z="&'">"
-implement : List(tagToken(true,z,false,List(Attribute(z,'))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(z,&'))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<z z='&'>"
-implement : List(tagToken(true,z,false,List(Attribute(z,))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(z,&))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<z z='&"'>"
-implement : List(tagToken(true,z,false,List(Attribute(z,"))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(z,&"))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<z z='&xlink_xmlns;'>bar<z>"
+testnum :14;
+state : RCDATA_state
+input : "&lt;"
 implement : List()
-correct : List(tagToken(true,z,false,List(Attribute(z,&xlink_xmlns;))), characterToken(bar), tagToken(true,z,false,List()), endOfFileToken())
+correct : List(characterToken(<), endOfFileToken())
  -> false
-
-state : Data_state
-input : "<z z='&#x0020; foo'>bar<z>"
-implement : List(tagToken(true,z,false,List(Attribute(z,oof ;0200))), characterToken(b), characterToken(a), characterToken(r), tagToken(true,z,false,List()), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(z,  foo))), characterToken(bar), tagToken(true,z,false,List()), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<foo "='bar'>"
-implement : List(tagToken(true,foo,false,List(Attribute(,rab))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(",bar))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<foo '='bar'>"
-implement : List(tagToken(true,foo,false,List(Attribute(,rab))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(',bar))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<foo a"b='bar'>"
-implement : List(tagToken(true,foo,false,List(Attribute(ab,rab))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(a"b,bar))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<foo a'b='bar'>"
-implement : List(tagToken(true,foo,false,List(Attribute(ab,rab))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(a'b,bar))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<foo a=b'c>"
-implement : List(tagToken(true,foo,false,List(Attribute(a,cb))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(a,b'c))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<foo a=b"c>"
-implement : List(tagToken(true,foo,false,List(Attribute(a,cb))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(a,b"c))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<foo a="b"c>"
-implement : List(tagToken(true,foo,false,List(Attribute(a,b), Attribute(c,))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(a,b), Attribute(c,))), endOfFileToken())
- -> true
-
-state : Data_state
-input : "<foo a='b'c>"
-implement : List(tagToken(true,foo,false,List(Attribute(a,b), Attribute(c,))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(a,b), Attribute(c,))), endOfFileToken())
- -> true
-
-state : Data_state
-input : "<br a='b'/>"
-implement : List(tagToken(true,br,false,List(Attribute(a,b))), endOfFileToken())
-correct : List(tagToken(true,br,true,List(Attribute(a,b))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<bar a='b'/>"
-implement : List(tagToken(true,bar,false,List(Attribute(a,b))), endOfFileToken())
-correct : List(tagToken(true,bar,true,List(Attribute(a,b))), endOfFileToken())
- -> false
-
-main:: r
-state : Data_state
-input : "<!doctype html "
-implement : List(commentToken(doctype html ), endOfFileToken())
-correct : List(DOCTYPEToken(html,,,false), endOfFileToken())
- -> false
-
-main:: r
-state : Data_state
-input : "<z"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
- -> true
-
-state : Data_state
-input : "<z/"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
- -> true
-
-state : Data_state
-input : "&#x0"
-implement : List(characterToken(&#x), characterToken(0), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
- -> false
-
-state : Data_state
-input : "&#0"
-implement : List(characterToken(&#), characterToken(0), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
- -> false
-
-state : Data_state
-input : "&#x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000041;"
-implement : List(characterToken(&#x), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(4), characterToken(1), characterToken(;), endOfFileToken())
-correct : List(characterToken(A), endOfFileToken())
- -> false
-
-state : Data_state
-input : "&#000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000065;"
-implement : List(characterToken(&#), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(6), characterToken(5), characterToken(;), endOfFileToken())
-correct : List(characterToken(A), endOfFileToken())
- -> false
-
-state : Data_state
-input : "&#x &#X "
-implement : List(characterToken(&#x), characterToken( ), characterToken(&#X), characterToken( ), endOfFileToken())
-correct : List(characterToken(&#x &#X ), endOfFileToken())
- -> true
-
-state : Data_state
-input : "&#xZ"
-implement : List(characterToken(&#x), characterToken(Z), endOfFileToken())
-correct : List(characterToken(&#xZ), endOfFileToken())
- -> true
-
-state : Data_state
-input : "&# &#; "
-implement : List(characterToken(&#), characterToken( ), characterToken(&#), characterToken(;), characterToken( ), endOfFileToken())
-correct : List(characterToken(&# &#; ), endOfFileToken())
- -> true
-
-state : Data_state
-input : "&#A"
-implement : List(characterToken(&#), characterToken(A), endOfFileToken())
-correct : List(characterToken(&#A), endOfFileToken())
- -> true
-
-state : Data_state
-input : "&#x10000;"
-implement : List(characterToken(&#x), characterToken(1), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(;), endOfFileToken())
-correct : List(characterToken(𐀀), endOfFileToken())
- -> false
-
-state : Data_state
-input : "&#X10FFFF;"
-implement : List(characterToken(&#X), characterToken(1), characterToken(0), characterToken(F), characterToken(F), characterToken(F), characterToken(F), characterToken(;), endOfFileToken())
-correct : List(characterToken(􏿿), endOfFileToken())
- -> false
-
-state : Data_state
-input : "&#x110000;"
-implement : List(characterToken(&#x), characterToken(1), characterToken(1), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(;), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
- -> false
-
-state : Data_state
-input : "&#x80000041;"
-implement : List(characterToken(&#x), characterToken(8), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(4), characterToken(1), characterToken(;), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
- -> false
-
-state : Data_state
-input : "&#x100000041;"
-implement : List(characterToken(&#x), characterToken(1), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(4), characterToken(1), characterToken(;), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
- -> false
-
-state : Data_state
-input : "&#4294967361;"
-implement : List(characterToken(&#), characterToken(4), characterToken(2), characterToken(9), characterToken(4), characterToken(9), characterToken(6), characterToken(7), characterToken(3), characterToken(6), characterToken(1), characterToken(;), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
- -> false
-
-state : Data_state
-input : "&#x10000000000000041;"
-implement : List(characterToken(&#x), characterToken(1), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(4), characterToken(1), characterToken(;), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
- -> false
-
-state : Data_state
-input : "&#18446744073709551681;"
-implement : List(characterToken(&#), characterToken(1), characterToken(8), characterToken(4), characterToken(4), characterToken(6), characterToken(7), characterToken(4), characterToken(4), characterToken(0), characterToken(7), characterToken(3), characterToken(7), characterToken(0), characterToken(9), characterToken(5), characterToken(5), characterToken(1), characterToken(6), characterToken(8), characterToken(1), characterToken(;), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
- -> false
-
-state : Data_state
-input : "&#xD7FF;&#xD800;&#xD801;&#xDFFE;&#xDFFF;&#xE000;"
-implement : List(characterToken(&#x), characterToken(D), characterToken(7), characterToken(F), characterToken(F), characterToken(;), characterToken(&#x), characterToken(D), characterToken(8), characterToken(0), characterToken(0), characterToken(;), characterToken(&#x), characterToken(D), characterToken(8), characterToken(0), characterToken(1), characterToken(;), characterToken(&#x), characterToken(D), characterToken(F), characterToken(F), characterToken(E), characterToken(;), characterToken(&#x), characterToken(D), characterToken(F), characterToken(F), characterToken(F), characterToken(;), characterToken(&#x), characterToken(E), characterToken(0), characterToken(0), characterToken(0), characterToken(;), endOfFileToken())
-correct : List(characterToken(퟿����), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<X>"
-implement : List(tagToken(true,x,false,List()), endOfFileToken())
-correct : List(tagToken(true,x,false,List()), endOfFileToken())
- -> true
-
-state : Data_state
-input : "</X>"
-implement : List(tagToken(false,x,false,List()), endOfFileToken())
-correct : List(tagToken(false,x,false,List()), endOfFileToken())
- -> true
-
-state : Data_state
-input : "<x X>"
-implement : List(tagToken(true,x,false,List(Attribute(x,))), endOfFileToken())
-correct : List(tagToken(true,x,false,List(Attribute(x,))), endOfFileToken())
- -> true
-
-state : Data_state
-input : "<x@AZ[`az{ @AZ[`az{>"
-implement : List(tagToken(true,x@az[`az{,false,List(Attribute(@az[`az{,))), endOfFileToken())
-correct : List(tagToken(true,x@az[`az{,false,List(Attribute(@az[`az{,))), endOfFileToken())
- -> true
-
-state : Data_state
-input : "<x x=1 x=2 X=3>"
-implement : List(tagToken(true,x,false,List(Attribute(x,1), Attribute(x,2), Attribute(x,3))), endOfFileToken())
-correct : List(tagToken(true,x,false,List(Attribute(x,1))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "</x X>"
-implement : List(tagToken(false,x,false,List(Attribute(x,))), endOfFileToken())
-correct : List(tagToken(false,x,false,List()), endOfFileToken())
- -> false
-
-state : Data_state
-input : "</x x x>"
-implement : List(tagToken(false,x,false,List(Attribute(x,), Attribute(x,))), endOfFileToken())
-correct : List(tagToken(false,x,false,List()), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<br/>"
-implement : List(tagToken(true,br,false,List()), endOfFileToken())
-correct : List(tagToken(true,br,true,List()), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<xr/>"
-implement : List(tagToken(true,xr,false,List()), endOfFileToken())
-correct : List(tagToken(true,xr,true,List()), endOfFileToken())
- -> false
-
-state : Data_state
-input : "</br/>"
-implement : List(tagToken(false,br,false,List()), endOfFileToken())
-correct : List(tagToken(false,br,false,List()), endOfFileToken())
- -> true
-
-state : Data_state
-input : "<!DoCtYpE HtMl PuBlIc "AbC" "XyZ">"
-implement : List(commentToken(DoCtYpE HtMl PuBlIc "AbC" "XyZ"), endOfFileToken())
-correct : List(DOCTYPEToken(html,AbC,XyZ,true), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<!dOcTyPe hTmL pUbLiC "aBc" "xYz">"
-implement : List(commentToken(dOcTyPe hTmL pUbLiC "aBc" "xYz"), endOfFileToken())
-correct : List(DOCTYPEToken(html,aBc,xYz,true), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<!DoCtYpE HtMl SyStEm "XyZ">"
-implement : List(commentToken(DoCtYpE HtMl SyStEm "XyZ"), endOfFileToken())
-correct : List(DOCTYPEToken(html,,XyZ,true), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<!dOcTyPe hTmL sYsTeM "xYz">"
-implement : List(commentToken(dOcTyPe hTmL sYsTeM "xYz"), endOfFileToken())
-correct : List(DOCTYPEToken(html,,xYz,true), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<!doc> "
-implement : List(commentToken(doc), characterToken( ), endOfFileToken())
-correct : List(commentToken(doc), characterToken( ), endOfFileToken())
- -> true
-
-state : Data_state
-input : "<!doc "
-implement : List(commentToken(doc�), endOfFileToken())
-correct : List(commentToken(doc�), endOfFileToken())
- -> true
-
-state : Data_state
-input : "<!doc"
-implement : List(commentToken(doc), endOfFileToken())
-correct : List(commentToken(doc), endOfFileToken())
- -> true
-
-state : Data_state
-input : "<!doc﷑"
-implement : List(commentToken(doc﷑), endOfFileToken())
-correct : List(commentToken(doc﷑), endOfFileToken())
- -> true
-
-state : Data_state
-input : "<!doc🿿"
-implement : List(commentToken(doc🿿), endOfFileToken())
-correct : List(commentToken(doc🿿), endOfFileToken())
- -> true
-
-main:: r
-state : Data_state
-input : "?"
-implement : List(characterToken(), characterToken(?), endOfFileToken())
-correct : List(characterToken(
-?), endOfFileToken())
- -> false
-
-main:: r
-state : Data_state
-input : ""
-implement : List(characterToken(), endOfFileToken())
-correct : List(characterToken(
-), endOfFileToken())
- -> false
-
-state : Data_state
-input : "
-"
-implement : List(characterToken(
-), endOfFileToken())
-correct : List(characterToken(
-), endOfFileToken())
- -> true
-
-main:: r
-state : Data_state
-input : "
-"
-implement : List(characterToken(), characterToken(
-), endOfFileToken())
-correct : List(characterToken(
-), endOfFileToken())
- -> false
-
-main:: r
-state : Data_state
-input : ""
-implement : List(characterToken(), characterToken(), endOfFileToken())
-correct : List(characterToken(
-
-), endOfFileToken())
- -> false
-
-state : Data_state
-input : "
-
-"
-implement : List(characterToken(
-), characterToken(
-), endOfFileToken())
-correct : List(characterToken(
-
-), endOfFileToken())
- -> true
-
-main:: r
-state : Data_state
-input : "
-"
-implement : List(characterToken(
-), characterToken(), endOfFileToken())
-correct : List(characterToken(
-
-), endOfFileToken())
- -> false
-
-main:: r
-state : Data_state
-input : "texttext"
-implement : List(characterToken(t), characterToken(e), characterToken(x), characterToken(t), characterToken(), characterToken(), characterToken(), characterToken(t), characterToken(e), characterToken(x), characterToken(t), endOfFileToken())
-correct : List(characterToken(text
-
-
-text), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<!DOCTYPE html PUBLIK "AbC" "XyZ">"
-implement : List(commentToken(DOCTYPE html PUBLIK "AbC" "XyZ"), endOfFileToken())
-correct : List(DOCTYPEToken(html,,,false), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<!DOCTYPE html PUBLI"
-implement : List(commentToken(DOCTYPE html PUBLI), endOfFileToken())
-correct : List(DOCTYPEToken(html,,,false), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<!DOCTYPE html SISTEM "AbC">"
-implement : List(commentToken(DOCTYPE html SISTEM "AbC"), endOfFileToken())
-correct : List(DOCTYPEToken(html,,,false), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<!DOCTYPE html SYS"
-implement : List(commentToken(DOCTYPE html SYS), endOfFileToken())
-correct : List(DOCTYPEToken(html,,,false), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<!DOCTYPE html x>text"
-implement : List(commentToken(DOCTYPE html x), characterToken(t), characterToken(e), characterToken(x), characterToken(t), endOfFileToken())
-correct : List(DOCTYPEToken(html,,,false), characterToken(text), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<a a=aa`>"
-implement : List(tagToken(true,a,false,List(Attribute(a,aa))), endOfFileToken())
-correct : List(tagToken(true,a,false,List(Attribute(a,aa`))), endOfFileToken())
- -> false
-
-state : Data_state
-input : "<a"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
- -> true
-
-state : Data_state
-input : "<a "
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
- -> true
-
-state : Data_state
-input : "<a a"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
- -> true
-
-state : Data_state
-input : "<a a "
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
- -> true
-
-state : Data_state
-input : "<a a ="
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
- -> true
-
-state : Data_state
-input : "<a a ="a"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
- -> true
-
-state : Data_state
-input : "<a a ='a"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
- -> true
-
-state : Data_state
-input : "<a a =a"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
- -> true
-
-state : Data_state
-input : "<a a ='a'"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
- -> true
 

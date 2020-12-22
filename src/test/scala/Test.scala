@@ -25,21 +25,17 @@ class Test extends FunSuite {
     startTest()
     txtOut4.println("contentModelFlags")
     val model = TestFormatter.format("src/test/testFile/contentModelFlags.test")
-    val tests = model.tests.asScala.toList//.slice(3,4)
+    val tests = model.tests.asScala.toList
     for (test <- tests) doTest(test)
-//    val test = model.tests.get(4)
-//    val env = implement(test.input, "Data_state")
-//    println("implement : " + env.emitTokens)
-//    println("correct : " + test.output)
 //    println("implement : " + env.errorContent)
 //    println("correct : " + test.errors.get(0).code)
-//    assert(1+2 === 3)
+    println("correct : " + correctCount + "/" + count)
     finishTest()
   }
   test("domjs.test") {
     startTest()
-    txtOut4.println("test4")
-    val model = TestFormatter.format("src/test/testFile/test4.test")
+    txtOut4.println("domjs")
+    val model = TestFormatter.format("src/test/testFile/domjs.test")
     val tests = model.tests.asScala.toList//.slice(3,4)
     for (test <- tests) doTest(test)
     println("correct : " + correctCount + "/" + count)
@@ -70,17 +66,14 @@ class Test extends FunSuite {
     assert(1+2 === 3)
   }
   test("test2.test") {
-
     TestFormatter.format("src/test/testFile/test2.test")
     assert(1+2 === 3)
   }
   test("test3.test") {
-
     TestFormatter.format("src/test/testFile/test3.test")
     assert(1+2 === 3)
   }
   test("test4.test") {
-
     TestFormatter.format("src/test/testFile/test4.test")
     assert(1+2 === 3)
   }
@@ -215,6 +208,7 @@ class Test extends FunSuite {
     }
     count += 1
     if (isCorrect) correctCount += 1
+    txtOut4.println("testnum :" + count + ";")
     txtOut4.println("state : " + initialState)
     txtOut4.println("input : \"" + test.input + "\"")
     txtOut4.println("implement : " + env.emitTokens)
