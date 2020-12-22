@@ -87,6 +87,42 @@ object Implement {
               case _ => characterMatching(currentInputCharacter, rst)
             }
           }
+          case "ASCII hex digit" => {
+            currentInputCharacter match {
+              case CharInput(c) => {
+                if ((c >= 0x0030 && c <= 0x0039)||(c >= 0x0041 && c <= 0x0046)||(c >= 0x0061 && c <= 0x0066)) comList
+                else characterMatching(currentInputCharacter, rst)
+              }
+              case _ => characterMatching(currentInputCharacter, rst)
+            }
+          }
+          case "ASCII upper hex digit" => {
+            currentInputCharacter match {
+              case CharInput(c) => {
+                if ((c >= 0x0030 && c <= 0x0039)||(c >= 0x0041 && c <= 0x0046)) comList
+                else characterMatching(currentInputCharacter, rst)
+              }
+              case _ => characterMatching(currentInputCharacter, rst)
+            }
+          }
+          case "ASCII lower hex digit" => {
+            currentInputCharacter match {
+              case CharInput(c) => {
+                if ((c >= 0x0030 && c <= 0x0039)||(c >= 0x0061 && c <= 0x0066)) comList
+                else characterMatching(currentInputCharacter, rst)
+              }
+              case _ => characterMatching(currentInputCharacter, rst)
+            }
+          }
+          case "ASCII digit" => {
+            currentInputCharacter match {
+              case CharInput(c) => {
+                if ((c >= 0x0030 && c <= 0x0039)) comList
+                else characterMatching(currentInputCharacter, rst)
+              }
+              case _ => characterMatching(currentInputCharacter, rst)
+            }
+          }
           case "Anything else" => comList
           case "EOF" => {
             if (currentInputCharacter == EOF) comList

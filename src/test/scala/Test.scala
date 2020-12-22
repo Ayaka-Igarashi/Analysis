@@ -34,8 +34,8 @@ class Test extends FunSuite {
   }
   test("domjs.test") {
     startTest()
-    txtOut4.println("domjs")
-    val model = TestFormatter.format("src/test/testFile/domjs.test")
+    txtOut4.println("namedEntities")
+    val model = TestFormatter.format("src/test/testFile/namedEntities.test")
     val tests = model.tests.asScala.toList//.slice(3,4)
     for (test <- tests) doTest(test)
     println("correct : " + correctCount + "/" + count)
