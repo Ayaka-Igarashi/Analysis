@@ -4,6 +4,12 @@ object Environment {
   trait Value
   case class TokenVal(token: Token) extends Value
   case class AttributeVal(attribute: Attribute) extends Value
+
+  case class CharVal(char: Char) extends Value
+  case class StringVal(string: String) extends Value
+  case class StateVal(state: String) extends Value
+  case object EOFVal extends Value
+
 //  case class IntVal(i: Int) extends Value
 //  case class BoolVal(b: Boolean) extends Value
 //  case class StringVal(s: String) extends Value

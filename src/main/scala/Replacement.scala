@@ -30,6 +30,8 @@ object Replacement {
     // ! => -EXC-
     val re4 = "(\\!)".r
     s = re4.replaceAllIn(s, m => "EXC")
+
+    // 参照関係
     // ",", "." => " and"
     val re5 = "(\\.|\\,) [sS]et".r
     s = re5.replaceAllIn(s, m => " and" + m.toString().tail)
@@ -37,7 +39,7 @@ object Replacement {
 //    s = s.replace("and then", ", then")
 //    s = s.replace("and Otherwise and", ". Otherwise,")
     s = s.replace("error and", "error.")
-    // 参照関係
+
     s = s.replace("that attribute", "that attribute's")
     s = s.replace("'s's", "'s")
     s = ":$".r.replaceAllIn(s, ".")

@@ -2,8 +2,8 @@
 object CommandStructure {
   trait Command
 
-  case class Switch(state: StateVal) extends Command
-  case class Reconsume(state: StateVal) extends Command
+  case class Switch(state: IStateVal) extends Command
+  case class Reconsume(state: IStateVal) extends Command
 
   /**
    * Set文はいろんなパターンがある(大体代入をする命令、対象が様々) -> 同じ関数でいいのか？
@@ -43,9 +43,9 @@ object CommandStructure {
   case class Ignore(obj: String) extends Command
 
   // 1パターンしかないから決め打ちする
-  case class Flush() extends Command // Flush code points consumed as a character reference.
-  case class Treat() extends Command // treat it as per "the character" entry below.
-  case class Start(corefId: String) extends Command //Start a new attribute in the current tag token.
+  case class FlushCodePoint() extends Command // Flush code points consumed as a character reference.
+  case class TreatAsAnythingElse() extends Command // treat it as per "the character" entry below.
+  case class StartAttribute(corefId: String) extends Command //Start a new attribute in the current tag token.
 
   // Multiply the character reference code by 16
   case class Multiply(obj: String, by: String) extends Command
@@ -76,14 +76,14 @@ object CommandStructure {
   case class UNDEF(str: String) extends Bool
 
   trait ImplementValue
-  trait StateVal extends ImplementValue
-  case class StateName(state: String) extends StateVal
-  case object ReturnState extends StateVal
+  trait IStateVal extends ImplementValue
+  case class StateName(state: String) extends IStateVal
+  case object ReturnState extends IStateVal
   case object TemporaryBuffer extends ImplementValue
 
   case object NewStartTagToken extends ImplementValue
-  case object NewEndTagToken extends ImplementValue
-  case object NewDOCTYPEToken extends ImplementValue
+  case object NewEndTagToken extends ImplementValue//
+  case object NewDOCTYPEToken extends ImplementValue//
 
   case object CurrentTagToken extends ImplementValue
   case object CurrentDOCTYPEToken extends ImplementValue
@@ -98,9 +98,10 @@ object CommandStructure {
   case class NameOf(token: ImplementValue) extends ImplementValue
   case class ValueOf(token: ImplementValue) extends ImplementValue
   case class LowerCase(token: ImplementValue) extends ImplementValue
+  case class NumericVersion(token: ImplementValue) extends ImplementValue
   case class FlagOf(variable: Variable) extends ImplementValue
   case class IChar(char: Char) extends ImplementValue
-  case class Mojiretu(string: String) extends ImplementValue
+  case class IString(string: String) extends ImplementValue
   case class Non(str :String) extends ImplementValue
 
 }

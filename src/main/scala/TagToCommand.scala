@@ -201,15 +201,15 @@ object TagToCommand {
           }
           // start
           case List(Leaf(VB,Token(_,_,"start")), Node(NP,np), Node(PP, _)) => {
-            commandList :+= Start("x_" + getCorefId(Node(NP,np)))
+            commandList :+= StartAttribute("x_" + getCorefId(Node(NP,np)))
           }
           // treat
           case List(Leaf(VB, Token(_,_, "treat")), Node(NP, _), Node(PP, _), Node(ADVP, _)) | List(Leaf(VB, Token(_,_, "treat")), Node(NP, _), Node(ADVP, _)) => {
-            commandList :+= Treat()
+            commandList :+= TreatAsAnythingElse()
           }
           // flush
           case List(Leaf(VB,Token(_,_,"flush")), Node(NP,_)) => {
-            commandList :+= Flush()
+            commandList :+= FlushCodePoint()
           }
           // append_1
           case Leaf(VB, Token(_,_, "append")) :: Node(NP, np1) :: Node(PP, List(Leaf(IN, _), Node(NP, np2))) :: Nil => {
@@ -364,6 +364,8 @@ object TagToCommand {
         val npstr = getLeave(removeDT(Node(NP, np)))
         if (npstr.contains("lowercase version")) {
           LowerCase(nptagToImplementValue(Node(NP, np2)))
+        } else if (npstr.contains("numeric version")) {
+          NumericVersion(nptagToImplementValue(Node(NP, np2)))
         } else {
           Non("")
         }
@@ -400,7 +402,7 @@ object TagToCommand {
             moji += char
             num += -1
           }
-          Mojiretu(moji)
+          IString(moji)
         }
         else if (str.contains("current tag")) {
           if (str.contains("name")) NameOf(CurrentTagToken)
@@ -419,7 +421,7 @@ object TagToCommand {
         else if (str.contains("end_of_file")) EndOfFileToken
         else if (str.contains("current input character")) CurrentInputCharacter
         else if (str.contains("character token")) CommandStructure.CharacterToken(str)
-        else if (str.contains("empty string")) Mojiretu("")
+        else if (str.contains("empty string")) IString("")
         else if (str.contains("name") && id != -1) NameOf(Variable("x_" + id))
         else if (str.contains("value") && id != -1) ValueOf(Variable("x_" + id))
         else if (id != -1) Variable("x_" + id)
