@@ -189,15 +189,30 @@ object TagToCommand {
           }
           // multiply
           case List(Leaf(VB,Token(_,_,"multiply")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_,_, "by")), Node(NP, np2)))) => {
-            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(getLeave(n._1), getLeave(Node(NP, np2)))
+            val i2 = nptagToImplementValue(Node(NP, np2))
+            for (n1 <- NPTag(Node(NP, np1))) {
+              val i1 = nptagToImplementValue(n1)
+              commandList :+= CommandStructure.Multiply(i1, i2)
+            }
+            //for (n <- NPDistribute(Node(NP, np1))) commandList :+= Multiply(getLeave(n._1), getLeave(Node(NP, np2)))
           }
           // add_1
           case List(Leaf(VB,Token(_,_,"add")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_,_, "to")), Node(NP, np2)))) => {
-            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(getLeave(n._1), getLeave(Node(NP, np2)))
+            val i2 = nptagToImplementValue(Node(NP, np2))
+            for (n1 <- NPTag(Node(NP, np1))) {
+              val i1 = nptagToImplementValue(n1)
+              commandList :+= CommandStructure.Add(i1, i2)
+            }
+            //for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(getLeave(n._1), getLeave(Node(NP, np2)))
           }
           // add_2
           case Leaf(VB, Token(_,_, "add")) :: Node(NP, List(Node(NP, np1), Node(PP, List(Leaf(IN, Token(_,_, "to")), Node(NP, np2))))) :: Nil => {
-            for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(getLeave(n._1), getLeave(Node(NP, np2)))
+            val i2 = nptagToImplementValue(Node(NP, np2))
+            for (n1 <- NPTag(Node(NP, np1))) {
+              val i1 = nptagToImplementValue(n1)
+              commandList :+= CommandStructure.Add(i1, i2)
+            }
+            //for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(getLeave(n._1), getLeave(Node(NP, np2)))
           }
           // start
           case List(Leaf(VB,Token(_,_,"start")), Node(NP,np), Node(PP, _)) => {
@@ -425,6 +440,19 @@ object TagToCommand {
         else if (str.contains("name") && id != -1) NameOf(Variable("x_" + id))
         else if (str.contains("value") && id != -1) ValueOf(Variable("x_" + id))
         else if (id != -1) Variable("x_" + id)
+        else if (!("0x[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.findFirstIn(str).isEmpty)) {
+          "0x[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.findFirstIn(str) match {
+            case Some(i) => IInt(Utility.unicodeToInt(i))
+            case _ => Non("")
+          }
+        }
+        else if (!("[0-9]+".r.findFirstIn(str).isEmpty)) {
+          "[0-9]+".r.findFirstIn(str) match {
+            case Some(i) => IInt(i.toInt)
+            case _ => Non("")
+          }
+        }
+        else if (str.contains("zero")) IInt(0)
         else Non(str)
       }
     }

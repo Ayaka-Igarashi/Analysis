@@ -10,7 +10,7 @@ import scala.collection.JavaConverters._
 import CommandStructure.Command
 import SpecificationAnalysis.analysis
 import ConvertTree.{convert, corefMap, makeLeafMap, tokenList, tokenList2}
-import Environment.{Env, endOfFileToken}
+import Environment.{Env, StateVal, endOfFileToken}
 import Implement.interpret
 import ParseHtml.{parseHtml, stateList}
 import Replacement.replace_out
@@ -114,7 +114,7 @@ object Main {
     var env: Env = new Env()
     env.setInputText(input)
     val length = env.inputText.length
-    env.setNextState(initialState)
+    env.setNextState(StateVal(initialState))
     var i = 1
     txtOut3.println("num :" + testNumber + ";")
     testNumber += 1

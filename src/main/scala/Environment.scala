@@ -9,21 +9,19 @@ object Environment {
   case class StringVal(string: String) extends Value
   case class StateVal(state: String) extends Value
   case object EOFVal extends Value
-
-//  case class IntVal(i: Int) extends Value
-//  case class BoolVal(b: Boolean) extends Value
-//  case class StringVal(s: String) extends Value
-  //case class Val(var v: Any)
+  case class IntVal(int: Int) extends Value
+  //case class BoolVal(b: Boolean) extends Value
 
   class Env {
     // 現在の状態
-    var currentState: String = null
+    var currentState: StateVal = null
     // 次に行く状態
-    var nextState: String = "Data_state"
+    var nextState: StateVal = StateVal("Data_state")
 
     // returnStateの値
-    var returnState: String = null
+    var returnState: StateVal = null
     var temporaryBuffer: String = ""
+    var characterReferenceCode: Int = 0
     var currentDOCTYPEToken: String = null
     var currentTagToken: String = null
     var commentToken: String = null
@@ -41,7 +39,7 @@ object Environment {
     var mapID : Int = 0
 
     def setInputText(text: String) = { inputText = text }
-    def setNextState(state: String) = { nextState = state }
+    def setNextState(state: StateVal) = { nextState = state }
     def addEmitToken(token: Token) = { emitTokens :+= token }
     def addMap(key: String, value: Value) = { map += (key -> value)}
     def getID(): Int = {val id = mapID; mapID += 1; id}

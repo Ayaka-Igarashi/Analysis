@@ -1,308 +1,99 @@
-domjs
-main:: r
+contentModelFlags
 testnum :1;
-state : Data_state
-input : "<?"
-implement : List(commentToken(?), endOfFileToken())
-correct : List(commentToken(?
-), endOfFileToken())
- -> false
+state : PLAINTEXT_state
+input : "<head>&body;"
+implement : List(characterToken(<), characterToken(h), characterToken(e), characterToken(a), characterToken(d), characterToken(>), characterToken(&), characterToken(b), characterToken(o), characterToken(d), characterToken(y), characterToken(;), endOfFileToken())
+correct : List(characterToken(<head>&body;), endOfFileToken())
+ -> true
 
-main:: r
 testnum :2;
-state : Data_state
-input : "<?
-"
-implement : List(commentToken(?
-), endOfFileToken())
-correct : List(commentToken(?
-), endOfFileToken())
- -> false
+state : PLAINTEXT_state
+input : "</plaintext>&body;"
+implement : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n), characterToken(t), characterToken(e), characterToken(x), characterToken(t), characterToken(>), characterToken(&), characterToken(b), characterToken(o), characterToken(d), characterToken(y), characterToken(;), endOfFileToken())
+correct : List(characterToken(</plaintext>&body;), endOfFileToken())
+ -> true
 
-main:: r
 testnum :3;
-state : Data_state
-input : "<?
-
-"
-implement : List(commentToken(?
-
-), endOfFileToken())
-correct : List(commentToken(?
-
-), endOfFileToken())
- -> false
+state : RCDATA_state
+input : "foo</xmp>"
+implement : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
+ -> true
 
 testnum :4;
 state : RCDATA_state
-input : "\u0000"
-implement : List(characterToken(\), characterToken(u), characterToken(0), characterToken(0), characterToken(0), characterToken(0), endOfFileToken())
-correct : List(characterToken(\uFFFD), endOfFileToken())
- -> false
+input : "foo</xMp>"
+implement : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
+ -> true
 
 testnum :5;
-state : CDATA_section_state
-input : "\u0000]]>"
-implement : List(characterToken(\), characterToken(u), characterToken(0), characterToken(0), characterToken(0), characterToken(0), endOfFileToken())
-correct : List(characterToken(\u0000), endOfFileToken())
- -> true
-
-testnum :6;
-state : Script_data_state
-input : "<!--test\u0000--><!--test-\u0000--><!--test--\u0000-->"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(t), characterToken(e), characterToken(s), characterToken(t), characterToken(\), characterToken(u), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(-), characterToken(-), characterToken(>), characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(t), characterToken(e), characterToken(s), characterToken(t), characterToken(-), characterToken(\), characterToken(u), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(-), characterToken(-), characterToken(>), characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(t), characterToken(e), characterToken(s), characterToken(t), characterToken(-), characterToken(-), characterToken(\), characterToken(u), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(-), characterToken(-), characterToken(>), endOfFileToken())
-correct : List(characterToken(<!--test\uFFFD--><!--test-\uFFFD--><!--test--\uFFFD-->), endOfFileToken())
- -> false
-
-testnum :7;
-state : Script_data_state
-input : "<!--<script>\u0000--><!--<script>-\u0000--><!--<script>--\u0000-->"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(<), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), characterToken(\), characterToken(u), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(-), characterToken(-), characterToken(>), characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(<), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), characterToken(-), characterToken(\), characterToken(u), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(-), characterToken(-), characterToken(>), characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(<), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), characterToken(-), characterToken(-), characterToken(\), characterToken(u), characterToken(0), characterToken(0), characterToken(0), characterToken(0), characterToken(-), characterToken(-), characterToken(>), endOfFileToken())
-correct : List(characterToken(<!--<script>\uFFFD--><!--<script>-\uFFFD--><!--<script>--\uFFFD-->), endOfFileToken())
- -> false
-
-testnum :8;
-state : Script_data_state
-input : "<!--test"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(t), characterToken(e), characterToken(s), characterToken(t), endOfFileToken())
-correct : List(characterToken(<!--test), endOfFileToken())
- -> true
-
-testnum :9;
-state : Script_data_state
-input : "<!--test-"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(t), characterToken(e), characterToken(s), characterToken(t), characterToken(-), endOfFileToken())
-correct : List(characterToken(<!--test-), endOfFileToken())
- -> true
-
-testnum :10;
-state : Script_data_state
-input : "<!--test--"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(t), characterToken(e), characterToken(s), characterToken(t), characterToken(-), characterToken(-), endOfFileToken())
-correct : List(characterToken(<!--test--), endOfFileToken())
- -> true
-
-testnum :11;
-state : Script_data_state
-input : "<!--<script>-"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(<), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), characterToken(-), endOfFileToken())
-correct : List(characterToken(<!--<script>-), endOfFileToken())
- -> false
-
-testnum :12;
-state : Script_data_state
-input : "<!--<script>--"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(<), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), characterToken(-), characterToken(-), endOfFileToken())
-correct : List(characterToken(<!--<script>--), endOfFileToken())
- -> false
-
-testnum :13;
-state : Script_data_state
-input : "<!--<script>"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(<), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), endOfFileToken())
-correct : List(characterToken(<!--<script>), endOfFileToken())
- -> false
-
-testnum :14;
-state : Script_data_state
-input : "<!-- - -->"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken( ), characterToken(-), characterToken( ), characterToken(-), characterToken(-), characterToken(>), endOfFileToken())
-correct : List(characterToken(<!-- - -->), endOfFileToken())
- -> true
-
-testnum :15;
-state : Script_data_state
-input : "<!-- -< -->"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken( ), characterToken(-), characterToken(<), characterToken( ), characterToken(-), characterToken(-), characterToken(>), endOfFileToken())
-correct : List(characterToken(<!-- -< -->), endOfFileToken())
- -> true
-
-testnum :16;
-state : Script_data_state
-input : "<!--test--->"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(t), characterToken(e), characterToken(s), characterToken(t), characterToken(-), characterToken(-), characterToken(-), characterToken(>), endOfFileToken())
-correct : List(characterToken(<!--test--->), endOfFileToken())
- -> true
-
-testnum :17;
-state : Script_data_state
-input : "<!-- </script> --></script>"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken( ), tagToken(false,script,false,List()), characterToken( ), characterToken(-), characterToken(-), characterToken(>), tagToken(false,script,false,List()), endOfFileToken())
-correct : List(characterToken(<!-- ), tagToken(false,script,false,List()), characterToken( -->), tagToken(false,script,false,List()), endOfFileToken())
- -> true
-
-testnum :18;
-state : Script_data_state
-input : "<!-- <script></script> --></script>"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken( ), characterToken(<), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), characterToken(<), characterToken(/), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), characterToken( ), characterToken(-), characterToken(-), characterToken(>), tagToken(false,script,false,List()), endOfFileToken())
-correct : List(characterToken(<!-- <script></script> -->), tagToken(false,script,false,List()), endOfFileToken())
- -> false
-
-testnum :19;
-state : Script_data_state
-input : "<!-- <script><script></script></script> --></script>"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken( ), characterToken(<), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), characterToken(<), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), characterToken(>), characterToken(<), characterToken(/), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), tagToken(false,script,false,List()), characterToken( ), characterToken(-), characterToken(-), characterToken(>), tagToken(false,script,false,List()), endOfFileToken())
-correct : List(characterToken(<!-- <script><script></script>), tagToken(false,script,false,List()), characterToken( -->), tagToken(false,script,false,List()), endOfFileToken())
- -> false
-
-testnum :20;
-state : Script_data_state
-input : "<!-- <script>--></script> --></script>"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken( ), characterToken(<), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), characterToken(-), characterToken(-), characterToken(>), tagToken(false,script,false,List()), characterToken( ), characterToken(-), characterToken(-), characterToken(>), tagToken(false,script,false,List()), endOfFileToken())
-correct : List(characterToken(<!-- <script>-->), tagToken(false,script,false,List()), characterToken( -->), tagToken(false,script,false,List()), endOfFileToken())
- -> false
-
-testnum :21;
-state : Script_data_state
-input : "<!--<scrip></script>-->"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(<), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(<), characterToken(/), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), characterToken(-), characterToken(-), characterToken(>), endOfFileToken())
-correct : List(characterToken(<!--<scrip>), tagToken(false,script,false,List()), characterToken(-->), endOfFileToken())
- -> false
-
-testnum :22;
-state : Script_data_state
-input : "<!--<script</script>-->"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(<), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), tagToken(false,script,false,List()), characterToken(-), characterToken(-), characterToken(>), endOfFileToken())
-correct : List(characterToken(<!--<script), tagToken(false,script,false,List()), characterToken(-->), endOfFileToken())
- -> true
-
-testnum :23;
-state : Script_data_state
-input : "<!--<script></scrip>-->"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(<), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), characterToken(<), characterToken(/), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(-), characterToken(-), characterToken(>), endOfFileToken())
-correct : List(characterToken(<!--<script></scrip>-->), endOfFileToken())
- -> false
-
-testnum :24;
-state : Script_data_state
-input : "<!--<script></script-->"
-implement : List(characterToken(<), characterToken(!), characterToken(-), characterToken(-), characterToken(<), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), characterToken(<), characterToken(/), characterToken(s), characterToken(c), characterToken(r), characterToken(i), characterToken(p), characterToken(t), characterToken(-), characterToken(-), characterToken(>), endOfFileToken())
-correct : List(characterToken(<!--<script></script-->), endOfFileToken())
- -> false
-
-testnum :25;
-state : Data_state
-input : "\uFEFFfoo\uFEFFbar"
-implement : List(characterToken(\), characterToken(u), characterToken(F), characterToken(E), characterToken(F), characterToken(F), characterToken(f), characterToken(o), characterToken(o), characterToken(\), characterToken(u), characterToken(F), characterToken(E), characterToken(F), characterToken(F), characterToken(b), characterToken(a), characterToken(r), endOfFileToken())
-correct : List(characterToken(\uFEFFfoo\uFEFFbar), endOfFileToken())
- -> true
-
-testnum :26;
 state : RCDATA_state
-input : "&NotEqualTilde;"
-implement : List()
-correct : List(characterToken(≂̸), endOfFileToken())
- -> false
-
-testnum :27;
-state : RCDATA_state
-input : "&NotEqualTild;"
-implement : List()
-correct : List(characterToken(&NotEqualTild;), endOfFileToken())
- -> false
-
-testnum :28;
-state : RCDATA_state
-input : "</XMP>"
-implement : List(tagToken(false,xmp,false,List()), endOfFileToken())
-correct : List(tagToken(false,xmp,false,List()), endOfFileToken())
- -> true
-
-testnum :29;
-state : RCDATA_state
-input : "</ XMP>"
-implement : List(characterToken(<), characterToken(/), characterToken( ), characterToken(X), characterToken(M), characterToken(P), characterToken(>), endOfFileToken())
-correct : List(characterToken(</ XMP>), endOfFileToken())
- -> true
-
-testnum :30;
-state : RCDATA_state
-input : "</xm>"
-implement : List(tagToken(false,xm,false,List()), endOfFileToken())
-correct : List(characterToken(</xm>), endOfFileToken())
- -> false
-
-testnum :31;
-state : RCDATA_state
-input : "</xm "
-implement : List(endOfFileToken())
-correct : List(characterToken(</xm ), endOfFileToken())
- -> false
-
-testnum :32;
-state : RCDATA_state
-input : "</xm/"
-implement : List(endOfFileToken())
-correct : List(characterToken(</xm/), endOfFileToken())
- -> false
-
-testnum :33;
-state : Data_state
-input : "<p id="&NotEqualTilde;">"
-implement : List()
-correct : List(tagToken(true,p,false,List(Attribute(id,≂̸))), endOfFileToken())
- -> false
-
-testnum :34;
-state : Data_state
-input : "<!----!\u0000-->"
-implement : List(commentToken(----!\u0000--), endOfFileToken())
-correct : List(commentToken(--!\uFFFD), endOfFileToken())
- -> false
-
-testnum :35;
-state : Data_state
-input : "<!DOCTYPE html "
-implement : List(commentToken(DOCTYPE html ), endOfFileToken())
-correct : List(DOCTYPEToken(html,,,false), endOfFileToken())
- -> false
-
-testnum :36;
-state : Data_state
-input : "<![CDATA[foo]]>"
-implement : List(commentToken([CDATA[foo]]), endOfFileToken())
-correct : List(commentToken([CDATA[foo]]), endOfFileToken())
- -> true
-
-testnum :37;
-state : CDATA_section_state
-input : "foo&#32;]]>"
-implement : List(characterToken(f), characterToken(o), characterToken(o), characterToken(&), characterToken(#), characterToken(3), characterToken(2), characterToken(;), endOfFileToken())
-correct : List(characterToken(foo&#32;), endOfFileToken())
- -> true
-
-testnum :38;
-state : CDATA_section_state
-input : "foo&#32;]]>&#32;"
-implement : List(characterToken(f), characterToken(o), characterToken(o), characterToken(&), characterToken(#), characterToken(3), characterToken(2), characterToken(;))
-correct : List(characterToken(foo&#32; ), endOfFileToken())
- -> false
-
-testnum :39;
-state : CDATA_section_state
-input : "foo]]]>"
-implement : List(characterToken(f), characterToken(o), characterToken(o), characterToken(]), endOfFileToken())
-correct : List(characterToken(foo]), endOfFileToken())
- -> true
-
-testnum :40;
-state : CDATA_section_state
-input : "foo"
+input : "foo</xmp "
 implement : List(characterToken(f), characterToken(o), characterToken(o), endOfFileToken())
 correct : List(characterToken(foo), endOfFileToken())
  -> true
 
-testnum :41;
-state : CDATA_section_state
-input : "foo]"
-implement : List(characterToken(f), characterToken(o), characterToken(o), characterToken(]), endOfFileToken())
-correct : List(characterToken(foo]), endOfFileToken())
+testnum :6;
+state : RCDATA_state
+input : "foo</xmp"
+implement : List(characterToken(f), characterToken(o), characterToken(o), characterToken(<), characterToken(/), characterToken(xmp), endOfFileToken())
+correct : List(characterToken(foo</xmp), endOfFileToken())
  -> true
 
-testnum :42;
-state : CDATA_section_state
-input : "foo]]"
-implement : List(characterToken(f), characterToken(o), characterToken(o), characterToken(]]), endOfFileToken())
-correct : List(characterToken(foo]]), endOfFileToken())
+testnum :7;
+state : RCDATA_state
+input : "foo</xmp/"
+implement : List(characterToken(f), characterToken(o), characterToken(o), endOfFileToken())
+correct : List(characterToken(foo), endOfFileToken())
  -> true
+
+testnum :8;
+state : RCDATA_state
+input : "foo</xmp<"
+implement : List(characterToken(f), characterToken(o), characterToken(o), characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), endOfFileToken())
+correct : List(characterToken(foo</xmp<), endOfFileToken())
+ -> true
+
+testnum :9;
+state : RCDATA_state
+input : "</foo>bar</xmp>"
+implement : List(tagToken(false,foo,false,List()), characterToken(b), characterToken(a), characterToken(r), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(</foo>bar), tagToken(false,xmp,false,List()), endOfFileToken())
+ -> false
+
+testnum :10;
+state : RCDATA_state
+input : "</xmp</xmp</xmp>"
+implement : List(characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), characterToken(/), characterToken(xmp), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(</xmp</xmp), tagToken(false,xmp,false,List()), endOfFileToken())
+ -> true
+
+testnum :11;
+state : RCDATA_state
+input : "</foo>bar</xmpaar>"
+implement : List(tagToken(false,foo,false,List()), characterToken(b), characterToken(a), characterToken(r), tagToken(false,xmpaar,false,List()), endOfFileToken())
+correct : List(characterToken(</foo>bar</xmpaar>), endOfFileToken())
+ -> false
+
+testnum :12;
+state : RCDATA_state
+input : "foo</xmp></baz>"
+implement : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()), tagToken(false,baz,false,List()), endOfFileToken())
+correct : List(characterToken(foo), tagToken(false,xmp,false,List()), tagToken(false,baz,false,List()), endOfFileToken())
+ -> true
+
+testnum :13;
+state : RAWTEXT_state
+input : "&foo;"
+implement : List(characterToken(&), characterToken(f), characterToken(o), characterToken(o), characterToken(;), endOfFileToken())
+correct : List(characterToken(&foo;), endOfFileToken())
+ -> true
+
+testnum :14;
+state : RCDATA_state
+input : "&lt;"
+implement : List()
+correct : List(characterToken(<), endOfFileToken())
+ -> false
 

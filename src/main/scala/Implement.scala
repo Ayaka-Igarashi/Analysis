@@ -15,8 +15,10 @@ object Implement {
     var newEnv: Env = env
     uniqueId = (uniqueId+ 1)
     // 最初の処理
-    val currentState = newEnv.nextState
-    newEnv.currentState = currentState
+    newEnv.currentState = newEnv.nextState
+    val currentState = newEnv.currentState match {
+      case StateVal(s) => s
+    }
     //newEnv.emitTokens = List()
     newEnv.currentInputCharacter = null
     newEnv.errorContent = null
@@ -154,23 +156,15 @@ object Implement {
     command match {
       case Switch(state) => {
         implementValueToValue(state, newEnv) match {
-          case StateVal(s) => newEnv.nextState = s
+          case s: StateVal => newEnv.nextState = s
           case _ =>
         }
-//        state match {
-//          case ReturnState => newEnv.nextState = newEnv.returnState
-//          case StateName(name) => newEnv.nextState = name
-//        }
       }
       case Reconsume(state) => {
         implementValueToValue(state, newEnv) match {
-          case StateVal(s) => newEnv.nextState = s
+          case s: StateVal => newEnv.nextState = s
           case _ =>
         }
-//        state match {
-//          case ReturnState => newEnv.nextState = newEnv.returnState
-//          case StateName(name) => newEnv.nextState = name
-//        }
         newEnv.currentInputCharacter match {
           case CharInput(c) => newEnv.inputText = c + newEnv.inputText
           case StrInput(string) => newEnv.inputText = string + newEnv.inputText
@@ -183,13 +177,9 @@ object Implement {
         obj match {
           case ReturnState => {
             value match {
-              case StateVal(s) => newEnv.returnState = s
+              case s: StateVal => newEnv.returnState = s
               case _ =>
             }
-//            iValue match {
-//              case StateName(s) => newEnv.returnState = s
-//              case _ =>
-//            }
           }
           case TemporaryBuffer => {
             value match {
@@ -197,10 +187,6 @@ object Implement {
               case CharVal(c) => newEnv.temporaryBuffer = c.toString
               case _ =>
             }
-//            iValue match {
-//              case IString(string) => newEnv.temporaryBuffer = string
-//              case _ =>
-//            }
           }
           case NameOf(token) => {
             //var name: String = null
@@ -209,15 +195,6 @@ object Implement {
               case CharVal(c) => c.toString
               case _ => ""
             }
-//            iValue match {
-//              case CurrentInputCharacter => name = newEnv.currentInputCharacter match {
-//                case CharInput(c) => c.toString
-//                case StrInput(s) => s
-//                case _ => ""
-//              }
-//              case IString(string) => name = string
-//              case _ =>
-//            }
             var key: String = null
             token match {
               case Variable(v) => key = v + uniqueId.toString
@@ -234,10 +211,10 @@ object Implement {
             }
           }
           case ValueOf(token) => {
-            var name: String = null
-            iValue match {
-              case IString(string) => name = string
-              case _ =>
+            val name = value match {
+              case StringVal(string) => string
+              case CharVal(c) => c.toString
+              case _ => ""
             }
             var key: String = null
             token match {
@@ -285,30 +262,13 @@ object Implement {
           txtOut3.println("emit error" + value)
         }
       }
-      case Append(value, obj) => {
-        val appendStr: String =
-          value match {
-            case LowerCase(iVal) => {
-              iVal match {
-                case CurrentInputCharacter => {
-                  newEnv.currentInputCharacter match {
-                    case CharInput(c) => (c + 0x20).toChar.toString
-                    case _ => ""
-                  }
-                }
-                case _ =>null
-              }
-            }
-            case IString(string) => string
-            case CurrentInputCharacter => {
-              newEnv.currentInputCharacter match {
-                case CharInput(c) => c.toString
-                case StrInput(s) => s
-                case _ => ""
-              }
-            }
-            case _ => null
-          }
+      case Append(iValue, obj) => {
+        val value = implementValueToValue(iValue, newEnv)
+        val appendStr: String = value match {
+          case StringVal(string) => string
+          case CharVal(c) => c.toString
+          case _ => ""
+        }
         obj match {
           case CommentToken => {newEnv.map.get(newEnv.commentToken) match {
             case Some(TokenVal(Environment.commentToken(s))) => newEnv.addMap(newEnv.commentToken, TokenVal(Environment.commentToken(s + appendStr)))
@@ -318,7 +278,7 @@ object Implement {
           case NameOf(token) => {
             var key: String = null
             token match {
-              case Variable(v) => key = v + uniqueId.toString/**  aaaaaaaaaaaaaaaaaa*/
+              case Variable(v) => key = v + uniqueId.toString
               case CurrentTagToken => key = newEnv.currentTagToken
               case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
               case CurrentAttribute => key = newEnv.currentAttribute
@@ -334,7 +294,7 @@ object Implement {
           case ValueOf(token) => {
             var key: String = null
             token match {
-              case Variable(v) => key = v + uniqueId.toString/**  aaaaaaaaaaaaaaaaaa*/
+              case Variable(v) => key = v + uniqueId.toString
               case CurrentTagToken => key = newEnv.currentTagToken
               case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
               case CurrentAttribute => key = newEnv.currentAttribute
@@ -387,16 +347,21 @@ object Implement {
         //newEnv.currentTagToken.attributes :+= new Attribute(null, null)
       }
       case Multiply(obj, by) => {
+        val value = implementValueToValue(by, newEnv)
+        val num = ValueToInt(value, newEnv)
         obj match {
-          case "character reference code" => {
-            val mutiNum = by.toInt
+          case CharacterReferenceCode => {
+            newEnv.characterReferenceCode *= num
           }
           case _ =>
         }
       }
       case Add(obj, to) => {
-        obj match {
-          case "character reference code" => {
+        val value = implementValueToValue(obj, newEnv)
+        val num = ValueToInt(value, newEnv)
+        to match {
+          case CharacterReferenceCode => {
+            newEnv.characterReferenceCode += num
           }
           case _ =>
         }
@@ -419,8 +384,8 @@ object Implement {
       case Not(b) => !implementBool(env, b)
       case CharacterReferenceConsumedAsAttributeVal() => {
         env.returnState match {
-          case "Attribute_value_double_quoted_state" | "Attribute_value_single_quoted_state"
-               | "Attribute_value_unquoted_state" => true
+          case StateVal("Attribute_value_double_quoted_state") | StateVal("Attribute_value_single_quoted_state")
+               | StateVal("Attribute_value_unquoted_state") => true
           case _ => false
         }
       }
@@ -438,7 +403,8 @@ object Implement {
     implementVal match {
       case IChar(c) => value = CharVal(c)
       case IString(s) => value = StringVal(s)
-      case ReturnState => value = StateVal(env.returnState)
+      case IInt(i) => value = IntVal(i)
+      case ReturnState => value = env.returnState
       case StateName(s) => value = StateVal(s)
       case TemporaryBuffer => value = StringVal(env.temporaryBuffer)
       case NewStartTagToken => value = TokenVal(Environment.tagToken_(true, null, false, List()))
@@ -476,7 +442,6 @@ object Implement {
       }
       case CommandStructure.EndOfFileToken => value = TokenVal(endOfFileToken())
       case CommandStructure.CharacterToken(c) => value = TokenVal(characterToken(c))
-
       case NameOf(x) => {
 
       }
@@ -489,6 +454,15 @@ object Implement {
       case _ =>
     }
     value
+  }
+
+  // ValueからIntに変換する
+  def ValueToInt(tVal: Value, env: Env): Int = {
+    tVal match {
+      case CharVal(char) => char
+      case IntVal(i) => i
+      case _ => 0
+    }
   }
 
   // ValueからTokenに変換する

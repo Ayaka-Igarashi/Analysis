@@ -48,10 +48,10 @@ object CommandStructure {
   case class StartAttribute(corefId: String) extends Command //Start a new attribute in the current tag token.
 
   // Multiply the character reference code by 16
-  case class Multiply(obj: String, by: String) extends Command
+  case class Multiply(obj: ImplementValue, by: ImplementValue) extends Command
 
   // Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0037 from the character's code point) to the character reference code.
-  case class Add(obj: String, to: String) extends Command
+  case class Add(obj: ImplementValue, to: ImplementValue) extends Command
 
   case class If(bool: Bool, var T: List[Command], var F: List[Command]) extends Command
 
@@ -80,6 +80,7 @@ object CommandStructure {
   case class StateName(state: String) extends IStateVal
   case object ReturnState extends IStateVal
   case object TemporaryBuffer extends ImplementValue
+  case object CharacterReferenceCode extends ImplementValue
 
   case object NewStartTagToken extends ImplementValue
   case object NewEndTagToken extends ImplementValue//
@@ -102,6 +103,7 @@ object CommandStructure {
   case class FlagOf(variable: Variable) extends ImplementValue
   case class IChar(char: Char) extends ImplementValue
   case class IString(string: String) extends ImplementValue
+  case class IInt(int: Int) extends ImplementValue
   case class Non(str :String) extends ImplementValue
 
 }
