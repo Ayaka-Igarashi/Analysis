@@ -34,11 +34,25 @@ class Test extends FunSuite {
   }
   test("domjs.test") {
     startTest()
-    txtOut4.println("domjs")
-    val model = TestFormatter.format("src/test/testFile/domjs.test")
-    val tests = model.tests.asScala.toList//.slice(3,4)
-    for (test <- tests) doTest(test)
-    println("correct : " + correctCount + "/" + count)
+    testFormat("domjs")
+    testFormat("entities")
+    testFormat("escapeFlag")
+    testFormat("namedEntities")
+    testFormat("numericEntities")
+    testFormat("pendingSpecChanges")
+    testFormat("test1")
+    testFormat("test2")
+    testFormat("test3")
+    testFormat("test4")
+    testFormat("unicodeChars")
+    testFormat("unicodeCharsProblematic")
+    //testFormat("xmlViolation")
+
+//    txtOut4.println("domjs")
+//    val model = TestFormatter.format("src/test/testFile/domjs.test")
+//    val tests = model.tests.asScala.toList//.slice(3,4)
+//    for (test <- tests) doTest(test)
+//    println("correct : " + correctCount + "/" + count)
     finishTest()
   }
   test("entities.test") {
@@ -88,6 +102,18 @@ class Test extends FunSuite {
   test("xmlViolation.test") {
     TestFormatter.format("src/test/testFile/xmlViolation.test")
     assert(1+2 === 3)
+  }
+
+  def testFormat(file: String) = {
+    count = 0
+    correctCount = 0
+    //startTest()
+    txtOut4.println(file)
+    val model = TestFormatter.format("src/test/testFile/" + file + ".test")
+    val tests = model.tests.asScala.toList//.slice(3,4)
+    for (test <- tests) doTest(test)
+    txtOut4.println(file + " => correct : " + correctCount + "/" + count)
+    //finishTest()
   }
 
   def startTest() = {

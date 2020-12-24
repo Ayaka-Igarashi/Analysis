@@ -118,16 +118,16 @@ object TagToCommand {
           }
           // set(代入する)
           case List(Leaf(VB, Token(_,_,"set")), Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2)))) => {
-            val i2 = nptagToImplementValue(Node(NP, np2))
+            val i2 = nptagToCommandValue(Node(NP, np2))
             for (n1 <- NPTag(Node(NP, np1))) {
-              val i1 = nptagToImplementValue(n1)
+              val i1 = nptagToCommandValue(n1)
               commandList :+= CommandStructure.Set(i1, i2)
             }
           }
           // set2(状態を変更)
           case List(Leaf(VB, Token(_,_,"set")), Node(NP, np), Node(PP, List(Leaf(IN, _), Node(PP, pp)))) => {
-            val i1 = nptagToImplementValue(Node(NP, np))
-            val i2 = nptagToImplementValue(Node(NP, pp))
+            val i1 = nptagToCommandValue(Node(NP, np))
+            val i2 = nptagToCommandValue(Node(NP, pp))
             commandList :+= CommandStructure.Set(i1, i2)
           }
           // set3(状態を変更_PPが省略されてるもの)
@@ -135,16 +135,16 @@ object TagToCommand {
             np match {
               // Set that attribute's name to the current input character, and its value to the empty string.(仮)
               case Node(NP, List(Node(NP, np1_1), Leaf(TO, _), Node(NP, np1_2))) :: Leaf(Comma,_)::Leaf(CC, _)::Node(NP, List(Node(NP, np2_1), Node(PP, List(Leaf(IN, _), Node(NP, np2_2)))))::Nil => {
-                val i1 = nptagToImplementValue(Node(NP, np1_1))
-                val i2 = nptagToImplementValue(Node(NP, np1_2))
-                val i3 = nptagToImplementValue(Node(NP, np2_1))
-                val i4 = nptagToImplementValue(Node(NP, np2_2))
+                val i1 = nptagToCommandValue(Node(NP, np1_1))
+                val i2 = nptagToCommandValue(Node(NP, np1_2))
+                val i3 = nptagToCommandValue(Node(NP, np2_1))
+                val i4 = nptagToCommandValue(Node(NP, np2_2))
 
                 commandList :+= CommandStructure.Set(i1, i2)
                 commandList :+= CommandStructure.Set(i3, i4)
               }
               case _ =>{
-                val i1 = nptagToImplementValue(Node(NP, np))
+                val i1 = nptagToCommandValue(Node(NP, np))
                 commandList :+= CommandStructure.Set(i1, Non("on"))
               }
             }
@@ -156,13 +156,13 @@ object TagToCommand {
           // emit
           case List(Leaf(VB,Token(_,_,"emit")), Node(NP,np)) => {
             for (n <- NPDistribute(Node(NP, np))) {
-              commandList :+= Emit(nptagToImplementValue(n._1))
+              commandList :+= Emit(nptagToCommandValue(n._1))
             }
           }
           // emit2
           case List(Leaf(VB,Token(_,_,"emit")), Node(NP,np), Node(PP, pp)) => {
             for (n <- NPDistribute(Node(NP, np))) {
-              var token: ImplementValue = null
+              var token: CommandValue = null
               if (getLeave(n._1).contains("current input character")) token = CurrentInputCharacter
               else if (n._2 != -1) token = Variable("x_" + n._2.toString)
               else token = CommandStructure.CharacterToken(getLeave(n._1))
@@ -177,7 +177,7 @@ object TagToCommand {
           case List(Leaf(VB,Token(_,_,"create")), Node(NP,np)) => {
             for (n <- NPDistribute(Node(NP, np))) {
               val key = if (n._2 == -1) "" else "x_" + n._2.toString
-              var iVal: ImplementValue = nptagToImplementValue(n._1)
+              var iVal: CommandValue = nptagToCommandValue(n._1)
               iVal match {
                 case CurrentDOCTYPEToken => iVal = NewDOCTYPEToken
                 case CommentToken => iVal = NewCommentToken
@@ -188,34 +188,34 @@ object TagToCommand {
           }
           // multiply
           case List(Leaf(VB,Token(_,_,"multiply")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_,_, "by")), Node(NP, np2)))) => {
-            val i2 = nptagToImplementValue(Node(NP, np2))
+            val i2 = nptagToCommandValue(Node(NP, np2))
             for (n1 <- NPTag(Node(NP, np1))) {
-              val i1 = nptagToImplementValue(n1)
-              commandList :+= CommandStructure.Multiply(i1, i2)
+              val i1 = nptagToCommandValue(n1)
+              commandList :+= CommandStructure.MultiplyBy(i1, i2)
             }
             //for (n <- NPDistribute(Node(NP, np1))) commandList :+= Multiply(getLeave(n._1), getLeave(Node(NP, np2)))
           }
           // add_1
           case List(Leaf(VB,Token(_,_,"add")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_,_, "to")), Node(NP, np2)))) => {
-            val i2 = nptagToImplementValue(Node(NP, np2))
+            val i2 = nptagToImplementVariable(Node(NP, np2))
             for (n1 <- NPTag(Node(NP, np1))) {
-              val i1 = nptagToImplementValue(n1)
-              commandList :+= CommandStructure.Add(i1, i2)
+              val i1 = nptagToCommandValue(n1)
+              commandList :+= CommandStructure.AddTo(i1, i2)
             }
             //for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(getLeave(n._1), getLeave(Node(NP, np2)))
           }
           // add_2
           case Leaf(VB, Token(_,_, "add")) :: Node(NP, List(Node(NP, np1), Node(PP, List(Leaf(IN, Token(_,_, "to")), Node(NP, np2))))) :: Nil => {
-            val i2 = nptagToImplementValue(Node(NP, np2))
+            val i2 = nptagToImplementVariable(Node(NP, np2))
             for (n1 <- NPTag(Node(NP, np1))) {
-              val i1 = nptagToImplementValue(n1)
-              commandList :+= CommandStructure.Add(i1, i2)
+              val i1 = nptagToCommandValue(n1)
+              commandList :+= CommandStructure.AddTo(i1, i2)
             }
             //for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(getLeave(n._1), getLeave(Node(NP, np2)))
           }
           // start
           case List(Leaf(VB,Token(_,_,"start")), Node(NP,np), Node(PP, _)) => {
-            commandList :+= StartAttribute("x_" + getCorefId(Node(NP,np)))
+            commandList :+= StartNewAttribute("x_" + getCorefId(Node(NP,np)))
           }
           // treat
           case List(Leaf(VB, Token(_,_, "treat")), Node(NP, _), Node(PP, _), Node(ADVP, _)) | List(Leaf(VB, Token(_,_, "treat")), Node(NP, _), Node(ADVP, _)) => {
@@ -227,17 +227,17 @@ object TagToCommand {
           }
           // append_1
           case Leaf(VB, Token(_,_, "append")) :: Node(NP, np1) :: Node(PP, List(Leaf(IN, _), Node(NP, np2))) :: Nil => {
-            val i2 = nptagToImplementValue(Node(NP, np2))
+            val i2 = nptagToCommandValue(Node(NP, np2))
             for (n <- NPDistribute(Node(NP, np1))) {
-              val i1 = nptagToImplementValue(n._1)
+              val i1 = nptagToCommandValue(n._1)
               commandList :+= Append(i1, i2)
             }
           }
           // append_2
           case Leaf(VB, Token(_,_, "append")) :: Node(NP, List(Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2))))) :: Nil => {
-            val i2 = nptagToImplementValue(Node(NP, np2))
+            val i2 = nptagToCommandValue(Node(NP, np2))
             for (n <- NPDistribute(Node(NP, np1))) {
-              val i1 = nptagToImplementValue(n._1)
+              val i1 = nptagToCommandValue(n._1)
               commandList :+= Append(i1, i2)
             }
           }
@@ -321,14 +321,14 @@ object TagToCommand {
           }
           case Node(NP, np1) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Node(NP, np2))) :: Nil => {
             if (getLeave(Node(NP, np1)).contains("current end tag") && getLeave(Node(NP, np2)).contains("appropriate")) CurrentEndTagIsAppropriate()
-            else IsEqual(nptagToImplementValue(Node(NP, np1)), nptagToImplementValue(Node(NP, np2)))
+            else IsEqual(nptagToCommandValue(Node(NP, np1)), nptagToCommandValue(Node(NP, np2)))
           }
           case Node(NP, List(Leaf(EX, Token(_,_, "there")))) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Leaf(RB, Token(_,_, "not")),Node(NP, np))) :: Nil => {
             Not(IsExist(getLeave(Node(NP, np))))
           }
           case Node(NP, np1) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Leaf(RB, Token(_,_, "not")), Node(NP, np2))) :: Nil => {
             if (getLeave(Node(NP, np1)).contains("current end tag") && getLeave(Node(NP, np2)).contains("appropriate")) Not(CurrentEndTagIsAppropriate())
-            else Not(IsEqual(nptagToImplementValue(Node(NP, np1)), nptagToImplementValue(Node(NP, np2))))
+            else Not(IsEqual(nptagToCommandValue(Node(NP, np1)), nptagToCommandValue(Node(NP, np2))))
           }
           case _ => {
             if (getLeave(tag).contains("character reference was consumed as part of an attribute")) CharacterReferenceConsumedAsAttributeVal()
@@ -370,107 +370,146 @@ object TagToCommand {
     }
   }
 
-  def nptagToImplementValue(nptag: Tag): ImplementValue = {
+  def nptagToCommandValue(nptag: Tag): CommandValue = {
     //val str = getLeave(removeDT(nptag))
     val id = getCorefId(nptag)
-
     nptag match {
       case Node(NP, List(Node(NP, np), Node(PP, List(Leaf(IN, _), Node(NP, np2))))) => {
         val npstr = getLeave(removeDT(Node(NP, np)))
         if (npstr.contains("lowercase version")) {
-          LowerCase(nptagToImplementValue(Node(NP, np2)))
+          return LowerCase(nptagToCommandValue(Node(NP, np2)))
         } else if (npstr.contains("numeric version")) {
-          NumericVersion(nptagToImplementValue(Node(NP, np2)))
-        } else {
-          Non("")
+          return NumericVersion(nptagToCommandValue(Node(NP, np2)))
         }
       }
       case Node(NP, List(Node(NP, np), Leaf(NN, Token(_,_,n)))) => {
         np.last match {
           case Leaf(POS,Token(_,_,"'s")) => {
             n match {
-              case "name" => NameOf(nptagToImplementValue(Node(NP, np)))
-              case "value" => ValueOf(nptagToImplementValue(Node(NP, np)))
-              case _ => Non("")
+              case "name" => return NameOf(nptagToCommandValue(Node(NP, np)))
+              case "value" => return ValueOf(nptagToCommandValue(Node(NP, np)))
+              case _ =>
             }
           }
-          case _ =>Non("")
+          case _ =>
         }
       }
-      case _ => {
-        val str = getLeave(removeDT(nptag))
-        if (str.contains("return state")) ReturnState
-        else if (str.contains("temporary buffer")) TemporaryBuffer
-        else if(str.contains("_state")) StateName(str)
-        else if (str.matches(".*U_[0-9A-F][0-9A-F][0-9A-F][0-9A-F].* character.*")) {
-          val unicode: String = "U_[0-9A-F][0-9A-F][0-9A-F][0-9A-F]".r.findFirstIn(str) match {
-            case Some(s) => s
-            case None => ""
-          }
-          val char = Utility.unicodeToChar(unicode)
-          var num = 1
-          if (str.contains("two")) num = 2
-          else if (str.contains("three")) num = 3
+      case _ =>
+    }
+    val str = getLeave(removeDT(nptag))
+    if (str.contains("return state")) ReturnState
+    else if (str.contains("temporary buffer")) TemporaryBuffer
+    else if (str.contains("character reference code")) CharacterReferenceCode
+    else if (str.contains("end_of_file")) EndOfFileToken
+    else if (str.contains("current input character")) CurrentInputCharacter
+    else if(str.contains("_state")) StateName(str)
+    else if (str.matches(".*U_[0-9A-F][0-9A-F][0-9A-F][0-9A-F].* character.*")) {
+      val unicode: String = "U_[0-9A-F][0-9A-F][0-9A-F][0-9A-F]".r.findFirstIn(str) match {
+        case Some(s) => s
+        case None => ""
+      }
+      val char = Utility.unicodeToChar(unicode)
+      var num = 1
+      if (str.contains("two")) num = 2
+      else if (str.contains("three")) num = 3
 
-          var moji  = ""
-          while (num >= 1) {
-            moji += char
-            num += -1
-          }
-          IString(moji)
-        }
-        else if (str.contains("new start tag")) {
-          NewStartTagToken
-        }
-        else if (str.contains("new end tag")) {
-          NewEndTagToken
-        }
-        else if (str.contains("DOCTYPE")) {
-          if (str.contains("name")) NameOf(CurrentDOCTYPEToken)
-          else if (str.contains("new")) NewDOCTYPEToken
-          else CurrentDOCTYPEToken
-        }
-        else if (str.contains("current attribute")) {
-          if (str.contains("name")) NameOf(CurrentAttribute)
-          else if (str.contains("value")) ValueOf(CurrentAttribute)
-          else CurrentAttribute
-        }
-        else if (str.contains("comment")) {
-          if (str.contains("new")) NewCommentToken
-          else CommentToken
-        }
-        else if (str.contains("end_of_file")) EndOfFileToken
-        else if (str.contains("current input character")) CurrentInputCharacter
-        else if (str.contains("character token")) CommandStructure.CharacterToken(str)
-        else if (str.contains("empty string")) IString("")
-        else if (str.contains("current") && str.contains("tag")) {
-          if (str.contains("name")) NameOf(CurrentTagToken)
-          else CurrentTagToken
-        }
-        else if (str.contains("name") && id != -1) NameOf(Variable("x_" + id))
-        else if (str.contains("value") && id != -1) ValueOf(Variable("x_" + id))
-        else if (id != -1) Variable("x_" + id)
-        else if (!("0x[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.findFirstIn(str).isEmpty)) {
-          "0x[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.findFirstIn(str) match {
-            case Some(i) => IInt(Utility.unicodeToInt(i))
-            case _ => Non("")
-          }
-        }
-        else if (!("[0-9]+".r.findFirstIn(str).isEmpty)) {
-          "[0-9]+".r.findFirstIn(str) match {
-            case Some(i) => IInt(i.toInt)
-            case _ => Non("")
-          }
-        }
-        else if (!("[sS]tring \".*\"".r.findFirstIn(str).isEmpty)) {
-          "[sS]tring \".*\"".r.findFirstIn(str) match {
-            case Some(i) => IString(i.slice(8, i.length - 1).replace(" ", ""))
-            case _ => Non("")
-          }
-        }
-        else if (str.contains("zero")) IInt(0)
-        else Non(str)
+      var moji  = ""
+      while (num >= 1) {
+        moji += char
+        num += -1
+      }
+      CString(moji)
+    }
+    else if (str.contains("new start tag")) {
+      NewStartTagToken
+    }
+    else if (str.contains("new end tag")) {
+      NewEndTagToken
+    }
+    else if (str.contains("DOCTYPE")) {
+      if (str.contains("name")) NameOf(CurrentDOCTYPEToken)
+      else if (str.contains("new")) NewDOCTYPEToken
+      else CurrentDOCTYPEToken
+    }
+    else if (str.contains("current attribute")) {
+      if (str.contains("name")) NameOf(CurrentAttribute)
+      else if (str.contains("value")) ValueOf(CurrentAttribute)
+      else CurrentAttribute
+    }
+    else if (str.contains("comment")) {
+      if (str.contains("new")) NewCommentToken
+      else CommentToken
+    }
+    else if (str.contains("character token")) CommandStructure.CharacterToken(str)
+    else if (str.contains("empty string")) CString("")
+    else if (str.contains("current") && str.contains("tag")) {
+      if (str.contains("name")) NameOf(CurrentTagToken)
+      else CurrentTagToken
+    }
+    else if (str.contains("name") && id != -1) NameOf(Variable("x_" + id))
+    else if (str.contains("value") && id != -1) ValueOf(Variable("x_" + id))
+    else if (id != -1) Variable("x_" + id)
+    else if (!("0x[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.findFirstIn(str).isEmpty)) {
+      "0x[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.findFirstIn(str) match {
+        case Some(i) => CInt(Utility.unicodeToInt(i))
+        case _ => Non("")
       }
     }
+    else if (!("[0-9]+".r.findFirstIn(str).isEmpty)) {
+      "[0-9]+".r.findFirstIn(str) match {
+        case Some(i) => CInt(i.toInt)
+        case _ => Non("")
+      }
+    }
+    else if (!("[sS]tring \".*\"".r.findFirstIn(str).isEmpty)) {
+      "[sS]tring \".*\"".r.findFirstIn(str) match {
+        case Some(i) => CString(i.slice(8, i.length - 1).replace(" ", ""))
+        case _ => Non("")
+      }
+    }
+    else if (str.contains("zero")) CInt(0)
+    else Non(str)
+  }
+
+  def nptagToImplementVariable(nptag: Tag): ImplementVariable = {
+    //val str = getLeave(removeDT(nptag))
+    val id = getCorefId(nptag)
+    nptag match {
+      case Node(NP, List(Node(NP, np), Leaf(NN, Token(_,_,n)))) => {
+        np.last match {
+          case Leaf(POS,Token(_,_,"'s")) => {
+            n match {
+              case "name" => return INameOf(nptagToImplementVariable(Node(NP, np)))
+              case "value" => return IValueOf(nptagToImplementVariable(Node(NP, np)))
+              case _ =>
+            }
+          }
+          case _ =>
+        }
+      }
+      case _ =>
+    }
+    val str = getLeave(removeDT(nptag))
+    if (str.contains("return state")) IReturnState
+    else if (str.contains("temporary buffer")) ITemporaryBuffer
+    else if (str.contains("character reference code")) ICharacterReferenceCode
+    else if (str.contains("DOCTYPE")) {
+      if (str.contains("name")) INameOf(ICurrentDOCTYPEToken)
+      else ICurrentDOCTYPEToken
+    }
+    else if (str.contains("current attribute")) {
+      if (str.contains("name")) INameOf(ICurrentAttribute)
+      else if (str.contains("value")) IValueOf(ICurrentAttribute)
+      else ICurrentAttribute
+    }
+    else if (str.contains("comment")) ICommentToken
+    else if (str.contains("current") && str.contains("tag")) {
+      if (str.contains("name")) INameOf(ICurrentTagToken)
+      else ICurrentTagToken
+    }
+    else if (str.contains("name") && id != -1) INameOf(IVariable("x_" + id))
+    else if (str.contains("value") && id != -1) IValueOf(IVariable("x_" + id))
+    else if (id != -1) IVariable("x_" + id)
+    else null
   }
 }

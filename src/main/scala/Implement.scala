@@ -186,6 +186,10 @@ object Implement {
               case _ =>
             }
           }
+          case CharacterReferenceCode => newEnv.characterReferenceCode = value match {
+            case IntVal(i) => i
+            case _ => println("CharacterReferenceCode error");-1000
+          }
           case TemporaryBuffer => newEnv.temporaryBuffer = value_string
           case NameOf(token) => {
             var key: String = null
@@ -323,7 +327,7 @@ object Implement {
         val comList = anythingElseCommand
         for (c <- comList) newEnv = interpretCommand(newEnv, c)
       }
-      case StartAttribute(corefId) => {
+      case StartNewAttribute(corefId) => {
         // currentTagTokenに新しい属性を追加する
         val key = if (corefId == "x_-1") "tag_token_attribute_" + newEnv.getID() else corefId + uniqueId
         val newAttribute = Attribute(null, null)
@@ -337,7 +341,7 @@ object Implement {
         newEnv.addMap(key, AttributeVal(newAttribute))
         newEnv.currentAttribute = key
       }
-      case Multiply(obj, by) => {
+      case MultiplyBy(obj, by) => {
         val value = implementValueToValue(by, newEnv)
         val num = ValueToInt(value, newEnv)
         obj match {
@@ -345,11 +349,11 @@ object Implement {
           case _ => println("multiply error")
         }
       }
-      case Add(obj, to) => {
+      case AddTo(obj, to) => {
         val value = implementValueToValue(obj, newEnv)
         val num = ValueToInt(value, newEnv)
         to match {
-          case CharacterReferenceCode => newEnv.characterReferenceCode += num
+          case ICharacterReferenceCode => newEnv.characterReferenceCode += num
           case _ => println("add error")
         }
       }
@@ -393,12 +397,12 @@ object Implement {
   }
 
   // ImplementValueからValueに変換する
-  def implementValueToValue(implementVal: ImplementValue, env: Env): Value = {
+  def implementValueToValue(implementVal: CommandValue, env: Env): Value = {
     var value: Value = null
     implementVal match {
-      case IChar(c) => value = CharVal(c)
-      case IString(s) => value = StringVal(s)
-      case IInt(i) => value = IntVal(i)
+      case CChar(c) => value = CharVal(c)
+      case CString(s) => value = StringVal(s)
+      case CInt(i) => value = IntVal(i)
       case ReturnState => value = env.returnState
       case StateName(s) => value = StateVal(s)
       case TemporaryBuffer => value = StringVal(env.temporaryBuffer)

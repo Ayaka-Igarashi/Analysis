@@ -15,7 +15,7 @@ object CommandStructure {
    * stateのパターン
    *  Set the return state to the data state
    */
-  case class Set(obj: ImplementValue, to: ImplementValue) extends Command
+  case class Set(obj: CommandValue, to: CommandValue) extends Command
 
   // Consume those two characters
   // Consume the next input character
@@ -28,16 +28,16 @@ object CommandStructure {
    * 複数ある場合はEmit自体を複数作る?
    * Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token, and a character token for each of the characters in the temporary buffer (in the order they were added to the buffer).
    * */
-  case class Emit(token: ImplementValue) extends Command
+  case class Emit(token: CommandValue) extends Command
 
   case class Error(error: String) extends Command
 
   // Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name.
   // Append a U+FFFD REPLACEMENT CHARACTER character to the current tag token's tag name.
-  case class Append(obj: ImplementValue, to: ImplementValue) extends Command
+  case class Append(obj: CommandValue, to: CommandValue) extends Command
 
   // create a comment token whose data is the empty string
-  case class Create(token: ImplementValue, valueKey: String) extends Command
+  case class Create(token: CommandValue, valueKey: String) extends Command
 
   // Ignore the character.
   case class Ignore(obj: String) extends Command
@@ -45,13 +45,13 @@ object CommandStructure {
   // 1パターンしかないから決め打ちする
   case class FlushCodePoint() extends Command // Flush code points consumed as a character reference.
   case class TreatAsAnythingElse() extends Command // treat it as per "the character" entry below.
-  case class StartAttribute(corefId: String) extends Command //Start a new attribute in the current tag token.
+  case class StartNewAttribute(corefId: String) extends Command //Start a new attribute in the current tag token.
 
   // Multiply the character reference code by 16
-  case class Multiply(obj: ImplementValue, by: ImplementValue) extends Command
+  case class MultiplyBy(obj: CommandValue, by: CommandValue) extends Command
 
   // Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0037 from the character's code point) to the character reference code.
-  case class Add(obj: ImplementValue, to: ImplementValue) extends Command
+  case class AddTo(obj: CommandValue, to: ImplementVariable) extends Command
 
   case class If(bool: Bool, var T: List[Command], var F: List[Command]) extends Command
 
@@ -72,40 +72,55 @@ object CommandStructure {
   case class Not(a: Bool) extends Bool
   case class CharacterReferenceConsumedAsAttributeVal() extends Bool
   case class CurrentEndTagIsAppropriate() extends Bool
-  case class IsEqual(a: ImplementValue, b: ImplementValue) extends Bool
+  case class IsEqual(a: CommandValue, b: CommandValue) extends Bool
   case class IsExist(a: String) extends Bool
   case class UNDEF(str: String) extends Bool
 
-  trait ImplementValue
-  trait IStateVal extends ImplementValue
+  trait CommandValue
+  trait IStateVal extends CommandValue
   case class StateName(state: String) extends IStateVal
   case object ReturnState extends IStateVal
-  case object TemporaryBuffer extends ImplementValue
-  case object CharacterReferenceCode extends ImplementValue
+  case object TemporaryBuffer extends CommandValue
+  case object CharacterReferenceCode extends CommandValue
 
-  case object NewStartTagToken extends ImplementValue
-  case object NewEndTagToken extends ImplementValue
-  case object NewDOCTYPEToken extends ImplementValue
-  case object NewCommentToken extends ImplementValue
+  case object NewStartTagToken extends CommandValue
+  case object NewEndTagToken extends CommandValue
+  case object NewDOCTYPEToken extends CommandValue
+  case object NewCommentToken extends CommandValue
 
-  case object CurrentTagToken extends ImplementValue
-  case object CurrentDOCTYPEToken extends ImplementValue
-  case object CurrentAttribute extends ImplementValue
-  case object CommentToken extends ImplementValue
-  case object EndOfFileToken extends ImplementValue
-  case class CharacterToken(chara: String) extends ImplementValue
+  case object CurrentTagToken extends CommandValue
+  case object CurrentDOCTYPEToken extends CommandValue
+  case object CurrentAttribute extends CommandValue
+  case object CommentToken extends CommandValue
+  case object EndOfFileToken extends CommandValue
+  case class CharacterToken(chara: String) extends CommandValue
 
-  case class Variable(variable: String) extends ImplementValue
-  case object CurrentInputCharacter extends ImplementValue
-  case object NextInputCharacter extends ImplementValue//
-  case class NameOf(token: ImplementValue) extends ImplementValue//
-  case class ValueOf(token: ImplementValue) extends ImplementValue//
-  case class LowerCase(token: ImplementValue) extends ImplementValue
-  case class NumericVersion(token: ImplementValue) extends ImplementValue
-  case class FlagOf(variable: Variable) extends ImplementValue//
-  case class IChar(char: Char) extends ImplementValue
-  case class IString(string: String) extends ImplementValue
-  case class IInt(int: Int) extends ImplementValue
-  case class Non(str :String) extends ImplementValue//
+  case class Variable(variable: String) extends CommandValue
+  case object CurrentInputCharacter extends CommandValue
+  case object NextInputCharacter extends CommandValue//
+  case class NameOf(token: CommandValue) extends CommandValue//いらない
+  case class ValueOf(token: CommandValue) extends CommandValue//いらない
+  case class LowerCase(token: CommandValue) extends CommandValue
+  case class NumericVersion(token: CommandValue) extends CommandValue
+  case class FlagOf(variable: Variable) extends CommandValue//いらない
+  case class CChar(char: Char) extends CommandValue
+  case class CString(string: String) extends CommandValue
+  case class CInt(int: Int) extends CommandValue
+  case class Non(str :String) extends CommandValue//
+
+
+  // 代入される変数
+  trait ImplementVariable
+  case object IReturnState extends ImplementVariable
+  case object ITemporaryBuffer extends ImplementVariable
+  case object ICharacterReferenceCode extends ImplementVariable
+  case object ICurrentTagToken extends ImplementVariable
+  case object ICurrentDOCTYPEToken extends ImplementVariable
+  case object ICurrentAttribute extends ImplementVariable
+  case object ICommentToken extends ImplementVariable
+  case class IVariable(variable: String) extends ImplementVariable
+  case class INameOf(token: ImplementVariable) extends ImplementVariable
+  case class IValueOf(token: ImplementVariable) extends ImplementVariable
+  case class IFlagOf(token: ImplementVariable) extends ImplementVariable
 
 }
