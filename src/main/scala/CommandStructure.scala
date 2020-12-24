@@ -37,7 +37,7 @@ object CommandStructure {
   case class Append(obj: ImplementValue, to: ImplementValue) extends Command
 
   // create a comment token whose data is the empty string
-  case class Create(token: Environment.Token, valueKey: String) extends Command
+  case class Create(token: ImplementValue, valueKey: String) extends Command
 
   // Ignore the character.
   case class Ignore(obj: String) extends Command
@@ -71,7 +71,8 @@ object CommandStructure {
   case class Or(a: Bool, b: Bool) extends Bool
   case class Not(a: Bool) extends Bool
   case class CharacterReferenceConsumedAsAttributeVal() extends Bool
-  case class IsEqual(a: String, b: String) extends Bool
+  case class CurrentEndTagIsAppropriate() extends Bool
+  case class IsEqual(a: ImplementValue, b: ImplementValue) extends Bool
   case class IsExist(a: String) extends Bool
   case class UNDEF(str: String) extends Bool
 
@@ -83,8 +84,9 @@ object CommandStructure {
   case object CharacterReferenceCode extends ImplementValue
 
   case object NewStartTagToken extends ImplementValue
-  case object NewEndTagToken extends ImplementValue//
-  case object NewDOCTYPEToken extends ImplementValue//
+  case object NewEndTagToken extends ImplementValue
+  case object NewDOCTYPEToken extends ImplementValue
+  case object NewCommentToken extends ImplementValue
 
   case object CurrentTagToken extends ImplementValue
   case object CurrentDOCTYPEToken extends ImplementValue
@@ -95,15 +97,15 @@ object CommandStructure {
 
   case class Variable(variable: String) extends ImplementValue
   case object CurrentInputCharacter extends ImplementValue
-  case object NextInputCharacter extends ImplementValue
-  case class NameOf(token: ImplementValue) extends ImplementValue
-  case class ValueOf(token: ImplementValue) extends ImplementValue
+  case object NextInputCharacter extends ImplementValue//
+  case class NameOf(token: ImplementValue) extends ImplementValue//
+  case class ValueOf(token: ImplementValue) extends ImplementValue//
   case class LowerCase(token: ImplementValue) extends ImplementValue
   case class NumericVersion(token: ImplementValue) extends ImplementValue
-  case class FlagOf(variable: Variable) extends ImplementValue
+  case class FlagOf(variable: Variable) extends ImplementValue//
   case class IChar(char: Char) extends ImplementValue
   case class IString(string: String) extends ImplementValue
   case class IInt(int: Int) extends ImplementValue
-  case class Non(str :String) extends ImplementValue
+  case class Non(str :String) extends ImplementValue//
 
 }

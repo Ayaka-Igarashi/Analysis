@@ -177,14 +177,13 @@ object TagToCommand {
           case List(Leaf(VB,Token(_,_,"create")), Node(NP,np)) => {
             for (n <- NPDistribute(Node(NP, np))) {
               val key = if (n._2 == -1) "" else "x_" + n._2.toString
-              var token: Environment.Token = null
-              val str = getLeave(n._1)
-              if (str.contains("start tag")) token = Environment.tagToken_(true, null, false, List())
-              else if (str.contains("end tag")) token = Environment.tagToken_(false, null, false, List())
-              else if (str.contains("DOCTYPE")) token = Environment.DOCTYPEToken(null, null, null, false)
-              else if (str.contains("comment")) token = Environment.commentToken("")
-              else println("create_error : " + n._1)
-              commandList :+= Create(token, key)
+              var iVal: ImplementValue = nptagToImplementValue(n._1)
+              iVal match {
+                case CurrentDOCTYPEToken => iVal = NewDOCTYPEToken
+                case CommentToken => iVal = NewCommentToken
+                case _ =>
+              }
+              commandList :+= Create(iVal, key)
             }
           }
           // multiply
@@ -308,7 +307,6 @@ object TagToCommand {
   }
 
   def convertBool(tag: Tag): Bool = {
-
     tag match {
       case Node(S, list) => {
         list match {
@@ -322,13 +320,15 @@ object TagToCommand {
             IsExist(getLeave(Node(NP, np)))
           }
           case Node(NP, np1) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Node(NP, np2))) :: Nil => {
-            IsEqual(getLeave(Node(NP, np1)), getLeave(Node(NP, np2)))
+            if (getLeave(Node(NP, np1)).contains("current end tag") && getLeave(Node(NP, np2)).contains("appropriate")) CurrentEndTagIsAppropriate()
+            else IsEqual(nptagToImplementValue(Node(NP, np1)), nptagToImplementValue(Node(NP, np2)))
           }
           case Node(NP, List(Leaf(EX, Token(_,_, "there")))) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Leaf(RB, Token(_,_, "not")),Node(NP, np))) :: Nil => {
             Not(IsExist(getLeave(Node(NP, np))))
           }
           case Node(NP, np1) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Leaf(RB, Token(_,_, "not")), Node(NP, np2))) :: Nil => {
-            Not(IsEqual(getLeave(Node(NP, np1)), getLeave(Node(NP, np2))))
+            if (getLeave(Node(NP, np1)).contains("current end tag") && getLeave(Node(NP, np2)).contains("appropriate")) Not(CurrentEndTagIsAppropriate())
+            else Not(IsEqual(nptagToImplementValue(Node(NP, np1)), nptagToImplementValue(Node(NP, np2))))
           }
           case _ => {
             if (getLeave(tag).contains("character reference was consumed as part of an attribute")) CharacterReferenceConsumedAsAttributeVal()
@@ -419,12 +419,15 @@ object TagToCommand {
           }
           IString(moji)
         }
-        else if (str.contains("current tag")) {
-          if (str.contains("name")) NameOf(CurrentTagToken)
-          else CurrentTagToken
+        else if (str.contains("new start tag")) {
+          NewStartTagToken
+        }
+        else if (str.contains("new end tag")) {
+          NewEndTagToken
         }
         else if (str.contains("DOCTYPE")) {
           if (str.contains("name")) NameOf(CurrentDOCTYPEToken)
+          else if (str.contains("new")) NewDOCTYPEToken
           else CurrentDOCTYPEToken
         }
         else if (str.contains("current attribute")) {
@@ -432,11 +435,18 @@ object TagToCommand {
           else if (str.contains("value")) ValueOf(CurrentAttribute)
           else CurrentAttribute
         }
-        else if (str.contains("comment")) CommentToken
+        else if (str.contains("comment")) {
+          if (str.contains("new")) NewCommentToken
+          else CommentToken
+        }
         else if (str.contains("end_of_file")) EndOfFileToken
         else if (str.contains("current input character")) CurrentInputCharacter
         else if (str.contains("character token")) CommandStructure.CharacterToken(str)
         else if (str.contains("empty string")) IString("")
+        else if (str.contains("current") && str.contains("tag")) {
+          if (str.contains("name")) NameOf(CurrentTagToken)
+          else CurrentTagToken
+        }
         else if (str.contains("name") && id != -1) NameOf(Variable("x_" + id))
         else if (str.contains("value") && id != -1) ValueOf(Variable("x_" + id))
         else if (id != -1) Variable("x_" + id)
@@ -449,6 +459,12 @@ object TagToCommand {
         else if (!("[0-9]+".r.findFirstIn(str).isEmpty)) {
           "[0-9]+".r.findFirstIn(str) match {
             case Some(i) => IInt(i.toInt)
+            case _ => Non("")
+          }
+        }
+        else if (!("[sS]tring \".*\"".r.findFirstIn(str).isEmpty)) {
+          "[sS]tring \".*\"".r.findFirstIn(str) match {
+            case Some(i) => IString(i.slice(8, i.length - 1).replace(" ", ""))
             case _ => Non("")
           }
         }

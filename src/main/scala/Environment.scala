@@ -26,6 +26,7 @@ object Environment {
     var currentTagToken: String = null
     var commentToken: String = null
     var currentAttribute: String = null
+    var lastStartTagName: String = null
 
     var currentInputCharacter: InputCharacter = null
     var emitTokens: List[Token] = List()
@@ -55,6 +56,7 @@ object Environment {
     write.println("current attribute : " + env.currentAttribute)
     write.println("comment Token : " + env.commentToken)
     write.println("temporary buffer : " + env.temporaryBuffer)
+    write.println("last start tag name : " + env.lastStartTagName)
     write.println("current input character : " + env.currentInputCharacter)
     write.println("emit tokens : " + env.emitTokens)
     write.println("error content : " + env.errorContent)

@@ -186,11 +186,13 @@ class Test extends FunSuite {
   def doTest(test: TestFormat) = {
     val initialState = getInitialState(test.initialStates)
 
+    val lastStartTagName = test.lastStartTag
+
     val outputList = test.output.asScala.toList
     val convertedOutput = convertOutput(outputList)
     //println(convertedOutput)
 
-    val env = implement(test.input, initialState)
+    val env = implement(test.input, initialState, lastStartTagName)
 
     var isCorrect = true
     var emitTokens = Main.combineCharacterToken(env.emitTokens)
@@ -210,8 +212,9 @@ class Test extends FunSuite {
     if (isCorrect) correctCount += 1
     txtOut4.println("testnum :" + count + ";")
     txtOut4.println("state : " + initialState)
+    txtOut4.println("lastStartTagName : " + lastStartTagName)
     txtOut4.println("input : \"" + test.input + "\"")
-    txtOut4.println("implement : " + env.emitTokens)
+    txtOut4.println("implement : " + Main.combineCharacterToken(env.emitTokens))
     txtOut4.println("correct : " + convertedOutput)
     txtOut4.println(" -> " + isCorrect + "\n")
   }

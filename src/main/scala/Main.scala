@@ -93,7 +93,7 @@ object Main {
 
       pStateMap = PreserveDefinition.read[ListMap[String, pState]]("src/definition.dat")
       //writeDefinition(txtOut2)
-      implement("<abar d=kl rt=hhh>tyu</huj>", "Data_state")
+      implement("<abar d=kl rt=hhh>tyu</huj>", "Data_state", null)
     }
 
     // ファイルを閉じる
@@ -103,7 +103,7 @@ object Main {
     IOUtils.closeIgnoringExceptions(replace_out)
   }
 
-  def implement(input: String, initialState: String): Env = {
+  def implement(input: String, initialState: String, lastStartTagName: String): Env = {
 
     if (input.contains("\r")) txtOut4.println("main:: r")
     var replacedInput = input.replaceAll("\u000d\u000a", "\u000a")
@@ -115,6 +115,7 @@ object Main {
     env.setInputText(input)
     val length = env.inputText.length
     env.setNextState(StateVal(initialState))
+    env.lastStartTagName = lastStartTagName
     var i = 1
     txtOut3.println("num :" + testNumber + ";")
     testNumber += 1

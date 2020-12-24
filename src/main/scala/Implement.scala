@@ -174,6 +174,11 @@ object Implement {
       }
       case Set(obj, iValue) => {
         val value = implementValueToValue(iValue, newEnv)
+        val value_string = value match {
+          case StringVal(string) => string
+          case CharVal(c) => c.toString
+          case _ => ""
+        }
         obj match {
           case ReturnState => {
             value match {
@@ -181,20 +186,8 @@ object Implement {
               case _ =>
             }
           }
-          case TemporaryBuffer => {
-            value match {
-              case StringVal(string) => newEnv.temporaryBuffer = string
-              case CharVal(c) => newEnv.temporaryBuffer = c.toString
-              case _ =>
-            }
-          }
+          case TemporaryBuffer => newEnv.temporaryBuffer = value_string
           case NameOf(token) => {
-            //var name: String = null
-            val name = value match {
-              case StringVal(string) => string
-              case CharVal(c) => c.toString
-              case _ => ""
-            }
             var key: String = null
             token match {
               case Variable(v) => key = v + uniqueId.toString
@@ -204,28 +197,23 @@ object Implement {
               case _ =>
             }
             newEnv.map.get(key) match {
-              case Some(TokenVal(tagToken_(b,_,f,a))) => newEnv.addMap(key, TokenVal(tagToken_(b,name,f,a)))
-              case Some(TokenVal(DOCTYPEToken(_,f1,f2,a))) => newEnv.addMap(key, TokenVal(DOCTYPEToken(name,f1,f2,a)))
-              case Some(AttributeVal(Attribute(n, v))) => newEnv.addMap(key, AttributeVal(Attribute(name, v)))
+              case Some(TokenVal(tagToken_(b,_,f,a))) => newEnv.addMap(key, TokenVal(tagToken_(b,value_string,f,a)))
+              case Some(TokenVal(DOCTYPEToken(_,f1,f2,a))) => newEnv.addMap(key, TokenVal(DOCTYPEToken(value_string,f1,f2,a)))
+              case Some(AttributeVal(Attribute(n, v))) => newEnv.addMap(key, AttributeVal(Attribute(value_string, v)))
               case _ => println("")
             }
           }
           case ValueOf(token) => {
-            val name = value match {
-              case StringVal(string) => string
-              case CharVal(c) => c.toString
-              case _ => ""
-            }
             var key: String = null
             token match {
-              case Variable(v) => key = v + uniqueId.toString/**  aaaaaaaaaaaaaaaaaa*/
+              case Variable(v) => key = v + uniqueId.toString
               case CurrentTagToken => key = newEnv.currentTagToken
               case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
               case CurrentAttribute => key = newEnv.currentAttribute
               case _ =>
             }
             newEnv.map.get(key) match {
-              case Some(AttributeVal(Attribute(n, _))) => newEnv.addMap(key, AttributeVal(Attribute(n, name)))
+              case Some(AttributeVal(Attribute(n, _))) => newEnv.addMap(key, AttributeVal(Attribute(n, value_string)))
               case _ => println("")
             }
           }
@@ -256,6 +244,10 @@ object Implement {
       case Emit(token) => {
         val value = implementValueToValue(token, newEnv)
         val t = ValueToToken(value, newEnv)
+        t match {
+          case tagToken(true, name, _, _) => newEnv.lastStartTagName = name
+          case _ =>
+        }
         if (t != null) newEnv.addEmitToken(t)
         else {
           newEnv.addEmitToken(characterToken(null))
@@ -274,7 +266,7 @@ object Implement {
             case Some(TokenVal(Environment.commentToken(s))) => newEnv.addMap(newEnv.commentToken, TokenVal(Environment.commentToken(s + appendStr)))
             case _ =>
           }}
-          case TemporaryBuffer => { newEnv.temporaryBuffer += appendStr }
+          case TemporaryBuffer => newEnv.temporaryBuffer += appendStr
           case NameOf(token) => {
             var key: String = null
             token match {
@@ -309,13 +301,13 @@ object Implement {
         }
       }
       case Error(error) => newEnv.errorContent = error //println("ErrorCode : "+error)
-      case Create(token, corefKey) => {/**  aaaaaaaaaaaaaaaaaa*/
+      case Create(iVal, corefKey) => {
         val key = if (corefKey == "") "token_" + newEnv.getID() else corefKey + uniqueId.toString
-        newEnv.addMap(key, TokenVal(token))
-        token match {
-          case tagToken_(_,_,_,_) => newEnv.currentTagToken = key
-          case DOCTYPEToken(_,_,_,_) => newEnv.currentDOCTYPEToken = key
-          case commentToken(_) => newEnv.commentToken = key
+        newEnv.addMap(key, implementValueToValue(iVal, newEnv))
+        iVal match {
+          case NewEndTagToken | NewStartTagToken => newEnv.currentTagToken = key
+          case NewDOCTYPEToken => newEnv.currentDOCTYPEToken = key
+          case NewCommentToken => newEnv.commentToken = key
           case _ => println("error")
         }
       }
@@ -334,7 +326,7 @@ object Implement {
       case StartAttribute(corefId) => {
         // currentTagTokenに新しい属性を追加する
         val key = if (corefId == "x_-1") "tag_token_attribute_" + newEnv.getID() else corefId + uniqueId
-        val newAttribute = new Attribute(null, null)
+        val newAttribute = Attribute(null, null)
         newEnv.map.get(newEnv.currentTagToken) match {
           case Some(TokenVal(tagToken_(b, s, f, attributes))) => {
             val newTagToken = tagToken_(b, s, f, attributes :+ key)
@@ -344,26 +336,21 @@ object Implement {
         }
         newEnv.addMap(key, AttributeVal(newAttribute))
         newEnv.currentAttribute = key
-        //newEnv.currentTagToken.attributes :+= new Attribute(null, null)
       }
       case Multiply(obj, by) => {
         val value = implementValueToValue(by, newEnv)
         val num = ValueToInt(value, newEnv)
         obj match {
-          case CharacterReferenceCode => {
-            newEnv.characterReferenceCode *= num
-          }
-          case _ =>
+          case CharacterReferenceCode => newEnv.characterReferenceCode *= num
+          case _ => println("multiply error")
         }
       }
       case Add(obj, to) => {
         val value = implementValueToValue(obj, newEnv)
         val num = ValueToInt(value, newEnv)
         to match {
-          case CharacterReferenceCode => {
-            newEnv.characterReferenceCode += num
-          }
-          case _ =>
+          case CharacterReferenceCode => newEnv.characterReferenceCode += num
+          case _ => println("add error")
         }
       }
       case If(bool, t, f) => {
@@ -389,9 +376,17 @@ object Implement {
           case _ => false
         }
       }
+      case CurrentEndTagIsAppropriate() => {
+        val endTagName = env.map.get(env.currentTagToken) match {
+          case Some(TokenVal(tagToken_(false, name, _, _))) => name
+          case _ => println("cant find current end tag token");null
+        }
+        if (env.lastStartTagName != null && endTagName == env.lastStartTagName) true
+        else false
+      }
         // 途中
-      case IsEqual(a, b) => true
-      case IsExist(a) => true
+      case IsEqual(a, b) => implementValueToValue(a, env) == implementValueToValue(b, env)
+      case IsExist(a) => false //
       case UNDEF(str) => println("undefined bool : " + bool);false
       case _ => println("undefined bool error : " + bool);false
     }
@@ -408,6 +403,9 @@ object Implement {
       case StateName(s) => value = StateVal(s)
       case TemporaryBuffer => value = StringVal(env.temporaryBuffer)
       case NewStartTagToken => value = TokenVal(Environment.tagToken_(true, null, false, List()))
+      case NewEndTagToken => value = TokenVal(Environment.tagToken_(false, null, false, List()))
+      case NewDOCTYPEToken => value = TokenVal(Environment.DOCTYPEToken(null, null, null, false))
+      case NewCommentToken => value = TokenVal(Environment.commentToken(""))
       case LowerCase(i) => implementValueToValue(i, env) match {
         case CharVal(c) => value = CharVal((c + 0x20).toChar)
         case _ =>

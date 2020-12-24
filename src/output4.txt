@@ -1,97 +1,111 @@
 contentModelFlags
 testnum :1;
 state : PLAINTEXT_state
+lastStartTagName : plaintext
 input : "<head>&body;"
-implement : List(characterToken(<), characterToken(h), characterToken(e), characterToken(a), characterToken(d), characterToken(>), characterToken(&), characterToken(b), characterToken(o), characterToken(d), characterToken(y), characterToken(;), endOfFileToken())
+implement : List(characterToken(<head>&body;), endOfFileToken())
 correct : List(characterToken(<head>&body;), endOfFileToken())
  -> true
 
 testnum :2;
 state : PLAINTEXT_state
+lastStartTagName : plaintext
 input : "</plaintext>&body;"
-implement : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n), characterToken(t), characterToken(e), characterToken(x), characterToken(t), characterToken(>), characterToken(&), characterToken(b), characterToken(o), characterToken(d), characterToken(y), characterToken(;), endOfFileToken())
+implement : List(characterToken(</plaintext>&body;), endOfFileToken())
 correct : List(characterToken(</plaintext>&body;), endOfFileToken())
  -> true
 
 testnum :3;
 state : RCDATA_state
+lastStartTagName : xmp
 input : "foo</xmp>"
-implement : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()), endOfFileToken())
+implement : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
 correct : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
  -> true
 
 testnum :4;
 state : RCDATA_state
+lastStartTagName : xmp
 input : "foo</xMp>"
-implement : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()), endOfFileToken())
+implement : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
 correct : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
  -> true
 
 testnum :5;
 state : RCDATA_state
+lastStartTagName : xmp
 input : "foo</xmp "
-implement : List(characterToken(f), characterToken(o), characterToken(o), endOfFileToken())
+implement : List(characterToken(foo), endOfFileToken())
 correct : List(characterToken(foo), endOfFileToken())
  -> true
 
 testnum :6;
 state : RCDATA_state
+lastStartTagName : xmp
 input : "foo</xmp"
-implement : List(characterToken(f), characterToken(o), characterToken(o), characterToken(<), characterToken(/), characterToken(xmp), endOfFileToken())
+implement : List(characterToken(foo</xmp), endOfFileToken())
 correct : List(characterToken(foo</xmp), endOfFileToken())
  -> true
 
 testnum :7;
 state : RCDATA_state
+lastStartTagName : xmp
 input : "foo</xmp/"
-implement : List(characterToken(f), characterToken(o), characterToken(o), endOfFileToken())
+implement : List(characterToken(foo), endOfFileToken())
 correct : List(characterToken(foo), endOfFileToken())
  -> true
 
 testnum :8;
 state : RCDATA_state
+lastStartTagName : xmp
 input : "foo</xmp<"
-implement : List(characterToken(f), characterToken(o), characterToken(o), characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), endOfFileToken())
+implement : List(characterToken(foo</xmp<), endOfFileToken())
 correct : List(characterToken(foo</xmp<), endOfFileToken())
  -> true
 
 testnum :9;
 state : RCDATA_state
+lastStartTagName : xmp
 input : "</foo>bar</xmp>"
-implement : List(tagToken(false,foo,false,List()), characterToken(b), characterToken(a), characterToken(r), tagToken(false,xmp,false,List()), endOfFileToken())
+implement : List(characterToken(</foo>bar), tagToken(false,xmp,false,List()), endOfFileToken())
 correct : List(characterToken(</foo>bar), tagToken(false,xmp,false,List()), endOfFileToken())
- -> false
+ -> true
 
 testnum :10;
 state : RCDATA_state
+lastStartTagName : xmp
 input : "</xmp</xmp</xmp>"
-implement : List(characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), characterToken(/), characterToken(xmp), tagToken(false,xmp,false,List()), endOfFileToken())
+implement : List(characterToken(</xmp</xmp), tagToken(false,xmp,false,List()), endOfFileToken())
 correct : List(characterToken(</xmp</xmp), tagToken(false,xmp,false,List()), endOfFileToken())
  -> true
 
 testnum :11;
 state : RCDATA_state
+lastStartTagName : xmp
 input : "</foo>bar</xmpaar>"
-implement : List(tagToken(false,foo,false,List()), characterToken(b), characterToken(a), characterToken(r), tagToken(false,xmpaar,false,List()), endOfFileToken())
+implement : List(characterToken(</foo>bar</xmpaar>), endOfFileToken())
 correct : List(characterToken(</foo>bar</xmpaar>), endOfFileToken())
- -> false
+ -> true
 
 testnum :12;
 state : RCDATA_state
+lastStartTagName : xmp
 input : "foo</xmp></baz>"
-implement : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()), tagToken(false,baz,false,List()), endOfFileToken())
+implement : List(characterToken(foo), tagToken(false,xmp,false,List()), tagToken(false,baz,false,List()), endOfFileToken())
 correct : List(characterToken(foo), tagToken(false,xmp,false,List()), tagToken(false,baz,false,List()), endOfFileToken())
  -> true
 
 testnum :13;
 state : RAWTEXT_state
+lastStartTagName : xmp
 input : "&foo;"
-implement : List(characterToken(&), characterToken(f), characterToken(o), characterToken(o), characterToken(;), endOfFileToken())
+implement : List(characterToken(&foo;), endOfFileToken())
 correct : List(characterToken(&foo;), endOfFileToken())
  -> true
 
 testnum :14;
 state : RCDATA_state
+lastStartTagName : textarea
 input : "&lt;"
 implement : List()
 correct : List(characterToken(<), endOfFileToken())
