@@ -1,4 +1,4 @@
-{"xmlViolationTests": [
+{"tests": [
 
 {"description":"Non-XML character",
 "input":"a\uFFFFb",

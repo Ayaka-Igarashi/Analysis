@@ -1,23 +1,23 @@
 num :1;
-input : <head>&body;
+input : a￿b
 
 1 : ===============================================
 command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
 
 ------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
+current state : StateVal(Data_state)
+next state : StateVal(Data_state)
 return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
 temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(<)
-emit tokens : List(characterToken(<))
+last start tag name : null
+current input character : CharInput(a)
+emit tokens : List(characterToken(a))
 error content : null
-input text : head>&body;
+input text : ￿b
 map : 
 ------------------------------------------
 
@@ -28,19 +28,19 @@ V
 command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
 
 ------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
+current state : StateVal(Data_state)
+next state : StateVal(Data_state)
 return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
 temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(h)
-emit tokens : List(characterToken(<), characterToken(h))
+last start tag name : null
+current input character : CharInput(￿)
+emit tokens : List(characterToken(a), characterToken(￿))
 error content : null
-input text : ead>&body;
+input text : b
 map : 
 ------------------------------------------
 
@@ -51,224 +51,17 @@ V
 command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
 
 ------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
+current state : StateVal(Data_state)
+next state : StateVal(Data_state)
 return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
 temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(e)
-emit tokens : List(characterToken(<), characterToken(h), characterToken(e))
-error content : null
-input text : ad>&body;
-map : 
-------------------------------------------
-
-|
-V
-
-4 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(a)
-emit tokens : List(characterToken(<), characterToken(h), characterToken(e), characterToken(a))
-error content : null
-input text : d>&body;
-map : 
-------------------------------------------
-
-|
-V
-
-5 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(d)
-emit tokens : List(characterToken(<), characterToken(h), characterToken(e), characterToken(a), characterToken(d))
-error content : null
-input text : >&body;
-map : 
-------------------------------------------
-
-|
-V
-
-6 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(>)
-emit tokens : List(characterToken(<), characterToken(h), characterToken(e), characterToken(a), characterToken(d), characterToken(>))
-error content : null
-input text : &body;
-map : 
-------------------------------------------
-
-|
-V
-
-7 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(&)
-emit tokens : List(characterToken(<), characterToken(h), characterToken(e), characterToken(a), characterToken(d), characterToken(>), characterToken(&))
-error content : null
-input text : body;
-map : 
-------------------------------------------
-
-|
-V
-
-8 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
+last start tag name : null
 current input character : CharInput(b)
-emit tokens : List(characterToken(<), characterToken(h), characterToken(e), characterToken(a), characterToken(d), characterToken(>), characterToken(&), characterToken(b))
-error content : null
-input text : ody;
-map : 
-------------------------------------------
-
-|
-V
-
-9 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(o)
-emit tokens : List(characterToken(<), characterToken(h), characterToken(e), characterToken(a), characterToken(d), characterToken(>), characterToken(&), characterToken(b), characterToken(o))
-error content : null
-input text : dy;
-map : 
-------------------------------------------
-
-|
-V
-
-10 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(d)
-emit tokens : List(characterToken(<), characterToken(h), characterToken(e), characterToken(a), characterToken(d), characterToken(>), characterToken(&), characterToken(b), characterToken(o), characterToken(d))
-error content : null
-input text : y;
-map : 
-------------------------------------------
-
-|
-V
-
-11 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(y)
-emit tokens : List(characterToken(<), characterToken(h), characterToken(e), characterToken(a), characterToken(d), characterToken(>), characterToken(&), characterToken(b), characterToken(o), characterToken(d), characterToken(y))
-error content : null
-input text : ;
-map : 
-------------------------------------------
-
-|
-V
-
-12 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(;)
-emit tokens : List(characterToken(<), characterToken(h), characterToken(e), characterToken(a), characterToken(d), characterToken(>), characterToken(&), characterToken(b), characterToken(o), characterToken(d), characterToken(y), characterToken(;))
+emit tokens : List(characterToken(a), characterToken(￿), characterToken(b))
 error content : null
 input text : 
 map : 
@@ -277,21 +70,21 @@ map :
 |
 V
 
-13 : ===============================================
+4 : ===============================================
 command : List(Consume(next input character)) , List(Emit(EndOfFileToken))
 
 ------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
+current state : StateVal(Data_state)
+next state : StateVal(Data_state)
 return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
 temporary buffer : 
-last start tag name : plaintext
+last start tag name : null
 current input character : EOF
-emit tokens : List(characterToken(<), characterToken(h), characterToken(e), characterToken(a), characterToken(d), characterToken(>), characterToken(&), characterToken(b), characterToken(o), characterToken(d), characterToken(y), characterToken(;), endOfFileToken())
+emit tokens : List(characterToken(a), characterToken(￿), characterToken(b), endOfFileToken())
 error content : null
 input text : 
 map : 
@@ -301,25 +94,25 @@ map :
 V
 
 num :2;
-input : </plaintext>&body;
+input : ab
 
 1 : ===============================================
 command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
 
 ------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
+current state : StateVal(Data_state)
+next state : StateVal(Data_state)
 return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
 temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(<)
-emit tokens : List(characterToken(<))
+last start tag name : null
+current input character : CharInput(a)
+emit tokens : List(characterToken(a))
 error content : null
-input text : /plaintext>&body;
+input text : b
 map : 
 ------------------------------------------
 
@@ -330,19 +123,19 @@ V
 command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
 
 ------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
+current state : StateVal(Data_state)
+next state : StateVal(Data_state)
 return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
 temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(/)
-emit tokens : List(characterToken(<), characterToken(/))
+last start tag name : null
+current input character : CharInput()
+emit tokens : List(characterToken(a), characterToken())
 error content : null
-input text : plaintext>&body;
+input text : b
 map : 
 ------------------------------------------
 
@@ -353,362 +146,17 @@ V
 command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
 
 ------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
+current state : StateVal(Data_state)
+next state : StateVal(Data_state)
 return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
 temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(p)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p))
-error content : null
-input text : laintext>&body;
-map : 
-------------------------------------------
-
-|
-V
-
-4 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(l)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l))
-error content : null
-input text : aintext>&body;
-map : 
-------------------------------------------
-
-|
-V
-
-5 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(a)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a))
-error content : null
-input text : intext>&body;
-map : 
-------------------------------------------
-
-|
-V
-
-6 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(i)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i))
-error content : null
-input text : ntext>&body;
-map : 
-------------------------------------------
-
-|
-V
-
-7 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(n)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n))
-error content : null
-input text : text>&body;
-map : 
-------------------------------------------
-
-|
-V
-
-8 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(t)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n), characterToken(t))
-error content : null
-input text : ext>&body;
-map : 
-------------------------------------------
-
-|
-V
-
-9 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(e)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n), characterToken(t), characterToken(e))
-error content : null
-input text : xt>&body;
-map : 
-------------------------------------------
-
-|
-V
-
-10 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(x)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n), characterToken(t), characterToken(e), characterToken(x))
-error content : null
-input text : t>&body;
-map : 
-------------------------------------------
-
-|
-V
-
-11 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(t)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n), characterToken(t), characterToken(e), characterToken(x), characterToken(t))
-error content : null
-input text : >&body;
-map : 
-------------------------------------------
-
-|
-V
-
-12 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(>)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n), characterToken(t), characterToken(e), characterToken(x), characterToken(t), characterToken(>))
-error content : null
-input text : &body;
-map : 
-------------------------------------------
-
-|
-V
-
-13 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(&)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n), characterToken(t), characterToken(e), characterToken(x), characterToken(t), characterToken(>), characterToken(&))
-error content : null
-input text : body;
-map : 
-------------------------------------------
-
-|
-V
-
-14 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
+last start tag name : null
 current input character : CharInput(b)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n), characterToken(t), characterToken(e), characterToken(x), characterToken(t), characterToken(>), characterToken(&), characterToken(b))
-error content : null
-input text : ody;
-map : 
-------------------------------------------
-
-|
-V
-
-15 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(o)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n), characterToken(t), characterToken(e), characterToken(x), characterToken(t), characterToken(>), characterToken(&), characterToken(b), characterToken(o))
-error content : null
-input text : dy;
-map : 
-------------------------------------------
-
-|
-V
-
-16 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(d)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n), characterToken(t), characterToken(e), characterToken(x), characterToken(t), characterToken(>), characterToken(&), characterToken(b), characterToken(o), characterToken(d))
-error content : null
-input text : y;
-map : 
-------------------------------------------
-
-|
-V
-
-17 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(y)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n), characterToken(t), characterToken(e), characterToken(x), characterToken(t), characterToken(>), characterToken(&), characterToken(b), characterToken(o), characterToken(d), characterToken(y))
-error content : null
-input text : ;
-map : 
-------------------------------------------
-
-|
-V
-
-18 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : plaintext
-current input character : CharInput(;)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n), characterToken(t), characterToken(e), characterToken(x), characterToken(t), characterToken(>), characterToken(&), characterToken(b), characterToken(o), characterToken(d), characterToken(y), characterToken(;))
+emit tokens : List(characterToken(a), characterToken(), characterToken(b))
 error content : null
 input text : 
 map : 
@@ -717,21 +165,21 @@ map :
 |
 V
 
-19 : ===============================================
+4 : ===============================================
 command : List(Consume(next input character)) , List(Emit(EndOfFileToken))
 
 ------------------------------------------
-current state : StateVal(PLAINTEXT_state)
-next state : StateVal(PLAINTEXT_state)
+current state : StateVal(Data_state)
+next state : StateVal(Data_state)
 return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
 temporary buffer : 
-last start tag name : plaintext
+last start tag name : null
 current input character : EOF
-emit tokens : List(characterToken(<), characterToken(/), characterToken(p), characterToken(l), characterToken(a), characterToken(i), characterToken(n), characterToken(t), characterToken(e), characterToken(x), characterToken(t), characterToken(>), characterToken(&), characterToken(b), characterToken(o), characterToken(d), characterToken(y), characterToken(;), endOfFileToken())
+emit tokens : List(characterToken(a), characterToken(), characterToken(b), endOfFileToken())
 error content : null
 input text : 
 map : 
@@ -741,3462 +189,9 @@ map :
 V
 
 num :3;
-input : foo</xmp>
+input : <!-- foo -- bar -->
 
 1 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(f)
-emit tokens : List(characterToken(f))
-error content : null
-input text : oo</xmp>
-map : 
-------------------------------------------
-
-|
-V
-
-2 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(f), characterToken(o))
-error content : null
-input text : o</xmp>
-map : 
-------------------------------------------
-
-|
-V
-
-3 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : </xmp>
-map : 
-------------------------------------------
-
-|
-V
-
-4 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(RCDATA_less_than_sign_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_less_than_sign_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : /xmp>
-map : 
-------------------------------------------
-
-|
-V
-
-5 : ===============================================
-command : List(Consume(next input character)) , List(Set(ITemporaryBuffer,CString()), Switch(StateName(RCDATA_end_tag_open_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_less_than_sign_state)
-next state : StateVal(RCDATA_end_tag_open_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : xmp>
-map : 
-------------------------------------------
-
-|
-V
-
-6 : ===============================================
-command : List(Consume(next input character)) , List(Create(NewEndTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(RCDATA_end_tag_name_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_open_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_139
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : xmp>
-map : 
- (x_139,TokenVal(tagToken_(false,,false,List())))
-------------------------------------------
-
-|
-V
-
-7 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_139
-current attribute : null
-comment Token : null
-temporary buffer : x
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : mp>
-map : 
- (x_139,TokenVal(tagToken_(false,x,false,List())))
-------------------------------------------
-
-|
-V
-
-8 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_139
-current attribute : null
-comment Token : null
-temporary buffer : xm
-last start tag name : xmp
-current input character : CharInput(m)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : p>
-map : 
- (x_139,TokenVal(tagToken_(false,xm,false,List())))
-------------------------------------------
-
-|
-V
-
-9 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_139
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(p)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : >
-map : 
- (x_139,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-10 : ===============================================
-command : List(Consume(next input character)) , List(If(CurrentEndTagIsAppropriate(),List(Switch(StateName(Data_state)), Emit(CurrentTagToken)),List(TreatAsAnythingElse())))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(Data_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_139
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(>)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()))
-error content : null
-input text : 
-map : 
- (x_139,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-11 : ===============================================
-command : List(Consume(next input character)) , List(Emit(EndOfFileToken))
-
-------------------------------------------
-current state : StateVal(Data_state)
-next state : StateVal(Data_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_139
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : EOF
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()), endOfFileToken())
-error content : null
-input text : 
-map : 
- (x_139,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-num :4;
-input : foo</xMp>
-
-1 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(f)
-emit tokens : List(characterToken(f))
-error content : null
-input text : oo</xMp>
-map : 
-------------------------------------------
-
-|
-V
-
-2 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(f), characterToken(o))
-error content : null
-input text : o</xMp>
-map : 
-------------------------------------------
-
-|
-V
-
-3 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : </xMp>
-map : 
-------------------------------------------
-
-|
-V
-
-4 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(RCDATA_less_than_sign_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_less_than_sign_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : /xMp>
-map : 
-------------------------------------------
-
-|
-V
-
-5 : ===============================================
-command : List(Consume(next input character)) , List(Set(ITemporaryBuffer,CString()), Switch(StateName(RCDATA_end_tag_open_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_less_than_sign_state)
-next state : StateVal(RCDATA_end_tag_open_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : xMp>
-map : 
-------------------------------------------
-
-|
-V
-
-6 : ===============================================
-command : List(Consume(next input character)) , List(Create(NewEndTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(RCDATA_end_tag_name_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_open_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_150
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : xMp>
-map : 
- (x_150,TokenVal(tagToken_(false,,false,List())))
-------------------------------------------
-
-|
-V
-
-7 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_150
-current attribute : null
-comment Token : null
-temporary buffer : x
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : Mp>
-map : 
- (x_150,TokenVal(tagToken_(false,x,false,List())))
-------------------------------------------
-
-|
-V
-
-8 : ===============================================
-command : List(Consume(next input character)) , List(Append(LowerCase(CurrentInputCharacter),INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_150
-current attribute : null
-comment Token : null
-temporary buffer : xM
-last start tag name : xmp
-current input character : CharInput(M)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : p>
-map : 
- (x_150,TokenVal(tagToken_(false,xm,false,List())))
-------------------------------------------
-
-|
-V
-
-9 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_150
-current attribute : null
-comment Token : null
-temporary buffer : xMp
-last start tag name : xmp
-current input character : CharInput(p)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : >
-map : 
- (x_150,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-10 : ===============================================
-command : List(Consume(next input character)) , List(If(CurrentEndTagIsAppropriate(),List(Switch(StateName(Data_state)), Emit(CurrentTagToken)),List(TreatAsAnythingElse())))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(Data_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_150
-current attribute : null
-comment Token : null
-temporary buffer : xMp
-last start tag name : xmp
-current input character : CharInput(>)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()))
-error content : null
-input text : 
-map : 
- (x_150,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-11 : ===============================================
-command : List(Consume(next input character)) , List(Emit(EndOfFileToken))
-
-------------------------------------------
-current state : StateVal(Data_state)
-next state : StateVal(Data_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_150
-current attribute : null
-comment Token : null
-temporary buffer : xMp
-last start tag name : xmp
-current input character : EOF
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()), endOfFileToken())
-error content : null
-input text : 
-map : 
- (x_150,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-num :5;
-input : foo</xmp 
-
-1 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(f)
-emit tokens : List(characterToken(f))
-error content : null
-input text : oo</xmp 
-map : 
-------------------------------------------
-
-|
-V
-
-2 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(f), characterToken(o))
-error content : null
-input text : o</xmp 
-map : 
-------------------------------------------
-
-|
-V
-
-3 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : </xmp 
-map : 
-------------------------------------------
-
-|
-V
-
-4 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(RCDATA_less_than_sign_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_less_than_sign_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : /xmp 
-map : 
-------------------------------------------
-
-|
-V
-
-5 : ===============================================
-command : List(Consume(next input character)) , List(Set(ITemporaryBuffer,CString()), Switch(StateName(RCDATA_end_tag_open_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_less_than_sign_state)
-next state : StateVal(RCDATA_end_tag_open_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : xmp 
-map : 
-------------------------------------------
-
-|
-V
-
-6 : ===============================================
-command : List(Consume(next input character)) , List(Create(NewEndTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(RCDATA_end_tag_name_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_open_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_161
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : xmp 
-map : 
- (x_161,TokenVal(tagToken_(false,,false,List())))
-------------------------------------------
-
-|
-V
-
-7 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_161
-current attribute : null
-comment Token : null
-temporary buffer : x
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : mp 
-map : 
- (x_161,TokenVal(tagToken_(false,x,false,List())))
-------------------------------------------
-
-|
-V
-
-8 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_161
-current attribute : null
-comment Token : null
-temporary buffer : xm
-last start tag name : xmp
-current input character : CharInput(m)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : p 
-map : 
- (x_161,TokenVal(tagToken_(false,xm,false,List())))
-------------------------------------------
-
-|
-V
-
-9 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_161
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(p)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text :  
-map : 
- (x_161,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-10 : ===============================================
-command : List(Consume(next input character)) , List(If(CurrentEndTagIsAppropriate(),List(Switch(StateName(Before_attribute_name_state))),List(TreatAsAnythingElse())))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(Before_attribute_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_161
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput( )
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : 
-map : 
- (x_161,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-11 : ===============================================
-command : List(Consume(next input character)) , List(Reconsume(StateName(After_attribute_name_state)))
-
-------------------------------------------
-current state : StateVal(Before_attribute_name_state)
-next state : StateVal(After_attribute_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_161
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : EOF
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : 
-map : 
- (x_161,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-12 : ===============================================
-command : List(Consume(next input character)) , List(Error(eof_in_tag parse error), Emit(EndOfFileToken))
-
-------------------------------------------
-current state : StateVal(After_attribute_name_state)
-next state : StateVal(After_attribute_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_161
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : EOF
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), endOfFileToken())
-error content : eof_in_tag parse error
-input text : 
-map : 
- (x_161,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-num :6;
-input : foo</xmp
-
-1 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(f)
-emit tokens : List(characterToken(f))
-error content : null
-input text : oo</xmp
-map : 
-------------------------------------------
-
-|
-V
-
-2 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(f), characterToken(o))
-error content : null
-input text : o</xmp
-map : 
-------------------------------------------
-
-|
-V
-
-3 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : </xmp
-map : 
-------------------------------------------
-
-|
-V
-
-4 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(RCDATA_less_than_sign_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_less_than_sign_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : /xmp
-map : 
-------------------------------------------
-
-|
-V
-
-5 : ===============================================
-command : List(Consume(next input character)) , List(Set(ITemporaryBuffer,CString()), Switch(StateName(RCDATA_end_tag_open_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_less_than_sign_state)
-next state : StateVal(RCDATA_end_tag_open_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : xmp
-map : 
-------------------------------------------
-
-|
-V
-
-6 : ===============================================
-command : List(Consume(next input character)) , List(Create(NewEndTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(RCDATA_end_tag_name_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_open_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_173
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : xmp
-map : 
- (x_173,TokenVal(tagToken_(false,,false,List())))
-------------------------------------------
-
-|
-V
-
-7 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_173
-current attribute : null
-comment Token : null
-temporary buffer : x
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : mp
-map : 
- (x_173,TokenVal(tagToken_(false,x,false,List())))
-------------------------------------------
-
-|
-V
-
-8 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_173
-current attribute : null
-comment Token : null
-temporary buffer : xm
-last start tag name : xmp
-current input character : CharInput(m)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : p
-map : 
- (x_173,TokenVal(tagToken_(false,xm,false,List())))
-------------------------------------------
-
-|
-V
-
-9 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_173
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(p)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : 
-map : 
- (x_173,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-10 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CString(<)), Emit(CString(/)), Emit(TemporaryBuffer), Reconsume(StateName(RCDATA_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_173
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : EOF
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : 
-map : 
- (x_173,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-11 : ===============================================
-command : List(Consume(next input character)) , List(Emit(EndOfFileToken))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_173
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : EOF
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), characterToken(<), characterToken(/), characterToken(xmp), endOfFileToken())
-error content : null
-input text : 
-map : 
- (x_173,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-num :7;
-input : foo</xmp/
-
-1 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(f)
-emit tokens : List(characterToken(f))
-error content : null
-input text : oo</xmp/
-map : 
-------------------------------------------
-
-|
-V
-
-2 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(f), characterToken(o))
-error content : null
-input text : o</xmp/
-map : 
-------------------------------------------
-
-|
-V
-
-3 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : </xmp/
-map : 
-------------------------------------------
-
-|
-V
-
-4 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(RCDATA_less_than_sign_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_less_than_sign_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : /xmp/
-map : 
-------------------------------------------
-
-|
-V
-
-5 : ===============================================
-command : List(Consume(next input character)) , List(Set(ITemporaryBuffer,CString()), Switch(StateName(RCDATA_end_tag_open_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_less_than_sign_state)
-next state : StateVal(RCDATA_end_tag_open_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : xmp/
-map : 
-------------------------------------------
-
-|
-V
-
-6 : ===============================================
-command : List(Consume(next input character)) , List(Create(NewEndTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(RCDATA_end_tag_name_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_open_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_184
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : xmp/
-map : 
- (x_184,TokenVal(tagToken_(false,,false,List())))
-------------------------------------------
-
-|
-V
-
-7 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_184
-current attribute : null
-comment Token : null
-temporary buffer : x
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : mp/
-map : 
- (x_184,TokenVal(tagToken_(false,x,false,List())))
-------------------------------------------
-
-|
-V
-
-8 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_184
-current attribute : null
-comment Token : null
-temporary buffer : xm
-last start tag name : xmp
-current input character : CharInput(m)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : p/
-map : 
- (x_184,TokenVal(tagToken_(false,xm,false,List())))
-------------------------------------------
-
-|
-V
-
-9 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_184
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(p)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : /
-map : 
- (x_184,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-10 : ===============================================
-command : List(Consume(next input character)) , List(If(CurrentEndTagIsAppropriate(),List(Switch(StateName(Self_closing_start_tag_state))),List(TreatAsAnythingElse())))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(Self_closing_start_tag_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_184
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : 
-map : 
- (x_184,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-11 : ===============================================
-command : List(Consume(next input character)) , List(Error(eof_in_tag parse error), Emit(EndOfFileToken))
-
-------------------------------------------
-current state : StateVal(Self_closing_start_tag_state)
-next state : StateVal(Self_closing_start_tag_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_184
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : EOF
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), endOfFileToken())
-error content : eof_in_tag parse error
-input text : 
-map : 
- (x_184,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-num :8;
-input : foo</xmp<
-
-1 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(f)
-emit tokens : List(characterToken(f))
-error content : null
-input text : oo</xmp<
-map : 
-------------------------------------------
-
-|
-V
-
-2 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(f), characterToken(o))
-error content : null
-input text : o</xmp<
-map : 
-------------------------------------------
-
-|
-V
-
-3 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : </xmp<
-map : 
-------------------------------------------
-
-|
-V
-
-4 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(RCDATA_less_than_sign_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_less_than_sign_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : /xmp<
-map : 
-------------------------------------------
-
-|
-V
-
-5 : ===============================================
-command : List(Consume(next input character)) , List(Set(ITemporaryBuffer,CString()), Switch(StateName(RCDATA_end_tag_open_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_less_than_sign_state)
-next state : StateVal(RCDATA_end_tag_open_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : xmp<
-map : 
-------------------------------------------
-
-|
-V
-
-6 : ===============================================
-command : List(Consume(next input character)) , List(Create(NewEndTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(RCDATA_end_tag_name_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_open_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_195
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : xmp<
-map : 
- (x_195,TokenVal(tagToken_(false,,false,List())))
-------------------------------------------
-
-|
-V
-
-7 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_195
-current attribute : null
-comment Token : null
-temporary buffer : x
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : mp<
-map : 
- (x_195,TokenVal(tagToken_(false,x,false,List())))
-------------------------------------------
-
-|
-V
-
-8 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_195
-current attribute : null
-comment Token : null
-temporary buffer : xm
-last start tag name : xmp
-current input character : CharInput(m)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : p<
-map : 
- (x_195,TokenVal(tagToken_(false,xm,false,List())))
-------------------------------------------
-
-|
-V
-
-9 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_195
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(p)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : <
-map : 
- (x_195,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-10 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CString(<)), Emit(CString(/)), Emit(TemporaryBuffer), Reconsume(StateName(RCDATA_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_195
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : <
-map : 
- (x_195,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-11 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(RCDATA_less_than_sign_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_less_than_sign_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_195
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : 
-map : 
- (x_195,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-12 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CString(<)), Reconsume(StateName(RCDATA_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_less_than_sign_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_195
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : EOF
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), characterToken(<), characterToken(/), characterToken(xmp), characterToken(<))
-error content : null
-input text : 
-map : 
- (x_195,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-13 : ===============================================
-command : List(Consume(next input character)) , List(Emit(EndOfFileToken))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_195
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : EOF
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), endOfFileToken())
-error content : null
-input text : 
-map : 
- (x_195,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-num :9;
-input : </foo>bar</xmp>
-
-1 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(RCDATA_less_than_sign_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_less_than_sign_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List()
-error content : null
-input text : /foo>bar</xmp>
-map : 
-------------------------------------------
-
-|
-V
-
-2 : ===============================================
-command : List(Consume(next input character)) , List(Set(ITemporaryBuffer,CString()), Switch(StateName(RCDATA_end_tag_open_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_less_than_sign_state)
-next state : StateVal(RCDATA_end_tag_open_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List()
-error content : null
-input text : foo>bar</xmp>
-map : 
-------------------------------------------
-
-|
-V
-
-3 : ===============================================
-command : List(Consume(next input character)) , List(Create(NewEndTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(RCDATA_end_tag_name_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_open_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1105
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(f)
-emit tokens : List()
-error content : null
-input text : foo>bar</xmp>
-map : 
- (x_1105,TokenVal(tagToken_(false,,false,List())))
-------------------------------------------
-
-|
-V
-
-4 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1105
-current attribute : null
-comment Token : null
-temporary buffer : f
-last start tag name : xmp
-current input character : CharInput(f)
-emit tokens : List()
-error content : null
-input text : oo>bar</xmp>
-map : 
- (x_1105,TokenVal(tagToken_(false,f,false,List())))
-------------------------------------------
-
-|
-V
-
-5 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1105
-current attribute : null
-comment Token : null
-temporary buffer : fo
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List()
-error content : null
-input text : o>bar</xmp>
-map : 
- (x_1105,TokenVal(tagToken_(false,fo,false,List())))
-------------------------------------------
-
-|
-V
-
-6 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1105
-current attribute : null
-comment Token : null
-temporary buffer : foo
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List()
-error content : null
-input text : >bar</xmp>
-map : 
- (x_1105,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-7 : ===============================================
-command : List(Consume(next input character)) , List(If(CurrentEndTagIsAppropriate(),List(Switch(StateName(Data_state)), Emit(CurrentTagToken)),List(TreatAsAnythingElse())))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1105
-current attribute : null
-comment Token : null
-temporary buffer : foo
-last start tag name : xmp
-current input character : CharInput(>)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo))
-error content : null
-input text : >bar</xmp>
-map : 
- (x_1105,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-8 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1105
-current attribute : null
-comment Token : null
-temporary buffer : foo
-last start tag name : xmp
-current input character : CharInput(>)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>))
-error content : null
-input text : bar</xmp>
-map : 
- (x_1105,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-9 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1105
-current attribute : null
-comment Token : null
-temporary buffer : foo
-last start tag name : xmp
-current input character : CharInput(b)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b))
-error content : null
-input text : ar</xmp>
-map : 
- (x_1105,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-10 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1105
-current attribute : null
-comment Token : null
-temporary buffer : foo
-last start tag name : xmp
-current input character : CharInput(a)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a))
-error content : null
-input text : r</xmp>
-map : 
- (x_1105,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-11 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1105
-current attribute : null
-comment Token : null
-temporary buffer : foo
-last start tag name : xmp
-current input character : CharInput(r)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : </xmp>
-map : 
- (x_1105,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-12 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(RCDATA_less_than_sign_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_less_than_sign_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1105
-current attribute : null
-comment Token : null
-temporary buffer : foo
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : /xmp>
-map : 
- (x_1105,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-13 : ===============================================
-command : List(Consume(next input character)) , List(Set(ITemporaryBuffer,CString()), Switch(StateName(RCDATA_end_tag_open_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_less_than_sign_state)
-next state : StateVal(RCDATA_end_tag_open_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1105
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : xmp>
-map : 
- (x_1105,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-14 : ===============================================
-command : List(Consume(next input character)) , List(Create(NewEndTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(RCDATA_end_tag_name_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_open_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1116
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : xmp>
-map : 
- (x_1105,TokenVal(tagToken_(false,foo,false,List())))
- (x_1116,TokenVal(tagToken_(false,,false,List())))
-------------------------------------------
-
-|
-V
-
-15 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1116
-current attribute : null
-comment Token : null
-temporary buffer : x
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : mp>
-map : 
- (x_1105,TokenVal(tagToken_(false,foo,false,List())))
- (x_1116,TokenVal(tagToken_(false,x,false,List())))
-------------------------------------------
-
-|
-V
-
-16 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1116
-current attribute : null
-comment Token : null
-temporary buffer : xm
-last start tag name : xmp
-current input character : CharInput(m)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : p>
-map : 
- (x_1105,TokenVal(tagToken_(false,foo,false,List())))
- (x_1116,TokenVal(tagToken_(false,xm,false,List())))
-------------------------------------------
-
-|
-V
-
-17 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1116
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(p)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : >
-map : 
- (x_1105,TokenVal(tagToken_(false,foo,false,List())))
- (x_1116,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-18 : ===============================================
-command : List(Consume(next input character)) , List(If(CurrentEndTagIsAppropriate(),List(Switch(StateName(Data_state)), Emit(CurrentTagToken)),List(TreatAsAnythingElse())))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(Data_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1116
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(>)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r), tagToken(false,xmp,false,List()))
-error content : null
-input text : 
-map : 
- (x_1105,TokenVal(tagToken_(false,foo,false,List())))
- (x_1116,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-19 : ===============================================
-command : List(Consume(next input character)) , List(Emit(EndOfFileToken))
-
-------------------------------------------
-current state : StateVal(Data_state)
-next state : StateVal(Data_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1116
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : EOF
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r), tagToken(false,xmp,false,List()), endOfFileToken())
-error content : null
-input text : 
-map : 
- (x_1105,TokenVal(tagToken_(false,foo,false,List())))
- (x_1116,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-num :10;
-input : </xmp</xmp</xmp>
-
-1 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(RCDATA_less_than_sign_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_less_than_sign_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List()
-error content : null
-input text : /xmp</xmp</xmp>
-map : 
-------------------------------------------
-
-|
-V
-
-2 : ===============================================
-command : List(Consume(next input character)) , List(Set(ITemporaryBuffer,CString()), Switch(StateName(RCDATA_end_tag_open_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_less_than_sign_state)
-next state : StateVal(RCDATA_end_tag_open_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List()
-error content : null
-input text : xmp</xmp</xmp>
-map : 
-------------------------------------------
-
-|
-V
-
-3 : ===============================================
-command : List(Consume(next input character)) , List(Create(NewEndTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(RCDATA_end_tag_name_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_open_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1124
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List()
-error content : null
-input text : xmp</xmp</xmp>
-map : 
- (x_1124,TokenVal(tagToken_(false,,false,List())))
-------------------------------------------
-
-|
-V
-
-4 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1124
-current attribute : null
-comment Token : null
-temporary buffer : x
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List()
-error content : null
-input text : mp</xmp</xmp>
-map : 
- (x_1124,TokenVal(tagToken_(false,x,false,List())))
-------------------------------------------
-
-|
-V
-
-5 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1124
-current attribute : null
-comment Token : null
-temporary buffer : xm
-last start tag name : xmp
-current input character : CharInput(m)
-emit tokens : List()
-error content : null
-input text : p</xmp</xmp>
-map : 
- (x_1124,TokenVal(tagToken_(false,xm,false,List())))
-------------------------------------------
-
-|
-V
-
-6 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1124
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(p)
-emit tokens : List()
-error content : null
-input text : </xmp</xmp>
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-7 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CString(<)), Emit(CString(/)), Emit(TemporaryBuffer), Reconsume(StateName(RCDATA_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1124
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : </xmp</xmp>
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-8 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(RCDATA_less_than_sign_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_less_than_sign_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1124
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : /xmp</xmp>
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-9 : ===============================================
-command : List(Consume(next input character)) , List(Set(ITemporaryBuffer,CString()), Switch(StateName(RCDATA_end_tag_open_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_less_than_sign_state)
-next state : StateVal(RCDATA_end_tag_open_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1124
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : xmp</xmp>
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-10 : ===============================================
-command : List(Consume(next input character)) , List(Create(NewEndTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(RCDATA_end_tag_name_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_open_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1131
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : xmp</xmp>
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1131,TokenVal(tagToken_(false,,false,List())))
-------------------------------------------
-
-|
-V
-
-11 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1131
-current attribute : null
-comment Token : null
-temporary buffer : x
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : mp</xmp>
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1131,TokenVal(tagToken_(false,x,false,List())))
-------------------------------------------
-
-|
-V
-
-12 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1131
-current attribute : null
-comment Token : null
-temporary buffer : xm
-last start tag name : xmp
-current input character : CharInput(m)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : p</xmp>
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1131,TokenVal(tagToken_(false,xm,false,List())))
-------------------------------------------
-
-|
-V
-
-13 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1131
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(p)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : </xmp>
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1131,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-14 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CString(<)), Emit(CString(/)), Emit(TemporaryBuffer), Reconsume(StateName(RCDATA_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1131
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : </xmp>
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1131,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-15 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(RCDATA_less_than_sign_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_less_than_sign_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1131
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : /xmp>
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1131,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-16 : ===============================================
-command : List(Consume(next input character)) , List(Set(ITemporaryBuffer,CString()), Switch(StateName(RCDATA_end_tag_open_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_less_than_sign_state)
-next state : StateVal(RCDATA_end_tag_open_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1131
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : xmp>
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1131,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-17 : ===============================================
-command : List(Consume(next input character)) , List(Create(NewEndTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(RCDATA_end_tag_name_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_open_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1138
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : xmp>
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1131,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1138,TokenVal(tagToken_(false,,false,List())))
-------------------------------------------
-
-|
-V
-
-18 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1138
-current attribute : null
-comment Token : null
-temporary buffer : x
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : mp>
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1131,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1138,TokenVal(tagToken_(false,x,false,List())))
-------------------------------------------
-
-|
-V
-
-19 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1138
-current attribute : null
-comment Token : null
-temporary buffer : xm
-last start tag name : xmp
-current input character : CharInput(m)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : p>
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1131,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1138,TokenVal(tagToken_(false,xm,false,List())))
-------------------------------------------
-
-|
-V
-
-20 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1138
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(p)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), characterToken(/), characterToken(xmp))
-error content : null
-input text : >
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1131,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1138,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-21 : ===============================================
-command : List(Consume(next input character)) , List(If(CurrentEndTagIsAppropriate(),List(Switch(StateName(Data_state)), Emit(CurrentTagToken)),List(TreatAsAnythingElse())))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(Data_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1138
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(>)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), characterToken(/), characterToken(xmp), tagToken(false,xmp,false,List()))
-error content : null
-input text : 
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1131,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1138,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-22 : ===============================================
-command : List(Consume(next input character)) , List(Emit(EndOfFileToken))
-
-------------------------------------------
-current state : StateVal(Data_state)
-next state : StateVal(Data_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1138
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : EOF
-emit tokens : List(characterToken(<), characterToken(/), characterToken(xmp), characterToken(<), characterToken(/), characterToken(xmp), tagToken(false,xmp,false,List()), endOfFileToken())
-error content : null
-input text : 
-map : 
- (x_1124,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1131,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1138,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-num :11;
-input : </foo>bar</xmpaar>
-
-1 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(RCDATA_less_than_sign_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_less_than_sign_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List()
-error content : null
-input text : /foo>bar</xmpaar>
-map : 
-------------------------------------------
-
-|
-V
-
-2 : ===============================================
-command : List(Consume(next input character)) , List(Set(ITemporaryBuffer,CString()), Switch(StateName(RCDATA_end_tag_open_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_less_than_sign_state)
-next state : StateVal(RCDATA_end_tag_open_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List()
-error content : null
-input text : foo>bar</xmpaar>
-map : 
-------------------------------------------
-
-|
-V
-
-3 : ===============================================
-command : List(Consume(next input character)) , List(Create(NewEndTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(RCDATA_end_tag_name_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_open_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1146
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(f)
-emit tokens : List()
-error content : null
-input text : foo>bar</xmpaar>
-map : 
- (x_1146,TokenVal(tagToken_(false,,false,List())))
-------------------------------------------
-
-|
-V
-
-4 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1146
-current attribute : null
-comment Token : null
-temporary buffer : f
-last start tag name : xmp
-current input character : CharInput(f)
-emit tokens : List()
-error content : null
-input text : oo>bar</xmpaar>
-map : 
- (x_1146,TokenVal(tagToken_(false,f,false,List())))
-------------------------------------------
-
-|
-V
-
-5 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1146
-current attribute : null
-comment Token : null
-temporary buffer : fo
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List()
-error content : null
-input text : o>bar</xmpaar>
-map : 
- (x_1146,TokenVal(tagToken_(false,fo,false,List())))
-------------------------------------------
-
-|
-V
-
-6 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1146
-current attribute : null
-comment Token : null
-temporary buffer : foo
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List()
-error content : null
-input text : >bar</xmpaar>
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-7 : ===============================================
-command : List(Consume(next input character)) , List(If(CurrentEndTagIsAppropriate(),List(Switch(StateName(Data_state)), Emit(CurrentTagToken)),List(TreatAsAnythingElse())))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1146
-current attribute : null
-comment Token : null
-temporary buffer : foo
-last start tag name : xmp
-current input character : CharInput(>)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo))
-error content : null
-input text : >bar</xmpaar>
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-8 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1146
-current attribute : null
-comment Token : null
-temporary buffer : foo
-last start tag name : xmp
-current input character : CharInput(>)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>))
-error content : null
-input text : bar</xmpaar>
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-9 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1146
-current attribute : null
-comment Token : null
-temporary buffer : foo
-last start tag name : xmp
-current input character : CharInput(b)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b))
-error content : null
-input text : ar</xmpaar>
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-10 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1146
-current attribute : null
-comment Token : null
-temporary buffer : foo
-last start tag name : xmp
-current input character : CharInput(a)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a))
-error content : null
-input text : r</xmpaar>
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-11 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1146
-current attribute : null
-comment Token : null
-temporary buffer : foo
-last start tag name : xmp
-current input character : CharInput(r)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : </xmpaar>
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-12 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(RCDATA_less_than_sign_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_less_than_sign_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1146
-current attribute : null
-comment Token : null
-temporary buffer : foo
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : /xmpaar>
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-13 : ===============================================
-command : List(Consume(next input character)) , List(Set(ITemporaryBuffer,CString()), Switch(StateName(RCDATA_end_tag_open_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_less_than_sign_state)
-next state : StateVal(RCDATA_end_tag_open_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1146
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : xmpaar>
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
-------------------------------------------
-
-|
-V
-
-14 : ===============================================
-command : List(Consume(next input character)) , List(Create(NewEndTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(RCDATA_end_tag_name_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_open_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1157
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : xmpaar>
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
- (x_1157,TokenVal(tagToken_(false,,false,List())))
-------------------------------------------
-
-|
-V
-
-15 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1157
-current attribute : null
-comment Token : null
-temporary buffer : x
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : mpaar>
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
- (x_1157,TokenVal(tagToken_(false,x,false,List())))
-------------------------------------------
-
-|
-V
-
-16 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1157
-current attribute : null
-comment Token : null
-temporary buffer : xm
-last start tag name : xmp
-current input character : CharInput(m)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : paar>
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
- (x_1157,TokenVal(tagToken_(false,xm,false,List())))
-------------------------------------------
-
-|
-V
-
-17 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1157
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(p)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : aar>
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
- (x_1157,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-18 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1157
-current attribute : null
-comment Token : null
-temporary buffer : xmpa
-last start tag name : xmp
-current input character : CharInput(a)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : ar>
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
- (x_1157,TokenVal(tagToken_(false,xmpa,false,List())))
-------------------------------------------
-
-|
-V
-
-19 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1157
-current attribute : null
-comment Token : null
-temporary buffer : xmpaa
-last start tag name : xmp
-current input character : CharInput(a)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : r>
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
- (x_1157,TokenVal(tagToken_(false,xmpaa,false,List())))
-------------------------------------------
-
-|
-V
-
-20 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1157
-current attribute : null
-comment Token : null
-temporary buffer : xmpaar
-last start tag name : xmp
-current input character : CharInput(r)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r))
-error content : null
-input text : >
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
- (x_1157,TokenVal(tagToken_(false,xmpaar,false,List())))
-------------------------------------------
-
-|
-V
-
-21 : ===============================================
-command : List(Consume(next input character)) , List(If(CurrentEndTagIsAppropriate(),List(Switch(StateName(Data_state)), Emit(CurrentTagToken)),List(TreatAsAnythingElse())))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1157
-current attribute : null
-comment Token : null
-temporary buffer : xmpaar
-last start tag name : xmp
-current input character : CharInput(>)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r), characterToken(<), characterToken(/), characterToken(xmpaar))
-error content : null
-input text : >
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
- (x_1157,TokenVal(tagToken_(false,xmpaar,false,List())))
-------------------------------------------
-
-|
-V
-
-22 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1157
-current attribute : null
-comment Token : null
-temporary buffer : xmpaar
-last start tag name : xmp
-current input character : CharInput(>)
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r), characterToken(<), characterToken(/), characterToken(xmpaar), characterToken(>))
-error content : null
-input text : 
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
- (x_1157,TokenVal(tagToken_(false,xmpaar,false,List())))
-------------------------------------------
-
-|
-V
-
-23 : ===============================================
-command : List(Consume(next input character)) , List(Emit(EndOfFileToken))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1157
-current attribute : null
-comment Token : null
-temporary buffer : xmpaar
-last start tag name : xmp
-current input character : EOF
-emit tokens : List(characterToken(<), characterToken(/), characterToken(foo), characterToken(>), characterToken(b), characterToken(a), characterToken(r), characterToken(<), characterToken(/), characterToken(xmpaar), characterToken(>), endOfFileToken())
-error content : null
-input text : 
-map : 
- (x_1146,TokenVal(tagToken_(false,foo,false,List())))
- (x_1157,TokenVal(tagToken_(false,xmpaar,false,List())))
-------------------------------------------
-
-|
-V
-
-num :12;
-input : foo</xmp></baz>
-
-1 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(f)
-emit tokens : List(characterToken(f))
-error content : null
-input text : oo</xmp></baz>
-map : 
-------------------------------------------
-
-|
-V
-
-2 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(f), characterToken(o))
-error content : null
-input text : o</xmp></baz>
-map : 
-------------------------------------------
-
-|
-V
-
-3 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : </xmp></baz>
-map : 
-------------------------------------------
-
-|
-V
-
-4 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(RCDATA_less_than_sign_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(RCDATA_less_than_sign_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(<)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : /xmp></baz>
-map : 
-------------------------------------------
-
-|
-V
-
-5 : ===============================================
-command : List(Consume(next input character)) , List(Set(ITemporaryBuffer,CString()), Switch(StateName(RCDATA_end_tag_open_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_less_than_sign_state)
-next state : StateVal(RCDATA_end_tag_open_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : xmp></baz>
-map : 
-------------------------------------------
-
-|
-V
-
-6 : ===============================================
-command : List(Consume(next input character)) , List(Create(NewEndTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(RCDATA_end_tag_name_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_open_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1172
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : xmp></baz>
-map : 
- (x_1172,TokenVal(tagToken_(false,,false,List())))
-------------------------------------------
-
-|
-V
-
-7 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1172
-current attribute : null
-comment Token : null
-temporary buffer : x
-last start tag name : xmp
-current input character : CharInput(x)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : mp></baz>
-map : 
- (x_1172,TokenVal(tagToken_(false,x,false,List())))
-------------------------------------------
-
-|
-V
-
-8 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1172
-current attribute : null
-comment Token : null
-temporary buffer : xm
-last start tag name : xmp
-current input character : CharInput(m)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : p></baz>
-map : 
- (x_1172,TokenVal(tagToken_(false,xm,false,List())))
-------------------------------------------
-
-|
-V
-
-9 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)), Append(CurrentInputCharacter,ITemporaryBuffer))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(RCDATA_end_tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1172
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(p)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : ></baz>
-map : 
- (x_1172,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-10 : ===============================================
-command : List(Consume(next input character)) , List(If(CurrentEndTagIsAppropriate(),List(Switch(StateName(Data_state)), Emit(CurrentTagToken)),List(TreatAsAnythingElse())))
-
-------------------------------------------
-current state : StateVal(RCDATA_end_tag_name_state)
-next state : StateVal(Data_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1172
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(>)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()))
-error content : null
-input text : </baz>
-map : 
- (x_1172,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-11 : ===============================================
 command : List(Consume(next input character)) , List(Switch(StateName(Tag_open_state)))
 
 ------------------------------------------
@@ -4204,380 +199,38 @@ current state : StateVal(Data_state)
 next state : StateVal(Tag_open_state)
 return state : null
 current DOCTYPE Token : null
-current tag Token : x_1172
+current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
+temporary buffer : 
+last start tag name : null
 current input character : CharInput(<)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()))
+emit tokens : List()
 error content : null
-input text : /baz>
+input text : !-- foo -- bar -->
 map : 
- (x_1172,TokenVal(tagToken_(false,xmp,false,List())))
 ------------------------------------------
 
 |
 V
 
-12 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(End_tag_open_state)))
+2 : ===============================================
+command : List(Consume(next input character)) , List(Switch(StateName(Markup_declaration_open_state)))
 
 ------------------------------------------
 current state : StateVal(Tag_open_state)
-next state : StateVal(End_tag_open_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1172
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(/)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()))
-error content : null
-input text : baz>
-map : 
- (x_1172,TokenVal(tagToken_(false,xmp,false,List())))
-------------------------------------------
-
-|
-V
-
-13 : ===============================================
-command : List(Consume(next input character)) , List(Create(NewEndTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(Tag_name_state)))
-
-------------------------------------------
-current state : StateVal(End_tag_open_state)
-next state : StateVal(Tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1179
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(b)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()))
-error content : null
-input text : baz>
-map : 
- (x_1172,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1179,TokenVal(tagToken_(false,,false,List())))
-------------------------------------------
-
-|
-V
-
-14 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)))
-
-------------------------------------------
-current state : StateVal(Tag_name_state)
-next state : StateVal(Tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1179
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(b)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()))
-error content : null
-input text : az>
-map : 
- (x_1172,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1179,TokenVal(tagToken_(false,b,false,List())))
-------------------------------------------
-
-|
-V
-
-15 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)))
-
-------------------------------------------
-current state : StateVal(Tag_name_state)
-next state : StateVal(Tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1179
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(a)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()))
-error content : null
-input text : z>
-map : 
- (x_1172,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1179,TokenVal(tagToken_(false,ba,false,List())))
-------------------------------------------
-
-|
-V
-
-16 : ===============================================
-command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)))
-
-------------------------------------------
-current state : StateVal(Tag_name_state)
-next state : StateVal(Tag_name_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1179
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(z)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()))
-error content : null
-input text : >
-map : 
- (x_1172,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1179,TokenVal(tagToken_(false,baz,false,List())))
-------------------------------------------
-
-|
-V
-
-17 : ===============================================
-command : List(Consume(next input character)) , List(Switch(StateName(Data_state)), Emit(CurrentTagToken))
-
-------------------------------------------
-current state : StateVal(Tag_name_state)
-next state : StateVal(Data_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1179
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : CharInput(>)
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()), tagToken(false,baz,false,List()))
-error content : null
-input text : 
-map : 
- (x_1172,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1179,TokenVal(tagToken_(false,baz,false,List())))
-------------------------------------------
-
-|
-V
-
-18 : ===============================================
-command : List(Consume(next input character)) , List(Emit(EndOfFileToken))
-
-------------------------------------------
-current state : StateVal(Data_state)
-next state : StateVal(Data_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : x_1179
-current attribute : null
-comment Token : null
-temporary buffer : xmp
-last start tag name : xmp
-current input character : EOF
-emit tokens : List(characterToken(f), characterToken(o), characterToken(o), tagToken(false,xmp,false,List()), tagToken(false,baz,false,List()), endOfFileToken())
-error content : null
-input text : 
-map : 
- (x_1172,TokenVal(tagToken_(false,xmp,false,List())))
- (x_1179,TokenVal(tagToken_(false,baz,false,List())))
-------------------------------------------
-
-|
-V
-
-num :13;
-input : &foo;
-
-1 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RAWTEXT_state)
-next state : StateVal(RAWTEXT_state)
+next state : StateVal(Markup_declaration_open_state)
 return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
 temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(&)
-emit tokens : List(characterToken(&))
-error content : null
-input text : foo;
-map : 
-------------------------------------------
-
-|
-V
-
-2 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RAWTEXT_state)
-next state : StateVal(RAWTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(f)
-emit tokens : List(characterToken(&), characterToken(f))
-error content : null
-input text : oo;
-map : 
-------------------------------------------
-
-|
-V
-
-3 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RAWTEXT_state)
-next state : StateVal(RAWTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(&), characterToken(f), characterToken(o))
-error content : null
-input text : o;
-map : 
-------------------------------------------
-
-|
-V
-
-4 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RAWTEXT_state)
-next state : StateVal(RAWTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(o)
-emit tokens : List(characterToken(&), characterToken(f), characterToken(o), characterToken(o))
-error content : null
-input text : ;
-map : 
-------------------------------------------
-
-|
-V
-
-5 : ===============================================
-command : List(Consume(next input character)) , List(Emit(CurrentInputCharacter))
-
-------------------------------------------
-current state : StateVal(RAWTEXT_state)
-next state : StateVal(RAWTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : CharInput(;)
-emit tokens : List(characterToken(&), characterToken(f), characterToken(o), characterToken(o), characterToken(;))
-error content : null
-input text : 
-map : 
-------------------------------------------
-
-|
-V
-
-6 : ===============================================
-command : List(Consume(next input character)) , List(Emit(EndOfFileToken))
-
-------------------------------------------
-current state : StateVal(RAWTEXT_state)
-next state : StateVal(RAWTEXT_state)
-return state : null
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : xmp
-current input character : EOF
-emit tokens : List(characterToken(&), characterToken(f), characterToken(o), characterToken(o), characterToken(;), endOfFileToken())
-error content : null
-input text : 
-map : 
-------------------------------------------
-
-|
-V
-
-num :14;
-input : &lt;
-
-1 : ===============================================
-command : List(Consume(next input character)) , List(Set(IReturnState,StateName(RCDATA_state)), Switch(StateName(Character_reference_state)))
-
-------------------------------------------
-current state : StateVal(RCDATA_state)
-next state : StateVal(Character_reference_state)
-return state : StateVal(RCDATA_state)
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : 
-last start tag name : textarea
-current input character : CharInput(&)
+last start tag name : null
+current input character : CharInput(!)
 emit tokens : List()
 error content : null
-input text : lt;
-map : 
-------------------------------------------
-
-|
-V
-
-2 : ===============================================
-command : List(Set(ITemporaryBuffer,CString()), Append(CString(&),ITemporaryBuffer), Consume(next input character)) , List(Reconsume(StateName(Named_character_reference_state)))
-
-------------------------------------------
-current state : StateVal(Character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
-current DOCTYPE Token : null
-current tag Token : null
-current attribute : null
-comment Token : null
-temporary buffer : &
-last start tag name : textarea
-current input character : CharInput(l)
-emit tokens : List()
-error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4588,19 +241,19 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4611,19 +264,19 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4634,19 +287,19 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4657,19 +310,19 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4680,19 +333,19 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4703,19 +356,19 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4726,19 +379,19 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4749,19 +402,19 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4772,19 +425,19 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4795,19 +448,19 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4818,19 +471,19 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4841,19 +494,19 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4864,19 +517,19 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4887,19 +540,19 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4910,19 +563,19 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
 ------------------------------------------
 
@@ -4933,20 +586,1140 @@ V
 command : List() , List()
 
 ------------------------------------------
-current state : StateVal(Named_character_reference_state)
-next state : StateVal(Named_character_reference_state)
-return state : StateVal(RCDATA_state)
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
 current DOCTYPE Token : null
 current tag Token : null
 current attribute : null
 comment Token : null
-temporary buffer : &
-last start tag name : textarea
+temporary buffer : 
+last start tag name : null
 current input character : null
 emit tokens : List()
 error content : null
-input text : lt;
+input text : -- foo -- bar -->
 map : 
+------------------------------------------
+
+|
+V
+
+19 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+20 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+21 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+22 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+23 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+24 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+25 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+26 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+27 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+28 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+29 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+30 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+31 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+32 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+33 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+34 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+35 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+36 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+37 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+38 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+39 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+40 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+41 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+42 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+43 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+44 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+45 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+46 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+47 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+48 : ===============================================
+command : List() , List()
+
+------------------------------------------
+current state : StateVal(Markup_declaration_open_state)
+next state : StateVal(Markup_declaration_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : null
+emit tokens : List()
+error content : null
+input text : -- foo -- bar -->
+map : 
+------------------------------------------
+
+|
+V
+
+num :4;
+input : <a b=''c=''>
+
+1 : ===============================================
+command : List(Consume(next input character)) , List(Switch(StateName(Tag_open_state)))
+
+------------------------------------------
+current state : StateVal(Data_state)
+next state : StateVal(Tag_open_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : null
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : CharInput(<)
+emit tokens : List()
+error content : null
+input text : a b=''c=''>
+map : 
+------------------------------------------
+
+|
+V
+
+2 : ===============================================
+command : List(Consume(next input character)) , List(Create(NewStartTagToken,x_1), Set(INameOf(IVariable(x_1)),CString()), Reconsume(StateName(Tag_name_state)))
+
+------------------------------------------
+current state : StateVal(Tag_open_state)
+next state : StateVal(Tag_name_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : CharInput(a)
+emit tokens : List()
+error content : null
+input text : a b=''c=''>
+map : 
+ (x_159,TokenVal(tagToken_(true,,false,List())))
+------------------------------------------
+
+|
+V
+
+3 : ===============================================
+command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentTagToken)))
+
+------------------------------------------
+current state : StateVal(Tag_name_state)
+next state : StateVal(Tag_name_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : CharInput(a)
+emit tokens : List()
+error content : null
+input text :  b=''c=''>
+map : 
+ (x_159,TokenVal(tagToken_(true,a,false,List())))
+------------------------------------------
+
+|
+V
+
+4 : ===============================================
+command : List(Consume(next input character)) , List(Switch(StateName(Before_attribute_name_state)))
+
+------------------------------------------
+current state : StateVal(Tag_name_state)
+next state : StateVal(Before_attribute_name_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : null
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : CharInput( )
+emit tokens : List()
+error content : null
+input text : b=''c=''>
+map : 
+ (x_159,TokenVal(tagToken_(true,a,false,List())))
+------------------------------------------
+
+|
+V
+
+5 : ===============================================
+command : List(Consume(next input character)) , List(StartNewAttribute(x_3), Set(INameOf(IVariable(x_3)),CString()), Set(IValueOf(IVariable(x_3)),CString()), Reconsume(StateName(Attribute_name_state)))
+
+------------------------------------------
+current state : StateVal(Before_attribute_name_state)
+next state : StateVal(Attribute_name_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : x_362
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : CharInput(b)
+emit tokens : List()
+error content : null
+input text : b=''c=''>
+map : 
+ (x_159,TokenVal(tagToken_(true,a,false,List(x_362))))
+ (x_362,AttributeVal(Attribute(,)))
+------------------------------------------
+
+|
+V
+
+6 : ===============================================
+command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentAttribute)))
+
+------------------------------------------
+current state : StateVal(Attribute_name_state)
+next state : StateVal(Attribute_name_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : x_362
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : CharInput(b)
+emit tokens : List()
+error content : null
+input text : =''c=''>
+map : 
+ (x_159,TokenVal(tagToken_(true,a,false,List(x_362))))
+ (x_362,AttributeVal(Attribute(b,)))
+------------------------------------------
+
+|
+V
+
+7 : ===============================================
+command : List(Consume(next input character)) , List(Switch(StateName(Before_attribute_value_state)))
+
+------------------------------------------
+current state : StateVal(Attribute_name_state)
+next state : StateVal(Before_attribute_value_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : x_362
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : CharInput(=)
+emit tokens : List()
+error content : null
+input text : ''c=''>
+map : 
+ (x_159,TokenVal(tagToken_(true,a,false,List(x_362))))
+ (x_362,AttributeVal(Attribute(b,)))
+------------------------------------------
+
+|
+V
+
+8 : ===============================================
+command : List(Consume(next input character)) , List(Switch(StateName(Attribute_value_single_quoted_state)))
+
+------------------------------------------
+current state : StateVal(Before_attribute_value_state)
+next state : StateVal(Attribute_value_single_quoted_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : x_362
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : CharInput(')
+emit tokens : List()
+error content : null
+input text : 'c=''>
+map : 
+ (x_159,TokenVal(tagToken_(true,a,false,List(x_362))))
+ (x_362,AttributeVal(Attribute(b,)))
+------------------------------------------
+
+|
+V
+
+9 : ===============================================
+command : List(Consume(next input character)) , List(Switch(StateName(After_attribute_value_quoted_state)))
+
+------------------------------------------
+current state : StateVal(Attribute_value_single_quoted_state)
+next state : StateVal(After_attribute_value_quoted_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : x_362
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : CharInput(')
+emit tokens : List()
+error content : null
+input text : c=''>
+map : 
+ (x_159,TokenVal(tagToken_(true,a,false,List(x_362))))
+ (x_362,AttributeVal(Attribute(b,)))
+------------------------------------------
+
+|
+V
+
+10 : ===============================================
+command : List(Consume(next input character)) , List(Switch(StateName(Before_attribute_name_state)))
+
+------------------------------------------
+current state : StateVal(After_attribute_value_quoted_state)
+next state : StateVal(Before_attribute_name_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : x_362
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : CharInput()
+emit tokens : List()
+error content : null
+input text : c=''>
+map : 
+ (x_159,TokenVal(tagToken_(true,a,false,List(x_362))))
+ (x_362,AttributeVal(Attribute(b,)))
+------------------------------------------
+
+|
+V
+
+11 : ===============================================
+command : List(Consume(next input character)) , List(StartNewAttribute(x_3), Set(INameOf(IVariable(x_3)),CString()), Set(IValueOf(IVariable(x_3)),CString()), Reconsume(StateName(Attribute_name_state)))
+
+------------------------------------------
+current state : StateVal(Before_attribute_name_state)
+next state : StateVal(Attribute_name_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : x_368
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : CharInput(c)
+emit tokens : List()
+error content : null
+input text : c=''>
+map : 
+ (x_159,TokenVal(tagToken_(true,a,false,List(x_362, x_368))))
+ (x_362,AttributeVal(Attribute(b,)))
+ (x_368,AttributeVal(Attribute(,)))
+------------------------------------------
+
+|
+V
+
+12 : ===============================================
+command : List(Consume(next input character)) , List(Append(CurrentInputCharacter,INameOf(ICurrentAttribute)))
+
+------------------------------------------
+current state : StateVal(Attribute_name_state)
+next state : StateVal(Attribute_name_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : x_368
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : CharInput(c)
+emit tokens : List()
+error content : null
+input text : =''>
+map : 
+ (x_159,TokenVal(tagToken_(true,a,false,List(x_362, x_368))))
+ (x_362,AttributeVal(Attribute(b,)))
+ (x_368,AttributeVal(Attribute(c,)))
+------------------------------------------
+
+|
+V
+
+13 : ===============================================
+command : List(Consume(next input character)) , List(Switch(StateName(Before_attribute_value_state)))
+
+------------------------------------------
+current state : StateVal(Attribute_name_state)
+next state : StateVal(Before_attribute_value_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : x_368
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : CharInput(=)
+emit tokens : List()
+error content : null
+input text : ''>
+map : 
+ (x_159,TokenVal(tagToken_(true,a,false,List(x_362, x_368))))
+ (x_362,AttributeVal(Attribute(b,)))
+ (x_368,AttributeVal(Attribute(c,)))
+------------------------------------------
+
+|
+V
+
+14 : ===============================================
+command : List(Consume(next input character)) , List(Switch(StateName(Attribute_value_single_quoted_state)))
+
+------------------------------------------
+current state : StateVal(Before_attribute_value_state)
+next state : StateVal(Attribute_value_single_quoted_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : x_368
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : CharInput(')
+emit tokens : List()
+error content : null
+input text : '>
+map : 
+ (x_159,TokenVal(tagToken_(true,a,false,List(x_362, x_368))))
+ (x_362,AttributeVal(Attribute(b,)))
+ (x_368,AttributeVal(Attribute(c,)))
+------------------------------------------
+
+|
+V
+
+15 : ===============================================
+command : List(Consume(next input character)) , List(Switch(StateName(After_attribute_value_quoted_state)))
+
+------------------------------------------
+current state : StateVal(Attribute_value_single_quoted_state)
+next state : StateVal(After_attribute_value_quoted_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : x_368
+comment Token : null
+temporary buffer : 
+last start tag name : null
+current input character : CharInput(')
+emit tokens : List()
+error content : null
+input text : >
+map : 
+ (x_159,TokenVal(tagToken_(true,a,false,List(x_362, x_368))))
+ (x_362,AttributeVal(Attribute(b,)))
+ (x_368,AttributeVal(Attribute(c,)))
+------------------------------------------
+
+|
+V
+
+16 : ===============================================
+command : List(Consume(next input character)) , List(Switch(StateName(Data_state)), Emit(CurrentTagToken))
+
+------------------------------------------
+current state : StateVal(After_attribute_value_quoted_state)
+next state : StateVal(Data_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : x_368
+comment Token : null
+temporary buffer : 
+last start tag name : a
+current input character : CharInput(>)
+emit tokens : List(tagToken(true,a,false,List(Attribute(b,), Attribute(c,))))
+error content : null
+input text : 
+map : 
+ (x_159,TokenVal(tagToken_(true,a,false,List(x_362, x_368))))
+ (x_362,AttributeVal(Attribute(b,)))
+ (x_368,AttributeVal(Attribute(c,)))
+------------------------------------------
+
+|
+V
+
+17 : ===============================================
+command : List(Consume(next input character)) , List(Emit(EndOfFileToken))
+
+------------------------------------------
+current state : StateVal(Data_state)
+next state : StateVal(Data_state)
+return state : null
+current DOCTYPE Token : null
+current tag Token : x_159
+current attribute : x_368
+comment Token : null
+temporary buffer : 
+last start tag name : a
+current input character : EOF
+emit tokens : List(tagToken(true,a,false,List(Attribute(b,), Attribute(c,))), endOfFileToken())
+error content : null
+input text : 
+map : 
+ (x_159,TokenVal(tagToken_(true,a,false,List(x_362, x_368))))
+ (x_362,AttributeVal(Attribute(b,)))
+ (x_368,AttributeVal(Attribute(c,)))
 ------------------------------------------
 
 |

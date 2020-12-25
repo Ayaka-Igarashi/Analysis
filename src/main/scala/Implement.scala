@@ -29,12 +29,17 @@ object Implement {
         for (command <- prev) {
           newEnv = interpretCommand(newEnv, command)
         }
-        // マッチング
-        val commandList: List[Command] = characterMatching(newEnv.currentInputCharacter, trans)
-        // Anything elseの処理とってくる
-        val lastCommand = trans.last
-        if (lastCommand._1 == "Anything else") {
-          anythingElseCommand = lastCommand._2
+
+        var commandList: List[Command] = List()
+        if (newEnv.currentInputCharacter != null) {
+          // マッチング
+          commandList = characterMatching(newEnv.currentInputCharacter, trans)
+
+          // Anything elseの処理とってくる
+          val lastCommand = trans.last
+          if (lastCommand._1 == "Anything else") {
+            anythingElseCommand = lastCommand._2
+          }
         }
 
         // Commandを1つずつ処理する
@@ -170,7 +175,6 @@ object Implement {
           case StrInput(string) => newEnv.inputText = string + newEnv.inputText
           case EOF =>
         }
-        //newEnv.currentInputCharacter = null
       }
       case Set(obj, iValue) => {
         val value = commandValueToValue(iValue, newEnv)

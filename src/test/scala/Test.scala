@@ -34,19 +34,19 @@ class Test extends FunSuite {
   }
   test("domjs.test") {
     startTest()
-    testFormat("domjs")
-    testFormat("entities")
-    testFormat("escapeFlag")
-    testFormat("namedEntities")
-    testFormat("numericEntities")
-    testFormat("pendingSpecChanges")
-    testFormat("test1")
-    testFormat("test2")
-    testFormat("test3")
-    testFormat("test4")
-    testFormat("unicodeChars")
-    testFormat("unicodeCharsProblematic")
-    //testFormat("xmlViolation")
+//    testFormat("domjs")
+//    testFormat("entities")
+//    testFormat("escapeFlag")
+//    testFormat("namedEntities")
+//    testFormat("numericEntities")
+//    testFormat("pendingSpecChanges")
+//    testFormat("test1")
+//    testFormat("test2")
+//    testFormat("test3")
+//    testFormat("test4")
+//    testFormat("unicodeChars")
+//    testFormat("unicodeCharsProblematic")
+    testFormat("xmlViolation")
 
 //    txtOut4.println("domjs")
 //    val model = TestFormatter.format("src/test/testFile/domjs.test")
@@ -198,50 +198,62 @@ class Test extends FunSuite {
     convertedOutput
   }
 
-  def getInitialState(initialStates: util.List[String]): String = {
-    var initialState: String = "Data_state"
-    if (initialStates != null) {
-      initialState = initialStates.asScala.toList match {
-        case state :: rst => state.replace(" ", "_")
-        case Nil => "Data_state"
+  def getInitialStates(initialStates: util.List[String]): List[String] = {
+    if (initialStates == null) List("Data_state")
+    else {
+      val initialStates_scalaList = initialStates.asScala.toList
+      if (initialStates_scalaList == Nil) List("Data_state")
+      else {
+        var newStates: List[String] = List()
+        for (state <- initialStates_scalaList) newStates +:= state.replace(" ", "_")
+        newStates
       }
     }
-    initialState
+//    var initialState: List[String] = List()
+//    if (initialStates != null) {
+//      initialState = initialStates.asScala.toList match {
+//        case state :: rst => List(state.replace(" ", "_"))
+//        case Nil => initialState
+//      }
+//    }
+//    initialState
   }
 
   def doTest(test: TestFormat) = {
-    val initialState = getInitialState(test.initialStates)
+    val initialStates = getInitialStates(test.initialStates)
 
     val lastStartTagName = test.lastStartTag
 
     val outputList = test.output.asScala.toList
     val convertedOutput = convertOutput(outputList)
-    //println(convertedOutput)
 
-    val env = implement(test.input, initialState, lastStartTagName)
+    for (initialState <- initialStates) {
+      val env = implement(test.input, initialState, lastStartTagName)
 
-    var isCorrect = true
-    var emitTokens = Main.combineCharacterToken(env.emitTokens)
-    for (correctOutput <- convertedOutput) {
-      //assert(emitTokens.head === correctOutput)
-      if (emitTokens != Nil) {
-        if (!(emitTokens.head == correctOutput)) {
+      var isCorrect = true
+      var emitTokens = Main.combineCharacterToken(env.emitTokens)
+      for (correctOutput <- convertedOutput) {
+        //assert(emitTokens.head === correctOutput)
+        if (emitTokens != Nil) {
+          if (!(emitTokens.head == correctOutput)) {
+            isCorrect = false
+          }
+          emitTokens = emitTokens.tail
+        }
+        else {
           isCorrect = false
         }
-        emitTokens = emitTokens.tail
       }
-      else {
-        isCorrect = false
-      }
+      count += 1
+      if (isCorrect) correctCount += 1
+      txtOut4.println("testnum :" + count + ";")
+      txtOut4.println("state : " + initialState)
+      txtOut4.println("lastStartTagName : " + lastStartTagName)
+      txtOut4.println("input : \"" + test.input + "\"")
+      txtOut4.println("implement : " + Main.combineCharacterToken(env.emitTokens))
+      txtOut4.println("correct : " + convertedOutput)
+      txtOut4.println(" -> " + isCorrect + "\n")
     }
-    count += 1
-    if (isCorrect) correctCount += 1
-    txtOut4.println("testnum :" + count + ";")
-    txtOut4.println("state : " + initialState)
-    txtOut4.println("lastStartTagName : " + lastStartTagName)
-    txtOut4.println("input : \"" + test.input + "\"")
-    txtOut4.println("implement : " + Main.combineCharacterToken(env.emitTokens))
-    txtOut4.println("correct : " + convertedOutput)
-    txtOut4.println(" -> " + isCorrect + "\n")
+
   }
 }
