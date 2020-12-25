@@ -155,13 +155,13 @@ object Implement {
     var newEnv: Env = env
     command match {
       case Switch(state) => {
-        implementValueToValue(state, newEnv) match {
+        commandValueToValue(state, newEnv) match {
           case s: StateVal => newEnv.nextState = s
           case _ =>
         }
       }
       case Reconsume(state) => {
-        implementValueToValue(state, newEnv) match {
+        commandValueToValue(state, newEnv) match {
           case s: StateVal => newEnv.nextState = s
           case _ =>
         }
@@ -173,31 +173,31 @@ object Implement {
         //newEnv.currentInputCharacter = null
       }
       case Set(obj, iValue) => {
-        val value = implementValueToValue(iValue, newEnv)
+        val value = commandValueToValue(iValue, newEnv)
         val value_string = value match {
           case StringVal(string) => string
           case CharVal(c) => c.toString
           case _ => ""
         }
         obj match {
-          case ReturnState => {
+          case IReturnState => {
             value match {
               case s: StateVal => newEnv.returnState = s
               case _ =>
             }
           }
-          case CharacterReferenceCode => newEnv.characterReferenceCode = value match {
+          case ICharacterReferenceCode => newEnv.characterReferenceCode = value match {
             case IntVal(i) => i
             case _ => println("CharacterReferenceCode error");-1000
           }
-          case TemporaryBuffer => newEnv.temporaryBuffer = value_string
-          case NameOf(token) => {
+          case ITemporaryBuffer => newEnv.temporaryBuffer = value_string
+          case INameOf(token) => {
             var key: String = null
             token match {
-              case Variable(v) => key = v + uniqueId.toString
-              case CurrentTagToken => key = newEnv.currentTagToken
-              case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
-              case CurrentAttribute => key = newEnv.currentAttribute
+              case IVariable(v) => key = v + uniqueId.toString
+              case ICurrentTagToken => key = newEnv.currentTagToken
+              case ICurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
+              case ICurrentAttribute => key = newEnv.currentAttribute
               case _ =>
             }
             newEnv.map.get(key) match {
@@ -207,13 +207,13 @@ object Implement {
               case _ => println("")
             }
           }
-          case ValueOf(token) => {
+          case IValueOf(token) => {
             var key: String = null
             token match {
-              case Variable(v) => key = v + uniqueId.toString
-              case CurrentTagToken => key = newEnv.currentTagToken
-              case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
-              case CurrentAttribute => key = newEnv.currentAttribute
+              case IVariable(v) => key = v + uniqueId.toString
+              case ICurrentTagToken => key = newEnv.currentTagToken
+              case ICurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
+              case ICurrentAttribute => key = newEnv.currentAttribute
               case _ =>
             }
             newEnv.map.get(key) match {
@@ -246,7 +246,7 @@ object Implement {
         }
       }
       case Emit(token) => {
-        val value = implementValueToValue(token, newEnv)
+        val value = commandValueToValue(token, newEnv)
         val t = ValueToToken(value, newEnv)
         t match {
           case tagToken(true, name, _, _) => newEnv.lastStartTagName = name
@@ -259,25 +259,25 @@ object Implement {
         }
       }
       case Append(iValue, obj) => {
-        val value = implementValueToValue(iValue, newEnv)
+        val value = commandValueToValue(iValue, newEnv)
         val appendStr: String = value match {
           case StringVal(string) => string
           case CharVal(c) => c.toString
           case _ => ""
         }
         obj match {
-          case CommentToken => {newEnv.map.get(newEnv.commentToken) match {
+          case ICommentToken => {newEnv.map.get(newEnv.commentToken) match {
             case Some(TokenVal(Environment.commentToken(s))) => newEnv.addMap(newEnv.commentToken, TokenVal(Environment.commentToken(s + appendStr)))
             case _ =>
           }}
-          case TemporaryBuffer => newEnv.temporaryBuffer += appendStr
-          case NameOf(token) => {
+          case ITemporaryBuffer => newEnv.temporaryBuffer += appendStr
+          case INameOf(token) => {
             var key: String = null
             token match {
-              case Variable(v) => key = v + uniqueId.toString
-              case CurrentTagToken => key = newEnv.currentTagToken
-              case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
-              case CurrentAttribute => key = newEnv.currentAttribute
+              case IVariable(v) => key = v + uniqueId.toString
+              case ICurrentTagToken => key = newEnv.currentTagToken
+              case ICurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
+              case ICurrentAttribute => key = newEnv.currentAttribute
               case _ =>
             }
             newEnv.map.get(key) match {
@@ -287,13 +287,13 @@ object Implement {
               case _ => println("")
             }
           }
-          case ValueOf(token) => {
+          case IValueOf(token) => {
             var key: String = null
             token match {
-              case Variable(v) => key = v + uniqueId.toString
-              case CurrentTagToken => key = newEnv.currentTagToken
-              case CurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
-              case CurrentAttribute => key = newEnv.currentAttribute
+              case IVariable(v) => key = v + uniqueId.toString
+              case ICurrentTagToken => key = newEnv.currentTagToken
+              case ICurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
+              case ICurrentAttribute => key = newEnv.currentAttribute
               case _ =>
             }
             newEnv.map.get(key) match {
@@ -307,7 +307,7 @@ object Implement {
       case Error(error) => newEnv.errorContent = error //println("ErrorCode : "+error)
       case Create(iVal, corefKey) => {
         val key = if (corefKey == "") "token_" + newEnv.getID() else corefKey + uniqueId.toString
-        newEnv.addMap(key, implementValueToValue(iVal, newEnv))
+        newEnv.addMap(key, commandValueToValue(iVal, newEnv))
         iVal match {
           case NewEndTagToken | NewStartTagToken => newEnv.currentTagToken = key
           case NewDOCTYPEToken => newEnv.currentDOCTYPEToken = key
@@ -318,7 +318,7 @@ object Implement {
       case Ignore(_) => //println("ignore") // 何もしない
       case FlushCodePoint() => {
         val flushCommand =  If(CharacterReferenceConsumedAsAttributeVal(),
-                              List(Append(TemporaryBuffer, ValueOf(Variable(newEnv.currentAttribute)))),
+                              List(Append(TemporaryBuffer, IValueOf(IVariable(newEnv.currentAttribute)))),
                                List(Emit(TemporaryBuffer)))
         newEnv = interpretCommand(newEnv, flushCommand)
       }
@@ -342,15 +342,15 @@ object Implement {
         newEnv.currentAttribute = key
       }
       case MultiplyBy(obj, by) => {
-        val value = implementValueToValue(by, newEnv)
+        val value = commandValueToValue(by, newEnv)
         val num = ValueToInt(value, newEnv)
         obj match {
-          case CharacterReferenceCode => newEnv.characterReferenceCode *= num
+          case ICharacterReferenceCode => newEnv.characterReferenceCode *= num
           case _ => println("multiply error")
         }
       }
       case AddTo(obj, to) => {
-        val value = implementValueToValue(obj, newEnv)
+        val value = commandValueToValue(obj, newEnv)
         val num = ValueToInt(value, newEnv)
         to match {
           case ICharacterReferenceCode => newEnv.characterReferenceCode += num
@@ -389,17 +389,17 @@ object Implement {
         else false
       }
         // 途中
-      case IsEqual(a, b) => implementValueToValue(a, env) == implementValueToValue(b, env)
+      case IsEqual(a, b) => commandValueToValue(a, env) == commandValueToValue(b, env)
       case IsExist(a) => false //
       case UNDEF(str) => println("undefined bool : " + bool);false
       case _ => println("undefined bool error : " + bool);false
     }
   }
 
-  // ImplementValueからValueに変換する
-  def implementValueToValue(implementVal: CommandValue, env: Env): Value = {
+  // CommandValueからValueに変換する
+  def commandValueToValue(commandVal: CommandValue, env: Env): Value = {
     var value: Value = null
-    implementVal match {
+    commandVal match {
       case CChar(c) => value = CharVal(c)
       case CString(s) => value = StringVal(s)
       case CInt(i) => value = IntVal(i)
@@ -410,11 +410,11 @@ object Implement {
       case NewEndTagToken => value = TokenVal(Environment.tagToken_(false, null, false, List()))
       case NewDOCTYPEToken => value = TokenVal(Environment.DOCTYPEToken(null, null, null, false))
       case NewCommentToken => value = TokenVal(Environment.commentToken(""))
-      case LowerCase(i) => implementValueToValue(i, env) match {
+      case LowerCase(i) => commandValueToValue(i, env) match {
         case CharVal(c) => value = CharVal((c + 0x20).toChar)
         case _ =>
       }
-      case NumericVersion(i) => implementValueToValue(i, env) match {
+      case NumericVersion(i) => commandValueToValue(i, env) match {
         case CharVal(c) => value = CharVal((c - 0x30).toChar)
         case _ =>
       }
@@ -482,6 +482,23 @@ object Implement {
       case StringVal(s) => characterToken(s)
       case CharVal(c) => characterToken(c.toString)
       case _ => null
+    }
+  }
+
+  def implementVariableToVariable(implementVariable: ImplementVariable, env: Env) = {
+    implementVariable match {
+      case IReturnState =>
+      case ITemporaryBuffer =>
+      case ICharacterReferenceCode =>
+      case ICurrentTagToken =>
+      case ICurrentDOCTYPEToken =>
+      case ICurrentAttribute =>
+      case ICommentToken =>
+      case IVariable(x) =>
+      case INameOf(i) =>
+      case IValueOf(i) =>
+      case IFlagOf(i) =>
+      case _ =>
     }
   }
 

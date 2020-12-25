@@ -15,7 +15,7 @@ object CommandStructure {
    * stateのパターン
    *  Set the return state to the data state
    */
-  case class Set(obj: CommandValue, to: CommandValue) extends Command
+  case class Set(obj: ImplementVariable, to: CommandValue) extends Command
 
   // Consume those two characters
   // Consume the next input character
@@ -34,7 +34,7 @@ object CommandStructure {
 
   // Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name.
   // Append a U+FFFD REPLACEMENT CHARACTER character to the current tag token's tag name.
-  case class Append(obj: CommandValue, to: CommandValue) extends Command
+  case class Append(obj: CommandValue, to: ImplementVariable) extends Command
 
   // create a comment token whose data is the empty string
   case class Create(token: CommandValue, valueKey: String) extends Command
@@ -48,7 +48,7 @@ object CommandStructure {
   case class StartNewAttribute(corefId: String) extends Command //Start a new attribute in the current tag token.
 
   // Multiply the character reference code by 16
-  case class MultiplyBy(obj: CommandValue, by: CommandValue) extends Command
+  case class MultiplyBy(obj: ImplementVariable, by: CommandValue) extends Command
 
   // Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0037 from the character's code point) to the character reference code.
   case class AddTo(obj: CommandValue, to: ImplementVariable) extends Command

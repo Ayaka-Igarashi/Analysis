@@ -120,13 +120,13 @@ object TagToCommand {
           case List(Leaf(VB, Token(_,_,"set")), Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2)))) => {
             val i2 = nptagToCommandValue(Node(NP, np2))
             for (n1 <- NPTag(Node(NP, np1))) {
-              val i1 = nptagToCommandValue(n1)
+              val i1 = nptagToImplementVariable(n1)
               commandList :+= CommandStructure.Set(i1, i2)
             }
           }
           // set2(状態を変更)
           case List(Leaf(VB, Token(_,_,"set")), Node(NP, np), Node(PP, List(Leaf(IN, _), Node(PP, pp)))) => {
-            val i1 = nptagToCommandValue(Node(NP, np))
+            val i1 = nptagToImplementVariable(Node(NP, np))
             val i2 = nptagToCommandValue(Node(NP, pp))
             commandList :+= CommandStructure.Set(i1, i2)
           }
@@ -135,16 +135,16 @@ object TagToCommand {
             np match {
               // Set that attribute's name to the current input character, and its value to the empty string.(仮)
               case Node(NP, List(Node(NP, np1_1), Leaf(TO, _), Node(NP, np1_2))) :: Leaf(Comma,_)::Leaf(CC, _)::Node(NP, List(Node(NP, np2_1), Node(PP, List(Leaf(IN, _), Node(NP, np2_2)))))::Nil => {
-                val i1 = nptagToCommandValue(Node(NP, np1_1))
+                val i1 = nptagToImplementVariable(Node(NP, np1_1))
                 val i2 = nptagToCommandValue(Node(NP, np1_2))
-                val i3 = nptagToCommandValue(Node(NP, np2_1))
+                val i3 = nptagToImplementVariable(Node(NP, np2_1))
                 val i4 = nptagToCommandValue(Node(NP, np2_2))
 
                 commandList :+= CommandStructure.Set(i1, i2)
                 commandList :+= CommandStructure.Set(i3, i4)
               }
               case _ =>{
-                val i1 = nptagToCommandValue(Node(NP, np))
+                val i1 = nptagToImplementVariable(Node(NP, np))
                 commandList :+= CommandStructure.Set(i1, Non("on"))
               }
             }
@@ -190,7 +190,7 @@ object TagToCommand {
           case List(Leaf(VB,Token(_,_,"multiply")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_,_, "by")), Node(NP, np2)))) => {
             val i2 = nptagToCommandValue(Node(NP, np2))
             for (n1 <- NPTag(Node(NP, np1))) {
-              val i1 = nptagToCommandValue(n1)
+              val i1 = nptagToImplementVariable(n1)
               commandList :+= CommandStructure.MultiplyBy(i1, i2)
             }
             //for (n <- NPDistribute(Node(NP, np1))) commandList :+= Multiply(getLeave(n._1), getLeave(Node(NP, np2)))
@@ -227,7 +227,7 @@ object TagToCommand {
           }
           // append_1
           case Leaf(VB, Token(_,_, "append")) :: Node(NP, np1) :: Node(PP, List(Leaf(IN, _), Node(NP, np2))) :: Nil => {
-            val i2 = nptagToCommandValue(Node(NP, np2))
+            val i2 = nptagToImplementVariable(Node(NP, np2))
             for (n <- NPDistribute(Node(NP, np1))) {
               val i1 = nptagToCommandValue(n._1)
               commandList :+= Append(i1, i2)
@@ -235,7 +235,7 @@ object TagToCommand {
           }
           // append_2
           case Leaf(VB, Token(_,_, "append")) :: Node(NP, List(Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2))))) :: Nil => {
-            val i2 = nptagToCommandValue(Node(NP, np2))
+            val i2 = nptagToImplementVariable(Node(NP, np2))
             for (n <- NPDistribute(Node(NP, np1))) {
               val i1 = nptagToCommandValue(n._1)
               commandList :+= Append(i1, i2)
@@ -472,7 +472,6 @@ object TagToCommand {
   }
 
   def nptagToImplementVariable(nptag: Tag): ImplementVariable = {
-    //val str = getLeave(removeDT(nptag))
     val id = getCorefId(nptag)
     nptag match {
       case Node(NP, List(Node(NP, np), Leaf(NN, Token(_,_,n)))) => {
