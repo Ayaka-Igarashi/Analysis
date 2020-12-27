@@ -167,7 +167,7 @@ object Main {
     parseHtml()
 
     // 状態名の置き換えのための処理
-    Replacement.replaceState = Replacement.replaceState.tail
+    //Replacement.replaceState = Replacement.replaceState.tail
     replace_out.println(Replacement.replaceState)
 
     System.out.println("> parse_start")

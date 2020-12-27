@@ -230,7 +230,7 @@ object TagToCommand {
             val i2 = nptagToImplementVariable(Node(NP, np2))
             for (n <- NPDistribute(Node(NP, np1))) {
               val i1 = nptagToCommandValue(n._1)
-              commandList :+= Append(i1, i2)
+              commandList :+= AppendTo(i1, i2)
             }
           }
           // append_2
@@ -238,7 +238,7 @@ object TagToCommand {
             val i2 = nptagToImplementVariable(Node(NP, np2))
             for (n <- NPDistribute(Node(NP, np1))) {
               val i1 = nptagToCommandValue(n._1)
-              commandList :+= Append(i1, i2)
+              commandList :+= AppendTo(i1, i2)
             }
           }
           case _ => txtOut.print("### dont match_vp : ");txtOut.println(list)

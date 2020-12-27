@@ -6,8 +6,6 @@ import StateProcessedStructure.pState
 import scala.collection.immutable.ListMap
 
 object Implement {
-  //env updated ("currentState", env("nextState"))
-
   var anythingElseCommand: List[Command] = List()
   var uniqueId: Int = 1
   // インタープリタ
@@ -21,34 +19,41 @@ object Implement {
     }
     //newEnv.emitTokens = List()
     newEnv.currentInputCharacter = null
-    newEnv.errorContent = null
+    //newEnv.errorContent = null
 
-    // 状態のマッチ
-    definition.get(currentState) match {
-      case Some(pState(_, prev, trans)) => {
-        for (command <- prev) {
-          newEnv = interpretCommand(newEnv, command)
-        }
+    currentState match {
+      case "Markup_declaration_open_state" => newEnv = OtherStates.markupDeclarationOpenState(newEnv)
+      case "Named_character_reference_state" => newEnv = OtherStates.namedCharacterReferenceState(newEnv)
+      case "Numeric_character_reference_end_state" => newEnv = OtherStates.numericCharacterReferenceEndState(newEnv)
+      case _ => {
+        // 状態のマッチ
+        definition.get(currentState) match {
+          case Some(pState(_, prev, trans)) => {
+            for (command <- prev) {
+              newEnv = interpretCommand(newEnv, command)
+            }
 
-        var commandList: List[Command] = List()
-        if (newEnv.currentInputCharacter != null) {
-          // マッチング
-          commandList = characterMatching(newEnv.currentInputCharacter, trans)
+            var commandList: List[Command] = List()
+            if (newEnv.currentInputCharacter != null) {
+              // マッチング
+              commandList = characterMatching(newEnv.currentInputCharacter, trans)
 
-          // Anything elseの処理とってくる
-          val lastCommand = trans.last
-          if (lastCommand._1 == "Anything else") {
-            anythingElseCommand = lastCommand._2
+              // Anything elseの処理とってくる
+              val lastCommand = trans.last
+              if (lastCommand._1 == "Anything else") {
+                anythingElseCommand = lastCommand._2
+              }
+            }
+
+            // Commandを1つずつ処理する
+            for (command <- commandList) {
+              newEnv = interpretCommand(newEnv, command)
+            }
+            txtOut3.println("command : "+ prev + " , " + commandList)
           }
+          case None => println("undefined state error : " + currentState)
         }
-
-        // Commandを1つずつ処理する
-        for (command <- commandList) {
-          newEnv = interpretCommand(newEnv, command)
-        }
-        txtOut3.println("command : "+ prev + " , " + commandList)
       }
-      case None => println("undefined state error : " + currentState)
     }
     anythingElseCommand = List()
     newEnv
@@ -178,11 +183,7 @@ object Implement {
       }
       case Set(obj, iValue) => {
         val value = commandValueToValue(iValue, newEnv)
-        val value_string = value match {
-          case StringVal(string) => string
-          case CharVal(c) => c.toString
-          case _ => ""
-        }
+        val value_string = valueToString(value)
         obj match {
           case IReturnState => {
             value match {
@@ -254,6 +255,7 @@ object Implement {
         val t = ValueToToken(value, newEnv)
         t match {
           case tagToken(true, name, _, _) => newEnv.lastStartTagName = name
+          case tagToken(false, _, _, attributes) if attributes != List() => newEnv.errorContent :+= "end_tag_with_attributes parse error"
           case _ =>
         }
         if (t != null) newEnv.addEmitToken(t)
@@ -262,13 +264,10 @@ object Implement {
           txtOut3.println("emit error" + value)
         }
       }
-      case Append(iValue, obj) => {
+      case AppendTo(iValue, obj) => {
         val value = commandValueToValue(iValue, newEnv)
-        val appendStr: String = value match {
-          case StringVal(string) => string
-          case CharVal(c) => c.toString
-          case _ => ""
-        }
+        val appendStr: String = valueToString(value)
+
         obj match {
           case ICommentToken => {newEnv.map.get(newEnv.commentToken) match {
             case Some(TokenVal(Environment.commentToken(s))) => newEnv.addMap(newEnv.commentToken, TokenVal(Environment.commentToken(s + appendStr)))
@@ -308,7 +307,7 @@ object Implement {
           case _ =>
         }
       }
-      case Error(error) => newEnv.errorContent = error //println("ErrorCode : "+error)
+      case Error(error) => newEnv.errorContent :+= error //println("ErrorCode : "+error)
       case Create(iVal, corefKey) => {
         val key = if (corefKey == "") "token_" + newEnv.getID() else corefKey + uniqueId.toString
         newEnv.addMap(key, commandValueToValue(iVal, newEnv))
@@ -322,7 +321,7 @@ object Implement {
       case Ignore(_) => //println("ignore") // 何もしない
       case FlushCodePoint() => {
         val flushCommand =  If(CharacterReferenceConsumedAsAttributeVal(),
-                              List(Append(TemporaryBuffer, IValueOf(IVariable(newEnv.currentAttribute)))),
+                              List(AppendTo(TemporaryBuffer, IValueOf(IVariable(newEnv.currentAttribute)))),
                                List(Emit(TemporaryBuffer)))
         newEnv = interpretCommand(newEnv, flushCommand)
       }
@@ -374,6 +373,8 @@ object Implement {
 
   def implementBool(env: Env, bool: Bool): Boolean = {
     bool match {
+      case T => true
+      case F => false
       case And(b1, b2) => implementBool(env, b1) && implementBool(env, b2)
       case Or(b1, b2) => implementBool(env, b1) || implementBool(env, b2)
       case Not(b) => !implementBool(env, b)
@@ -468,6 +469,16 @@ object Implement {
       case CharVal(char) => char
       case IntVal(i) => i
       case _ => 0
+    }
+  }
+
+  // ValueからStringに変換する
+  def valueToString(tVal: Value): String = {
+    tVal match {
+      case StringVal(s) => s
+      case CharVal(c) => c.toString
+      case IntVal(i) => i.toChar.toString
+      case _ => ""
     }
   }
 

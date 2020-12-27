@@ -3,7 +3,7 @@ import java.io.{BufferedWriter, File, FileWriter, PrintWriter}
 object Replacement {
   // 置き換え結果出力
   val replace_out = new PrintWriter(new BufferedWriter(new FileWriter(new File("src/replaceOut.txt"))))
-  var replaceState: String = ""
+  var replaceState: String = "[mM]arkup declaration open state|[nN]amed character reference state|[nN]umeric character reference end state"
 
   // 自然言語処理しやすいように、文字の置き換えを行う
   def replace(str: String): String = {

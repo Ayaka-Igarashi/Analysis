@@ -27,14 +27,12 @@ class Test extends FunSuite {
     val model = TestFormatter.format("src/test/testFile/contentModelFlags.test")
     val tests = model.tests.asScala.toList
     for (test <- tests) doTest(test)
-//    println("implement : " + env.errorContent)
-//    println("correct : " + test.errors.get(0).code)
     println("correct : " + correctCount + "/" + count)
     finishTest()
   }
   test("domjs.test") {
     startTest()
-//    testFormat("domjs")
+    testFormat("domjs")
 //    testFormat("entities")
 //    testFormat("escapeFlag")
 //    testFormat("namedEntities")
@@ -46,7 +44,7 @@ class Test extends FunSuite {
 //    testFormat("test4")
 //    testFormat("unicodeChars")
 //    testFormat("unicodeCharsProblematic")
-    testFormat("xmlViolation")
+//    testFormat("xmlViolation")
 
 //    txtOut4.println("domjs")
 //    val model = TestFormatter.format("src/test/testFile/domjs.test")
@@ -252,6 +250,14 @@ class Test extends FunSuite {
       txtOut4.println("input : \"" + test.input + "\"")
       txtOut4.println("implement : " + Main.combineCharacterToken(env.emitTokens))
       txtOut4.println("correct : " + convertedOutput)
+
+      txtOut4.println("implement_error : " + env.errorContent)
+      val correctError = if (test.errors == null) List() else test.errors.asScala.toList
+      txtOut4.print("correct_error : ")
+      for (error <- correctError) txtOut4.print(" " + error.code)
+      txtOut4.println("")
+
+
       txtOut4.println(" -> " + isCorrect + "\n")
     }
 

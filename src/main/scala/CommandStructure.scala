@@ -34,7 +34,7 @@ object CommandStructure {
 
   // Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name.
   // Append a U+FFFD REPLACEMENT CHARACTER character to the current tag token's tag name.
-  case class Append(obj: CommandValue, to: ImplementVariable) extends Command
+  case class AppendTo(obj: CommandValue, to: ImplementVariable) extends Command
 
   // create a comment token whose data is the empty string
   case class Create(token: CommandValue, valueKey: String) extends Command
@@ -67,6 +67,8 @@ object CommandStructure {
    */
   trait Bool
 
+  case object T extends Bool
+  case object F extends Bool
   case class And(a: Bool, b: Bool) extends Bool
   case class Or(a: Bool, b: Bool) extends Bool
   case class Not(a: Bool) extends Bool

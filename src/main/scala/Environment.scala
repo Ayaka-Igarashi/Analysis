@@ -5,11 +5,11 @@ object Environment {
   case class TokenVal(token: Token) extends Value
   case class AttributeVal(attribute: Attribute) extends Value
 
+  case class IntVal(int: Int) extends Value
   case class CharVal(char: Char) extends Value
   case class StringVal(string: String) extends Value
-  case class StateVal(state: String) extends Value
   case object EOFVal extends Value
-  case class IntVal(int: Int) extends Value
+  case class StateVal(state: String) extends Value
   //case class BoolVal(b: Boolean) extends Value
 
   class Env {
@@ -30,7 +30,7 @@ object Environment {
 
     var currentInputCharacter: InputCharacter = null
     var emitTokens: List[Token] = List()
-    var errorContent: String = null
+    var errorContent: List[String] = List()
 
     // 入力文字列
     var inputText: String = null
