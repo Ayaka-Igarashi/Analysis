@@ -28,7 +28,7 @@ object Environment {
     var currentAttribute: String = null
     var lastStartTagName: String = null
 
-    var currentInputCharacter: InputCharacter = null
+    var currentInputCharacter: Value = null
     var emitTokens: List[Token] = List()
     var errorContent: List[String] = List()
 
@@ -78,8 +78,8 @@ object Environment {
 
   case class Attribute(name: String, value: String)
 
-  trait InputCharacter
-  case class CharInput(char: Char) extends InputCharacter
-  case class StrInput(string: String) extends InputCharacter
-  case object EOF extends InputCharacter
+//  trait InputCharacter
+//  case class CharInput(char: Char) extends InputCharacter
+//  case class StrInput(string: String) extends InputCharacter
+//  case object EOF extends InputCharacter
 }

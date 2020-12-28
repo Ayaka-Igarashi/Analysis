@@ -23,8 +23,14 @@ object Implement {
 
     currentState match {
       case "Markup_declaration_open_state" => newEnv = OtherStates.markupDeclarationOpenState(newEnv)
-      case "Named_character_reference_state" => newEnv = OtherStates.namedCharacterReferenceState(newEnv)
-      case "Numeric_character_reference_end_state" => newEnv = OtherStates.numericCharacterReferenceEndState(newEnv)
+      case "Named_character_reference_state" => {
+        OtherStates.loadTable()
+        newEnv = OtherStates.namedCharacterReferenceState(newEnv)
+      }
+      case "Numeric_character_reference_end_state" => {
+        OtherStates.loadTable()
+        newEnv = OtherStates.numericCharacterReferenceEndState(newEnv)
+      }
       case _ => {
         // 状態のマッチ
         definition.get(currentState) match {
@@ -59,13 +65,13 @@ object Implement {
     newEnv
   }
 
-  def characterMatching(currentInputCharacter: InputCharacter, trans: List[(String, List[Command])]): List[Command] = {
+  def characterMatching(currentInputCharacter: Value, trans: List[(String, List[Command])]): List[Command] = {
     trans match {
       case (character, comList) :: rst => {
         character match {
           case "ASCII upper alpha" => {
             currentInputCharacter match {
-              case CharInput(c) => {
+              case CharVal(c) => {
                 if (c >= 0x0041 && c <= 0x005A) comList
                 else characterMatching(currentInputCharacter, rst)
               }
@@ -74,7 +80,7 @@ object Implement {
           }
           case "ASCII lower alpha" => {
             currentInputCharacter match {
-              case CharInput(c) => {
+              case CharVal(c) => {
                 if (c >= 0x0061 && c <= 0x007A) comList
                 else characterMatching(currentInputCharacter, rst)
               }
@@ -83,7 +89,7 @@ object Implement {
           }
           case "ASCII alpha" => {
             currentInputCharacter match {
-              case CharInput(c) => {
+              case CharVal(c) => {
                 if ((c >= 0x0041 && c <= 0x005A)||(c >= 0x0061 && c <= 0x007A)) comList
                 else characterMatching(currentInputCharacter, rst)
               }
@@ -92,7 +98,7 @@ object Implement {
           }
           case "ASCII alphanumeric" => {
             currentInputCharacter match {
-              case CharInput(c) => {
+              case CharVal(c) => {
                 if ((c >= 0x0030 && c <= 0x0039)||(c >= 0x0041 && c <= 0x005A)||(c >= 0x0061 && c <= 0x007A)) comList
                 else characterMatching(currentInputCharacter, rst)
               }
@@ -101,7 +107,7 @@ object Implement {
           }
           case "ASCII hex digit" => {
             currentInputCharacter match {
-              case CharInput(c) => {
+              case CharVal(c) => {
                 if ((c >= 0x0030 && c <= 0x0039)||(c >= 0x0041 && c <= 0x0046)||(c >= 0x0061 && c <= 0x0066)) comList
                 else characterMatching(currentInputCharacter, rst)
               }
@@ -110,7 +116,7 @@ object Implement {
           }
           case "ASCII upper hex digit" => {
             currentInputCharacter match {
-              case CharInput(c) => {
+              case CharVal(c) => {
                 if ((c >= 0x0030 && c <= 0x0039)||(c >= 0x0041 && c <= 0x0046)) comList
                 else characterMatching(currentInputCharacter, rst)
               }
@@ -119,7 +125,7 @@ object Implement {
           }
           case "ASCII lower hex digit" => {
             currentInputCharacter match {
-              case CharInput(c) => {
+              case CharVal(c) => {
                 if ((c >= 0x0030 && c <= 0x0039)||(c >= 0x0061 && c <= 0x0066)) comList
                 else characterMatching(currentInputCharacter, rst)
               }
@@ -128,7 +134,7 @@ object Implement {
           }
           case "ASCII digit" => {
             currentInputCharacter match {
-              case CharInput(c) => {
+              case CharVal(c) => {
                 if ((c >= 0x0030 && c <= 0x0039)) comList
                 else characterMatching(currentInputCharacter, rst)
               }
@@ -137,7 +143,7 @@ object Implement {
           }
           case "Anything else" => comList
           case "EOF" => {
-            if (currentInputCharacter == EOF) comList
+            if (currentInputCharacter == EOFVal) comList
             else characterMatching(currentInputCharacter, rst)
           }
           case s => {
@@ -145,7 +151,7 @@ object Implement {
             re.findFirstIn(s) match {
               case Some(unicode) => {
                 currentInputCharacter match {
-                  case CharInput(c) => {
+                  case CharVal(c) => {
                     if (c == Utility.unicodeToInt(unicode)) comList
                     else characterMatching(currentInputCharacter, rst)
                   }
@@ -176,9 +182,9 @@ object Implement {
           case _ =>
         }
         newEnv.currentInputCharacter match {
-          case CharInput(c) => newEnv.inputText = c + newEnv.inputText
-          case StrInput(string) => newEnv.inputText = string + newEnv.inputText
-          case EOF =>
+          case CharVal(c) => newEnv.inputText = c + newEnv.inputText
+          case StringVal(string) => newEnv.inputText = string + newEnv.inputText
+          case EOFVal =>
         }
       }
       case Set(obj, iValue) => {
@@ -230,25 +236,39 @@ object Implement {
         }
       }
       case Consume(character) => {
-        character match {
-          case "next input character" => {
-            if (newEnv.inputText.length > 0) {
-              newEnv.currentInputCharacter = CharInput(newEnv.inputText.head)
-              newEnv.inputText = newEnv.inputText.tail
-            } else {
-              newEnv.currentInputCharacter = EOF
-            }
+        val value = commandValueToValue(character, newEnv)
+        newEnv.currentInputCharacter = value
+        value match {
+          case CharVal(c) => {
+            if (newEnv.inputText.head == c) newEnv.inputText = newEnv.inputText.tail
+            else println("consume error : " + CharVal(c))
           }
-          case _ => {
-            // 途中
-            if (newEnv.inputText.substring(0, character.length) == character) {
-              newEnv.inputText = newEnv.inputText.substring(character.length - 1)
-              newEnv.currentInputCharacter = StrInput(character)
-            } else {
-              println("consume error")
-            }
+          case StringVal(s) => {
+            if (newEnv.inputText.startsWith(s)) newEnv.inputText = newEnv.inputText.substring(s.length)
+            else println("consume error : " + StringVal(s))
           }
+          case EOFVal =>
+          case _ =>
         }
+//        character match {
+//          case NextInputCharacter => {
+//            if (newEnv.inputText.length > 0) {
+//              newEnv.currentInputCharacter = CharVal(newEnv.inputText.head)
+//              newEnv.inputText = newEnv.inputText.tail
+//            } else {
+//              newEnv.currentInputCharacter = EOFVal
+//            }
+//          }
+//          case _ => {
+//            // 途中
+//            if (newEnv.inputText.substring(0, character.length) == character) {
+//              newEnv.inputText = newEnv.inputText.substring(character.length - 1)
+//              newEnv.currentInputCharacter = StringVal(character)
+//            } else {
+//              println("consume error")
+//            }
+//          }
+//        }
       }
       case Emit(token) => {
         val value = commandValueToValue(token, newEnv)
@@ -423,11 +443,10 @@ object Implement {
         case CharVal(c) => value = CharVal((c - 0x30).toChar)
         case _ =>
       }
-      case CurrentInputCharacter => env.currentInputCharacter match {
-        case CharInput(c) => value = CharVal(c)
-        case StrInput(s) => value = StringVal(s)
-        case EOF => value = EOFVal
-        case _ =>
+      case CurrentInputCharacter => value = env.currentInputCharacter
+      case NextInputCharacter => value = env.inputText.headOption match {
+        case Some(c) => CharVal(c)
+        case None => EOFVal
       }
       case CurrentTagToken => {
         env.map.get(env.currentTagToken) match {

@@ -151,7 +151,7 @@ object TagToCommand {
           }
           // consume
           case List(Leaf(VB,Token(_,_,"consume")), Node(NP,np)) => {
-            for (n <- NPDistribute(Node(NP, np))) commandList :+= CommandStructure.Consume(getLeave(n._1))
+            for (n <- NPDistribute(Node(NP, np))) commandList :+= CommandStructure.Consume(nptagToCommandValue(n._1))
           }
           // emit
           case List(Leaf(VB,Token(_,_,"emit")), Node(NP,np)) => {
@@ -401,6 +401,7 @@ object TagToCommand {
     else if (str.contains("temporary buffer")) TemporaryBuffer
     else if (str.contains("character reference code")) CharacterReferenceCode
     else if (str.contains("end_of_file")) EndOfFileToken
+    else if (str.contains("next input character")) NextInputCharacter
     else if (str.contains("current input character")) CurrentInputCharacter
     else if(str.contains("_state")) StateName(str)
     else if (str.matches(".*U_[0-9A-F][0-9A-F][0-9A-F][0-9A-F].* character.*")) {

@@ -19,7 +19,7 @@ object CommandStructure {
 
   // Consume those two characters
   // Consume the next input character
-  case class Consume(character: String) extends Command
+  case class Consume(character: CommandValue) extends Command
 
   /**
    * 1つだけ

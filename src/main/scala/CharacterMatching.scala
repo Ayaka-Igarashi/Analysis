@@ -26,4 +26,24 @@ object CharacterMatching {
       case _ => false
     }
   }
+
+  def isASCIIDigit(c: Int): Boolean = {
+    0x0030 <= c && c <= 0x0039
+  }
+
+  def isASCIIUpperAlpha(c: Int): Boolean = {
+    0x0041 <= c && c <= 0x005A
+  }
+
+  def isASCIILowerAlpha(c: Int): Boolean = {
+    0x0061 <= c && c <= 0x007A
+  }
+
+  def isASCIIAlpha(c: Int): Boolean = {
+    isASCIIUpperAlpha(c) || isASCIILowerAlpha(c)
+  }
+
+  def isASCIIAlphaNumeric(c: Int): Boolean = {
+    isASCIIDigit(c) || isASCIIAlpha(c)
+  }
 }
