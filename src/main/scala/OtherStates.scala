@@ -12,7 +12,7 @@ import org.jsoup.nodes.{Document, Node}
 import scala.collection.immutable.ListMap
 
 object OtherStates {
-  var namedCharacterReferenceMap: ListMap[String, Int] = ListMap()
+  var namedCharacterReferenceMap: ListMap[String, String] = ListMap()
   var state80table: Map[Int, Int] = Map()
 
 //  val  Markup_declaration_open_state =
@@ -50,7 +50,7 @@ object OtherStates {
     newEnv.inputText match {
       case i if i.startsWith("--") => comlist ++= List(Consume(CString("--")), Create(NewCommentToken, ""), Switch(StateName("Comment_start_state")))
       case i if i.startsWith("DOCTYPE") => comlist ++= List(Consume(CString("DOCTYPE")), Switch(StateName("DOCTYPE_state")))
-      case i if i.startsWith("[CDATA[") => { /** 条件分岐省略*/
+      case i if i.startsWith("[CDATA[") => { /** 条件分岐省略してる*/
         comlist ++= List(Consume(CString("[CDATA[")),
                       If(T, List(Switch(StateName("CDATA_section_state"))),
                             List(Error("cdata_in_html_content parse error"), Create(NewCommentToken, "x_1"), Set(IValueOf(IVariable("x_1")), CString("[CDATA[")), Switch(StateName("Bogus_comment_state")))))
@@ -70,7 +70,7 @@ object OtherStates {
     var comlist: List[Command] = List()
 
     var isMatched = false
-    var characterReferencePair: (String, Int) = null
+    var characterReferencePair: (String, String) = null
     for (m <- namedCharacterReferenceMap) {
       if (!isMatched && env.inputText.startsWith(m._1)) {
         isMatched = true
@@ -98,8 +98,7 @@ object OtherStates {
         if (b2) {
           comlist :+= Error("missing_semicolon_after_character_reference parse error")
         }
-        /**append直す*/
-        comlist ++= List(Set(ITemporaryBuffer, CString("")), AppendTo(CString(characterReferencePair._2.toString), ITemporaryBuffer),
+        comlist ++= List(Set(ITemporaryBuffer, CString("")), AppendTo(CString(characterReferencePair._2), ITemporaryBuffer),
                           FlushCodePoint(), Switch(ReturnState))
       }
     } else {
@@ -187,16 +186,20 @@ object OtherStates {
       val unicode_str = node.childNode(0).nextSibling().childNode(0).toString.replace(" ", "")
       val re = "U\\+[0-9A-F][0-9A-F][0-9A-F][0-9A-F][0-9A-F]?".r
       val it = re.findAllMatchIn(unicode_str)
+      var characters: String = ""
       while (it.hasNext) {
         val us = it.next()
-        us.toString()
+        val s = us.toString().slice(2, us.toString().length)
+        val hex = Integer.parseInt(s, 16)
+        if (s.startsWith("0")) {
+          characters += hex.toChar.toString
+        }
+        else {
+          characters += (((hex - 0x10000) / 0x400 + 0xD800).toChar.toString + ((hex - 0x10000) % 0x400 + 0xDC00).toChar.toString)
+        }
       }
-      namedCharacterReferenceMap += (str -> 1)
+      namedCharacterReferenceMap += (str -> characters)
       node = node.nextSibling()
     }
-
-    println(node)
-    println("a : " + node.childNode(0).childNode(1).childNode(0).toString)
-    println("c : " + node.childNode(0).nextSibling().childNode(0).toString)
   }
 }
