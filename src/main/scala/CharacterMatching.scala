@@ -1,6 +1,6 @@
 object CharacterMatching {
   // character matching
-  def isNonCharacter(c: Int): Boolean = {
+  def isNonCharacter(c: Long): Boolean = {
     if (0xfdd0 <= c && c <= 0xfdef) true
     else {
       c match {
@@ -12,38 +12,38 @@ object CharacterMatching {
     }
   }
 
-  def isC0Control(c: Int): Boolean = {
+  def isC0Control(c: Long): Boolean = {
     0x0000 <= c && c <= 0x001F
   }
 
-  def isControl(c: Int): Boolean = {
+  def isControl(c: Long): Boolean = {
     isC0Control(c) || (0x007F <= c && c <= 0x009F)
   }
 
-  def isASCIIWhitespace(c: Int): Boolean = {
+  def isASCIIWhitespace(c: Long): Boolean = {
     c match {
       case 0x0009|0x000A|0x000C|0x000D|0x0020 => true
       case _ => false
     }
   }
 
-  def isASCIIDigit(c: Int): Boolean = {
+  def isASCIIDigit(c: Long): Boolean = {
     0x0030 <= c && c <= 0x0039
   }
 
-  def isASCIIUpperAlpha(c: Int): Boolean = {
+  def isASCIIUpperAlpha(c: Long): Boolean = {
     0x0041 <= c && c <= 0x005A
   }
 
-  def isASCIILowerAlpha(c: Int): Boolean = {
+  def isASCIILowerAlpha(c: Long): Boolean = {
     0x0061 <= c && c <= 0x007A
   }
 
-  def isASCIIAlpha(c: Int): Boolean = {
+  def isASCIIAlpha(c: Long): Boolean = {
     isASCIIUpperAlpha(c) || isASCIILowerAlpha(c)
   }
 
-  def isASCIIAlphaNumeric(c: Int): Boolean = {
+  def isASCIIAlphaNumeric(c: Long): Boolean = {
     isASCIIDigit(c) || isASCIIAlpha(c)
   }
 }

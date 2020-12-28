@@ -341,8 +341,8 @@ object Implement {
       case Ignore(_) => //println("ignore") // 何もしない
       case FlushCodePoint() => {
         val flushCommand =  If(CharacterReferenceConsumedAsAttributeVal(),
-                              List(AppendTo(TemporaryBuffer, IValueOf(IVariable(newEnv.currentAttribute)))),
-                               List(Emit(TemporaryBuffer)))
+                              List(AppendTo(CharacterReferenceCode, IValueOf(IVariable(newEnv.currentAttribute)))),
+                               List(Emit(CharacterReferenceCode)))
         newEnv = interpretCommand(newEnv, flushCommand)
       }
       case TreatAsAnythingElse() => {
@@ -431,6 +431,7 @@ object Implement {
       case ReturnState => value = env.returnState
       case StateName(s) => value = StateVal(s)
       case TemporaryBuffer => value = StringVal(env.temporaryBuffer)
+      case CharacterReferenceCode => value = IntVal(env.characterReferenceCode)
       case NewStartTagToken => value = TokenVal(Environment.tagToken_(true, null, false, List()))
       case NewEndTagToken => value = TokenVal(Environment.tagToken_(false, null, false, List()))
       case NewDOCTYPEToken => value = TokenVal(Environment.DOCTYPEToken(null, null, null, false))
@@ -483,7 +484,7 @@ object Implement {
   }
 
   // ValueからIntに変換する
-  def ValueToInt(tVal: Value, env: Env): Int = {
+  def ValueToInt(tVal: Value, env: Env): Long = {
     tVal match {
       case CharVal(char) => char
       case IntVal(i) => i
@@ -515,6 +516,7 @@ object Implement {
       }
       case StringVal(s) => characterToken(s)
       case CharVal(c) => characterToken(c.toString)
+      case IntVal(i) => characterToken(i.toChar.toString)
       case _ => null
     }
   }

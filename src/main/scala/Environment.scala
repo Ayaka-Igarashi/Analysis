@@ -5,7 +5,7 @@ object Environment {
   case class TokenVal(token: Token) extends Value
   case class AttributeVal(attribute: Attribute) extends Value
 
-  case class IntVal(int: Int) extends Value
+  case class IntVal(int: Long) extends Value
   case class CharVal(char: Char) extends Value
   case class StringVal(string: String) extends Value
   case object EOFVal extends Value
@@ -21,7 +21,7 @@ object Environment {
     // returnStateの値
     var returnState: StateVal = null
     var temporaryBuffer: String = ""
-    var characterReferenceCode: Int = 0
+    var characterReferenceCode: Long = 0
     var currentDOCTYPEToken: String = null
     var currentTagToken: String = null
     var commentToken: String = null
@@ -56,6 +56,7 @@ object Environment {
     write.println("current attribute : " + env.currentAttribute)
     write.println("comment Token : " + env.commentToken)
     write.println("temporary buffer : " + env.temporaryBuffer)
+    write.println("character reference code : " + env.characterReferenceCode)
     write.println("last start tag name : " + env.lastStartTagName)
     write.println("current input character : " + env.currentInputCharacter)
     write.println("emit tokens : " + env.emitTokens)

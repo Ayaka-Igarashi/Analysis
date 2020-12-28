@@ -32,7 +32,7 @@ class Test extends FunSuite {
   }
   test("domjs.test") {
     startTest()
-    testFormat("domjs")
+//    testFormat("domjs")
 //    testFormat("entities")
 //    testFormat("escapeFlag")
 //    testFormat("namedEntities")
@@ -42,7 +42,7 @@ class Test extends FunSuite {
 //    testFormat("test2")
 //    testFormat("test3")
 //    testFormat("test4")
-//    testFormat("unicodeChars")
+    testFormat("unicodeChars")
 //    testFormat("unicodeCharsProblematic")
 //    testFormat("xmlViolation")
 

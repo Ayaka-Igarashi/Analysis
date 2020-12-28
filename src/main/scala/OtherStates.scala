@@ -13,7 +13,7 @@ import scala.collection.immutable.ListMap
 
 object OtherStates {
   var namedCharacterReferenceMap: ListMap[String, String] = ListMap()
-  var state80table: Map[Int, Int] = Map()
+  var state80table: Map[Long, Int] = Map()
 
 //  val  Markup_declaration_open_state =
 //    pState("Markup_declaration_open_state",
@@ -72,9 +72,10 @@ object OtherStates {
     var isMatched = false
     var characterReferencePair: (String, String) = null
     for (m <- namedCharacterReferenceMap) {
-      if (!isMatched && env.inputText.startsWith(m._1)) {
-        isMatched = true
-        characterReferencePair = (m._1, m._2)
+      if (env.inputText.startsWith(m._1)) {
+        if (!isMatched) isMatched = true
+        if (characterReferencePair == null) characterReferencePair = (m._1, m._2)
+        else if (characterReferencePair._1.length < m._1.length) characterReferencePair = (m._1, m._2)
       }
     }
 
@@ -86,8 +87,8 @@ object OtherStates {
         case StringVal(string) => string.last == ';'
         case _ => false
       }
-      val b3 = newEnv.inputText.head == '='
-      val b4 = isASCIIAlphaNumeric(newEnv.inputText.head)
+      val b3 = newEnv.inputText.headOption == Some('=')
+      val b4 = if (newEnv.inputText.headOption == None) false else isASCIIAlphaNumeric(newEnv.inputText.head)
 
       val b = b1 && !b2 && (b3 || b4)
 
@@ -156,7 +157,7 @@ object OtherStates {
     var node = rootNode.childNode(0)
 
     var i = 0
-    var m: Int = -1
+    var m: Long = -1
     while (node != null) {
       i match {
         case i2 if i2 % 3 == 0 => {
