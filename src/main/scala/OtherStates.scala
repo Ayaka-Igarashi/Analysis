@@ -49,7 +49,7 @@ object OtherStates {
     var comlist: List[Command] = List()
     newEnv.inputText match {
       case i if i.startsWith("--") => comlist ++= List(Consume(CString("--")), Create(NewCommentToken, ""), Switch(StateName("Comment_start_state")))
-      case i if i.startsWith("DOCTYPE") => comlist ++= List(Consume(CString("DOCTYPE")), Switch(StateName("DOCTYPE_state")))
+      case i if i.toLowerCase.startsWith("DOCTYPE".toLowerCase) => comlist ++= List(Consume(CString(i.substring(0, 7))), Switch(StateName("DOCTYPE_state")))
       case i if i.startsWith("[CDATA[") => { /** 条件分岐省略してる*/
         comlist ++= List(Consume(CString("[CDATA[")),
                       If(T, List(Switch(StateName("CDATA_section_state"))),

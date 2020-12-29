@@ -108,6 +108,7 @@ object CommandStructure {
   case class CChar(char: Char) extends CommandValue
   case class CString(string: String) extends CommandValue
   case class CInt(int: Int) extends CommandValue
+  case class CBool(boolean: Boolean) extends CommandValue
   case class Non(str :String) extends CommandValue//
 
 

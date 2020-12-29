@@ -41,8 +41,8 @@ class Test extends FunSuite {
 //    testFormat("test1")
 //    testFormat("test2")
 //    testFormat("test3")
-//    testFormat("test4")
-    testFormat("unicodeChars")
+    testFormat("test4")
+//    testFormat("unicodeChars")
 //    testFormat("unicodeCharsProblematic")
 //    testFormat("xmlViolation")
 
@@ -233,8 +233,17 @@ class Test extends FunSuite {
       for (correctOutput <- convertedOutput) {
         //assert(emitTokens.head === correctOutput)
         if (emitTokens != Nil) {
-          if (!(emitTokens.head == correctOutput)) {
-            isCorrect = false
+          emitTokens.head match {
+            case Environment.tagToken(false, n,_,_) => {
+              if (!(Environment.tagToken(false, n, false, List()) == correctOutput)) {
+                isCorrect = false
+              }
+            }
+            case _ => {
+              if (!(emitTokens.head == correctOutput)) {
+                isCorrect = false
+              }
+            }
           }
           emitTokens = emitTokens.tail
         }

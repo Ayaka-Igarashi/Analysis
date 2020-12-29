@@ -190,6 +190,7 @@ object Implement {
       case Set(obj, iValue) => {
         val value = commandValueToValue(iValue, newEnv)
         val value_string = valueToString(value)
+        val value_bool = valueToBool(value)
         obj match {
           case IReturnState => {
             value match {
@@ -232,6 +233,20 @@ object Implement {
               case _ => println("")
             }
           }
+          case IFlagOf(token) => {
+            var key: String = null
+            token match {
+              case IVariable(v) => key = v + uniqueId.toString
+              case ICurrentTagToken => key = newEnv.currentTagToken
+              case ICurrentDOCTYPEToken => key = newEnv.currentDOCTYPEToken
+              case _ =>
+            }
+            newEnv.map.get(key) match {
+              case Some(TokenVal(tagToken_(b,n,_,a))) => newEnv.addMap(key, TokenVal(tagToken_(b,n,value_bool,a)))
+              case Some(TokenVal(DOCTYPEToken(n,f1,f2,_))) => newEnv.addMap(key, TokenVal(DOCTYPEToken(n,f1,f2,value_bool)))
+              case _ => println("")
+            }
+          }
           case _ =>
         }
       }
@@ -250,25 +265,6 @@ object Implement {
           case EOFVal =>
           case _ =>
         }
-//        character match {
-//          case NextInputCharacter => {
-//            if (newEnv.inputText.length > 0) {
-//              newEnv.currentInputCharacter = CharVal(newEnv.inputText.head)
-//              newEnv.inputText = newEnv.inputText.tail
-//            } else {
-//              newEnv.currentInputCharacter = EOFVal
-//            }
-//          }
-//          case _ => {
-//            // 途中
-//            if (newEnv.inputText.substring(0, character.length) == character) {
-//              newEnv.inputText = newEnv.inputText.substring(character.length - 1)
-//              newEnv.currentInputCharacter = StringVal(character)
-//            } else {
-//              println("consume error")
-//            }
-//          }
-//        }
       }
       case Emit(token) => {
         val value = commandValueToValue(token, newEnv)
@@ -320,7 +316,7 @@ object Implement {
               case _ =>
             }
             newEnv.map.get(key) match {
-              case Some(AttributeVal(Attribute(n, v))) => newEnv.addMap(key, AttributeVal(Attribute(n, appendStr + v)))
+              case Some(AttributeVal(Attribute(n, v))) => newEnv.addMap(key, AttributeVal(Attribute(n, v + appendStr)))
               case _ => println("")
             }
           }
@@ -341,8 +337,8 @@ object Implement {
       case Ignore(_) => //println("ignore") // 何もしない
       case FlushCodePoint() => {
         val flushCommand =  If(CharacterReferenceConsumedAsAttributeVal(),
-                              List(AppendTo(CharacterReferenceCode, IValueOf(IVariable(newEnv.currentAttribute)))),
-                               List(Emit(CharacterReferenceCode)))
+                              List(AppendTo(TemporaryBuffer, IValueOf(ICurrentAttribute))),
+                               List(Emit(TemporaryBuffer)))
         newEnv = interpretCommand(newEnv, flushCommand)
       }
       case TreatAsAnythingElse() => {
@@ -428,20 +424,21 @@ object Implement {
       case CChar(c) => value = CharVal(c)
       case CString(s) => value = StringVal(s)
       case CInt(i) => value = IntVal(i)
+      case CBool(t) => value = BoolVal(t)
       case ReturnState => value = env.returnState
       case StateName(s) => value = StateVal(s)
       case TemporaryBuffer => value = StringVal(env.temporaryBuffer)
       case CharacterReferenceCode => value = IntVal(env.characterReferenceCode)
       case NewStartTagToken => value = TokenVal(Environment.tagToken_(true, null, false, List()))
       case NewEndTagToken => value = TokenVal(Environment.tagToken_(false, null, false, List()))
-      case NewDOCTYPEToken => value = TokenVal(Environment.DOCTYPEToken(null, null, null, false))
+      case NewDOCTYPEToken => value = TokenVal(Environment.DOCTYPEToken("", "", "", false))
       case NewCommentToken => value = TokenVal(Environment.commentToken(""))
       case LowerCase(i) => commandValueToValue(i, env) match {
         case CharVal(c) => value = CharVal((c + 0x20).toChar)
         case _ =>
       }
       case NumericVersion(i) => commandValueToValue(i, env) match {
-        case CharVal(c) => value = CharVal((c - 0x30).toChar)
+        case CharVal(c) => value = IntVal(Integer.parseInt(c.toString, 16))
         case _ =>
       }
       case CurrentInputCharacter => value = env.currentInputCharacter
@@ -469,9 +466,6 @@ object Implement {
       }
       case CommandStructure.EndOfFileToken => value = TokenVal(endOfFileToken())
       case CommandStructure.CharacterToken(c) => value = TokenVal(characterToken(c))
-      case NameOf(x) => {
-
-      }
       case Variable(x) => {
         env.map.get(x + uniqueId.toString) match {
           case Some(a) => value = a
@@ -497,8 +491,15 @@ object Implement {
     tVal match {
       case StringVal(s) => s
       case CharVal(c) => c.toString
-      case IntVal(i) => i.toChar.toString
+      case IntVal(i) => Utility.longIntToCharacter(i)
       case _ => ""
+    }
+  }
+
+  def valueToBool(tVal: Value): Boolean = {
+    tVal match {
+      case BoolVal(b) => b
+      case _ => false
     }
   }
 

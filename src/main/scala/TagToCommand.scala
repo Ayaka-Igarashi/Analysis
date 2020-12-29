@@ -127,7 +127,9 @@ object TagToCommand {
           // set2(状態を変更)
           case List(Leaf(VB, Token(_,_,"set")), Node(NP, np), Node(PP, List(Leaf(IN, _), Node(PP, pp)))) => {
             val i1 = nptagToImplementVariable(Node(NP, np))
-            val i2 = nptagToCommandValue(Node(NP, pp))
+            val i2 = if (getLeave(Node(NP, pp)).contains("on")) CBool(true)
+            else if(getLeave(Node(NP, pp)).contains("off")) CBool(false)
+            else nptagToCommandValue(Node(NP, pp))
             commandList :+= CommandStructure.Set(i1, i2)
           }
           // set3(状態を変更_PPが省略されてるもの)
@@ -145,7 +147,7 @@ object TagToCommand {
               }
               case _ =>{
                 val i1 = nptagToImplementVariable(Node(NP, np))
-                commandList :+= CommandStructure.Set(i1, Non("on"))
+                commandList :+= CommandStructure.Set(i1, CBool(true))
               }
             }
           }
@@ -493,8 +495,12 @@ object TagToCommand {
     if (str.contains("return state")) IReturnState
     else if (str.contains("temporary buffer")) ITemporaryBuffer
     else if (str.contains("character reference code")) ICharacterReferenceCode
+    else if (id != -1 && (str.contains("force_quirks flag") || str.contains("self_closing flag"))) {
+      IFlagOf(IVariable("x_" + id))
+    }
     else if (str.contains("DOCTYPE")) {
       if (str.contains("name")) INameOf(ICurrentDOCTYPEToken)
+      else if (str.contains("flag")) IFlagOf(ICurrentDOCTYPEToken)
       else ICurrentDOCTYPEToken
     }
     else if (str.contains("current attribute")) {
@@ -505,6 +511,7 @@ object TagToCommand {
     else if (str.contains("comment")) ICommentToken
     else if (str.contains("current") && str.contains("tag")) {
       if (str.contains("name")) INameOf(ICurrentTagToken)
+      else if (str.contains("flag")) IFlagOf(ICurrentTagToken)
       else ICurrentTagToken
     }
     else if (str.contains("name") && id != -1) INameOf(IVariable("x_" + id))

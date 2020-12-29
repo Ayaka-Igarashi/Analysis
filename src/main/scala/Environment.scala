@@ -10,7 +10,7 @@ object Environment {
   case class StringVal(string: String) extends Value
   case object EOFVal extends Value
   case class StateVal(state: String) extends Value
-  //case class BoolVal(b: Boolean) extends Value
+  case class BoolVal(b: Boolean) extends Value
 
   class Env {
     // 現在の状態

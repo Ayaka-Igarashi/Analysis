@@ -112,7 +112,7 @@ object Main {
     replacedInput = replacedInput.replaceAll("\r", "\n")
 
     var env: Env = new Env()
-    env.setInputText(input)
+    env.setInputText(replacedInput)
     val length = env.inputText.length
     env.setNextState(StateVal(initialState))
     env.lastStartTagName = lastStartTagName

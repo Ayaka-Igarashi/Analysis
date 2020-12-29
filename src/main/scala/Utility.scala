@@ -17,4 +17,13 @@ object Utility {
     }
     else 0
   }
+
+  def longIntToCharacter(unicode: Long): String = {
+    if (unicode < 0x10000) {
+      unicode.toChar.toString
+    }
+    else {
+      ((unicode - 0x10000) / 0x400 + 0xD800).toChar.toString + ((unicode - 0x10000) % 0x400 + 0xDC00).toChar.toString
+    }
+  }
 }
