@@ -144,7 +144,7 @@
   <dl class=switch><dt><a id=rawtext-end-tag-open-state:ascii-letters href=https://infra.spec.whatwg.org/#ascii-alpha data-x-internal=ascii-letters>ASCII alpha</a><dd>Create a new end tag token, set its tag name to the empty string. <a href=#reconsume id=rawtext-end-tag-open-state:reconsume>Reconsume</a> in
    the <a href=#rawtext-end-tag-name-state id=rawtext-end-tag-open-state:rawtext-end-tag-name-state>RAWTEXT end tag name state</a>.
 
-   <dt>Anything else<dd>Emit a UP003C LESS-THAN SIGN character token and a UP002F SOLIDUS character token.
+   <dt>Anything else<dd>Emit a U+003C LESS-THAN SIGN character token and a U+002F SOLIDUS character token.
    <a href=#reconsume id=rawtext-end-tag-open-state:reconsume-2>Reconsume</a> in the <a href=#rawtext-state id=rawtext-end-tag-open-state:rawtext-state>RAWTEXT state</a>.</dl>
 
 

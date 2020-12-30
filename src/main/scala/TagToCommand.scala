@@ -483,6 +483,8 @@ object TagToCommand {
             n match {
               case "name" => return INameOf(nptagToImplementVariable(Node(NP, np)))
               case "value" => return IValueOf(nptagToImplementVariable(Node(NP, np)))
+              case "system identifier" => return SystemIdentifierOf(nptagToImplementVariable(Node(NP, np)))
+              case "public identifier" => return PublicIdentifierOf(nptagToImplementVariable(Node(NP, np)))
               case _ =>
             }
           }
@@ -495,11 +497,10 @@ object TagToCommand {
     if (str.contains("return state")) IReturnState
     else if (str.contains("temporary buffer")) ITemporaryBuffer
     else if (str.contains("character reference code")) ICharacterReferenceCode
-    else if (id != -1 && (str.contains("force_quirks flag") || str.contains("self_closing flag"))) {
-      IFlagOf(IVariable("x_" + id))
-    }
     else if (str.contains("DOCTYPE")) {
-      if (str.contains("name")) INameOf(ICurrentDOCTYPEToken)
+      if (str.contains("system identifier")) SystemIdentifierOf(ICurrentDOCTYPEToken)
+      else if (str.contains("public identifier")) PublicIdentifierOf(ICurrentDOCTYPEToken)
+      else if (str.contains("name")) INameOf(ICurrentDOCTYPEToken)
       else if (str.contains("flag")) IFlagOf(ICurrentDOCTYPEToken)
       else ICurrentDOCTYPEToken
     }
@@ -514,6 +515,11 @@ object TagToCommand {
       else if (str.contains("flag")) IFlagOf(ICurrentTagToken)
       else ICurrentTagToken
     }
+    else if (id != -1 && (str.contains("force_quirks flag") || str.contains("self_closing flag"))) {
+      IFlagOf(IVariable("x_" + id))
+    }
+    else if (str.contains("system identifier") && id != -1) SystemIdentifierOf(IVariable("x_" + id))
+    else if (str.contains("public identifier") && id != -1) PublicIdentifierOf(IVariable("x_" + id))
     else if (str.contains("name") && id != -1) INameOf(IVariable("x_" + id))
     else if (str.contains("value") && id != -1) IValueOf(IVariable("x_" + id))
     else if (id != -1) IVariable("x_" + id)

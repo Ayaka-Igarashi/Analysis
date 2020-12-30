@@ -3,6 +3,7 @@ import Environment._
 import Main.{txtOut2, txtOut3}
 import StateProcessedStructure.pState
 
+import scala.collection.convert.ImplicitConversions.`collection asJava`
 import scala.collection.immutable.ListMap
 
 object Implement {
@@ -55,6 +56,33 @@ object Implement {
             for (command <- commandList) {
               newEnv = interpretCommand(newEnv, command)
             }
+
+            // attribute
+            if (currentState == "Attribute_name_state" && newEnv.nextState != StateVal("Attribute_name_state")) {
+              val name = newEnv.map.get(newEnv.currentAttribute) match {
+                case Some(AttributeVal(Attribute(n,_))) => n
+                case _ => null
+              }
+              newEnv.map.get(newEnv.currentTagToken) match {
+                case Some(TokenVal(tagToken_(s, n, f, list))) => {
+                  var remove = false
+                  for (a <- list) {
+                    if (a != newEnv.currentAttribute) {
+                      newEnv.map.get(a) match {
+                        case Some(AttributeVal(Attribute(n,_))) => {if (n == name) remove = true }
+                        case _ =>
+                      }
+                    }
+                  }
+                  if (remove) {
+                    newEnv.errorContent :+= "duplicate_attribute parse error"
+                    newEnv.addMap(newEnv.currentTagToken, TokenVal(tagToken_(s, n, f, list.slice(0, list.length -1))))
+                  }
+                }
+                case _ =>
+              }
+            }
+
             txtOut3.println("command : "+ prev + " , " + commandList)
           }
           case None => println("undefined state error : " + currentState)
@@ -364,7 +392,9 @@ object Implement {
         val value = commandValueToValue(by, newEnv)
         val num = ValueToInt(value, newEnv)
         obj match {
-          case ICharacterReferenceCode => newEnv.characterReferenceCode *= num
+          case ICharacterReferenceCode => {
+            if (!(newEnv.characterReferenceCode >= Long.MaxValue / num)) newEnv.characterReferenceCode *= num
+          }
           case _ => println("multiply error")
         }
       }
@@ -431,7 +461,7 @@ object Implement {
       case CharacterReferenceCode => value = IntVal(env.characterReferenceCode)
       case NewStartTagToken => value = TokenVal(Environment.tagToken_(true, null, false, List()))
       case NewEndTagToken => value = TokenVal(Environment.tagToken_(false, null, false, List()))
-      case NewDOCTYPEToken => value = TokenVal(Environment.DOCTYPEToken("", "", "", false))
+      case NewDOCTYPEToken => value = TokenVal(Environment.DOCTYPEToken(null, null, null, false))
       case NewCommentToken => value = TokenVal(Environment.commentToken(""))
       case LowerCase(i) => commandValueToValue(i, env) match {
         case CharVal(c) => value = CharVal((c + 0x20).toChar)

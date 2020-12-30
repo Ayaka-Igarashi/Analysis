@@ -38,10 +38,10 @@ class Test extends FunSuite {
 //    testFormat("namedEntities")
 //    testFormat("numericEntities")
 //    testFormat("pendingSpecChanges")
-//    testFormat("test1")
+    testFormat("test1")
 //    testFormat("test2")
 //    testFormat("test3")
-    testFormat("test4")
+//    testFormat("test4")
 //    testFormat("unicodeChars")
 //    testFormat("unicodeCharsProblematic")
 //    testFormat("xmlViolation")
@@ -131,18 +131,21 @@ class Test extends FunSuite {
         case "DOCTYPE"=>{
           val name = out.get(1) match {
             case s: String => s
+            case null => null
             case _ => ""
           }
           val public_id = out.get(2) match {
             case s: String => s
+            case null => null
             case _ => ""
           }
           val system_id = out.get(3) match {
             case s: String => s
+            case null => null
             case _ => ""
           }
           val correctness = out.get(4) match {
-            case b: Boolean => b
+            case b: Boolean => !b
             case _ => false
           }
           convertedOutput :+= DOCTYPEToken(name, public_id, system_id, correctness)
@@ -150,6 +153,7 @@ class Test extends FunSuite {
         case "StartTag" => {
           val name = out.get(1) match {
             case s: String => s
+            case null => null
             case _ => ""
           }
           var attributeList: List[Environment.Attribute] = List()
@@ -171,6 +175,7 @@ class Test extends FunSuite {
         case "EndTag" =>{
           val name = out.get(1) match {
             case s: String => s
+            case null => null
             case _ => ""
           }
           convertedOutput :+= Environment.tagToken(false, name, false, List())
@@ -178,6 +183,7 @@ class Test extends FunSuite {
         case "Comment" => {
           val data = out.get(1) match {
             case s: String => s
+            case null => null
             case _ => ""
           }
           convertedOutput :+= Environment.commentToken(data)
@@ -185,6 +191,7 @@ class Test extends FunSuite {
         case "Character" => {
           val data = out.get(1) match {
             case s: String => s
+            case null => null
             case _ => ""
           }
           convertedOutput :+= Environment.characterToken(data)

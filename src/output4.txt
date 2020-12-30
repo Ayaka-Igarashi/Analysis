@@ -1,891 +1,241 @@
-test4
+contentModelFlags
 testnum :1;
-state : Data_state
-lastStartTagName : null
-input : "<z/0  <>"
-implement : List(tagToken(true,z,false,List(Attribute(0,), Attribute(<,))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(0,), Attribute(<,))), endOfFileToken())
-implement_error : List(unexpected_solidus_in_tag parse error, unexpected_character_in_attribute_name parse error)
-correct_error :  unexpected-solidus-in-tag unexpected-character-in-attribute-name
- -> true
-
-testnum :2;
-state : Data_state
-lastStartTagName : null
-input : "<z x=<>"
-implement : List(tagToken(true,z,false,List(Attribute(x,<))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(x,<))), endOfFileToken())
-implement_error : List(unexpected_character_in_unquoted_attribute_value parse error)
-correct_error :  unexpected-character-in-unquoted-attribute-value
- -> true
-
-testnum :3;
-state : Data_state
-lastStartTagName : null
-input : "<z z=z=z>"
-implement : List(tagToken(true,z,false,List(Attribute(z,z=z))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(z,z=z))), endOfFileToken())
-implement_error : List(unexpected_character_in_unquoted_attribute_value parse error)
-correct_error :  unexpected-character-in-unquoted-attribute-value
- -> true
-
-testnum :4;
-state : Data_state
-lastStartTagName : null
-input : "<z =>"
-implement : List(tagToken(true,z,false,List(Attribute(=,))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(=,))), endOfFileToken())
-implement_error : List(unexpected_equals_sign_before_attribute_name parse error)
-correct_error :  unexpected-equals-sign-before-attribute-name
- -> true
-
-testnum :5;
-state : Data_state
-lastStartTagName : null
-input : "<z ==>"
-implement : List(tagToken(true,z,false,List(Attribute(=,))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(=,))), endOfFileToken())
-implement_error : List(unexpected_equals_sign_before_attribute_name parse error, missing_attribute_value parse error)
-correct_error :  unexpected-equals-sign-before-attribute-name missing-attribute-value
- -> true
-
-testnum :6;
-state : Data_state
-lastStartTagName : null
-input : "<z ===>"
-implement : List(tagToken(true,z,false,List(Attribute(=,=))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(=,=))), endOfFileToken())
-implement_error : List(unexpected_equals_sign_before_attribute_name parse error, unexpected_character_in_unquoted_attribute_value parse error)
-correct_error :  unexpected-equals-sign-before-attribute-name unexpected-character-in-unquoted-attribute-value
- -> true
-
-testnum :7;
-state : Data_state
-lastStartTagName : null
-input : "<z ====>"
-implement : List(tagToken(true,z,false,List(Attribute(=,==))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(=,==))), endOfFileToken())
-implement_error : List(unexpected_equals_sign_before_attribute_name parse error, unexpected_character_in_unquoted_attribute_value parse error, unexpected_character_in_unquoted_attribute_value parse error)
-correct_error :  unexpected-equals-sign-before-attribute-name unexpected-character-in-unquoted-attribute-value unexpected-character-in-unquoted-attribute-value
- -> true
-
-testnum :8;
-state : Data_state
-lastStartTagName : null
-input : "<z z="&">"
-implement : List(tagToken(true,z,false,List(Attribute(z,&))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(z,&))), endOfFileToken())
+state : PLAINTEXT_state
+lastStartTagName : plaintext
+input : "<head>&body;"
+implement : List(characterToken(<head>&body;), endOfFileToken())
+correct : List(characterToken(<head>&body;), endOfFileToken())
 implement_error : List()
 correct_error : 
  -> true
 
+testnum :2;
+state : PLAINTEXT_state
+lastStartTagName : plaintext
+input : "</plaintext>&body;"
+implement : List(characterToken(</plaintext>&body;), endOfFileToken())
+correct : List(characterToken(</plaintext>&body;), endOfFileToken())
+implement_error : List()
+correct_error : 
+ -> true
+
+testnum :3;
+state : RAWTEXT_state
+lastStartTagName : xmp
+input : "foo</xmp>"
+implement : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
+implement_error : List()
+correct_error : 
+ -> true
+
+testnum :4;
+state : RCDATA_state
+lastStartTagName : xmp
+input : "foo</xmp>"
+implement : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
+implement_error : List()
+correct_error : 
+ -> true
+
+testnum :5;
+state : RAWTEXT_state
+lastStartTagName : xmp
+input : "foo</xMp>"
+implement : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
+implement_error : List()
+correct_error : 
+ -> true
+
+testnum :6;
+state : RCDATA_state
+lastStartTagName : xmp
+input : "foo</xMp>"
+implement : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(foo), tagToken(false,xmp,false,List()), endOfFileToken())
+implement_error : List()
+correct_error : 
+ -> true
+
+testnum :7;
+state : RAWTEXT_state
+lastStartTagName : xmp
+input : "foo</xmp "
+implement : List(characterToken(foo), endOfFileToken())
+correct : List(characterToken(foo), endOfFileToken())
+implement_error : List(eof_in_tag parse error)
+correct_error :  eof-in-tag
+ -> true
+
+testnum :8;
+state : RCDATA_state
+lastStartTagName : xmp
+input : "foo</xmp "
+implement : List(characterToken(foo), endOfFileToken())
+correct : List(characterToken(foo), endOfFileToken())
+implement_error : List(eof_in_tag parse error)
+correct_error :  eof-in-tag
+ -> true
+
 testnum :9;
-state : Data_state
-lastStartTagName : null
-input : "<z z="&'">"
-implement : List(tagToken(true,z,false,List(Attribute(z,&'))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(z,&'))), endOfFileToken())
+state : RAWTEXT_state
+lastStartTagName : xmp
+input : "foo</xmp"
+implement : List(characterToken(foo</xmp), endOfFileToken())
+correct : List(characterToken(foo</xmp), endOfFileToken())
 implement_error : List()
 correct_error : 
  -> true
 
 testnum :10;
-state : Data_state
-lastStartTagName : null
-input : "<z z='&'>"
-implement : List(tagToken(true,z,false,List(Attribute(z,&))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(z,&))), endOfFileToken())
+state : RCDATA_state
+lastStartTagName : xmp
+input : "foo</xmp"
+implement : List(characterToken(foo</xmp), endOfFileToken())
+correct : List(characterToken(foo</xmp), endOfFileToken())
 implement_error : List()
 correct_error : 
  -> true
 
 testnum :11;
-state : Data_state
-lastStartTagName : null
-input : "<z z='&"'>"
-implement : List(tagToken(true,z,false,List(Attribute(z,&"))), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(z,&"))), endOfFileToken())
-implement_error : List()
-correct_error : 
+state : RAWTEXT_state
+lastStartTagName : xmp
+input : "foo</xmp/"
+implement : List(characterToken(foo), endOfFileToken())
+correct : List(characterToken(foo), endOfFileToken())
+implement_error : List(eof_in_tag parse error)
+correct_error :  eof-in-tag
  -> true
 
 testnum :12;
-state : Data_state
-lastStartTagName : null
-input : "<z z='&xlink_xmlns;'>bar<z>"
-implement : List(tagToken(true,z,false,List(Attribute(z,&xlink_xmlns;))), characterToken(bar), tagToken(true,z,false,List()), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(z,&xlink_xmlns;))), characterToken(bar), tagToken(true,z,false,List()), endOfFileToken())
-implement_error : List()
-correct_error : 
+state : RCDATA_state
+lastStartTagName : xmp
+input : "foo</xmp/"
+implement : List(characterToken(foo), endOfFileToken())
+correct : List(characterToken(foo), endOfFileToken())
+implement_error : List(eof_in_tag parse error)
+correct_error :  eof-in-tag
  -> true
 
 testnum :13;
-state : Data_state
-lastStartTagName : null
-input : "<z z='&#x0020; foo'>bar<z>"
-implement : List(tagToken(true,z,false,List(Attribute(z,  foo))), characterToken(bar), tagToken(true,z,false,List()), endOfFileToken())
-correct : List(tagToken(true,z,false,List(Attribute(z,  foo))), characterToken(bar), tagToken(true,z,false,List()), endOfFileToken())
+state : RAWTEXT_state
+lastStartTagName : xmp
+input : "foo</xmp<"
+implement : List(characterToken(foo</xmp<), endOfFileToken())
+correct : List(characterToken(foo</xmp<), endOfFileToken())
 implement_error : List()
 correct_error : 
  -> true
 
 testnum :14;
-state : Data_state
-lastStartTagName : null
-input : "<foo "='bar'>"
-implement : List(tagToken(true,foo,false,List(Attribute(",bar))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(",bar))), endOfFileToken())
-implement_error : List(unexpected_character_in_attribute_name parse error)
-correct_error :  unexpected-character-in-attribute-name
+state : RCDATA_state
+lastStartTagName : xmp
+input : "foo</xmp<"
+implement : List(characterToken(foo</xmp<), endOfFileToken())
+correct : List(characterToken(foo</xmp<), endOfFileToken())
+implement_error : List()
+correct_error : 
  -> true
 
 testnum :15;
-state : Data_state
-lastStartTagName : null
-input : "<foo '='bar'>"
-implement : List(tagToken(true,foo,false,List(Attribute(',bar))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(',bar))), endOfFileToken())
-implement_error : List(unexpected_character_in_attribute_name parse error)
-correct_error :  unexpected-character-in-attribute-name
+state : RAWTEXT_state
+lastStartTagName : xmp
+input : "</foo>bar</xmp>"
+implement : List(characterToken(</foo>bar), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(</foo>bar), tagToken(false,xmp,false,List()), endOfFileToken())
+implement_error : List()
+correct_error : 
  -> true
 
 testnum :16;
-state : Data_state
-lastStartTagName : null
-input : "<foo a"b='bar'>"
-implement : List(tagToken(true,foo,false,List(Attribute(a"b,bar))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(a"b,bar))), endOfFileToken())
-implement_error : List(unexpected_character_in_attribute_name parse error)
-correct_error :  unexpected-character-in-attribute-name
+state : RCDATA_state
+lastStartTagName : xmp
+input : "</foo>bar</xmp>"
+implement : List(characterToken(</foo>bar), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(</foo>bar), tagToken(false,xmp,false,List()), endOfFileToken())
+implement_error : List()
+correct_error : 
  -> true
 
 testnum :17;
-state : Data_state
-lastStartTagName : null
-input : "<foo a'b='bar'>"
-implement : List(tagToken(true,foo,false,List(Attribute(a'b,bar))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(a'b,bar))), endOfFileToken())
-implement_error : List(unexpected_character_in_attribute_name parse error)
-correct_error :  unexpected-character-in-attribute-name
+state : RAWTEXT_state
+lastStartTagName : xmp
+input : "</xmp</xmp</xmp>"
+implement : List(characterToken(</xmp</xmp), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(</xmp</xmp), tagToken(false,xmp,false,List()), endOfFileToken())
+implement_error : List()
+correct_error : 
  -> true
 
 testnum :18;
-state : Data_state
-lastStartTagName : null
-input : "<foo a=b'c>"
-implement : List(tagToken(true,foo,false,List(Attribute(a,b'c))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(a,b'c))), endOfFileToken())
-implement_error : List(unexpected_character_in_unquoted_attribute_value parse error)
-correct_error :  unexpected-character-in-unquoted-attribute-value
+state : RCDATA_state
+lastStartTagName : xmp
+input : "</xmp</xmp</xmp>"
+implement : List(characterToken(</xmp</xmp), tagToken(false,xmp,false,List()), endOfFileToken())
+correct : List(characterToken(</xmp</xmp), tagToken(false,xmp,false,List()), endOfFileToken())
+implement_error : List()
+correct_error : 
  -> true
 
 testnum :19;
-state : Data_state
-lastStartTagName : null
-input : "<foo a=b"c>"
-implement : List(tagToken(true,foo,false,List(Attribute(a,b"c))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(a,b"c))), endOfFileToken())
-implement_error : List(unexpected_character_in_unquoted_attribute_value parse error)
-correct_error :  unexpected-character-in-unquoted-attribute-value
+state : RAWTEXT_state
+lastStartTagName : xmp
+input : "</foo>bar</xmpaar>"
+implement : List(characterToken(</foo>bar</xmpaar>), endOfFileToken())
+correct : List(characterToken(</foo>bar</xmpaar>), endOfFileToken())
+implement_error : List()
+correct_error : 
  -> true
 
 testnum :20;
-state : Data_state
-lastStartTagName : null
-input : "<foo a="b"c>"
-implement : List(tagToken(true,foo,false,List(Attribute(a,b), Attribute(c,))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(a,b), Attribute(c,))), endOfFileToken())
-implement_error : List(missing_whitespace_between_attributes parse error)
-correct_error :  missing-whitespace-between-attributes
+state : RCDATA_state
+lastStartTagName : xmp
+input : "</foo>bar</xmpaar>"
+implement : List(characterToken(</foo>bar</xmpaar>), endOfFileToken())
+correct : List(characterToken(</foo>bar</xmpaar>), endOfFileToken())
+implement_error : List()
+correct_error : 
  -> true
 
 testnum :21;
-state : Data_state
-lastStartTagName : null
-input : "<foo a='b'c>"
-implement : List(tagToken(true,foo,false,List(Attribute(a,b), Attribute(c,))), endOfFileToken())
-correct : List(tagToken(true,foo,false,List(Attribute(a,b), Attribute(c,))), endOfFileToken())
-implement_error : List(missing_whitespace_between_attributes parse error)
-correct_error :  missing-whitespace-between-attributes
+state : RAWTEXT_state
+lastStartTagName : xmp
+input : "foo</xmp></baz>"
+implement : List(characterToken(foo), tagToken(false,xmp,false,List()), tagToken(false,baz,false,List()), endOfFileToken())
+correct : List(characterToken(foo), tagToken(false,xmp,false,List()), tagToken(false,baz,false,List()), endOfFileToken())
+implement_error : List()
+correct_error : 
  -> true
 
 testnum :22;
-state : Data_state
-lastStartTagName : null
-input : "<br a='b'/>"
-implement : List(tagToken(true,br,true,List(Attribute(a,b))), endOfFileToken())
-correct : List(tagToken(true,br,true,List(Attribute(a,b))), endOfFileToken())
+state : RCDATA_state
+lastStartTagName : xmp
+input : "foo</xmp></baz>"
+implement : List(characterToken(foo), tagToken(false,xmp,false,List()), tagToken(false,baz,false,List()), endOfFileToken())
+correct : List(characterToken(foo), tagToken(false,xmp,false,List()), tagToken(false,baz,false,List()), endOfFileToken())
 implement_error : List()
 correct_error : 
  -> true
 
 testnum :23;
-state : Data_state
-lastStartTagName : null
-input : "<bar a='b'/>"
-implement : List(tagToken(true,bar,true,List(Attribute(a,b))), endOfFileToken())
-correct : List(tagToken(true,bar,true,List(Attribute(a,b))), endOfFileToken())
+state : RAWTEXT_state
+lastStartTagName : xmp
+input : "&foo;"
+implement : List(characterToken(&foo;), endOfFileToken())
+correct : List(characterToken(&foo;), endOfFileToken())
 implement_error : List()
 correct_error : 
  -> true
 
-main:: r
 testnum :24;
-state : Data_state
-lastStartTagName : null
-input : "<!doctype html "
-implement : List(DOCTYPEToken(html,,,false), endOfFileToken())
-correct : List(DOCTYPEToken(html,,,false), endOfFileToken())
-implement_error : List(eof_in_doctype parse error)
-correct_error :  eof-in-doctype
- -> true
-
-main:: r
-testnum :25;
-state : Data_state
-lastStartTagName : null
-input : "<z"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
-implement_error : List(eof_in_tag parse error)
-correct_error :  eof-in-tag
- -> true
-
-testnum :26;
-state : Data_state
-lastStartTagName : null
-input : "<z/"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
-implement_error : List(eof_in_tag parse error)
-correct_error :  eof-in-tag
- -> true
-
-testnum :27;
-state : Data_state
-lastStartTagName : null
-input : "&#x0"
-implement : List(characterToken(�), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
-implement_error : List(missing_semicolon_after_character_reference parse error, null_character_reference parse error)
-correct_error :  missing-semicolon-after-character-reference null-character-reference
- -> true
-
-testnum :28;
-state : Data_state
-lastStartTagName : null
-input : "&#0"
-implement : List(characterToken(�), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
-implement_error : List(missing_semicolon_after_character_reference parse error, null_character_reference parse error)
-correct_error :  missing-semicolon-after-character-reference null-character-reference
- -> true
-
-testnum :29;
-state : Data_state
-lastStartTagName : null
-input : "&#x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000041;"
-implement : List(characterToken(A), endOfFileToken())
-correct : List(characterToken(A), endOfFileToken())
-implement_error : List()
+state : RCDATA_state
+lastStartTagName : textarea
+input : "&lt;"
+implement : List(characterToken(<), endOfFileToken())
+correct : List(characterToken(<), endOfFileToken())
+implement_error : List(missing_semicolon_after_character_reference parse error)
 correct_error : 
  -> true
 
-testnum :30;
-state : Data_state
-lastStartTagName : null
-input : "&#000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000065;"
-implement : List(characterToken(A), endOfFileToken())
-correct : List(characterToken(A), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-testnum :31;
-state : Data_state
-lastStartTagName : null
-input : "&#x &#X "
-implement : List(characterToken(&#x &#X ), endOfFileToken())
-correct : List(characterToken(&#x &#X ), endOfFileToken())
-implement_error : List(absence_of_digits_in_numeric_character_reference parse error, absence_of_digits_in_numeric_character_reference parse error)
-correct_error :  absence-of-digits-in-numeric-character-reference absence-of-digits-in-numeric-character-reference
- -> true
-
-testnum :32;
-state : Data_state
-lastStartTagName : null
-input : "&#xZ"
-implement : List(characterToken(&#xZ), endOfFileToken())
-correct : List(characterToken(&#xZ), endOfFileToken())
-implement_error : List(absence_of_digits_in_numeric_character_reference parse error)
-correct_error :  absence-of-digits-in-numeric-character-reference
- -> true
-
-testnum :33;
-state : Data_state
-lastStartTagName : null
-input : "&# &#; "
-implement : List(characterToken(&# &#; ), endOfFileToken())
-correct : List(characterToken(&# &#; ), endOfFileToken())
-implement_error : List(absence_of_digits_in_numeric_character_reference parse error, absence_of_digits_in_numeric_character_reference parse error)
-correct_error :  absence-of-digits-in-numeric-character-reference absence-of-digits-in-numeric-character-reference
- -> true
-
-testnum :34;
-state : Data_state
-lastStartTagName : null
-input : "&#A"
-implement : List(characterToken(&#A), endOfFileToken())
-correct : List(characterToken(&#A), endOfFileToken())
-implement_error : List(absence_of_digits_in_numeric_character_reference parse error)
-correct_error :  absence-of-digits-in-numeric-character-reference
- -> true
-
-testnum :35;
-state : Data_state
-lastStartTagName : null
-input : "&#x10000;"
-implement : List(characterToken(𐀀), endOfFileToken())
-correct : List(characterToken(𐀀), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-testnum :36;
-state : Data_state
-lastStartTagName : null
-input : "&#X10FFFF;"
-implement : List(characterToken(􏿿), endOfFileToken())
-correct : List(characterToken(􏿿), endOfFileToken())
-implement_error : List(noncharacter_character_reference parse error)
-correct_error :  noncharacter-character-reference
- -> true
-
-testnum :37;
-state : Data_state
-lastStartTagName : null
-input : "&#x110000;"
-implement : List(characterToken(�), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
-implement_error : List(character_reference_outside_unicode_range parse error)
-correct_error :  character-reference-outside-unicode-range
- -> true
-
-testnum :38;
-state : Data_state
-lastStartTagName : null
-input : "&#x80000041;"
-implement : List(characterToken(�), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
-implement_error : List(character_reference_outside_unicode_range parse error)
-correct_error :  character-reference-outside-unicode-range
- -> true
-
-testnum :39;
-state : Data_state
-lastStartTagName : null
-input : "&#x100000041;"
-implement : List(characterToken(�), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
-implement_error : List(character_reference_outside_unicode_range parse error)
-correct_error :  character-reference-outside-unicode-range
- -> true
-
-testnum :40;
-state : Data_state
-lastStartTagName : null
-input : "&#4294967361;"
-implement : List(characterToken(�), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
-implement_error : List(character_reference_outside_unicode_range parse error)
-correct_error :  character-reference-outside-unicode-range
- -> true
-
-testnum :41;
-state : Data_state
-lastStartTagName : null
-input : "&#x10000000000000041;"
-implement : List(characterToken(A), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
-implement_error : List()
-correct_error :  character-reference-outside-unicode-range
- -> false
-
-testnum :42;
-state : Data_state
-lastStartTagName : null
-input : "&#18446744073709551681;"
-implement : List(characterToken(A), endOfFileToken())
-correct : List(characterToken(�), endOfFileToken())
-implement_error : List()
-correct_error :  character-reference-outside-unicode-range
- -> false
-
-testnum :43;
-state : Data_state
-lastStartTagName : null
-input : "&#xD7FF;&#xD800;&#xD801;&#xDFFE;&#xDFFF;&#xE000;"
-implement : List(characterToken(퟿����), endOfFileToken())
-correct : List(characterToken(퟿����), endOfFileToken())
-implement_error : List(surrogate_character_reference parse error, surrogate_character_reference parse error, surrogate_character_reference parse error, surrogate_character_reference parse error)
-correct_error :  surrogate-character-reference surrogate-character-reference surrogate-character-reference surrogate-character-reference
- -> true
-
-testnum :44;
-state : Data_state
-lastStartTagName : null
-input : "<X>"
-implement : List(tagToken(true,x,false,List()), endOfFileToken())
-correct : List(tagToken(true,x,false,List()), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-testnum :45;
-state : Data_state
-lastStartTagName : null
-input : "</X>"
-implement : List(tagToken(false,x,false,List()), endOfFileToken())
-correct : List(tagToken(false,x,false,List()), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-testnum :46;
-state : Data_state
-lastStartTagName : null
-input : "<x X>"
-implement : List(tagToken(true,x,false,List(Attribute(x,))), endOfFileToken())
-correct : List(tagToken(true,x,false,List(Attribute(x,))), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-testnum :47;
-state : Data_state
-lastStartTagName : null
-input : "<x@AZ[`az{ @AZ[`az{>"
-implement : List(tagToken(true,x@az[`az{,false,List(Attribute(@az[`az{,))), endOfFileToken())
-correct : List(tagToken(true,x@az[`az{,false,List(Attribute(@az[`az{,))), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-testnum :48;
-state : Data_state
-lastStartTagName : null
-input : "<x x=1 x=2 X=3>"
-implement : List(tagToken(true,x,false,List(Attribute(x,1), Attribute(x,2), Attribute(x,3))), endOfFileToken())
-correct : List(tagToken(true,x,false,List(Attribute(x,1))), endOfFileToken())
-implement_error : List()
-correct_error :  duplicate-attribute duplicate-attribute
- -> false
-
-testnum :49;
-state : Data_state
-lastStartTagName : null
-input : "</x X>"
-implement : List(tagToken(false,x,false,List(Attribute(x,))), endOfFileToken())
-correct : List(tagToken(false,x,false,List()), endOfFileToken())
-implement_error : List(end_tag_with_attributes parse error)
-correct_error :  end-tag-with-attributes
- -> true
-
-testnum :50;
-state : Data_state
-lastStartTagName : null
-input : "</x x x>"
-implement : List(tagToken(false,x,false,List(Attribute(x,), Attribute(x,))), endOfFileToken())
-correct : List(tagToken(false,x,false,List()), endOfFileToken())
-implement_error : List(end_tag_with_attributes parse error)
-correct_error :  duplicate-attribute end-tag-with-attributes
- -> true
-
-testnum :51;
-state : Data_state
-lastStartTagName : null
-input : "<br/>"
-implement : List(tagToken(true,br,true,List()), endOfFileToken())
-correct : List(tagToken(true,br,true,List()), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-testnum :52;
-state : Data_state
-lastStartTagName : null
-input : "<xr/>"
-implement : List(tagToken(true,xr,true,List()), endOfFileToken())
-correct : List(tagToken(true,xr,true,List()), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-testnum :53;
-state : Data_state
-lastStartTagName : null
-input : "</br/>"
-implement : List(tagToken(false,br,true,List()), endOfFileToken())
-correct : List(tagToken(false,br,false,List()), endOfFileToken())
-implement_error : List()
-correct_error :  end-tag-with-trailing-solidus
- -> true
-
-testnum :54;
-state : Data_state
-lastStartTagName : null
-input : "<!DoCtYpE HtMl PuBlIc "AbC" "XyZ">"
-implement : List(DOCTYPEToken(html,,,true), endOfFileToken())
-correct : List(DOCTYPEToken(html,AbC,XyZ,true), endOfFileToken())
-implement_error : List(invalid_character_sequence_after_doctype_name parse error)
-correct_error : 
- -> false
-
-testnum :55;
-state : Data_state
-lastStartTagName : null
-input : "<!dOcTyPe hTmL pUbLiC "aBc" "xYz">"
-implement : List(DOCTYPEToken(html,,,true), endOfFileToken())
-correct : List(DOCTYPEToken(html,aBc,xYz,true), endOfFileToken())
-implement_error : List(invalid_character_sequence_after_doctype_name parse error)
-correct_error : 
- -> false
-
-testnum :56;
-state : Data_state
-lastStartTagName : null
-input : "<!DoCtYpE HtMl SyStEm "XyZ">"
-implement : List(DOCTYPEToken(html,,,true), endOfFileToken())
-correct : List(DOCTYPEToken(html,,XyZ,true), endOfFileToken())
-implement_error : List(invalid_character_sequence_after_doctype_name parse error)
-correct_error : 
- -> false
-
-testnum :57;
-state : Data_state
-lastStartTagName : null
-input : "<!dOcTyPe hTmL sYsTeM "xYz">"
-implement : List(DOCTYPEToken(html,,,true), endOfFileToken())
-correct : List(DOCTYPEToken(html,,xYz,true), endOfFileToken())
-implement_error : List(invalid_character_sequence_after_doctype_name parse error)
-correct_error : 
- -> false
-
-testnum :58;
-state : Data_state
-lastStartTagName : null
-input : "<!doc> "
-implement : List(commentToken(doc), characterToken( ), endOfFileToken())
-correct : List(commentToken(doc), characterToken( ), endOfFileToken())
-implement_error : List(incorrectly_opened_comment parse error, unexpected_null_character parse error)
-correct_error :  incorrectly-opened-comment unexpected-null-character
- -> true
-
-testnum :59;
-state : Data_state
-lastStartTagName : null
-input : "<!doc "
-implement : List(commentToken(doc�), endOfFileToken())
-correct : List(commentToken(doc�), endOfFileToken())
-implement_error : List(incorrectly_opened_comment parse error, unexpected_null_character parse error)
-correct_error :  incorrectly-opened-comment unexpected-null-character
- -> true
-
-testnum :60;
-state : Data_state
-lastStartTagName : null
-input : "<!doc"
-implement : List(commentToken(doc), endOfFileToken())
-correct : List(commentToken(doc), endOfFileToken())
-implement_error : List(incorrectly_opened_comment parse error)
-correct_error :  incorrectly-opened-comment control-character-in-input-stream
- -> true
-
-testnum :61;
-state : Data_state
-lastStartTagName : null
-input : "<!doc﷑"
-implement : List(commentToken(doc﷑), endOfFileToken())
-correct : List(commentToken(doc﷑), endOfFileToken())
-implement_error : List(incorrectly_opened_comment parse error)
-correct_error :  incorrectly-opened-comment noncharacter-in-input-stream
- -> true
-
-testnum :62;
-state : Data_state
-lastStartTagName : null
-input : "<!doc🿿"
-implement : List(commentToken(doc🿿), endOfFileToken())
-correct : List(commentToken(doc🿿), endOfFileToken())
-implement_error : List(incorrectly_opened_comment parse error)
-correct_error :  incorrectly-opened-comment noncharacter-in-input-stream
- -> true
-
-main:: r
-testnum :63;
-state : Data_state
-lastStartTagName : null
-input : "?"
-implement : List(characterToken(
-?), endOfFileToken())
-correct : List(characterToken(
-?), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-main:: r
-testnum :64;
-state : Data_state
-lastStartTagName : null
-input : ""
-implement : List(characterToken(
-), endOfFileToken())
-correct : List(characterToken(
-), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-testnum :65;
-state : Data_state
-lastStartTagName : null
-input : "
-"
-implement : List(characterToken(
-), endOfFileToken())
-correct : List(characterToken(
-), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-main:: r
-testnum :66;
-state : Data_state
-lastStartTagName : null
-input : "
-"
-implement : List(characterToken(
-), endOfFileToken())
-correct : List(characterToken(
-), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-main:: r
-testnum :67;
-state : Data_state
-lastStartTagName : null
-input : ""
-implement : List(characterToken(
-
-), endOfFileToken())
-correct : List(characterToken(
-
-), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-testnum :68;
-state : Data_state
-lastStartTagName : null
-input : "
-
-"
-implement : List(characterToken(
-
-), endOfFileToken())
-correct : List(characterToken(
-
-), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-main:: r
-testnum :69;
-state : Data_state
-lastStartTagName : null
-input : "
-"
-implement : List(characterToken(
-
-), endOfFileToken())
-correct : List(characterToken(
-
-), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-main:: r
-testnum :70;
-state : Data_state
-lastStartTagName : null
-input : "texttext"
-implement : List(characterToken(text
-
-
-text), endOfFileToken())
-correct : List(characterToken(text
-
-
-text), endOfFileToken())
-implement_error : List()
-correct_error : 
- -> true
-
-testnum :71;
-state : Data_state
-lastStartTagName : null
-input : "<!DOCTYPE html PUBLIK "AbC" "XyZ">"
-implement : List(DOCTYPEToken(html,,,true), endOfFileToken())
-correct : List(DOCTYPEToken(html,,,false), endOfFileToken())
-implement_error : List(invalid_character_sequence_after_doctype_name parse error)
-correct_error :  invalid-character-sequence-after-doctype-name
- -> false
-
-testnum :72;
-state : Data_state
-lastStartTagName : null
-input : "<!DOCTYPE html PUBLI"
-implement : List(DOCTYPEToken(html,,,true), endOfFileToken())
-correct : List(DOCTYPEToken(html,,,false), endOfFileToken())
-implement_error : List(invalid_character_sequence_after_doctype_name parse error)
-correct_error :  invalid-character-sequence-after-doctype-name
- -> false
-
-testnum :73;
-state : Data_state
-lastStartTagName : null
-input : "<!DOCTYPE html SISTEM "AbC">"
-implement : List(DOCTYPEToken(html,,,true), endOfFileToken())
-correct : List(DOCTYPEToken(html,,,false), endOfFileToken())
-implement_error : List(invalid_character_sequence_after_doctype_name parse error)
-correct_error :  invalid-character-sequence-after-doctype-name
- -> false
-
-testnum :74;
-state : Data_state
-lastStartTagName : null
-input : "<!DOCTYPE html SYS"
-implement : List(DOCTYPEToken(html,,,true), endOfFileToken())
-correct : List(DOCTYPEToken(html,,,false), endOfFileToken())
-implement_error : List(invalid_character_sequence_after_doctype_name parse error)
-correct_error :  invalid-character-sequence-after-doctype-name
- -> false
-
-testnum :75;
-state : Data_state
-lastStartTagName : null
-input : "<!DOCTYPE html x>text"
-implement : List(DOCTYPEToken(html,,,true), characterToken(text), endOfFileToken())
-correct : List(DOCTYPEToken(html,,,false), characterToken(text), endOfFileToken())
-implement_error : List(invalid_character_sequence_after_doctype_name parse error)
-correct_error :  invalid-character-sequence-after-doctype-name
- -> false
-
-testnum :76;
-state : Data_state
-lastStartTagName : null
-input : "<a a=aa`>"
-implement : List(tagToken(true,a,false,List(Attribute(a,aa`))), endOfFileToken())
-correct : List(tagToken(true,a,false,List(Attribute(a,aa`))), endOfFileToken())
-implement_error : List(unexpected_character_in_unquoted_attribute_value parse error)
-correct_error :  unexpected-character-in-unquoted-attribute-value
- -> true
-
-testnum :77;
-state : Data_state
-lastStartTagName : null
-input : "<a"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
-implement_error : List(eof_in_tag parse error)
-correct_error :  eof-in-tag
- -> true
-
-testnum :78;
-state : Data_state
-lastStartTagName : null
-input : "<a "
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
-implement_error : List(eof_in_tag parse error)
-correct_error :  eof-in-tag
- -> true
-
-testnum :79;
-state : Data_state
-lastStartTagName : null
-input : "<a a"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
-implement_error : List(eof_in_tag parse error)
-correct_error :  eof-in-tag
- -> true
-
-testnum :80;
-state : Data_state
-lastStartTagName : null
-input : "<a a "
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
-implement_error : List(eof_in_tag parse error)
-correct_error :  eof-in-tag
- -> true
-
-testnum :81;
-state : Data_state
-lastStartTagName : null
-input : "<a a ="
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
-implement_error : List(eof_in_tag parse error)
-correct_error :  eof-in-tag
- -> true
-
-testnum :82;
-state : Data_state
-lastStartTagName : null
-input : "<a a ="a"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
-implement_error : List(eof_in_tag parse error)
-correct_error :  eof-in-tag
- -> true
-
-testnum :83;
-state : Data_state
-lastStartTagName : null
-input : "<a a ='a"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
-implement_error : List(eof_in_tag parse error)
-correct_error :  eof-in-tag
- -> true
-
-testnum :84;
-state : Data_state
-lastStartTagName : null
-input : "<a a =a"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
-implement_error : List(eof_in_tag parse error)
-correct_error :  eof-in-tag
- -> true
-
-testnum :85;
-state : Data_state
-lastStartTagName : null
-input : "<a a ='a'"
-implement : List(endOfFileToken())
-correct : List(endOfFileToken())
-implement_error : List(eof_in_tag parse error)
-correct_error :  eof-in-tag
- -> true
-
-test4 => correct : 73/85

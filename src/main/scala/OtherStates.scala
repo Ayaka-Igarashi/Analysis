@@ -81,6 +81,7 @@ object OtherStates {
 
     if (isMatched) {
       newEnv = interpretCommand(newEnv, Consume(CString(characterReferencePair._1)))
+      newEnv = interpretCommand(newEnv, AppendTo(CString(characterReferencePair._1), ITemporaryBuffer))
 
       val b1 = implementBool(newEnv, CharacterReferenceConsumedAsAttributeVal())
       val b2 = newEnv.currentInputCharacter match {
@@ -121,8 +122,8 @@ object OtherStates {
       case i if i > 0x10FFFF => comlist ++= List(Error("character_reference_outside_unicode_range parse error"), Set(ICharacterReferenceCode, CInt(0xFFFD)))
       case i if (0xD800 <= i && i <= 0xDFFF) => comlist ++= List(Error("surrogate_character_reference parse error"), Set(ICharacterReferenceCode, CInt(0xFFFD)))
       case i if isNonCharacter(i) => comlist ++= List(Error("noncharacter_character_reference parse error"))
-      case i if (i == 0x0D || (isControl(i) && !isASCIIWhitespace(i))) => comlist ++= List(Error("control_character_reference parse error"))
       case i => {
+        if (i == 0x0D || (isControl(i) && !isASCIIWhitespace(i))) comlist ++= List(Error("control_character_reference parse error"))
         state80table.get(i) match {
           case Some(num) => comlist :+= Set(ICharacterReferenceCode, CInt(num))
           case None =>

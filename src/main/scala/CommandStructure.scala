@@ -100,7 +100,7 @@ object CommandStructure {
   case class Variable(variable: String) extends CommandValue
   case object CurrentInputCharacter extends CommandValue
   case object NextInputCharacter extends CommandValue//
-  case class NameOf(token: CommandValue) extends CommandValue//いらない
+  case class NameOf(token: CommandValue) extends CommandValue//いらない?
   case class ValueOf(token: CommandValue) extends CommandValue//いらない
   case class LowerCase(token: CommandValue) extends CommandValue
   case class NumericVersion(token: CommandValue) extends CommandValue
@@ -125,5 +125,6 @@ object CommandStructure {
   case class INameOf(token: ImplementVariable) extends ImplementVariable
   case class IValueOf(token: ImplementVariable) extends ImplementVariable
   case class IFlagOf(token: ImplementVariable) extends ImplementVariable
-
+  case class SystemIdentifierOf(token: ImplementVariable) extends ImplementVariable
+  case class PublicIdentifierOf(token: ImplementVariable) extends ImplementVariable
 }
