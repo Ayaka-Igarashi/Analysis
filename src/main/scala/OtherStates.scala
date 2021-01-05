@@ -83,7 +83,7 @@ object OtherStates {
       newEnv = interpretCommand(newEnv, Consume(CString(characterReferencePair._1)))
       newEnv = interpretCommand(newEnv, AppendTo(CString(characterReferencePair._1), ITemporaryBuffer))
 
-      val b1 = implementBool(newEnv, CharacterReferenceConsumedAsAttributeVal())
+      val b1 = implementBool(newEnv, CharacterReferenceConsumedAsAttributeVal())._1
       val b2 = newEnv.currentInputCharacter match {
         case StringVal(string) => string.last == ';'
         case _ => false

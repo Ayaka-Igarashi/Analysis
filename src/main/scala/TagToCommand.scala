@@ -318,16 +318,24 @@ object TagToCommand {
           case Node(S, s1) :: Leaf(CC, Token(_,_, "or")) :: Node(S, s2) :: Nil => {
             Or(convertBool(Node(S, s1)), convertBool(Node(S, s2)))
           }
-          case Node(NP, List(Leaf(EX, Token(_,_, "there")))) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Node(NP, np))) :: Nil => {
-            IsExist(getLeave(Node(NP, np)))
-          }
+//          case Node(NP, List(Leaf(EX, Token(_,_, "there")))) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Node(NP, np))) :: Nil => {
+//            IsExist(getLeave(Node(NP, np)))
+//          }
           case Node(NP, np1) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Node(NP, np2))) :: Nil => {
-            if (getLeave(Node(NP, np1)).contains("current end tag") && getLeave(Node(NP, np2)).contains("appropriate")) CurrentEndTagIsAppropriate()
-            else IsEqual(nptagToCommandValue(Node(NP, np1)), nptagToCommandValue(Node(NP, np2)))
+            val str = getLeave(Node(NP, np1))
+            if (str.contains("current end tag") && getLeave(Node(NP, np2)).contains("appropriate")) CurrentEndTagIsAppropriate()
+            else{
+              np2 match {
+                case Node(NP, np2_1) :: Node(PP, List(Leaf(IN, Token(_,_,"for")), Node(NP, np2_2))) :: Nil if getLeave(Node(NP, np2_1)).contains("ASCII case_insensitive match") => {
+                  AsciiCaseInsensitiveMatch(nptagToCommandValue(Node(NP, np1)), nptagToCommandValue(Node(NP, np2_2)))
+                }
+                case _ => IsEqual(nptagToCommandValue(Node(NP, np1)), nptagToCommandValue(Node(NP, np2)))
+              }
+            }
           }
-          case Node(NP, List(Leaf(EX, Token(_,_, "there")))) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Leaf(RB, Token(_,_, "not")),Node(NP, np))) :: Nil => {
-            Not(IsExist(getLeave(Node(NP, np))))
-          }
+//          case Node(NP, List(Leaf(EX, Token(_,_, "there")))) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Leaf(RB, Token(_,_, "not")),Node(NP, np))) :: Nil => {
+//            Not(IsExist(getLeave(Node(NP, np))))
+//          }
           case Node(NP, np1) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Leaf(RB, Token(_,_, "not")), Node(NP, np2))) :: Nil => {
             if (getLeave(Node(NP, np1)).contains("current end tag") && getLeave(Node(NP, np2)).contains("appropriate")) Not(CurrentEndTagIsAppropriate())
             else Not(IsEqual(nptagToCommandValue(Node(NP, np1)), nptagToCommandValue(Node(NP, np2))))
@@ -403,7 +411,10 @@ object TagToCommand {
     else if (str.contains("temporary buffer")) TemporaryBuffer
     else if (str.contains("character reference code")) CharacterReferenceCode
     else if (str.contains("end_of_file")) EndOfFileToken
-    else if (str.contains("next input character")) NextInputCharacter
+    else if (str.contains("six characters starting from the current input character")) {
+      Substitute(Variable("x_" + id), CharactersFromCurrentInputCharacter(6))
+    }
+    else if (str.contains("next input character")) NextInputCharacter(1)
     else if (str.contains("current input character")) CurrentInputCharacter
     else if(str.contains("_state")) StateName(str)
     else if (str.matches(".*U_[0-9A-F][0-9A-F][0-9A-F][0-9A-F].* character.*")) {
@@ -464,10 +475,13 @@ object TagToCommand {
         case _ => Non("")
       }
     }
-    else if (!("[sS]tring \".*\"".r.findFirstIn(str).isEmpty)) {
-      "[sS]tring \".*\"".r.findFirstIn(str) match {
+    else if (!("([wW]ord|[sS]tring) \".*\"".r.findFirstIn(str).isEmpty)) {
+      "([sS]tring) \".*\"".r.findFirstIn(str) match {
         case Some(i) => CString(i.slice(8, i.length - 1).replace(" ", ""))
-        case _ => Non("")
+        case _ => "([wW]ord) \".*\"".r.findFirstIn(str) match {
+          case Some(i) => CString(i.slice(6, i.length - 1).replace(" ", ""))
+          case _ => Non("")
+        }
       }
     }
     else if (str.contains("zero")) CInt(0)

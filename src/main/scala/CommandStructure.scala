@@ -59,9 +59,7 @@ object CommandStructure {
   case class IF_(bool: Bool) extends Command
   case class OTHERWISE_() extends Command
 
-  // the temporary buffer is the string "script"
-  // there is an adjusted current node and it is not an element in the HTML namespace
-  // the character reference was consumed as part of an attribute
+
   /**
    * Boolean
    */
@@ -72,14 +70,16 @@ object CommandStructure {
   case class And(a: Bool, b: Bool) extends Bool
   case class Or(a: Bool, b: Bool) extends Bool
   case class Not(a: Bool) extends Bool
-  case class CharacterReferenceConsumedAsAttributeVal() extends Bool
+  case class CharacterReferenceConsumedAsAttributeVal() extends Bool // the character reference was consumed as part of an attribute
   case class CurrentEndTagIsAppropriate() extends Bool
-  case class IsEqual(a: CommandValue, b: CommandValue) extends Bool
-  case class IsExist(a: String) extends Bool
+  case class IsEqual(a: CommandValue, b: CommandValue) extends Bool // the temporary buffer is the string "script"
+  case class AsciiCaseInsensitiveMatch(a: CommandValue, b: CommandValue) extends Bool
+
+  case class IsExist(a: String) extends Bool //iranai// there is an adjusted current node and it is not an element in the HTML namespace
   case class UNDEF(str: String) extends Bool
 
   trait CommandValue
-  trait IStateVal extends CommandValue
+  trait IStateVal extends CommandValue// iranai
   case class StateName(state: String) extends IStateVal
   case object ReturnState extends IStateVal
   case object TemporaryBuffer extends CommandValue
@@ -97,20 +97,24 @@ object CommandStructure {
   case object EndOfFileToken extends CommandValue
   case class CharacterToken(chara: String) extends CommandValue
 
-  case class Variable(variable: String) extends CommandValue
-  case object CurrentInputCharacter extends CommandValue
-  case object NextInputCharacter extends CommandValue//
-  case class NameOf(token: CommandValue) extends CommandValue//いらない?
-  case class ValueOf(token: CommandValue) extends CommandValue//いらない
   case class LowerCase(token: CommandValue) extends CommandValue
   case class NumericVersion(token: CommandValue) extends CommandValue
-  case class FlagOf(variable: Variable) extends CommandValue//いらない
+  case object CurrentInputCharacter extends CommandValue
+  case class NextInputCharacter(num: Int) extends CommandValue
+  case class CharactersFromCurrentInputCharacter(num: Int) extends CommandValue
+
+  case class Variable(variable: String) extends CommandValue
   case class CChar(char: Char) extends CommandValue
   case class CString(string: String) extends CommandValue
   case class CInt(int: Int) extends CommandValue
   case class CBool(boolean: Boolean) extends CommandValue
-  case class Non(str :String) extends CommandValue//
 
+  case class Substitute(variable: Variable, commandValue: CommandValue) extends CommandValue
+
+  case class NameOf(token: CommandValue) extends CommandValue//いらない?
+  case class ValueOf(token: CommandValue) extends CommandValue//いらない
+  case class FlagOf(variable: Variable) extends CommandValue//いらない
+  case class Non(str :String) extends CommandValue//
 
   // 代入される変数
   trait ImplementVariable
