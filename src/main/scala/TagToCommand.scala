@@ -97,25 +97,26 @@ object TagToCommand {
           }
 
           // switch文
-          case List(Leaf(VB, Token(_,_,"switch")), Node(PP, List(Leaf(IN, _), Node(NP, np)))) => {
+          case List(Leaf(VB, Token(_,_,"switch")), Node(PP, List(Leaf(IN, Token(_,_,"to")), Node(NP, np)))) => {
             getLeave(removeDT(Node(NP, np))) match {
               case "return state" => commandList :+= Switch(ReturnState)
               case state => commandList :+= Switch(StateName(state))
             }
           }
           // recomsume文
-          case List(Leaf(VB, Token(_,_,"reconsume")), Node(PP, List(Leaf(IN, _), Node(NP, np)))) => {
+          case List(Leaf(VB, Token(_,_,"reconsume")), Node(PP, List(Leaf(IN, Token(_,_,"in")), Node(NP, np)))) => {
             getLeave(removeDT(Node(NP, np))) match {
               case "return state" => commandList :+= Reconsume(ReturnState)
               case state => commandList :+= Reconsume(StateName(state))
             }
           }
-          case List(Leaf(VB, Token(_,_,"Reconsume")), Node(PP, List(Leaf(IN, _), Node(NP, np)))) => {
-            getLeave(removeDT(Node(NP, np))) match {
-              case "return state" => commandList :+= Reconsume(ReturnState)
-              case state => commandList :+= Reconsume(StateName(state))
-            }
-          }
+//          case List(Leaf(VB, Token(_,_,"Reconsume")), Node(PP, List(Leaf(IN, _), Node(NP, np)))) => {
+//            println("rere")
+//            getLeave(removeDT(Node(NP, np))) match {
+//              case "return state" => commandList :+= Reconsume(ReturnState)
+//              case state => commandList :+= Reconsume(StateName(state))
+//            }
+//          }
           // set(代入する)
           case List(Leaf(VB, Token(_,_,"set")), Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2)))) => {
             val i2 = nptagToCommandValue(Node(NP, np2))

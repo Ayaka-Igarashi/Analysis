@@ -58,18 +58,18 @@ object Main {
 
     val scanner = new Scanner(System.in)
 
-    if (false) {
+    if (true) {
       print("> parse start?(put yes or no) : ")
       val scan = scanner.next()
-      if (scan == "yes") {
+      if (scan == "yes"||scan == "y") {
         // 出力ファイル
         if (args.length > 1) {
           txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
           System.out.println("txtout: " + args(1))
         } else txtOut = new PrintWriter(System.out)
 
-        parse(1, 79)
-        PreserveDefinition.preserve[List[nState]](nStateList, "src/parsed.dat")
+        parse(7, 7)
+        //PreserveDefinition.preserve[List[nState]](nStateList, "src/parsed.dat")
         tagConvert()
       }
     } else if (true) {
@@ -81,7 +81,7 @@ object Main {
       txtOut3 = new PrintWriter("src/output3.txt")
 
       nStateList = PreserveDefinition.read[List[nState]]("src/parsed.dat")
-      tagConvert()
+      //tagConvert()
 
       //implement("<abar d=kl rt=hhh>tyu</huj>", "Data_state")
     } else {

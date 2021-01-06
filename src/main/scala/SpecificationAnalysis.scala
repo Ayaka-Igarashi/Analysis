@@ -125,6 +125,36 @@ object SpecificationAnalysis {
 
       val coref = sent.coref().asScala.toList
       corefList :+= coref
+
+//      println(sent.dependencyGraph())
+      val depList = sent.dependencyGraph().toList.split("\n")
+      println()
+      var map1: Map[Int, Set[(String, Int)]] = Map()
+      for (dep <- depList) {
+        println(dep)
+        val s1 = dep.split("\\(", 2)
+        val rel = s1(0)
+        val s2 = s1(1).split(", ", 2)
+        val obj = "[0-9]+$".r.findFirstIn(s2(0)) match {
+          case Some(i) => i.toInt
+          case None => -1
+        }
+        val sbj = "[0-9]+\\)$".r.findFirstIn(s2(1)) match {
+          case Some(i) => i.substring(0, i.length-1).toInt
+          case None => -1
+        }
+//        println(rel+" : "+obj + " : "+ sbj)
+        map1.get(obj) match {
+          case Some(set) => {
+            val s = set ++ Set((rel, sbj))
+            map1 += (obj -> s)
+          }
+          case None => map1 += (obj -> Set((rel, sbj)))
+        }
+      }
+      println(map1)
+      //println(sent.dependencyGraph().getChildList(sent.dependencyGraph().vertexListSorted().get(0)))
+      //println(sent.dependencyGraph().vertexListSorted().get(0))
       //txtOut.println(coref)
 //      import edu.stanford.nlp.coref.CorefCoreAnnotations
 //      import edu.stanford.nlp.ling.CoreAnnotations
