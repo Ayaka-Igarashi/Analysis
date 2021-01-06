@@ -1,0 +1,62 @@
+\documentclass[uplatex,a4j]{jsreport}
+\usepackage{thesis}
+
+\begin{document}
+\chapter{実装}
+インタープリタを作成した.
+% インタープリタの概略図
+\section{Env}
+
+\section{Command型}
+Command型のそれぞれの値の解釈
+\subsection*{Switch(state: CommandValue)}
+$\langle$ Switch(state), $env \rangle \rightarrow env[nextState \leftarrow \mathcal{C}[\![state]\!] ]$
+\subsection*{Recomsume(state: CommandValue)}
+\subsection*{If(bool: Bool, t: CommandList, f: CommandList)}
+\begin{prooftree}
+    \AxiomC{$\langle$ clist1, $env\rangle \rightarrow env^\prime $ }
+    \RightLabel{{\scriptsize if $\mathcal{B}[\![b]\!] = true$}}
+    \UnaryInfC{$\langle$if $b$ then clist1 else clist2, $env\rangle \rightarrow env^\prime$}
+\end{prooftree}
+\begin{prooftree}
+    \AxiomC{$\langle$ clist2, $env\rangle \rightarrow env^\prime $ }
+    \RightLabel{{\scriptsize if $\mathcal{B}[\![\mathcal{C}[\![b]\!]]\!] = false$}}
+    \UnaryInfC{$\langle$if $b$ then clist1 else clist2, $env\rangle \rightarrow env^\prime$}
+\end{prooftree}
+
+\section{Bool型}
+\subsection*{And(a: Bool, b: Bool)}
+\subsection*{CharacterReferenceConsumedAsAttributeVal()}
+\subsection*{CurrentEndTagIsAppropriate()}
+\subsection*{IsEqual(a: CommandValue, b: CommandValue)}
+
+\section{Token型}
+tagToken(isStart: Boolean, name: String, attributes: List[Attribute])
+DOCTYPEToken( systemIdentifier: String, publicIdentifier: String)
+characterToken()
+\section{Value}
+CharVal(c: Char)
+StringVal(string: String)
+EOFVal
+StateVal(statename: String)
+TokenVal(token: Token)
+
+\section{CommandValue型}
+CommandValue型からValue型の値を返す関数\\
+$C : {\rm CommandValue} \rightarrow {\rm Value} $\\
+\subsection*{LowerCaseVersion(cVal: CommandValue)}
+c.toLowerCase if $C[\![$cVal$]\!] = $c: Char or String
+\subsection*{NumericVersion(cVal: CommandValue)}
+Integer.parseInt(c.toString, 16)
+\subsection*{NextInputCharacter}
+$
+\begin{cases}
+    {\rm CharVal(c)} & {\rm inputText.headOption} = {\rm Some(c)} \\
+    {\rm EOFVal} & {\rm inputText.headOption} = {\rm None}
+\end{cases}
+$
+\subsection*{CurrentInputCharacter}
+currentInputCharacter
+\subsection*{EndOfFileToken}
+TokenVal(endOfFileToken())
+\end{document}

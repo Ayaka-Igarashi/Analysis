@@ -1,0 +1,19 @@
+\ProvidesPackage{thesis}
+
+\usepackage{docmute}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{url}
+\usepackage{syntax}
+\usepackage{bussproofs}
+\usepackage[dvipdfmx]{graphicx}
+
+\newcommand{\myname}{五十嵐彩夏}
+
+% BNFの設定
+\newcommand{\bnfdef}{::=}
+\newlength{\len}
+\settowidth{\len}{$\bnfdef$}
+\newcommand{\bnfor}{\makebox[\len]{$|$}}
+
+\renewcommand{\bibname}{参考文献}

@@ -1,0 +1,30 @@
+\ProvidesPackage{title}
+
+\newcommand{\studentid}[1]{\newcommand{\@studentid}{#1}}
+\newcommand{\department}[1]{\newcommand{\@department}{#1}}
+\newcommand{\supervisor}[1]{\newcommand{\@supervisor}{#1}}
+\newcommand{\degree}[1]{\newcommand{\@degree}{#1}}
+\newcommand{\schoolyear}[1]{\newcommand{\@schoolyear}{#1}}
+\newcommand{\submitday}[1]{\newcommand{\@submitday}{#1}}
+
+\renewcommand{\maketitle}{%
+  \begin{titlepage}
+    \begin{center}
+      \vspace*{\fill}
+      {\LARGE \@schoolyear \@degree 論文}\\
+      \vspace{2.5\baselineskip}
+      {\Huge \@title}\\
+      \vspace{4\baselineskip}
+      {\LARGE \@department}\\
+      \vspace{0.5\baselineskip}
+      {\LARGE 学籍番号 \@studentid}\\
+      \vspace{0.5\baselineskip}
+      {\huge \@author}\\
+      \vspace{2\baselineskip}
+      {\LARGE 指導教員 \@supervisor}\\
+      {\LARGE 提出日 \@submitday}\\
+      \vspace{4\baselineskip}
+      \vspace*{\fill}
+    \end{center}
+  \end{titlepage}%
+}

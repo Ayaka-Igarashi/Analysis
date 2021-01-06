@@ -1,0 +1,43 @@
+\documentclass[uplatex,a4j]{jsreport}
+\usepackage{title}
+\usepackage{thesis}
+\usepackage[dvipdfm]{pict2e}
+\usepackage{qtree}
+
+\begin{document}
+\title{HTML5字句解析仕様の\\自然言語処理による意味解析}
+\author{五十嵐彩夏}
+\studentid{17B01064}
+\department{東京工業大学 情報理工学院 数理・計算科学系}
+\supervisor{南出靖彦 教授}
+\degree{学士}
+\schoolyear{令和2年度}
+\submitday{1月18日}
+
+\maketitle
+
+\include{abstract}
+
+\pagenumbering{roman}
+
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+
+%%% ここに各章をinclude %%%
+\include{introduction}
+
+\include{preparation}
+\include{html5parser}
+\include{nlProcessing}
+
+\include{implementation}
+\include{evaluation}
+\include{conclusion}
+
+\include{acknowledgments}
+
+\bibliographystyle{plain}
+\bibliography{thesis}
+\end{document}
