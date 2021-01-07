@@ -15,6 +15,9 @@ object ConvertTree {
   var leafDict: Map[Tree, Int] = null
 
   var leafIdx: Int = 0
+  var newLeafIdx: Int = 0
+  var idxMap: Map[Int,Int] = Map()
+  var depMap: Map[Int, Set[(String, Int)]] = Map()
 
   // TreeからTag構造体に変換
   def convert(tree: Tree): Tag = {
@@ -147,7 +150,13 @@ object ConvertTree {
       case Some(i) => {
         //println(leafIdx + " : " + i)
         leafIdx += 1
+        newLeafIdx += 1
+        idxMap += (leafIdx+1 -> newLeafIdx)
         Token(corefMap(leafIdx), child.value(), tokenList(leafIdx).lemma())
+        // depMap.get(leafIdx+1) match {
+        // case Some(set) => set.map((s, id) => (s, idxMap(id)))
+        // case None =>
+        // }
       }
       case None => Token(-2, child.value(), null) // error
     }
@@ -156,6 +165,9 @@ object ConvertTree {
   // lemmaツリーを作るのに使う関数
   def makeLeafMap(tree: Tree) = {
     leafIdx = -1
+    newLeafIdx = -1
+    idxMap = Map()
+
     leafDict = Map()
     var i = 0
     val leaveList: List[Tree] = tree.getLeaves().asScala.toList

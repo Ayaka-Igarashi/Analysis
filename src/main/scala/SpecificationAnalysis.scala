@@ -20,7 +20,7 @@ object SpecificationAnalysis {
 
   // 入力ファイルを解析する
   @throws[IOException]
-  def analysis(str: String): (List[List[(Integer, CorefChain)]], List[(Tree, List[Token])]) = {
+  def analysis(str: String): (List[List[(Integer, CorefChain)]], List[(Tree, List[Token])], List[Map[Int, Set[(String, Int)]]]) = {
     /** Core NLP */
     //coreNlpParse(str)
 
@@ -108,7 +108,7 @@ object SpecificationAnalysis {
     tree_List
   }
 
-  def simpleParse(str: String): (List[List[(Integer, CorefChain)]], List[(Tree, List[Token])]) = {
+  def simpleParse(str: String): (List[List[(Integer, CorefChain)]], List[(Tree, List[Token])], List[Map[Int, Set[(String, Int)]]]) = {
     var tree_List: List[(Tree, List[Token])] = List()
 
     // parseのみ解析
@@ -116,6 +116,7 @@ object SpecificationAnalysis {
     val sentences = doc.sentences().asScala.toList
 
     var corefList: List[List[(Integer, CorefChain)]] = List()
+    var mapList: List[Map[Int, Set[(String, Int)]]] = List()
 
     for(sent: Sentence <- sentences) {
       // System.out.println("The second word of the sentence '" + sent + "' is " + sent.word(1))
@@ -153,6 +154,7 @@ object SpecificationAnalysis {
           case None => map1 += (obj -> Set((rel, sbj)))
         }
       }
+      mapList :+= map1
       println(map1)
       //println(sent.dependencyGraph().getChildList(sent.dependencyGraph().vertexListSorted().get(0)))
       //println(sent.dependencyGraph().vertexListSorted().get(0))
@@ -169,7 +171,7 @@ object SpecificationAnalysis {
 //      }
 
     }
-    (corefList, tree_List)
+    (corefList, tree_List, mapList)
 
   }
 }

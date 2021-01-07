@@ -244,7 +244,7 @@ object Main {
   var uniqueId = 0
   def parseStatementToTag(str: String): (String, List[List[(Integer, CorefChain)]], List[Tag]) = {
     val newStr = Replacement.replace(str)
-    val (coref, tree_List) = analysis(newStr)
+    var (coref, tree_List, depMapList) = analysis(newStr)
 
     var tagList: List[Tag] = List()
     var i = 0
@@ -257,6 +257,8 @@ object Main {
           corefIdx ++= (o.startIndex - 1 to o.endIndex - 2).toList.map(n => (n, o.corefClusterID))}
       }
       ConvertTree.corefMap = corefIdx
+      ConvertTree.depMap = depMapList.head
+      depMapList = depMapList.tail
 
       makeLeafMap(t._1)
       tokenList = t._2
