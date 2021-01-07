@@ -142,7 +142,7 @@ object ConvertTree {
     list
   }
   // 補助関数(Leaf)
-  def toToken(tree: Tree): Token = {
+  def toToken(tree: Tree): Token_ = {
     if (tree.numChildren() != 1) System.out.println("not leaf error")
     val child = tree.firstChild()
 
@@ -152,13 +152,14 @@ object ConvertTree {
         leafIdx += 1
         newLeafIdx += 1
         idxMap += (leafIdx+1 -> newLeafIdx)
-        Token(corefMap(leafIdx), child.value(), tokenList(leafIdx).lemma())
         // depMap.get(leafIdx+1) match {
         // case Some(set) => set.map((s, id) => (s, idxMap(id)))
         // case None =>
         // }
+        Token_(depMap(leafIdx+1), corefMap(leafIdx), child.value(), tokenList(leafIdx).lemma())
+
       }
-      case None => Token(-2, child.value(), null) // error
+      case None => Token_(Set(),-2, child.value(), null) // error
     }
   }
 
@@ -166,7 +167,7 @@ object ConvertTree {
   def makeLeafMap(tree: Tree) = {
     leafIdx = -1
     newLeafIdx = -1
-    idxMap = Map()
+    idxMap = Map().withDefaultValue(-100)
 
     leafDict = Map()
     var i = 0
@@ -175,6 +176,22 @@ object ConvertTree {
       //println(leaf.nodeNumber(rootTree))
       leafDict += (leaf -> i)
       i += 1
+    }
+  }
+
+  def repairLeave(tag: Tag): Tag = {
+    tag match {
+      case Node(nodeName, list) => {
+        var newList: List[Tag] = List()
+        for (n <- list) {
+          newList :+= repairLeave(n)
+        }
+        Node(nodeName, newList)
+      }
+      case Leaf(leafName, Token_(dep, coref, word, lem)) => {
+        Leaf(leafName, Token_(dep.map(d => (d._1, idxMap(d._2))), coref, word, lem))
+      }
+      case _ => print("matchERROR: ");println(tag);null
     }
   }
 

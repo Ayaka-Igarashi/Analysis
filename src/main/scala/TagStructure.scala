@@ -7,7 +7,7 @@ object TagStructure {
   case class Node(node: NodeType, list: List[Tag]) extends Tag
 
   trait LeafType
-  case class Leaf(leaf: LeafType, token: Token) extends Tag
+  case class Leaf(leaf: LeafType, token: Token_) extends Tag
 
   //syntactic tagset
   case object ROOT extends NodeType
@@ -93,8 +93,9 @@ object TagStructure {
   case object GW extends LeafType
 
   // Leaf(とりあえず元の単語と原型両方格納する)
-  //case class Token(word: String, lemma: String) extends Tag
+  case class Token_(rel: Set[(String, Int)], ref: Int, word: String, lemma: String) extends Tag
   case class Token(ref: Int, word: String, lemma: String) extends Tag
+//, rel: (String, Int)
 
   /*
   //syntactic tagset
@@ -192,7 +193,7 @@ object TagStructure {
           str += getLeave_(n)
         }
       }
-      case Leaf(_, Token(_, word, lem)) => {
+      case Leaf(_, Token_(_,_, word, lem)) => {
         str = word
       }
 
@@ -204,7 +205,7 @@ object TagStructure {
   def getCorefId(tag: Tag): Int = {
     tag match {
       case Node(_, list) => getCorefId(list.head)
-      case Leaf(_, Token(id, _, _)) => id
+      case Leaf(_, Token_(_,id, _, _)) => id
     }
   }
 }

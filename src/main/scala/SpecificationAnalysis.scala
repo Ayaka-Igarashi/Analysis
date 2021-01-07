@@ -130,10 +130,10 @@ object SpecificationAnalysis {
       // dependency
 //      println(sent.dependencyGraph())
       val depList = sent.dependencyGraph().toList.split("\n")
-      println()
+//      println()
       var map1: Map[Int, Set[(String, Int)]] = Map()
       for (dep <- depList) {
-        println(dep)
+//        println(dep)
         val s1 = dep.split("\\(", 2)
         val rel = s1(0)
         val s2 = s1(1).split(", ", 2)
@@ -155,7 +155,7 @@ object SpecificationAnalysis {
         }
       }
       mapList :+= map1
-      println(map1)
+//      println(map1)
       //println(sent.dependencyGraph().getChildList(sent.dependencyGraph().vertexListSorted().get(0)))
       //println(sent.dependencyGraph().vertexListSorted().get(0))
       //txtOut.println(coref)

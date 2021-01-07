@@ -68,8 +68,8 @@ object Main {
           System.out.println("txtout: " + args(1))
         } else txtOut = new PrintWriter(System.out)
 
-        parse(7, 7)
-        //PreserveDefinition.preserve[List[nState]](nStateList, "src/parsed.dat")
+        parse(1, 79)
+        PreserveDefinition.preserve[List[nState]](nStateList, "src/parsed.dat")
         tagConvert()
       }
     } else if (true) {
@@ -81,7 +81,7 @@ object Main {
       txtOut3 = new PrintWriter("src/output3.txt")
 
       nStateList = PreserveDefinition.read[List[nState]]("src/parsed.dat")
-      //tagConvert()
+      tagConvert()
 
       //implement("<abar d=kl rt=hhh>tyu</huj>", "Data_state")
     } else {
@@ -257,12 +257,13 @@ object Main {
           corefIdx ++= (o.startIndex - 1 to o.endIndex - 2).toList.map(n => (n, o.corefClusterID))}
       }
       ConvertTree.corefMap = corefIdx
-      ConvertTree.depMap = depMapList.head
+      ConvertTree.depMap = depMapList.head.withDefaultValue(Set())
       depMapList = depMapList.tail
 
       makeLeafMap(t._1)
       tokenList = t._2
-      val tag = convert(t._1)
+      var tag = convert(t._1)
+      tag = ConvertTree.repairLeave(tag)
       tagList :+= tag
       i += 1
     }

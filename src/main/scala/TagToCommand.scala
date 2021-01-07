@@ -27,17 +27,17 @@ object TagToCommand {
       case Node(S, list) => {
         list match {
           // S and ...
-          case Node(S, s) :: Leaf(CC, Token(_,_, "and")) :: rst => {
+          case Node(S, s) :: Leaf(CC, Token_(_,_,_, "and")) :: rst => {
             commandList ++= STag(Node(S, s))
             commandList ++= STag(Node(S, rst))
           }
           // S ,and ...
-          case Node(S, s) :: Leaf(Comma, _):: Leaf(CC, Token(_,_, "and")) :: rst => {
+          case Node(S, s) :: Leaf(Comma, _):: Leaf(CC, Token_(_,_,_, "and")) :: rst => {
             commandList ++= STag(Node(S, s))
             commandList ++= STag(Node(S, rst))
           }
           // S ,then ...
-          case Node(S, s) :: Leaf(Comma, _) :: Node(ADVP, List(Leaf(RB, Token(_,_, "then")))) :: rst => {
+          case Node(S, s) :: Leaf(Comma, _) :: Node(ADVP, List(Leaf(RB, Token_(_,_,_, "then")))) :: rst => {
             commandList ++= STag(Node(S, s))
             commandList ++= STag(Node(S, rst))
           }
@@ -47,19 +47,19 @@ object TagToCommand {
           }
 
           // if S ,then ...
-          case Node(SBAR, List(Leaf(IN, Token(_,_, "if")), Node(S, bool))) :: Leaf(Comma, _) :: rst => {
+          case Node(SBAR, List(Leaf(IN, Token_(_,_,_, "if")), Node(S, bool))) :: Leaf(Comma, _) :: rst => {
             commandList :+= IF_(convertBool(Node(S, bool)))
             commandList ++= STag(Node(S, rst))
           }
           // otherwise, ...
-          case Node(ADVP, List(Leaf(RB, Token(_,_, "otherwise")))) :: Leaf(Comma, _) :: rst => {
+          case Node(ADVP, List(Leaf(RB, Token_(_,_,_, "otherwise")))) :: Leaf(Comma, _) :: rst => {
             commandList :+= OTHERWISE_()
             commandList ++= STag(Node(S, rst))
           }
           // this is ...error
-          case Node(NP, List(Leaf(DT, Token(_,_, "this")))) :: Node(VP, List(Leaf(_, Token(_,_, "be")), Node(NP, nplist))) :: Nil => {
+          case Node(NP, List(Leaf(DT, Token_(_,_,_, "this")))) :: Node(VP, List(Leaf(_, Token_(_,_,_, "be")), Node(NP, nplist))) :: Nil => {
             nplist.last match {
-              case Leaf(NN, Token(_,_, "error")) => commandList :+= Error(getLeave(removeDT(Node(NP, nplist))))
+              case Leaf(NN, Token_(_,_,_, "error")) => commandList :+= Error(getLeave(removeDT(Node(NP, nplist))))
               case _ =>
             }
           }
@@ -68,7 +68,7 @@ object TagToCommand {
             commandList ++= VPTag(Node(VP, vp))
           }
           // then VP
-          case Node(ADVP, List(Leaf(RB, Token(_,_, "then")))) :: Node(VP, vp) :: Nil => {
+          case Node(ADVP, List(Leaf(RB, Token_(_,_,_, "then")))) :: Node(VP, vp) :: Nil => {
             commandList ++= VPTag(Node(VP, vp))
           }
           case Nil =>
@@ -86,7 +86,7 @@ object TagToCommand {
       case Node(VP, list) => {
         list match {
           // &文
-          case Node(VP, vp1) :: Leaf(CC,Token(_,_,"and")) :: rst => {
+          case Node(VP, vp1) :: Leaf(CC,Token_(_,_,_,"and")) :: rst => {
             commandList ++= VPTag(Node(VP, vp1))
             commandList ++= STag(Node(S, rst))
           }
@@ -97,20 +97,20 @@ object TagToCommand {
           }
 
           // switch文
-          case List(Leaf(VB, Token(_,_,"switch")), Node(PP, List(Leaf(IN, Token(_,_,"to")), Node(NP, np)))) => {
+          case List(Leaf(VB, Token_(_,_,_,"switch")), Node(PP, List(Leaf(IN, Token_(_,_,_,"to")), Node(NP, np)))) => {
             getLeave(removeDT(Node(NP, np))) match {
               case "return state" => commandList :+= Switch(ReturnState)
               case state => commandList :+= Switch(StateName(state))
             }
           }
           // recomsume文
-          case List(Leaf(VB, Token(_,_,"reconsume")), Node(PP, List(Leaf(IN, Token(_,_,"in")), Node(NP, np)))) => {
+          case List(Leaf(VB, Token_(_,_,_,"reconsume")), Node(PP, List(Leaf(IN, Token_(_,_,_,"in")), Node(NP, np)))) => {
             getLeave(removeDT(Node(NP, np))) match {
               case "return state" => commandList :+= Reconsume(ReturnState)
               case state => commandList :+= Reconsume(StateName(state))
             }
           }
-//          case List(Leaf(VB, Token(_,_,"Reconsume")), Node(PP, List(Leaf(IN, _), Node(NP, np)))) => {
+//          case List(Leaf(VB, Token_(_,_,_,"Reconsume")), Node(PP, List(Leaf(IN, _), Node(NP, np)))) => {
 //            println("rere")
 //            getLeave(removeDT(Node(NP, np))) match {
 //              case "return state" => commandList :+= Reconsume(ReturnState)
@@ -118,7 +118,7 @@ object TagToCommand {
 //            }
 //          }
           // set(代入する)
-          case List(Leaf(VB, Token(_,_,"set")), Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2)))) => {
+          case List(Leaf(VB, Token_(_,_,_,"set")), Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2)))) => {
             val i2 = nptagToCommandValue(Node(NP, np2))
             for (n1 <- NPTag(Node(NP, np1))) {
               val i1 = nptagToImplementVariable(n1)
@@ -126,7 +126,7 @@ object TagToCommand {
             }
           }
           // set2(状態を変更)
-          case List(Leaf(VB, Token(_,_,"set")), Node(NP, np), Node(PP, List(Leaf(IN, _), Node(PP, pp)))) => {
+          case List(Leaf(VB, Token_(_,_,_,"set")), Node(NP, np), Node(PP, List(Leaf(IN, _), Node(PP, pp)))) => {
             val i1 = nptagToImplementVariable(Node(NP, np))
             val i2 = if (getLeave(Node(NP, pp)).contains("on")) CBool(true)
             else if(getLeave(Node(NP, pp)).contains("off")) CBool(false)
@@ -134,7 +134,7 @@ object TagToCommand {
             commandList :+= CommandStructure.Set(i1, i2)
           }
           // set3(状態を変更_PPが省略されてるもの)
-          case List(Leaf(VB, Token(_,_,"set")), Node(NP, np)) => {
+          case List(Leaf(VB, Token_(_,_,_,"set")), Node(NP, np)) => {
             np match {
               // Set that attribute's name to the current input character, and its value to the empty string.(仮)
               case Node(NP, List(Node(NP, np1_1), Leaf(TO, _), Node(NP, np1_2))) :: Leaf(Comma,_)::Leaf(CC, _)::Node(NP, List(Node(NP, np2_1), Node(PP, List(Leaf(IN, _), Node(NP, np2_2)))))::Nil => {
@@ -153,17 +153,17 @@ object TagToCommand {
             }
           }
           // consume
-          case List(Leaf(VB,Token(_,_,"consume")), Node(NP,np)) => {
+          case List(Leaf(VB,Token_(_,_,_,"consume")), Node(NP,np)) => {
             for (n <- NPDistribute(Node(NP, np))) commandList :+= CommandStructure.Consume(nptagToCommandValue(n._1))
           }
           // emit
-          case List(Leaf(VB,Token(_,_,"emit")), Node(NP,np)) => {
+          case List(Leaf(VB,Token_(_,_,_,"emit")), Node(NP,np)) => {
             for (n <- NPDistribute(Node(NP, np))) {
               commandList :+= Emit(nptagToCommandValue(n._1))
             }
           }
           // emit2
-          case List(Leaf(VB,Token(_,_,"emit")), Node(NP,np), Node(PP, pp)) => {
+          case List(Leaf(VB,Token_(_,_,_,"emit")), Node(NP,np), Node(PP, pp)) => {
             for (n <- NPDistribute(Node(NP, np))) {
               var token: CommandValue = null
               if (getLeave(n._1).contains("current input character")) token = CurrentInputCharacter
@@ -173,11 +173,11 @@ object TagToCommand {
             }
           }
           // ignore
-          case List(Leaf(VB,Token(_,_,"ignore")), Node(NP,np)) => {
+          case List(Leaf(VB,Token_(_,_,_,"ignore")), Node(NP,np)) => {
             for (n <- NPDistribute(Node(NP, np))) commandList :+= Ignore(getLeave(n._1))
           }
           // create
-          case List(Leaf(VB,Token(_,_,"create")), Node(NP,np)) => {
+          case List(Leaf(VB,Token_(_,_,_,"create")), Node(NP,np)) => {
             for (n <- NPDistribute(Node(NP, np))) {
               val key = if (n._2 == -1) "" else "x_" + n._2.toString
               var iVal: CommandValue = nptagToCommandValue(n._1)
@@ -190,7 +190,7 @@ object TagToCommand {
             }
           }
           // multiply
-          case List(Leaf(VB,Token(_,_,"multiply")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_,_, "by")), Node(NP, np2)))) => {
+          case List(Leaf(VB,Token_(_,_,_,"multiply")), Node(NP,np1), Node(PP, List(Leaf(IN, Token_(_,_,_, "by")), Node(NP, np2)))) => {
             val i2 = nptagToCommandValue(Node(NP, np2))
             for (n1 <- NPTag(Node(NP, np1))) {
               val i1 = nptagToImplementVariable(n1)
@@ -199,7 +199,7 @@ object TagToCommand {
             //for (n <- NPDistribute(Node(NP, np1))) commandList :+= Multiply(getLeave(n._1), getLeave(Node(NP, np2)))
           }
           // add_1
-          case List(Leaf(VB,Token(_,_,"add")), Node(NP,np1), Node(PP, List(Leaf(IN, Token(_,_, "to")), Node(NP, np2)))) => {
+          case List(Leaf(VB,Token_(_,_,_,"add")), Node(NP,np1), Node(PP, List(Leaf(IN, Token_(_,_,_, "to")), Node(NP, np2)))) => {
             val i2 = nptagToImplementVariable(Node(NP, np2))
             for (n1 <- NPTag(Node(NP, np1))) {
               val i1 = nptagToCommandValue(n1)
@@ -208,7 +208,7 @@ object TagToCommand {
             //for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(getLeave(n._1), getLeave(Node(NP, np2)))
           }
           // add_2
-          case Leaf(VB, Token(_,_, "add")) :: Node(NP, List(Node(NP, np1), Node(PP, List(Leaf(IN, Token(_,_, "to")), Node(NP, np2))))) :: Nil => {
+          case Leaf(VB, Token_(_,_,_, "add")) :: Node(NP, List(Node(NP, np1), Node(PP, List(Leaf(IN, Token_(_,_,_, "to")), Node(NP, np2))))) :: Nil => {
             val i2 = nptagToImplementVariable(Node(NP, np2))
             for (n1 <- NPTag(Node(NP, np1))) {
               val i1 = nptagToCommandValue(n1)
@@ -217,19 +217,19 @@ object TagToCommand {
             //for (n <- NPDistribute(Node(NP, np1))) commandList :+= Add(getLeave(n._1), getLeave(Node(NP, np2)))
           }
           // start
-          case List(Leaf(VB,Token(_,_,"start")), Node(NP,np), Node(PP, _)) => {
+          case List(Leaf(VB,Token_(_,_,_,"start")), Node(NP,np), Node(PP, _)) => {
             commandList :+= StartNewAttribute("x_" + getCorefId(Node(NP,np)))
           }
           // treat
-          case List(Leaf(VB, Token(_,_, "treat")), Node(NP, _), Node(PP, _), Node(ADVP, _)) | List(Leaf(VB, Token(_,_, "treat")), Node(NP, _), Node(ADVP, _)) => {
+          case List(Leaf(VB, Token_(_,_,_, "treat")), Node(NP, _), Node(PP, _), Node(ADVP, _)) | List(Leaf(VB, Token_(_,_,_, "treat")), Node(NP, _), Node(ADVP, _)) => {
             commandList :+= TreatAsAnythingElse()
           }
           // flush
-          case List(Leaf(VB,Token(_,_,"flush")), Node(NP,_)) => {
+          case List(Leaf(VB,Token_(_,_,_,"flush")), Node(NP,_)) => {
             commandList :+= FlushCodePoint()
           }
           // append_1
-          case Leaf(VB, Token(_,_, "append")) :: Node(NP, np1) :: Node(PP, List(Leaf(IN, _), Node(NP, np2))) :: Nil => {
+          case Leaf(VB, Token_(_,_,_, "append")) :: Node(NP, np1) :: Node(PP, List(Leaf(IN, _), Node(NP, np2))) :: Nil => {
             val i2 = nptagToImplementVariable(Node(NP, np2))
             for (n <- NPDistribute(Node(NP, np1))) {
               val i1 = nptagToCommandValue(n._1)
@@ -237,7 +237,7 @@ object TagToCommand {
             }
           }
           // append_2
-          case Leaf(VB, Token(_,_, "append")) :: Node(NP, List(Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2))))) :: Nil => {
+          case Leaf(VB, Token_(_,_,_, "append")) :: Node(NP, List(Node(NP, np1), Node(PP, List(Leaf(IN, _), Node(NP, np2))))) :: Nil => {
             val i2 = nptagToImplementVariable(Node(NP, np2))
             for (n <- NPDistribute(Node(NP, np1))) {
               val i1 = nptagToCommandValue(n._1)
@@ -258,7 +258,7 @@ object TagToCommand {
     tag match {
       case Node(NP, list) => {
         list match {
-          case Node(NP, np1) :: Leaf(Comma, _) :: Leaf(CC, Token(_,_, "and")) :: rst => {
+          case Node(NP, np1) :: Leaf(Comma, _) :: Leaf(CC, Token_(_,_,_, "and")) :: rst => {
             taglist :+= removeDT(Node(NP, np1))
             taglist = taglist ++ NPTag(Node(NP, rst))
           }
@@ -266,11 +266,11 @@ object TagToCommand {
             taglist :+= removeDT(Node(NP, np1))
             taglist = taglist ++ NPTag(Node(NP, rst))
           }
-          case Node(NP, np1) :: Leaf(CC, Token(_,_, "and")) :: rst => {
+          case Node(NP, np1) :: Leaf(CC, Token_(_,_,_, "and")) :: rst => {
             taglist :+= removeDT(Node(NP, np1))
             taglist = taglist ++ NPTag(Node(NP, rst))
           }
-          case Node(NP, np) :: Leaf(NN, nn1) :: Leaf(CC, Token(_,_,"and")) :: Leaf(NN, nn2) :: r => {
+          case Node(NP, np) :: Leaf(NN, nn1) :: Leaf(CC, Token_(_,_,_,"and")) :: Leaf(NN, nn2) :: r => {
             taglist :+= Node(NP, List(Node(NP, np), Leaf(NN, nn1)))
             taglist :+= Node(NP, List(Node(NP, np), Leaf(NN, nn2)))
           }
@@ -286,7 +286,7 @@ object TagToCommand {
     var strList: List[(Tag, Int)] = List()
     val taglist = NPTag(tag)
     for(t <- taglist) {
-      //strList :+= (toSimpleToken(getLeave(t)), getCorefId(t))
+      //strList :+= (toSimpleToken_(_,getLeave(t)), getCorefId(t))
       strList :+= (t, getCorefId(t))
     }
     strList
@@ -301,7 +301,7 @@ object TagToCommand {
       case Node(NP, rst) => {
         rst.head match {
           case Leaf(DT, _) => Node(NP, rst.tail)
-          //case Leaf(CD, Token(_,_, "two")) => println("aaaa");tag
+          //case Leaf(CD, Token_(_,_,_, "two")) => println("aaaa");tag
           case _ => tag
         }
       }
@@ -313,31 +313,31 @@ object TagToCommand {
     tag match {
       case Node(S, list) => {
         list match {
-          case Node(S, s1) :: Leaf(CC, Token(_,_, "and")) :: Node(S, s2) :: Nil => {
+          case Node(S, s1) :: Leaf(CC, Token_(_,_,_, "and")) :: Node(S, s2) :: Nil => {
             And(convertBool(Node(S, s1)), convertBool(Node(S, s2)))
           }
-          case Node(S, s1) :: Leaf(CC, Token(_,_, "or")) :: Node(S, s2) :: Nil => {
+          case Node(S, s1) :: Leaf(CC, Token_(_,_,_, "or")) :: Node(S, s2) :: Nil => {
             Or(convertBool(Node(S, s1)), convertBool(Node(S, s2)))
           }
-//          case Node(NP, List(Leaf(EX, Token(_,_, "there")))) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Node(NP, np))) :: Nil => {
+//          case Node(NP, List(Leaf(EX, Token_(_,_,_, "there")))) :: Node(VP, List(Leaf(VB, Token_(_,_,_, "be")), Node(NP, np))) :: Nil => {
 //            IsExist(getLeave(Node(NP, np)))
 //          }
-          case Node(NP, np1) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Node(NP, np2))) :: Nil => {
+          case Node(NP, np1) :: Node(VP, List(Leaf(VB, Token_(_,_,_, "be")), Node(NP, np2))) :: Nil => {
             val str = getLeave(Node(NP, np1))
             if (str.contains("current end tag") && getLeave(Node(NP, np2)).contains("appropriate")) CurrentEndTagIsAppropriate()
             else{
               np2 match {
-                case Node(NP, np2_1) :: Node(PP, List(Leaf(IN, Token(_,_,"for")), Node(NP, np2_2))) :: Nil if getLeave(Node(NP, np2_1)).contains("ASCII case_insensitive match") => {
+                case Node(NP, np2_1) :: Node(PP, List(Leaf(IN, Token_(_,_,_,"for")), Node(NP, np2_2))) :: Nil if getLeave(Node(NP, np2_1)).contains("ASCII case_insensitive match") => {
                   AsciiCaseInsensitiveMatch(nptagToCommandValue(Node(NP, np1)), nptagToCommandValue(Node(NP, np2_2)))
                 }
                 case _ => IsEqual(nptagToCommandValue(Node(NP, np1)), nptagToCommandValue(Node(NP, np2)))
               }
             }
           }
-//          case Node(NP, List(Leaf(EX, Token(_,_, "there")))) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Leaf(RB, Token(_,_, "not")),Node(NP, np))) :: Nil => {
+//          case Node(NP, List(Leaf(EX, Token_(_,_,_, "there")))) :: Node(VP, List(Leaf(VB, Token_(_,_,_, "be")), Leaf(RB, Token_(_,_,_, "not")),Node(NP, np))) :: Nil => {
 //            Not(IsExist(getLeave(Node(NP, np))))
 //          }
-          case Node(NP, np1) :: Node(VP, List(Leaf(VB, Token(_,_, "be")), Leaf(RB, Token(_,_, "not")), Node(NP, np2))) :: Nil => {
+          case Node(NP, np1) :: Node(VP, List(Leaf(VB, Token_(_,_,_, "be")), Leaf(RB, Token_(_,_,_, "not")), Node(NP, np2))) :: Nil => {
             if (getLeave(Node(NP, np1)).contains("current end tag") && getLeave(Node(NP, np2)).contains("appropriate")) Not(CurrentEndTagIsAppropriate())
             else Not(IsEqual(nptagToCommandValue(Node(NP, np1)), nptagToCommandValue(Node(NP, np2))))
           }
@@ -393,9 +393,9 @@ object TagToCommand {
           return NumericVersion(nptagToCommandValue(Node(NP, np2)))
         }
       }
-      case Node(NP, List(Node(NP, np), Leaf(NN, Token(_,_,n)))) => {
+      case Node(NP, List(Node(NP, np), Leaf(NN, Token_(_,_,_,n)))) => {
         np.last match {
-          case Leaf(POS,Token(_,_,"'s")) => {
+          case Leaf(POS,Token_(_,_,_,"'s")) => {
             n match {
               case "name" => return NameOf(nptagToCommandValue(Node(NP, np)))
               case "value" => return ValueOf(nptagToCommandValue(Node(NP, np)))
@@ -492,9 +492,9 @@ object TagToCommand {
   def nptagToImplementVariable(nptag: Tag): ImplementVariable = {
     val id = getCorefId(nptag)
     nptag match {
-      case Node(NP, List(Node(NP, np), Leaf(NN, Token(_,_,n)))) => {
+      case Node(NP, List(Node(NP, np), Leaf(NN, Token_(_,_,_,n)))) => {
         np.last match {
-          case Leaf(POS,Token(_,_,"'s")) => {
+          case Leaf(POS,Token_(_,_,_,"'s")) => {
             n match {
               case "name" => return INameOf(nptagToImplementVariable(Node(NP, np)))
               case "value" => return IValueOf(nptagToImplementVariable(Node(NP, np)))
