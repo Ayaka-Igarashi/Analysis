@@ -3,25 +3,44 @@
 
 \begin{document}
 \chapter{評価}
+\label{評価}
 \section{HTML5テスト}
+字句解析のインタプリターの正しさを検証するために,html5lib-tests~\cite{html5lib-tests}のtokenizerのテストデータを用い,テストを行った.
 \subsection*{テスト結果}
-contentModelFlags => 24/24
-domjs => 42/58 (((okikae? ,if, CDATAの分岐(42)
- entities => 80/80 -> 状態80のテスト
- escapeFlag => 9/9
- namedEntities => 4210/4210 -> 状態73のテスト
- numericEntities => 336/336 -> 状態73のテスト
- pendingSpecChanges => 1/1
-test1 => 63/68  !!!(((if,
- test2 => 35/45  !!!(((public,system -> 45/45
- test3 => 1374/1786  !!!(((pub,sys ->1786/1786
- test4 => 81/85  !!!((( public  -> 85/85
- unicodeChars => 323/323
- unicodeCharsProblem => 5/5
-xml => 1/4  (((okikae
-\section{上手くいかなかった点}
+\begin{table}[htb]
+    \begin{tabular}{|l|c|l|} \hline
+      テストファイル名 & 結果 & 内容\\ \hline 
+      contentModelFlags.test & 24/24 & あ\\
+      domjs.test & 42/58 & あ\\
+      entities.test & 80/80 & あ\\
+      escapeFlag.test & 9/9 & あ\\
+      namedEntities.test & 4210/4210 & あ\\
+      numericEntities.test & 336/336 & あ\\
+      pendingSpecChanges.test & 1/1 & あ\\
+      test1.test & 63/68 & あ\\
+      test2.test & 35/45 & あ\\
+      test3.test & 1374/1786 & あ\\
+      test4.test & 81/85 & あ\\
+      unicodeChars.test & 323/323 & あ\\
+      unicodeCharsProblem.test & 5/5 & あ\\ \hline 
+    \end{tabular}
+\end{table}
+
+\section{問題点}
+%上手くいかなかった点
+\subsection*{test2.test,test3.test,test4.testが上手くいかなかった原因}
 If the six characters starting from the current input character are an ASCII case-insensitive match for the word "PUBLIC", then consume those characters
 この文章を自然言語解析させると"those characters"は"the six characters starting from the current input character"を参照するという出力になる.\\
 もし,この状態へ遷移した時点での入力文字列が"public $\cdots$"であったら,まず文字'p'を消費し,入力文字列が"ublic $\cdots$"となる.\\
 機械的にこの文章を処理しようとすると,現在の入力文字列"ublic $\cdots$"から文字列"public"を消費せよという解釈になるので,上手くいかない.\\
+この問題を手動で解決させた結果,以下のようなテスト結果の改善が成された.\\
+\begin{table}[htb]
+    \begin{tabular}{|l|c|} \hline
+      テストファイル名 & 結果 \\ \hline 
+      test2.test & 45/45 \\
+      test3.test & 1786/1786 \\
+      test4.test & 85/85 \\ \hline 
+    \end{tabular}
+\end{table}
+
 \end{document}

@@ -3,102 +3,159 @@
 
 \begin{document}
 \chapter{自然言語処理}
+\label{自然言語処理}
 \section{自然言語処理の対象}
- ~\cite{html5specification}
-HTML5の字句解析仕様には80個の状態がある。
-今回の字句解析仕様の自然言語処理する対象は80個のうち77個とした。
-80個の状態のうち、
-自然言語処理の対象とした77個の状態は、同じような構造で書かれていた。
-しかし残りの、
-Markup declaration open state
-Named character reference state
+HTML5の字句解析仕様には80個の状態があるが, 本論文では字句解析仕様の自然言語処理する対象は80個のうち77個とした.\\
+なぜなら80個の状態のうち, 77の状態は同じような構造で書かれているが,
+% 自然言語処理の対象とした
+残りの3状態(
+Markup declaration open state, 
+Named character reference state, 
 Numeric character reference end state
-3つの状態はそれぞれ特殊な構造で書かれていたので、これらも一括りにして自然言語処理を適用させるのは、複雑になると判断し、自然言語処理の対象から除外した。
+)
+はそれぞれ特殊な構造で書かれている.これらも一括りにして自然言語処理を適用させるのは複雑になると判断し, 自然言語処理の対象から除外した.
+\\
+また, HTML5仕様書内のNoteやExample等の補足説明は無視する.
 
-尚、テストする際は残りの3つは手動で実装することにした。
+尚, テストする際は残りの3つは手動で実装することにした。
 
-\section{使用ライブラリ}
-StanfordCoreNLP
-% ライブラリでどういう情報を得られるか
-形態素解析(品詞タグ付け、単語の原型の取得),構文解析,意味解析などが出来る.\\
-以下の例で詳しく述べる.
-\subsection{自然言語処理の例}
-"Mika likes her dog's name."をStanfordCoreNLPで自然言語処理をさせる.
-\subsubsection{トークン分割、品詞タグ付け、原型}
-Mika/NNP  likes/VBZ her/PRP\$ dog/NN 's/POS name/NN ./.
-\subsubsection{固有表現抽出}
-数字や時間、アドレス、人間、地名といった固有な表現を抽出することが出来る.\\
-Mika : PERSON
-\subsubsection{構文木解析}
-\Tree [.S [.NP [.NNP Mika ] ]
-           [.VP
-              [.VBZ likes ]
-              [.NP [.NP [.PRP\$ her ][.NN dog ][.POS 's ] ]
-                    [.NN name ] ]
-           ]
-           [.. . ]
-      ]
-\subsubsection{係り受け解析}
-係り受け解析とは、単語間の関係を解析するものである.\\
-\subsubsection{参照関係の解析}
-参照関係の解析とは,文章内で複数個同じものを指し示す単語がある時、それを抽出するものである.itやheなどの指示語の指し示すものを見つける時になどに使用される.\\
-Mika, her
+%%%%-自然言語処理の概要は「準備」に移動した
 
 \section{対象の前処理}
+仕様書自体が構造的に書かれているので,
+仕様書解析の入力はそのHTMLのソースコードとした.\\
+
 % htmlパーサーによって自然言語処理する部分を切り分ける
-% StateStructureの説明
 \subsection{Scala構造体}
-HTML5字句解析仕様書は構造的に書かれている.
-name,prev,trans
+HTML5字句解析仕様書は構造的に書かれている.\\
+状態名は"h5"タグ内にある.\\
+文字マッチング前の処理は"h5"タグ直後の"p"タグ内に記述してある.\\
+文字マッチングの処理は"dt","dd"タグ.
+% StateStructureの説明
+\subsubsection{StateStructure}
+StateStructure構造体は,状態名name,最初の処理prev,文字マッチングの処理transを持つ.
+仕様書のHTMLソースファイルの情報をこの構造にする.
+
 \subsection{文字列の置き換え}
 自然言語処理したい文章をそのまま処理すると,トークンの分割や品詞解析が適切な形で解釈されない.\\
 よって自然言語処理する際に,前処理として以下の文字列の置き換えをすることによって適切に文章が解釈されるようにした.
 \subsubsection*{状態名の置き換え}
-attribute value (double-quoted) state　=>  
-Attribute_value_double_quoted_state 
-1つのトークンとして認識させるため、
-空白、”-”を”_”にする.”(“,”)”を除く.先頭を大文字にする
+Switch to the script data escape start state.の命令文が構文木解析において\\
+\Tree [.S [.S [.VP [.VB switch ]
+              \qroof{to the script data escape}.PP
+         ]]
+         \qroof{start state}.VP
+      ]\\
+\vspace{0.5\baselineskip}\\
+と"script data escape"と"start state"が本来同じまとまりの中にいるべき単語がそれぞれ別のまとまりにいると解釈される.\\
+よって状態名を1つのトークンとして扱われるようにし,適切に命令の文が解釈されるようにするため,次のような記法に置き換えることにした.\\
+・空白、”-”を”\_”にする.\\
+・”(“,”)”を除く.\\
+・先頭を大文字にする.
+\\
+例:\\
+attribute value (double-quoted) state $\Rightarrow$
+Attribute\_value\_double\_quoted\_state 
 
 \subsubsection*{Unicodeの置き換え}
-“U+xxxx” => “U_xxxx”
- (“+”があると2つのトークンに分断されてしまうため)
+仕様書内では"U+xxxx"というユニコードが多用されている.
+これにそのまま自然言語処理を行うと,単語分割において"U", "+xxxx"と2つのトークンに分割される.
+よってユニコード内の"+"を"\_"に置き換えることによって1つのトークンとして認識させるようにした.\\
+例:\\
+“U+00AB” $\Rightarrow$ “U_00AB”
+
 \subsubsection*{動詞の置き換え}
-StanfordCoreNLPは命令文の解釈が苦手である.
-品詞解析の時点で動詞と認識されるべき単語が名詞扱いされることがあった.
+%
+自然言語処理の結果を確認してみると,品詞解析の時点で動詞と認識されるべき単語が名詞扱いされることがあった.\\
 例えば,"Reconsume"は"re"と"consume"の複合語であり,一般的な辞書にも載ってないので動詞として解釈されないことがあった.
-よってこのような単語の前に"you"という単語を付け加え,"you Reconsume $\cdots$"とすることによって,"Reconsume"を動詞として解釈させるようにした.
-“<特定の動詞>” => “you <特定の動詞>”
-Multiply => multiply
+よってこのような単語の前に"you"という単語を付け加え,"you Reconsume $\cdots$"とすることによって,"Reconsume"を動詞として解釈させるようにした.\\
+また,Stanford CoreNLPは命令文の解釈が苦手である.
+よって特定の単語(Switch, Reconsume, Emit, Flush, Append, Add, Multiply)の前に"you"という仮の主語を付け加え,命令文にならないようにする.\\
+%“<動詞>” $\Rightarrow$ “you <特定の動詞>”
+例:\\
+“Switch to the data state.” $\Rightarrow$ “you Switch to the data state.”
+% Multiply $\Rightarrow$ multiply
+\subsubsection*{その他の置き換え}
+\begin{itemize}
+   \item "-"で繋がれている単語は1つのトークンとして認識されないため,“-” を “_”に置き換えた.
+   \item 句読点をまたいでいる場合,参照関係の解析が上手くいかないことがあった.参照関係が多く出てくるSet文に関して, 
+   "(,$|$.) set" $\Rightarrow$ “ and set” と置き換えをした.
+   \item “!”が文末記号と認識されるため, “!” は “EXC” に置き換える.
+ \end{itemize}
 
-\section{Lemma tree}
-
-\section{Tag型からCommand型への変換}
-\subsection*{Switch to the $\cdots$ state}
-\Tree [.VP [.VB switch ]
-           [.PP
-              [.IN to ]
-              [.NP $\langle$state$\rangle$ ]
+% 形態素、構文木の情報、参照関係の情報からTagに変換する過程を書く
+\section{Tag型への変換}
+StanfordCoreNLPを用いての自然言語処理から得られる情報のうち,
+単語の原型の情報,構文解析の結果,参照関係の解析の結果を使用した.
+%  仕様書の文章が決まった形で書かれていることが多かったため,構文木の情報から命令の抽出が出来ると考え,係り受け解析の情報は使用していない.
+そしてそれらの情報を,Scalaで定義したTag型の構造に変換した.\\
+%  Tagの情報を使用し,命令の抽出を行った.
+%Tag型の説明=====
+\subsection{Tag型}
+Tag型は,Node型とLeaf型の2種類を持っている.
+Node型は構文木の句を表すもので,句の種類を表すNodeTypeと,そのノードの子であるTag型のリストを持つ.
+Leaf型は構文木の末端である単語を表すもので,品詞名を表すLeafTypeと,単語の情報を格納するToken型を持つ.
+Token型は単語,単語の原型,参照関係の番号の情報を持つ.\\
+%実際の定義
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, caption=Tagの定義,label=Tag][htbp]
+   trait Tag
+   case class Node(node: NodeType, list: List[Tag]) extends Tag
+   case class Leaf(leaf: LeafType, token: Token) extends Tag
+   case class Token(word: String, lemma: String, coref: Int) extends Tag
+   trait NodeType
+   case object S extends NodeType
+   case object NP extends NodeType
+   case object VP extends NodeType
+   ...
+   trait LeafType
+   case object NN extends LeafType
+   case object NNP extends LeafType
+   case object VB extends LeafType
+   ...
+\end{lstlisting}
+%変換の過程(ここ頑張って書く)======
+\subsection{Tag型への変換}
+% 変換の例を書く
+% 取り出せる情報の具体例を書く
+変換の対象として,"Create a token. Emit the token."を例にとる.
+%2つのセンテンスに分けられる.\\
+%構文木のへ説明
+\subsubsection{構文木の処理}
+\label{構文木の処理}
+基本的には自然言語処理の構文木の出力の形を保った状態で木構造であるTag型に変換するが,
+例外的に以下の処理を加える.\\%書き方直す
+\begin{screen}
+１．-NP-PRP-"you"となっている部分を取り除く.\\
+２．PRNノード,"("と")"の間にあるノードを取り除く.\\
+３．ドット(.)を取り除く.\\
+４．動詞を表す品詞は複数(VB,VBZ,VBP...)あるが,それらは"VB"に統一する.
+\end{screen}
+1つ目は,自然言語の前処理として適切な解釈がなされるように加えた"you"を取り除くためである.
+2つ目の処理は,カッコの中身に書いてある文章は補足説明が多く,命令の抽出に必要ないと判断したためである.
+3つ目は,既に自然言語処理の段階で文章の分割がなされており不要であるから,Tag構造を簡潔なものにするため取り除く.
+4つ目は,命令の抽出において,単語が動詞かどうかを判断できれば十分であるので"VB"に統一することにした.\\
+%参照関係の説明
+\subsubsection{参照関係の処理}
+参照関係の出力として,CorefEntity : 1 $\Rightarrow$ [a tag token, the token]
+が出力される.\\
+構文木をTag型に変換する際に,参照関係を持っている単語のTokenの参照番号をその番号とする.%言い方分からない
+参照関係を持たない単語に関しては参照番号を-1とする.\\
+%% 変換後のTag構造
+\subsubsection*{変換後のTag構造}
+構文木の処理と参照関係の処理を行った結果.\\
+\Tree [.ROOT [.S [.VP [.(VB,Token(Create,create,-1)) ]
+           [.NP
+              [.(DT,Token(a,a,1)) ]
+              [.(NN,Token(tag,tag,1)) ]
+              [.(NN,Token(token,token,1)) ]
            ]
+      ] ] ]
+\Tree [.ROOT [.S [.VP [.(VB,Token(Emit,emit,-1)) ]
+      [.NP
+         [.(DT,Token(the,the,1)) ]
+         [.(NN,Token(token,token,1)) ]
       ]
+      ] ] ]
 
-$\rightarrow$Switch($\langle$state$\rangle$)
-\subsection*{Reconsume in the $\cdots$ state}
-\Tree [.VP [.VB reconusme ]
-           [.PP
-              [.IN in ]
-              [.NP $\langle$state$\rangle$ ]
-           ]
-      ]
-
-$\rightarrow$Reconsume($\langle$state$\rangle$)
-\section{If文の処理}
-
-\section{NPノードからCommandValue型への変換}
-NPノードをCommandValue型に変換する際,単純に文字列に特定の単語が含まれているかどうかを調べるというやり方で実装した.
-
-\section{参照関係}
-% 
-
-
-
+%% 後半 チャプターを分けした
 \end{document}

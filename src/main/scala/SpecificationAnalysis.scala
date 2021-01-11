@@ -127,7 +127,7 @@ object SpecificationAnalysis {
       val coref = sent.coref().asScala.toList
       corefList :+= coref
 
-      // dependency
+      /** dependency*/
 //      println(sent.dependencyGraph())
       val depList = sent.dependencyGraph().toList.split("\n")
 //      println()

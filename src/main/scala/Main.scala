@@ -80,6 +80,7 @@ object Main {
       } else txtOut = new PrintWriter(System.out)
       txtOut3 = new PrintWriter("src/output3.txt")
 
+      // 取り出す
       nStateList = PreserveDefinition.read[List[nState]]("src/parsed.dat")
       tagConvert()
 

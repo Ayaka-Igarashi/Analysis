@@ -1,5 +1,17 @@
 \begin{thebibliography}{1}
 
+\bibitem{html5lib-tests}
+Geoffrey~Sneddon James~Graham.
+\newblock html5lib-tests, 2020.
+\newblock \url{https://github.com/html5lib/html5lib-tests}.
+
+\bibitem{manning-EtAl:2014:P14-5}
+Christopher~D. Manning, Mihai Surdeanu, John Bauer, Jenny Finkel, Steven~J.
+  Bethard, and David McClosky.
+\newblock The {Stanford} {CoreNLP} natural language processing toolkit.
+\newblock In {\em Association for Computational Linguistics (ACL) System
+  Demonstrations}, pages 55--60, 2014.
+
 \bibitem{pennTreebankTags}
 Jeanette Pettibone.
 \newblock Penn treebank ii tags, 2020.

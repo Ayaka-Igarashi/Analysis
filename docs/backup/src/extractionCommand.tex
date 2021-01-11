@@ -1,0 +1,49 @@
+\documentclass[uplatex,a4j]{jsreport}
+\usepackage{thesis}
+
+\begin{document}
+\chapter{命令の抽出}
+\label{命令抽出}
+%% 後半 チャプターを分けてもよい-----------------------------------------------------------------
+%% 自然言語処理で取り出した情報(tag構造)を使ってどう命令の抽出を行ったか.
+\section{Tag型からCommand型への変換}
+\subsection{Sノードの変換}
+\Tree [.S [.S s ]
+           [.CC and ]
+           [.rst ]
+      ]
+
+あ
+
+\subsection{VPノードの変換}
+\subsubsection*{Switch文}
+Switch to the $\cdots$ state\\
+\Tree [.VP [.VB switch ]
+           [.PP
+              [.IN to ]
+              [.NP $\langle$state$\rangle$ ]
+           ]
+      ]
+
+$\rightarrow$Switch($\langle$state$\rangle$)
+\subsubsection*{Reconsume文}
+Reconsume in the $\cdots$ state\\
+\Tree [.VP [.VB reconusme ]
+           [.PP
+              [.IN in ]
+              [.NP $\langle$state$\rangle$ ]
+           ]
+      ]
+
+$\rightarrow$Reconsume($\langle$state$\rangle$)
+
+\subsection{NPノードの変換}
+
+\section{If文の処理}
+
+\section{NPノードからCommandValue型への変換}
+NPノードをCommandValue型に変換する際,単純に文字列に特定の単語が含まれているかどうかを調べるというやり方で実装した.
+%参照関係の使用の部分を書く
+ 
+
+\end{document}

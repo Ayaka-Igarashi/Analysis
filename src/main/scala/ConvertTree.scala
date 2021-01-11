@@ -152,12 +152,7 @@ object ConvertTree {
         leafIdx += 1
         newLeafIdx += 1
         idxMap += (leafIdx+1 -> newLeafIdx)
-        // depMap.get(leafIdx+1) match {
-        // case Some(set) => set.map((s, id) => (s, idxMap(id)))
-        // case None =>
-        // }
         Token_(depMap(leafIdx+1), corefMap(leafIdx), child.value(), tokenList(leafIdx).lemma())
-
       }
       case None => Token_(Set(),-2, child.value(), null) // error
     }

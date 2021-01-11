@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.3-u1.26-191112-2.6 (utf8.uptex) (TeX Live 2020/W32TeX) (preloaded format=uplatex 2020.4.7)  7 JAN 2021 00:52
+This is e-upTeX, Version 3.14159265-p3.8.3-u1.26-191112-2.6 (utf8.uptex) (TeX Live 2020/W32TeX) (preloaded format=uplatex 2020.4.7)  11 JAN 2021 11:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -192,11 +192,59 @@ File: dvipdfmx.def 2017/06/24 v5.0g Graphics/color driver for dvipdfmx
 \Gin@req@height=\dimen185
 \Gin@req@width=\dimen186
 )
+(c:/w32tex/share/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count190
+\lst@gtempboxa=\box70
+\lst@token=\toks28
+\lst@length=\count191
+\lst@currlwidth=\dimen187
+\lst@column=\count192
+\lst@pos=\count193
+\lst@lostspace=\dimen188
+\lst@width=\dimen189
+\lst@newlines=\count194
+\lst@lineno=\count195
+\lst@maxwidth=\dimen190
+
+(c:/w32tex/share/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+\c@lstnumber=\count196
+\lst@skipnumbers=\count197
+\lst@framebox=\box71
+)
+(c:/w32tex/share/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2020/03/24 1.8d listings configuration
+))
+Package: listings 2020/03/24 1.8d (Carsten Heinz)
+
+(c:/w32tex/share/texmf-dist/tex/latex/ascmac/ascmac.sty
+Package: ascmac 2020/01/15 v2.1 ascmac wrapper (community edition) 
+
+(c:/w32tex/share/texmf-dist/tex/latex/ascmac/tascmac.sty
+Package: tascmac 2020/01/15 v2.1 ascmac package (community edition) 
+\@savetbaselineshift=\dimen191
+\@saveybaselineshift=\dimen192
+\scb@x=\box72
+\scscb@x=\box73
+\@bw=\dimen193
+\@nbox=\box74
+\@nbody=\box75
+\@scw=\dimen194
+\ascmac@hoboxa=\box76
+\ascmac@hoboxb=\box77
+\@itemh=\dimen195
+\@iboxpos=\toks29
+\@iboxstr=\box78
+\@bwsp=\box79
+\@@bwsp=\box80
+\@bcal=\count198
+\shaderule=\dimen196
+))
 \len=\skip62
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 16.
+(Font)              scaled to size 6.47278pt on input line 18.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 4.62341pt on input line 16.
+(Font)              scaled to size 4.62341pt on input line 18.
 )
 (c:/w32tex/share/texmf-dist/tex/latex/pict2e/pict2e.sty
 Package: pict2e 2019/08/20 v0.3c Improved picture commands (HjG,RN,JT)
@@ -211,37 +259,37 @@ Package pict2e Info: Driver file for pict2e: p2e-dvipdfm.def on input line 121.
 (c:/w32tex/share/texmf-dist/tex/latex/pict2e/p2e-dvipdfm.def
 File: p2e-dvipdfm.def 2016/02/05 v0.1u Driver-dependant file (RN,HjG,JT)
 )
-\pIIe@GRAPH=\toks28
-\@arclen=\dimen187
-\@arcrad=\dimen188
-\@tempdimd=\dimen189
+\pIIe@GRAPH=\toks30
+\@arclen=\dimen197
+\@arcrad=\dimen198
+\@tempdimd=\dimen199
 ) (./qtree.sty
 Package: 2008/12/12 v.3.1bQtree: tree-drawing for linguistics
 Package: qtree 2008/12/12 v.3.1bQtree: tree-drawing for linguistics
-\c@treecount=\count190
-\c@branchcount=\count191
-\parentbox=\box70
-\treebox=\box71
-\treeboxone=\box72
-\treeboxtwo=\box73
-\treeboxthree=\box74
-\treeboxfour=\box75
-\treeboxfive=\box76
-\treeboxsix=\box77
-\treeboxseven=\box78
-\treeboxeight=\box79
-\treeboxnine=\box80
-\treeboxten=\box81
-\treeboxeleven=\box82
-\treeboxtwelve=\box83
-\treeboxthirteen=\box84
-\treeboxfourteen=\box85
-\treeboxfifteen=\box86
-\treeboxsixteen=\box87
-\treeboxseventeen=\box88
-\treeboxeighteen=\box89
-\treeboxnineteen=\box90
-\treeboxtwenty=\box91
+\c@treecount=\count199
+\c@branchcount=\count266
+\parentbox=\box81
+\treebox=\box82
+\treeboxone=\box83
+\treeboxtwo=\box84
+\treeboxthree=\box85
+\treeboxfour=\box86
+\treeboxfive=\box87
+\treeboxsix=\box88
+\treeboxseven=\box89
+\treeboxeight=\box90
+\treeboxnine=\box91
+\treeboxten=\box92
+\treeboxeleven=\box93
+\treeboxtwelve=\box94
+\treeboxthirteen=\box95
+\treeboxfourteen=\box96
+\treeboxfifteen=\box97
+\treeboxsixteen=\box98
+\treeboxseventeen=\box99
+\treeboxeighteen=\box100
+\treeboxnineteen=\box101
+\treeboxtwenty=\box102
 \treeoffsetone=\skip63
 \treeoffsettwo=\skip64
 \treeoffsetthree=\skip65
@@ -316,28 +364,30 @@ Package: qtree 2008/12/12 v.3.1bQtree: tree-drawing for linguistics
 \branchwidth=\skip134
 \parentwidth=\skip135
 \treewidth=\skip136
-\qta=\toks29
-\qtb=\toks30
-\nbranches=\count192
-\qroofx=\count193
-\qroofy=\count194
-\@qrscratchbox=\box92
+\qta=\toks31
+\qtb=\toks32
+\nbranches=\count267
+\qroofx=\count268
+\qroofy=\count269
+\@qrscratchbox=\box103
 ) (c:/w32tex/share/texmf-dist/tex/latex/l3backend/l3backend-dvips.def
 File: l3backend-dvips.def 2020-03-12 L3 backend support: dvips
-\l__pdf_internal_box=\box93
-\g__pdf_backend_object_int=\count195
-\l__pdf_backend_content_box=\box94
-\l__pdf_backend_model_box=\box95
-\g__pdf_backend_annotation_int=\count196
-\g__pdf_backend_link_int=\count197
-\g__pdf_backend_link_sf_int=\count198
+\l__pdf_internal_box=\box104
+\g__pdf_backend_object_int=\count270
+\l__pdf_backend_content_box=\box105
+\l__pdf_backend_model_box=\box106
+\g__pdf_backend_annotation_int=\count271
+\g__pdf_backend_link_int=\count272
+\g__pdf_backend_link_sf_int=\count273
 )
 (C:/Users/ayaka/Desktop/textest/temp/target/thesis.aux
 (C:/Users/ayaka/Desktop/textest/temp/target/abstract.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/introduction.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/preparation.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/html5parser.aux)
+(C:/Users/ayaka/Desktop/textest/temp/target/commandFormat.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/nlProcessing.aux)
+(C:/Users/ayaka/Desktop/textest/temp/target/extractionCommand.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/implementation.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/evaluation.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/conclusion.aux)
@@ -362,7 +412,8 @@ LaTeX Font Info:    Checking defaults for JY2/mc/m/n on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
 LaTeX Font Info:    Checking defaults for JT2/mc/m/n on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
-\docmute@nestinglevel=\count199
+\c@lstlisting=\count274
+\docmute@nestinglevel=\count275
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
 (Font)              scaled to size 15.9785pt on input line 17.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
@@ -393,15 +444,15 @@ LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
 (Font)              scaled to size 23.0061pt on input line 23.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 (Font)              scaled to size 23.0061pt on input line 23.
- (C:/Users/ayaka/Desktop/textest/temp/target/thesis.toc)
-\tf@toc=\write3
-\openout3 = `thesis.toc'.
-
-
+ (C:/Users/ayaka/Desktop/textest/temp/target/thesis.toc
 [1
 
 
-]
+])
+\tf@toc=\write3
+\openout3 = `thesis.toc'.
+
+ [2]
 \openout2 = `introduction.aux'.
 
  (./introduction.tex
@@ -410,6 +461,12 @@ LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
 (Font)              scaled to size 19.17792pt on input line 5.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 (Font)              scaled to size 19.17792pt on input line 5.
+File: figure/流れ.png Graphic file (type bmp)
+<figure/流れ.png>
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 8.32214pt on input line 16.
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 8.32214pt on input line 16.
 ) [1
 
 
@@ -419,124 +476,165 @@ LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
  (./preparation.tex
 第2章
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 13.31541pt on input line 9.
+(Font)              scaled to size 13.31541pt on input line 10.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 13.31541pt on input line 9.
+(Font)              scaled to size 13.31541pt on input line 10.
 LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 13.31541pt on input line 9.
+(Font)              scaled to size 13.31541pt on input line 10.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 13.31541pt on input line 9.
-) [2
+(Font)              scaled to size 13.31541pt on input line 10.
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 11.09619pt on input line 19.
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 11.09619pt on input line 19.
+LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
+(Font)              scaled to size 11.09619pt on input line 19.
+LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
+(Font)              scaled to size 11.09619pt on input line 19.
+[2
 
 
 
 ]
+File: figure/dependency.png Graphic file (type bmp)
+ <figure/dependency.png>) [3]
 \openout2 = `html5parser.aux'.
 
  (./html5parser.tex
 第3章
 File: figure/html5.png Graphic file (type bmp)
 <figure/html5.png>
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 13.
-LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 13.
- [3
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[4
 
 
 
-]
-Overfull \hbox (85.87851pt too wide) in alignment at lines 28--45
+] [5]) [6]
+\openout2 = `commandFormat.aux'.
+
+ (./commandFormat.tex
+第4章
+
+Overfull \hbox (55.7163pt too wide) in alignment at lines 36--43
  [][][] []
  []
 
+[7
 
-Overfull \hbox (55.7163pt too wide) in alignment at lines 54--61
- [][][] []
- []
 
-[4]) [5]
+
+] [8]) [9]
 \openout2 = `nlProcessing.aux'.
 
  (./nlProcessing.tex
-第4章
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 11.09619pt on input line 25.
-LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 11.09619pt on input line 25.
-LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 11.09619pt on input line 25.
-LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 11.09619pt on input line 25.
-[6
-
-
-
-] [7]
-LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 5.5481pt on input line 76.
-) [8] [9]
-\openout2 = `implementation.aux'.
-
- (./implementation.tex
 第5章
-\myBox1=\box96
-\myScoreStart1=\dimen190
-\myCenter1=\dimen191
-\myScoreEnd1=\dimen192
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 18.
 [10
 
 
 
-]) [11] [12]
+] [11]
+LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
+(Font)              scaled to size 7.39746pt on input line 100.
+LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
+(Font)              scaled to size 7.39746pt on input line 100.
+
+
+Package Listings Warning: Text dropped after begin of listing on input line 100
+.
+
+[12]
+Overfull \hbox (26.36488pt too wide) in paragraph at lines 145--159
+[] []
+ []
+
+[13]) [14]
+\openout2 = `extractionCommand.aux'.
+
+ (./extractionCommand.tex
+第6章
+[15
+
+
+
+]) [16]
+\openout2 = `implementation.aux'.
+
+ (./implementation.tex
+第7章
+\myBox1=\box107
+\myScoreStart1=\dimen256
+\myCenter1=\dimen257
+\myScoreEnd1=\dimen258
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 6.47278pt on input line 19.
+[17
+
+
+
+]) [18] [19]
 \openout2 = `evaluation.aux'.
 
  (./evaluation.tex
-第6章
-) [13
+第8章
+[20
 
 
 
-]
+]) [21]
 \openout2 = `conclusion.aux'.
 
  (./conclusion.tex
-第7章
-) [14
+第9章
+) [22
 
 
 
 ]
 \openout2 = `acknowledgments.aux'.
 
- (./acknowledgments.tex) [15
+ (./acknowledgments.tex) [23
 
 
 ]
-(C:/Users/ayaka/Desktop/textest/temp/target/thesis.bbl) [16
+(C:/Users/ayaka/Desktop/textest/temp/target/thesis.bbl
+Underfull \hbox (badness 1728) in paragraph at lines 4--7
+[]\OT1/cmr/m/n/10 Geoffrey Sned-don James Gra-ham.  html5lib-tests, 2020.  $\OT
+1/cmtt/m/n/10 https : / / github . com / html5lib /
+ []
+
+LaTeX Font Info:    Font shape `JT2/gt/m/it' in size <10> not available
+(Font)              Font shape `JT2/gt/m/n' tried instead on input line 12.
+LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
+(Font)              scaled to size 9.24683pt on input line 12.
+LaTeX Font Info:    Font shape `JY2/gt/m/it' in size <10> not available
+(Font)              Font shape `JY2/gt/m/n' tried instead on input line 12.
+LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
+(Font)              scaled to size 9.24683pt on input line 12.
+) [24
 
 
-]
-(C:/Users/ayaka/Desktop/textest/temp/target/thesis.aux
+] (C:/Users/ayaka/Desktop/textest/temp/target/thesis.aux
 (C:/Users/ayaka/Desktop/textest/temp/target/abstract.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/introduction.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/preparation.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/html5parser.aux)
+(C:/Users/ayaka/Desktop/textest/temp/target/commandFormat.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/nlProcessing.aux)
+(C:/Users/ayaka/Desktop/textest/temp/target/extractionCommand.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/implementation.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/evaluation.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/conclusion.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/acknowledgments.aux)) ) 
 Here is how much of TeX's memory you used:
- 2629 strings out of 481133
- 35450 string characters out of 5919255
- 311469 words of memory out of 5000000
- 18585 multiletter control sequences out of 15000+600000
- 546745 words of font info for 98 fonts, out of 8000000 for 9000
+ 4343 strings out of 481133
+ 58413 string characters out of 5919255
+ 338628 words of memory out of 5000000
+ 20268 multiletter control sequences out of 15000+600000
+ 544651 words of font info for 92 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 38i,8n,29p,299b,309s stack positions out of 5000i,500n,10000p,500000b,80000s
+ 38i,20n,40p,299b,1747s stack positions out of 5000i,500n,10000p,500000b,80000s
 
-Output written on C:/Users/ayaka/Desktop/textest/temp/target/thesis.dvi (19 pag
-es, 33460 bytes).
+Output written on C:/Users/ayaka/Desktop/textest/temp/target/thesis.dvi (28 pag
+es, 58180 bytes).

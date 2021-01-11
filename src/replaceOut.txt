@@ -972,11 +972,11 @@ This is an absence-of-digits-in-numeric-character-reference parse error. Flush c
 Consume the next input character:
  => Consume the next input character.
 Multiply the character reference code by 16. Add a numeric version of the current input character (subtract 0x0030 from the character's code point) to the character reference code.
- => multiply the character reference code by 16. you Add a numeric version of the current input character (subtract 0x0030 from the character's code point) to the character reference code.
+ => you Multiply the character reference code by 16. you Add a numeric version of the current input character (subtract 0x0030 from the character's code point) to the character reference code.
 Multiply the character reference code by 16. Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0037 from the character's code point) to the character reference code.
- => multiply the character reference code by 16. you Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0037 from the character's code point) to the character reference code.
+ => you Multiply the character reference code by 16. you Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0037 from the character's code point) to the character reference code.
 Multiply the character reference code by 16. Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0057 from the character's code point) to the character reference code.
- => multiply the character reference code by 16. you Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0057 from the character's code point) to the character reference code.
+ => you Multiply the character reference code by 16. you Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0057 from the character's code point) to the character reference code.
 Switch to the numeric character reference end state.
  => you Switch to the Numeric_character_reference_end_state.
 This is a missing-semicolon-after-character-reference parse error. Reconsume in the numeric character reference end state.
@@ -984,7 +984,7 @@ This is a missing-semicolon-after-character-reference parse error. Reconsume in 
 Consume the next input character:
  => Consume the next input character.
 Multiply the character reference code by 10. Add a numeric version of the current input character (subtract 0x0030 from the character's code point) to the character reference code.
- => multiply the character reference code by 10. you Add a numeric version of the current input character (subtract 0x0030 from the character's code point) to the character reference code.
+ => you Multiply the character reference code by 10. you Add a numeric version of the current input character (subtract 0x0030 from the character's code point) to the character reference code.
 Switch to the numeric character reference end state.
  => you Switch to the Numeric_character_reference_end_state.
 This is a missing-semicolon-after-character-reference parse error. Reconsume in the numeric character reference end state.

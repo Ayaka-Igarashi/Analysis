@@ -24,9 +24,9 @@ object Replacement {
     val re2 =  "(U\\+[0-9A-F][0-9A-F][0-9A-F][0-9A-F])".r
     s = re2.replaceAllIn(s, m => "U_" + m.toString().substring(2,6))
     // switch => you switch
-    val re3 = "([sS]witch|[rR]econsume|[eE]mit|[fF]lush|[aA]ppend|[aA]dd)".r
+    val re3 = "([sS]witch|[rR]econsume|[eE]mit|[fF]lush|[aA]ppend|[aA]dd|[mM]ultiply)".r//
     s = re3.replaceAllIn(s, m => "you " + m.toString())
-    s = s.replace("Multiply", "multiply")
+//    s = s.replace("Multiply", "multiply")
     // ! => -EXC-
     val re4 = "(\\!)".r
     s = re4.replaceAllIn(s, m => "EXC")
