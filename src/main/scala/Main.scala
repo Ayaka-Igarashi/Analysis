@@ -58,7 +58,7 @@ object Main {
 
     val scanner = new Scanner(System.in)
 
-    if (true) {
+    if (false) {
       print("> parse start?(put yes or no) : ")
       val scan = scanner.next()
       if (scan == "yes"||scan == "y") {

@@ -273,6 +273,7 @@ object TagToCommand {
           case Node(NP, np) :: Leaf(NN, nn1) :: Leaf(CC, Token_(_,_,_,"and")) :: Leaf(NN, nn2) :: r => {
             taglist :+= Node(NP, List(Node(NP, np), Leaf(NN, nn1)))
             taglist :+= Node(NP, List(Node(NP, np), Leaf(NN, nn2)))
+            //println("where : " + tag)
           }
           case _ => taglist :+= removeDT(tag)
         }
