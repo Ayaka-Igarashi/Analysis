@@ -9,7 +9,7 @@
 \subsection*{テスト結果}
 \begin{table}[htb]
     \begin{tabular}{|l|c|l|} \hline
-      テストファイル名 & 結果 & 内容\\ \hline 
+      テストファイル名 & 結果 & テスト内容\\ \hline 
       contentModelFlags.test & 24/24 & あ\\
       domjs.test & 42/58 & あ\\
       entities.test & 80/80 & あ\\
@@ -29,10 +29,10 @@
 \section{問題点}
 %上手くいかなかった点
 \subsection*{test2.test,test3.test,test4.testが上手くいかなかった原因}
-If the six characters starting from the current input character are an ASCII case-insensitive match for the word "PUBLIC", then consume those characters
-この文章を自然言語解析させると"those characters"は"the six characters starting from the current input character"を参照するという出力になる.\\
-もし,この状態へ遷移した時点での入力文字列が"public $\cdots$"であったら,まず文字'p'を消費し,入力文字列が"ublic $\cdots$"となる.\\
-機械的にこの文章を処理しようとすると,現在の入力文字列"ublic $\cdots$"から文字列"public"を消費せよという解釈になるので,上手くいかない.\\
+If the six characters starting from the current input character are an ASCII case-insensitive match for the word ``PUBLIC'', then consume those characters
+この文章を自然言語解析させると``those characters''は``the six characters starting from the current input character''を参照するという出力になる.\\
+もし,この状態へ遷移した時点での入力文字列が``public $\cdots$''であったら,まず文字'p'を消費し,入力文字列が``ublic $\cdots$''となる.\\
+機械的にこの文章を処理しようとすると,現在の入力文字列``ublic $\cdots$''から文字列``public''を消費せよという解釈になるので,上手くいかない.\\
 この問題を手動で解決させた結果,以下のようなテスト結果の改善が成された.\\
 \begin{table}[htb]
     \begin{tabular}{|l|c|} \hline

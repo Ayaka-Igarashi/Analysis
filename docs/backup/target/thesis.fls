@@ -154,18 +154,18 @@ INPUT extractbb -B cropbox -O figure/dependency.png
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/html5parser.aux
 INPUT html5parser.tex
 INPUT html5parser.tex
-INPUT figure/html5.png
-INPUT extractbb -B cropbox -O figure/html5.png
+INPUT figure/html5-bw.png
+INPUT extractbb -B cropbox -O figure/html5-bw.png
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisg-v.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisg-h.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/commandFormat.aux
 INPUT commandFormat.tex
 INPUT commandFormat.tex
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/nlProcessing.aux
 INPUT nlProcessing.tex
 INPUT nlProcessing.tex
-INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
-INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisg-v.tfm
-INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisg-h.tfm
-INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/extractionCommand.aux
 INPUT extractionCommand.tex
 INPUT extractionCommand.tex

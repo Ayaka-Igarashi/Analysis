@@ -6,14 +6,14 @@
 \label{準備}
 % 読んでもらうことに必要なこと
 % 自然言語処理のこと,必要な言葉
-%html5のtokenerser仕様のこと
+%html5のtokenizer仕様のことは3章
 \section{品詞タグ}
-% 自然言語処理のチャプターでやる
-準備~\cite{pennTreebankTags}
+品詞タグの説明~\cite{pennTreebankTags}
 S : 節
 VP : 動詞句
 NP : 名詞句
 VB : 動詞
+NN : 名詞
 
 \section{自然言語処理}
 \subsection{使用ライブラリ}
@@ -27,7 +27,7 @@ StanfordCoreNLPでは,
 (pipelineの説明をする)\\
 %====
 \subsection{概要}
-"Mika likes her dog's name."をStanford CoreNLPで自然言語処理をさせる.
+``Mika likes her dog's name.''をStanford CoreNLPで自然言語処理をさせる.
 \subsubsection{トークン分割、品詞タグ付け、原型}
 Mika/NNP  likes/VBZ her/PRP\$ dog/NN 's/POS name/NN ./.\\
 Mika/Mika  likes/like her/she dog/dog 's/'s name/name ./.
@@ -49,7 +49,7 @@ Mika : PERSON
   \centering
   \includegraphics[keepaspectratio, scale=1.0]
        {figure/dependency.png}
-  \caption{dependency}
+  \caption{dependency(仮)}
   \label{dependency}
 \end{figure}
 \subsubsection{参照関係の解析}

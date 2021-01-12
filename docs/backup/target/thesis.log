@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.3-u1.26-191112-2.6 (utf8.uptex) (TeX Live 2020/W32TeX) (preloaded format=uplatex 2020.4.7)  11 JAN 2021 11:28
+This is e-upTeX, Version 3.14159265-p3.8.3-u1.26-191112-2.6 (utf8.uptex) (TeX Live 2020/W32TeX) (preloaded format=uplatex 2020.4.7)  13 JAN 2021 01:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -464,13 +464,17 @@ LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 File: figure/流れ.png Graphic file (type bmp)
 <figure/流れ.png>
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 16.
+(Font)              scaled to size 8.32214pt on input line 30.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 16.
-) [1
+(Font)              scaled to size 8.32214pt on input line 30.
+)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[1
 
 
-]
+] [2]
 \openout2 = `preparation.aux'.
 
  (./preparation.tex
@@ -491,74 +495,75 @@ LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
 (Font)              scaled to size 11.09619pt on input line 19.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 (Font)              scaled to size 11.09619pt on input line 19.
-[2
+[3
 
 
 
 ]
 File: figure/dependency.png Graphic file (type bmp)
- <figure/dependency.png>) [3]
+ <figure/dependency.png>) [4]
 \openout2 = `html5parser.aux'.
 
  (./html5parser.tex
 第3章
-File: figure/html5.png Graphic file (type bmp)
-<figure/html5.png>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[4
+File: figure/html5-bw.png Graphic file (type bmp)
+<figure/html5-bw.png> [5
 
 
 
-] [5]) [6]
+]
+LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
+(Font)              scaled to size 7.39746pt on input line 40.
+LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
+(Font)              scaled to size 7.39746pt on input line 40.
+
+
+Package Listings Warning: Text dropped after begin of listing on input line 40.
+
+
+[6]) [7]
 \openout2 = `commandFormat.aux'.
 
  (./commandFormat.tex
 第4章
 
-Overfull \hbox (55.7163pt too wide) in alignment at lines 36--43
- [][][] []
+Overfull \hbox (8.0391pt too wide) detected at line 58
+[]
  []
 
-[7
+[8
 
 
 
-] [8]) [9]
+]
+Overfull \hbox (50.59564pt too wide) detected at line 154
+[]
+ []
+
+[9] [10]) [11]
 \openout2 = `nlProcessing.aux'.
 
  (./nlProcessing.tex
 第5章
-[10
+[12
 
 
 
-] [11]
-LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 7.39746pt on input line 100.
-LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 7.39746pt on input line 100.
+] [13]
 
-
-Package Listings Warning: Text dropped after begin of listing on input line 100
+Package Listings Warning: Text dropped after begin of listing on input line 101
 .
 
-[12]
-Overfull \hbox (26.36488pt too wide) in paragraph at lines 145--159
-[] []
- []
-
-[13]) [14]
+[14] [15]) [16]
 \openout2 = `extractionCommand.aux'.
 
  (./extractionCommand.tex
 第6章
-[15
+[17
 
 
 
-]) [16]
+] [18] [19]) [20]
 \openout2 = `implementation.aux'.
 
  (./implementation.tex
@@ -568,42 +573,37 @@ Overfull \hbox (26.36488pt too wide) in paragraph at lines 145--159
 \myCenter1=\dimen257
 \myScoreEnd1=\dimen258
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 19.
-[17
+(Font)              scaled to size 6.47278pt on input line 55.
+[21
 
 
 
-]) [18] [19]
+] [22]) [23]
 \openout2 = `evaluation.aux'.
 
  (./evaluation.tex
 第8章
-[20
+[24
 
 
 
-]) [21]
+]) [25]
 \openout2 = `conclusion.aux'.
 
  (./conclusion.tex
 第9章
-) [22
+) [26
 
 
 
 ]
 \openout2 = `acknowledgments.aux'.
 
- (./acknowledgments.tex) [23
+ (./acknowledgments.tex) [27
 
 
 ]
 (C:/Users/ayaka/Desktop/textest/temp/target/thesis.bbl
-Underfull \hbox (badness 1728) in paragraph at lines 4--7
-[]\OT1/cmr/m/n/10 Geoffrey Sned-don James Gra-ham.  html5lib-tests, 2020.  $\OT
-1/cmtt/m/n/10 https : / / github . com / html5lib /
- []
-
 LaTeX Font Info:    Font shape `JT2/gt/m/it' in size <10> not available
 (Font)              Font shape `JT2/gt/m/n' tried instead on input line 12.
 LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
@@ -612,10 +612,11 @@ LaTeX Font Info:    Font shape `JY2/gt/m/it' in size <10> not available
 (Font)              Font shape `JY2/gt/m/n' tried instead on input line 12.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 (Font)              scaled to size 9.24683pt on input line 12.
-) [24
+) [28
 
 
-] (C:/Users/ayaka/Desktop/textest/temp/target/thesis.aux
+]
+(C:/Users/ayaka/Desktop/textest/temp/target/thesis.aux
 (C:/Users/ayaka/Desktop/textest/temp/target/abstract.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/introduction.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/preparation.aux)
@@ -628,13 +629,13 @@ LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 (C:/Users/ayaka/Desktop/textest/temp/target/conclusion.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/acknowledgments.aux)) ) 
 Here is how much of TeX's memory you used:
- 4343 strings out of 481133
- 58413 string characters out of 5919255
- 338628 words of memory out of 5000000
- 20268 multiletter control sequences out of 15000+600000
+ 4347 strings out of 481133
+ 58497 string characters out of 5919255
+ 344640 words of memory out of 5000000
+ 20272 multiletter control sequences out of 15000+600000
  544651 words of font info for 92 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 38i,20n,40p,299b,1747s stack positions out of 5000i,500n,10000p,500000b,80000s
+ 38i,20n,40p,396b,1744s stack positions out of 5000i,500n,10000p,500000b,80000s
 
-Output written on C:/Users/ayaka/Desktop/textest/temp/target/thesis.dvi (28 pag
-es, 58180 bytes).
+Output written on C:/Users/ayaka/Desktop/textest/temp/target/thesis.dvi (32 pag
+es, 81808 bytes).

@@ -1,7 +1,7 @@
 \begin{thebibliography}{1}
 
 \bibitem{html5lib-tests}
-Geoffrey~Sneddon James~Graham.
+James Graham, Geoffrey Sneddon, et~al.
 \newblock html5lib-tests, 2020.
 \newblock \url{https://github.com/html5lib/html5lib-tests}.
 
@@ -12,15 +12,39 @@ Christopher~D. Manning, Mihai Surdeanu, John Bauer, Jenny Finkel, Steven~J.
 \newblock In {\em Association for Computational Linguistics (ACL) System
   Demonstrations}, pages 55--60, 2014.
 
+\bibitem{HTML5Testing}
+Yasuhiko Minamide and Shunsuke Mori.
+\newblock Reachability analysis of the html5 parser specification and its
+  application to compatibility testing.
+\newblock {\em FM 2012: Formal Methods}, 2012.
+
 \bibitem{pennTreebankTags}
 Jeanette Pettibone.
-\newblock Penn treebank ii tags, 2020.
+\newblock Penn treebank {II} tags, 2020.
 \newblock
   \url{https://web.archive.org/web/20130517134339/http://bulba.sdsu.edu/jeanette/thesis/PennTags.html}.
+
+\bibitem{arm}
+Anh~V. Vu and Mizuhito Ogawa.
+\newblock Formal semantics extraction from natural language specifications for
+  arm.
+\newblock {\em Formal Methods--The Next 30 Years}, 2019.
 
 \bibitem{html5specification}
 WHATWG.
 \newblock Html standard, 2020.
 \newblock \url{https://html.spec.whatwg.org/multipage/parsing.html}.
+
+\bibitem{トランスデューサの包含関係}
+小林 孝広.
+\newblock
+  交代性オートマトンを用いたトランスデューサの包含関係の保守的検査.
+\newblock {\em 東京工業大学　学士論文}, 2019.
+
+\bibitem{XSSAuditor}
+芹田 悠一郎.
+\newblock トランスデューサによる {XSS Auditor}
+  の有効性の分析.
+\newblock {\em 東京工業大学　学士論文}, 2017.
 
 \end{thebibliography}

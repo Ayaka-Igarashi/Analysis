@@ -5,14 +5,50 @@
 \chapter{実装}
 \label{実装}
 インタープリタを作成した.
-% インタープリタの概略図
+\section{概略}
+% インタープリタの概略図書く
+
 \section{Env}
+next state
+
+current state
+
+return state
+
 
 \section{Command型}
-Command型のそれぞれの値の解釈
+実装したCommand型のそれぞれの動作を操作的意味論を用いて表す. 
 \subsection*{Switch(state: CommandValue)}
-$\langle$ Switch(state), $env \rangle \rightarrow env[nextState \leftarrow \mathcal{C}[\![state]\!] ]$
+$\langle$ Switch(state), $env \rangle \rightarrow env[nextState \leftarrow \mathcal{I}_{cval}[\![state]\!] ]$
+
 \subsection*{Recomsume(state: CommandValue)}
+$\langle$ Recomsume(state), $env \rangle \rightarrow env[nextState \leftarrow \mathcal{I}_{cval}[\![state]\!] , {\rm inputText} \leftarrow {\rm char + inputText} ]$\\
+ if currentInputCharacter = CharVal(char)\\
+$\langle$ Recomsume(state), $env \rangle \rightarrow env[nextState \leftarrow \mathcal{I}_{cval}[\![state]\!] , {\rm inputText} \leftarrow {\rm string + inputText} ]$\\
+ if currentInputCharacter = StringVal(string)\\
+$\langle$ Recomsume(state), $env \rangle \rightarrow env[nextState \leftarrow \mathcal{I}_{cval}[\![state]\!] ]$\\
+ if currentInputCharacter = EOFVal\\
+
+\subsection*{Consume()}
+
+\subsection*{Consume()}
+
+\subsection*{Consume()}
+
+\subsection*{Consume()}
+
+\subsection*{Consume()}
+
+\subsection*{Consume()}
+
+\subsection*{Consume()}
+
+\subsection*{Consume()}
+
+\subsection*{Consume()}
+
+\subsection*{Consume()}
+
 \subsection*{If(bool: Bool, t: CommandList, f: CommandList)}
 \begin{prooftree}
     \AxiomC{$\langle$ clist1, $env\rangle \rightarrow env^\prime $ }

@@ -4,65 +4,90 @@
 \begin{document}
 \chapter{HTML5字句解析仕様}
 \label{字句解析仕様}
+まず, 自然言語処理の適用対象である, HTML5の字句解析仕様について概要を述べていく.
 \section{概要}
-%トークン,変数の説明=========
-\subsection*{token}
-HTML5字句解析器はHTML5の文章をtokenという単位に分解する.
-字句解析器により排出されたトークンはDOMツリーを構成する次のステップに使われる.
-排出されるtokenには,5つ種類があり,
-その文書で利用するHTMLやXHTMLのバージョンを表すDOCTYPE token, "$<$!-- --$>$"などでコメントアウトした文章を表すcomment token, $<$,$>$で囲まれているタグを表すstart tag tokenとend tag token, 
-文字を表すcharacter token, 文章の終了を表すend-of-file tokenがある.\\
-
-DOCTYPE tokenはDOCTYPEの名前,  public identifierとsystem identifierの値, force-quirks flagの要素を持っている.\\
-start tag token, end tag tokenはタグの名前, タグの属性の集合(attributes), self-closing flagの要素を持っている.\\
-end-of-fileトークンが排出されたら字句解析器の動作は終了する.\\
-\subsection*{変数}
-HTML5字句解析器はreturn stateや一時バッファなどの変数を持つ.
-%=========
-\subsection*{状態}
+%トークンより状態の説明先がいい？
+% \subsection*{状態}
 HTML5字句解析仕様はWHATWG communityのwebサイトから得られる.~\cite{html5specification}\\
-HTML5の字句解析器は80個の状態のあるオートマトンとして定義されている.
+HTML5の字句解析器は80個の状態のあるオートマトンとして定義されており, 
 それぞれの状態は以下の図\ref{html5}の形式で書かれている.\\
 \begin{figure}[h]
     \centering
-    \includegraphics[keepaspectratio, scale=1.0]
-         {figure/html5.png}
-    \caption{HTML5字句解析仕様書}
+    \includegraphics[keepaspectratio, scale=0.5]
+         {figure/html5-bw.png}
+    \caption{HTML5字句解析仕様書（仮）なくていいかも}
     \label{html5}
 \end{figure}
 
-\section{動作の例}
+% 状態を1つの単位として, 仕様書に自然言語処理を適用していく.
+
+\subsection*{字句解析トークン}
+HTML5字句解析器は, HTML5で書かれている文章をその文法の構成単位であるトークンに分解するプログラムである.\\
+HTML5字句解析器により出力されるトークンは5つの種類がある.
+文書で利用するHTMLやXHTMLのバージョンを表すトークンである, DOCTYPEトークン(DOCTYPE token), 
+``\texttt{<!-- -->}''などでコメントアウトした文章を値として持つコメントトークン(comment token), 
+`\texttt{<}'と`\texttt{>}'で囲まれている, HTMLのタグを表す開始タグトークン(start tag token)と終了タグトークン(end tag token), 
+文字の情報を表す文字トークン(character token), 文章の終了を表すEOFトークン(end-of-file token)が存在する.
+
+EOFトークン以外はそれぞれ値を持っている.\\
+DOCTYPEトークンはDOCTYPEの名前,  公開識別子(public identifier)とシステム識別子(system identifier), 強制互換モードのフラグ(force-quirks flag)の要素を持っている.\\
+開始,終了タグトークンはタグの名前, 属性の集合(attributes), セルフクロージングタグかどうかのフラグ(self-closing flag)の要素を持っている.\\
+文字トークンは文字のデータを持つ. 
+コメントトークンはコメント内容の文字列データを持つ.\\
+% EOFトークンが排出されたら字句解析器の動作は終了する.\\
+
+具体的なトークン分解の例として, HTML5文章
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single][htbp]
+      <!DOCTYPE html> <!-- ABCDEFG --> <p> hello </p>
+\end{lstlisting}
+をトークンに分解すると, \\
+DOCTYPEトークン(名前: \texttt{html}, 公開識別子: null, システム識別子: null, 強制互換モードのフラグ: off)\\
+コメントトークン(\texttt{ABCDEF})\\
+開始タグトークン(名前: \texttt{p}, 属性: 無し, セルフクロージングタグのフラグ: off)\\
+文字トークン(\texttt{hello})\\
+終了タグトークン(名前: \texttt{p}, 属性: 無し, セルフクロージングタグのフラグ: off)\\
+となる. \\
+
+字句解析器により出力されたトークンはDOMツリーを構成する次の構文解析のステップに使われる.
+
+\subsection*{字句解析器の環境の変数}
+HTML5字句解析器はreturn stateや一時バッファなどの様々な変数を持ち, 様々な命令により, 環境の変数の値を変化させていき, 動作する.
+% これだけで大丈夫なのか?
+
+\section{字句解析器の動作の例}
+% 字句解析器の動作をステップごとに分けて記述していく.
 \subsection{例1}
-入力"$<$a$>$bc$<$/a$>$"に対して, HTML5字句解析器は以下のように動作を行う.\\
+入力``\texttt{<a>bc</a>}''に対して, HTML5字句解析器は以下のように動作を行う.\\
 \begin{enumerate}
-    \item 初期状態Data stateから, 文字'$<$'が消費され, Tag open state に遷移する.
-    \item 文字'a'を消費し, 名前が空文字である新たなstart tag tokenを作る. Tag name stateに遷移する.
-    \item 先ほど消費した文字'a'を再度消費し, start tag tokenの名前に'a'を付け足す.
-    \item 文字'$>$'を消費し, start tag tokenを排出し, Data stateに遷移する.
-    \item 文字'b'を消費し, characterToken('b')を排出する.
-    \item 文字'c'を消費し, characterToken('c')を排出する.
-    \item 文字'$<$'を消費し, Tag open state に遷移する.
-    \item 文字'/'を消費し, End tag open state に遷移する.
-    \item 文字'a'を消費し, 名前が空文字である新たなend tag tokenを作る. Tag name stateに遷移する.
-    \item 先ほど消費した文字'a'を再度消費し, end tag tokenの名前に'a'を付け足す.
-    \item 文字'$>$'を消費し, end tag tokenを排出し, Data stateに遷移する.
-    \item end-of-file tokenを排出する.
+    \item 初期状態Data stateから, 文字'\texttt{<}'が消費され, Tag open state に遷移する.
+    \item 文字'\texttt{a}'を消費し, 名前が空文字である新たな開始タグトークンを作る. Tag name stateに遷移する.
+    \item 先ほど消費した文字'\texttt{a}'を再度消費し, 開始タグトークンの名前に'\texttt{a}'を付け足す.
+    \item 文字'\texttt{>}'を消費し, 開始タグトークンを排出し, Data stateに遷移する.
+    \item 文字'\texttt{b}'を消費し, 文字トークン('\texttt{b}')を排出する.
+    \item 文字'\texttt{c}'を消費し, 文字トークン('\texttt{c}')を排出する.
+    \item 文字'\texttt{<}'を消費し, Tag open state に遷移する.
+    \item 文字'\texttt{/}'を消費し, End tag open state に遷移する.
+    \item 文字'\texttt{a}'を消費し, 名前が空文字である新たな終了タグトークンを作る. Tag name stateに遷移する.
+    \item 先ほど消費した文字'\texttt{a}'を再度消費し, 終了タグトークンの名前に'\texttt{a}'を付け足す.
+    \item 文字'\texttt{>}'を消費し, 終了タグトークンを排出し, Data stateに遷移する.
+    \item EOFトークンを排出する.
 \end{enumerate}
 動作の結果として,\\
-startTagToken(name = "a", attributes = []), characterToken('b'), characterToken('c'), endTagToken(name = "a"), end-of-fileToken\\
+開始タグトークン(名前: ``\texttt{a}'', 属性: [], セルフクローズフラグ: off), 文字トークン('\texttt{b}'), 文字トークン('\texttt{c}'), 終了タグトークン(名前: ``\texttt{a}''), EOFトークン\\
 が順に排出される.
 
 \subsection{例2}
 %エラーが出る例
-入力"a$<$ab"に対して, HTML5字句解析器は以下ように動作を行う.\\
+入力``\texttt{a<ab}''に対して, HTML5字句解析器は以下ように動作を行う.\\
 \begin{enumerate}
-    \item 初期状態Data stateにおいて, 文字'a'を消費し, characterToken('a')を排出する.
-    \item 文字'$<$'を消費し, Tag open state に遷移する.
-    \item 文字'a'を消費し, 名前が空文字である新たなstart tag tokenを作る. Tag name stateに遷移する.
-    \item 先ほど消費した文字'a'を再度消費し, start tag tokenの名前に'a'を付け足す.
-    \item 文字'b'を消費し, start tag tokenの名前に'b'を付け足す.
-    \item "eof-in-tag"構文エラーを出す. end-of-file tokenを排出する.
+    \item 初期状態Data stateにおいて, 文字'\texttt{a}'を消費し, 文字トークン('\texttt{a}')を排出する.
+    \item 文字'\texttt{<}'を消費し, Tag open state に遷移する.
+    \item 文字'\texttt{a}'を消費し, 名前が空文字である新たな開始タグトークンを作る. Tag name stateに遷移する.
+    \item 先ほど消費した文字'\texttt{a}'を再度消費し, 開始タグトークンの名前に'\texttt{a}'を付け足す.
+    \item 文字'\texttt{b}'を消費し, 開始タグトークンの名前に'\texttt{b}'を付け足す.
+    \item ``eof-in-tag''構文エラーを出す. EOFトークンを排出する.
 \end{enumerate}
 動作の結果として,\\
-characterToken('a'), end-of-fileTokenが順に排出される.
+``eof-in-tag''構文エラーと, \\
+文字トークン('\texttt{a}'), EOFトークンが排出される.
 \end{document}

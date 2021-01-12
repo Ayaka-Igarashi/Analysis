@@ -4,91 +4,220 @@
 \begin{document}
 \chapter{抽出の形式}
 \label{形式}
-%% BNFを書く
+HTML5の仕様書から命令を抽出するため, BNFの記法を用いて, 命令を形式化する.
 \section{抽出する命令の形式}
-以下のBNFの形式で仕様書から抽出する命令を定義する.\\
-cList : CommandList $\cdots$ 命令文のリスト\\
-c : Command $\cdots$ 命令文\\
-b : Bool $\cdots$ 条件文\\
-cval : CommandValue $\cdots$ 値\\
-ival : InplementVariable $\cdots$ 代入される変数\\
-% \begin{eqnarray*}
-%     {\rm cList }&\bnfdef& c :: cList \bnfor Nil\\
-% \end{eqnarray*}
+% 例：抽出する命令を形式化したいため, BNFで命令を定義した.
+%BNFの形式を使って, 仕様書から抽出したい命令を形式化する.\\
+
+まず命令の形式の, メタ変数, 型を以下で定める.\\
+\begin{alignat*}{3}
+  &{\rm cList } & &{\rm : CommandList }&\quad&\cdots 命令文のリスト\\
+  &{\rm c }& &{\rm : Command }& &\cdots 命令文\\
+  &{\rm b }& &{\rm : Bool }& &\cdots {\rm if}文の命令文の条件部分の文\\
+  &{\rm cval }& &{\rm : CommandValue }& &\cdots 命令文が引数に持つ値\\
+  &{\rm ival }& &{\rm : InplementVariable} & &\cdots 命令文が引数に持つ代入される変数の種類\\
+\end{alignat*}
+メタ変数は, c$_1$, c$_2$のように, 添え字つけられていてもよいものとする. \\
+% \begin{flalign*}
+%   &cList &:& CommandList \cdots 命令文のリスト&\\
+%   &c &:& Command \cdots 命令文&\\
+%   &b &:& Bool \cdots 条件文&\\
+%   &cval &:& CommandValue \cdots 値&\\
+%   &ival &:& InplementVariable \cdots 代入される変数&\\
+% \end{flalign*}
+
+%   & cList : CommandList $\cdots$ 命令文のリスト\\
+%   & c : Command $\cdots$ 命令文\\
+%   & b : Bool $\cdots$ 条件文\\
+%   & cval : CommandValue $\cdots$ 値\\
+%   & ival : InplementVariable $\cdots$ 代入される変数\\
+
+それぞれの型の構造は以下のように定める. \\
+\subsection*{CommandList型}
 \begin{eqnarray*}
   {\rm cList }&\bnfdef& \mbox{ c :: cList} \bnfor \mbox{ Nil}\\
-  {\rm c }&::=& \mbox{ If(b, cList$_1$, cList$_2$) // if b then cList$_1$ else cList$_2$}\\
-    &|& \mbox{ Ignore() // 何もしない} \\
-    &|& \mbox{ Switch(cval) // 状態cvalへ遷移する} \\
-    &|& \mbox{ Reconsume(cval) // 状態cvalへ遷移. この状態で消費した文字を,次の状態で再度消費する.} \\
-    &|& \mbox{ Set(ival, cval) // ivalにcvalを代入する(ival $\leftarrow$ cval)} \\
-    &|& \mbox{ AppendTo(cval, ival) // ivalにcvalを追加する(ival $\leftarrow$ ival + cval)} \\
-    &|& \mbox{ Emit(cval) // トークンcvalを排出する} \\
-    &|& \mbox{ Create(cval) // トークンcvalを新たに作る} \\
-    &|& \mbox{ Consume(cval) // 文字cvalを消費する} \\
-    &|& \mbox{ Error(string) // エラーstringを排出する} \\
-    &|& \mbox{ FlushCodePoint() // 一時バッファの内容を排出する} \\
-    &|& \mbox{ StartAttribute() // 現在のtagTokenに新しい属性を加える} \\
-    &|& \mbox{ TreatAsAnythingElse() // AnythingElseの処理内容を実行する} \\
-    &|& \mbox{ AddTo(cval, ival) //ival $\leftarrow$ ival + cval } \\
-    &|& \mbox{ MultiplyBy(ival, cval) //ival $\leftarrow$ ival * cval} \\
 \end{eqnarray*}
-\begin{eqnarray*}
-    {\rm b }&::=& \mbox{ And(b$_1$, b$_2$)}\\
-      &|& \mbox{ Or(b$_1$, b$_2$)} \\
-      &|& \mbox{ Not(b)} \\
-      &|& \mbox{ CharacterReferenceConsumedAsAttributeVal}() \mbox{ // CharacterReferenceCodeが属性の値として消費されているか} \\
-      &|& \mbox{ CurrentEndTagIsAppropriate}() \mbox{ //EndTagTokenが適切であるか } \\
-      &|& \mbox{ IsEqual(cval$_1$, cval$_2$)} \\
-\end{eqnarray*}
-\begin{eqnarray*}
-  {\rm cval }&::=& \mbox{ StateName(string) // 状態名string}\\
-    &|& \mbox{ ReturnState // return state} \\
-    &|& \mbox{ TemporaryBuffer // temporary buffer} \\
-    &|& \mbox{ CharacterReferenceCode // character reference code} \\
-    &|& \mbox{ NewStartTagToken // 新しいstart tag token} \\
-    &|& \mbox{ NewEndTagToken // 新しいend tag token} \\
-    &|& \mbox{ NewDOCTYPEToken // 新しいDOCTYPE token} \\
-    &|& \mbox{ NewCommentToken // 新しいcomment token} \\
-    &|& \mbox{ CurrentTagToken // 一番新しく作られたtag token} \\
-    &|& \mbox{ CurrentDOCTYPEToken // 一番新しく作られたDOCTYPE token} \\
-    &|& \mbox{ CurrentAttribute // 一番新しく作られたattribute} \\
-    &|& \mbox{ CommentToken // 一番新しく作られたcomment token} \\
-    &|& \mbox{ EndOfFileToken // end of fileトークン} \\
-    &|& \mbox{ CharacterToken(char) // character token : char} \\
-    &|& \mbox{ LowerCase(cval) // cvalの小文字} \\
-    &|& \mbox{ NumericVersion(cval) // 16進数表記されているcvalの数字としての値} \\
-    &|& \mbox{ CurrentInputCharacter // 現在消費した文字} \\
-    &|& \mbox{ NextInputCharacter // 入力文字列の一番最初の文字} \\
-    &|& \mbox{ Variable(string) // 変数string} \\
-    &|& \mbox{ CChar(char) // Char型の値char} \\
-    &|& \mbox{ CString(string) // String型の値string} \\
-    &|& \mbox{ CInt(int) // Int型の値int} \\
-    &|& \mbox{ CBool(boolean) // Boolean型の値boolean} \\
-\end{eqnarray*}
-\begin{eqnarray*}
-  {\rm ival }&::=& \mbox{ IReturnState // return state}\\
-    &|& \mbox{ ITemporaryBuffer // 一時バッファ} \\
-    &|& \mbox{ ICharacterReferenceCode // character reference code} \\
-    &|& \mbox{ ICurrentTagToken // 一番新しく作られたtag token} \\
-    &|& \mbox{ ICurrentDOCTYPEToken // 一番新しく作られたDOCTYPE token} \\
-    &|& \mbox{ ICurrentAttribute // 一番新しく作られたattribute} \\
-    &|& \mbox{ ICommentToken // 一番新しく作られたcomment token} \\
-    &|& \mbox{ IVariable(string) // 変数string} \\
-    &|& \mbox{ INameOf(ival) // ivalの名前} \\
-    &|& \mbox{ IValueOf(ival) // ivalの値} \\
-    &|& \mbox{ IFlagOf(ival) // ivalのflag} \\
-    &|& \mbox{ SystemIdentifierOf(ival) // ivalのsystem identifier} \\
-    &|& \mbox{ PublicIdentifierOf(ival) // ivalのpublic identifier} \\
-\end{eqnarray*}
+実際の実装では単にScalaのList構造を用いている.
+\subsection*{Command型}
+\begin{alignat*}{3}
+  {\rm c }::&= &\quad&\mbox{ If(b, cList$_1$, cList$_2$)} &\quad&\mbox{ // if b then cList$_1$ else cList$_2$}\\
+    &|& &\mbox{ Ignore()} & &\mbox{ // 何もしない処理} \\
+    &|& &\mbox{ Switch(cval)} & &\mbox{ // 状態cvalへ遷移する} \\
+    &|& &\mbox{ Reconsume(cval)} & &\mbox{ // 状態cvalへ遷移. この状態で消費した文字を,次の状態で再度消費する.} \\
+    &|& &\mbox{ Set(ival, cval)} & &\mbox{ // ivalにcvalを代入する (ival $\leftarrow$ cval)} \\
+    &|& &\mbox{ AppendTo(cval, ival)} & &\mbox{ // ivalにcvalを追加する (ival $\leftarrow$ ival + cval)} \\
+    &|& &\mbox{ Emit(cval)} & &\mbox{ // トークンcvalを排出する} \\
+    &|& &\mbox{ Create(cval)} & &\mbox{ // トークンcvalを新たに作る} \\
+    &|& &\mbox{ Consume(cval)} & &\mbox{ // 文字cvalを消費する} \\
+    &|& &\mbox{ Error(string)} & &\mbox{ // エラーstringを排出する} \\
+    &|& &\mbox{ FlushCodePoint()} & &\mbox{ // 一時バッファの内容を排出する} \\
+    &|& &\mbox{ StartAttribute()} & &\mbox{ // 現在のtagTokenに新しい属性を加える} \\
+    &|& &\mbox{ TreatAsAnythingElse()} & &\mbox{ // AnythingElseの処理内容を実行する} \\
+    &|& &\mbox{ AddTo(cval, ival)} & &\mbox{ // ival $\leftarrow$ ival + cval } \\
+    &|& &\mbox{ MultiplyBy(ival, cval)} & &\mbox{ // ival $\leftarrow$ ival * cval} \\
+\end{alignat*}
+
+% \begin{alignat*}{3}
+%   {\rm c }::=& & &\mbox{ If(b, cList$_1$, cList$_2$)} & &\mbox{ // if b then cList$_1$ else cList$_2$}\\
+%           &|& &\mbox{ Ignore()} & &\mbox{ // 何もしない} \\
+% \end{alignat*}
+% \begin{alignat}{2}
+%   a &= b & \quad & \text{(定義)} \\
+%     &= c &       & \text{(なんかすごい定理)}
+%   \end{alignat}
+% % \begin{eqnarray*}
+% %   f(x) ::=&x^2+3x+ssssdddddd2  &// aa\\
+% %   |&(x+1)(x+2)  &// ss\\
+% %   |&(x+1)(x+2)aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa  &// ss
+% % \end{eqnarray*}
+
+% \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, caption=Commandの定義,label=Tag][htbp]
+%   trait Command
+%   case class Ignore() extends Command // 何もしない
+%   case class Switch(state: CommandValue) extends Command // 状態stateへ遷移する
+%   case class Reconsume(state: CommandValue) extends Command // 状態stateへ遷移. この状態で消費した文字を,次の状態で再度消費する.
+% \end{lstlisting}
+
+% \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, caption=Boolの定義,label=Tag][htbp]
+%   case object T extends Bool
+%   case object F extends Bool
+%   case class And(a: Bool, b: Bool) extends Bool
+%   case class Or(a: Bool, b: Bool) extends Bool
+%   case class Not(a: Bool) extends Bool
+%   case class CharacterReferenceConsumedAsAttributeVal() extends Bool // the character reference was consumed as part of an attribute
+%   case class CurrentEndTagIsAppropriate() extends Bool
+%   case class IsEqual(a: CommandValue, b: CommandValue) extends Bool // the temporary buffer is the string "script"
+%   case class AsciiCaseInsensitiveMatch(a: CommandValue, b: CommandValue) extends Bool
+% \end{lstlisting}
+
+% \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, caption=CommandValueの定義,label=Tag][htbp]
+%   trait CommandValue
+%   case class StateName(state: String) extends CommandValue
+%   case object ReturnState extends CommandValue
+%   case object TemporaryBuffer extends CommandValue
+%   case object CharacterReferenceCode extends CommandValue
+
+%   case object NewStartTagToken extends CommandValue
+%   case object NewEndTagToken extends CommandValue
+%   case object NewDOCTYPEToken extends CommandValue
+%   case object NewCommentToken extends CommandValue
+
+%   case object CurrentTagToken extends CommandValue
+%   case object CurrentDOCTYPEToken extends CommandValue
+%   case object CurrentAttribute extends CommandValue
+%   case object CommentToken extends CommandValue
+%   case object EndOfFileToken extends CommandValue
+%   case class CharacterToken(chara: String) extends CommandValue
+
+%   case class LowerCase(token: CommandValue) extends CommandValue
+%   case class NumericVersion(token: CommandValue) extends CommandValue
+%   case object CurrentInputCharacter extends CommandValue
+%   case class NextInputCharacter(num: Int) extends CommandValue
+%   case class CharactersFromCurrentInputCharacter(num: Int) extends CommandValue
+
+%   case class Variable(variable: String) extends CommandValue
+%   case class CChar(char: Char) extends CommandValue
+%   case class CString(string: String) extends CommandValue
+%   case class CInt(int: Int) extends CommandValue
+%   case class CBool(boolean: Boolean) extends CommandValue
+
+%   case class Substitute(variable: Variable, commandValue: CommandValue) extends CommandValue
+% \end{lstlisting}
+
+% \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, caption=ImplementVariableの定義,label=Tag][htbp]
+%   trait ImplementVariable
+%   case object IReturnState extends ImplementVariable
+%   case object ITemporaryBuffer extends ImplementVariable
+%   case object ICharacterReferenceCode extends ImplementVariable
+%   case object ICurrentTagToken extends ImplementVariable
+%   case object ICurrentDOCTYPEToken extends ImplementVariable
+%   case object ICurrentAttribute extends ImplementVariable
+%   case object ICommentToken extends ImplementVariable
+%   case class IVariable(variable: String) extends ImplementVariable
+%   case class INameOf(token: ImplementVariable) extends ImplementVariable
+%   case class IValueOf(token: ImplementVariable) extends ImplementVariable
+%   case class IFlagOf(token: ImplementVariable) extends ImplementVariable
+%   case class SystemIdentifierOf(token: ImplementVariable) extends ImplementVariable
+%   case class PublicIdentifierOf(token: ImplementVariable) extends ImplementVariable
+% \end{lstlisting}
+\subsection*{Bool型}
+\begin{alignat*}{3}
+    {\rm b }::&= &\quad& \mbox{ And(b$_1$, b$_2$)} &\quad&\mbox{ // b$_1$ かつ b$_2$ である}\\
+      &|& &\mbox{ Or(b$_1$, b$_2$)} & &\mbox{ // b$_1$ または b$_2$ である} \\
+      &|& &\mbox{ Not(b)} & &\mbox{ // bでない} \\
+      &|& &\mbox{ CharacterReferenceConsumedAsAttributeVal}()& & \mbox{ // CharacterReferenceCodeが属性の値として} \\
+      & & & & &\mbox{ \hspace{12pt}消費されているか} \\
+      &|& &\mbox{ CurrentEndTagIsAppropriate}()& & \mbox{ // EndTagTokenが適切なものであるか } \\
+      &|& &\mbox{ IsEqual(cval$_1$, cval$_2$)} & &\mbox{ // cval$_1$とcval$_2$の値が等しい} \\
+      &|& &\mbox{ AsciiCaseInsensitiveMatch(cval$_1$, cval$_2$)} & &\mbox{ // cval$_1$とcval$_2$が文字列であるとき, } \\
+      & & & & &\mbox{ \hspace{12pt}大文字, 小文字の差を無視しcval$_1$とcval$_2$の値が等しい} \\
+\end{alignat*}
+\subsection*{CommandValue型}
+\begin{alignat*}{3}
+  {\rm cval }::&= &\quad& \mbox{ StateName(string)} &\quad&\mbox{ // 状態名string}\\
+    &|& &\mbox{ ReturnState} & &\mbox{ // return state} \\
+    &|& &\mbox{ TemporaryBuffer} & &\mbox{ // temporary buffer} \\
+    &|& &\mbox{ CharacterReferenceCode} & &\mbox{ // character reference code} \\
+    &|& &\mbox{ NewStartTagToken} & &\mbox{ // 新しいstart tag token} \\
+    &|& &\mbox{ NewEndTagToken} & &\mbox{ // 新しいend tag token} \\
+    &|& &\mbox{ NewDOCTYPEToken} & &\mbox{ // 新しいDOCTYPE token} \\
+    &|& &\mbox{ NewCommentToken} & &\mbox{ // 新しいcomment token} \\
+    &|& &\mbox{ CurrentTagToken} & &\mbox{ // 一番新しく作られたtag token} \\
+    &|& &\mbox{ CurrentDOCTYPEToken} & &\mbox{ // 一番新しく作られたDOCTYPE token} \\
+    &|& &\mbox{ CurrentAttribute} & &\mbox{ // 一番新しく作られたattribute} \\
+    &|& &\mbox{ CommentToken} & &\mbox{ // 一番新しく作られたcomment token} \\
+    &|& &\mbox{ EndOfFileToken} & &\mbox{ // end of fileトークン} \\
+    &|& &\mbox{ CharacterToken(char)} & &\mbox{ // character token : char} \\
+    &|& &\mbox{ LowerCase(cval)} & &\mbox{ // cvalの小文字} \\
+    &|& &\mbox{ NumericVersion(cval)} & &\mbox{ // 16進数表記されているcvalの数字としての値} \\
+    &|& &\mbox{ CurrentInputCharacter} & &\mbox{ // 現在消費した文字} \\
+    &|& &\mbox{ NextInputCharacter} & &\mbox{ // 入力文字列の一番最初の文字} \\
+    &|& &\mbox{ Variable(string)} & &\mbox{ // 変数string} \\
+    &|& &\mbox{ CChar(char)} & &\mbox{ // Char型の値char} \\
+    &|& &\mbox{ CString(string)} & &\mbox{ // String型の値string} \\
+    &|& &\mbox{ CInt(int)} & &\mbox{ // Int型の値int} \\
+    &|& &\mbox{ CBool(boolean)} & &\mbox{ // Boolean型の値boolean} \\
+\end{alignat*}
+\subsection*{InplementVariable型}
+\begin{alignat*}{3}
+  {\rm ival }::&= &\quad& \mbox{ IReturnState} &\quad&\mbox{ // return state}\\
+    &|& &\mbox{ ITemporaryBuffer} & &\mbox{ // 一時バッファ} \\
+    &|& &\mbox{ ICharacterReferenceCode} & &\mbox{ // character reference code} \\
+    &|& &\mbox{ ICurrentTagToken} & &\mbox{ // 一番新しく作られたtag token} \\
+    &|& &\mbox{ ICurrentDOCTYPEToken} & &\mbox{ // 一番新しく作られたDOCTYPE token} \\
+    &|& &\mbox{ ICurrentAttribute} & &\mbox{ // 一番新しく作られたattribute} \\
+    &|& &\mbox{ ICommentToken} & &\mbox{ // 一番新しく作られたcomment token} \\
+    &|& &\mbox{ IVariable(string)} & &\mbox{ // 変数string} \\
+    &|& &\mbox{ INameOf(ival)} & &\mbox{ // ivalの名前} \\
+    &|& &\mbox{ IValueOf(ival)} & &\mbox{ // ivalの値} \\
+    &|& &\mbox{ IFlagOf(ival)} & &\mbox{ // ivalのflag} \\
+    &|& &\mbox{ SystemIdentifierOf(ival)} & &\mbox{ // ivalのsystem identifier} \\
+    &|& &\mbox{ PublicIdentifierOf(ival)} & &\mbox{ // ivalのpublic identifier} \\
+\end{alignat*}
 
 string,char,int,booleanはそれぞれScalaの標準の型(String,Char,Int,Boolean)の値
 \section{例}
+自然言語の文から, 上記の形式への変換の例をいくつか記す.\\
+
+状態Data_stateへ遷移するという意味の文に関して, 
+
 Switch to the Data_state.\\
-$\Rightarrow$ Switch(StateName(Data_state))\\
+%$\Rightarrow$ Switch(\underline{the Data_state})\\
+$\Rightarrow$ Switch(StateName(Data_state))
+
+状態名を意味するStateName(Data_state)というCommandValue型の値を持つ, Switchという遷移を意味するCommand型の値に変換する.\\
+
+また, 現在のタグトークン名に, 現在消費した文字を小文字にしたものを付け足すという意味の文に関して, 
 
 Append the lowercase version of the current input character to the current tag token's tag name.\\
-$\Rightarrow$ Append(LowerCase(CurrentInputCharacter), INameOf(CurrentTagToken))\\
+$\Rightarrow$ Append(LowerCase(CurrentInputCharacter), INameOf(CurrentTagToken))
+
+第1引数に``現在消費した文字の小文字''を意味するCommandValue型の値, 第2引数に``現在のタグトークン名''を意味するImplementVariable型の値を持つCommand型のAppendという値に変換される.\\
+
+この自然言語の文章から上記の形式への変換の過程を\ref{自然言語処理}, \ref{命令抽出}章で説明していく.\\
+% 自然言語処理の情報を取り出す過程を5章
+% 取り出した情報からCommand型へ変換する過程を6章
+
 % \begin{eqnarray*}
 %     {\rm c }&::=& \mbox{if $\langle$Bool$\rangle$ then $\langle$cList$\rangle_1$ else $\langle$cList$\rangle_2$}\\
 %       &|& \mbox{ Ignore() // 何もしない} \\

@@ -22,18 +22,20 @@ Numeric character reference end state
 %%%%-自然言語処理の概要は「準備」に移動した
 
 \section{対象の前処理}
-仕様書自体が構造的に書かれているので,
-仕様書解析の入力はそのHTMLのソースコードとした.\\
+HTML5字句解析仕様書は構造的に書かれている. \\
+仕様書自体が構造的に書かれているので, 
+仕様書解析の入力はそのHTMLのソースコードとした. \\
 
 % htmlパーサーによって自然言語処理する部分を切り分ける
 \subsection{Scala構造体}
-HTML5字句解析仕様書は構造的に書かれている.\\
-状態名は"h5"タグ内にある.\\
-文字マッチング前の処理は"h5"タグ直後の"p"タグ内に記述してある.\\
-文字マッチングの処理は"dt","dd"タグ.
+HTML5字句解析仕様のオートマトンとしての状態を1つの単位として, 構造体に変換する.\\%仕様書に自然言語処理を適用していく.\\
+1状態あたり, 文字マッチング前の処理, 
+状態名は``\texttt{h5}''タグ内にある.\\
+文字マッチング前の処理は``\texttt{h5}''タグ直後の``\texttt{p}''タグ内に記述してある.\\
+文字マッチングの処理は``\texttt{dt}'', ``\texttt{dd}''タグ.
 % StateStructureの説明
 \subsubsection{StateStructure}
-StateStructure構造体は,状態名name,最初の処理prev,文字マッチングの処理transを持つ.
+StateStructure構造体は, 状態名name, 最初の処理prev, 文字マッチングの処理transを持つ.
 仕様書のHTMLソースファイルの情報をこの構造にする.
 
 \subsection{文字列の置き換え}
@@ -47,7 +49,7 @@ Switch to the script data escape start state.の命令文が構文木解析に�
          \qroof{start state}.VP
       ]\\
 \vspace{0.5\baselineskip}\\
-と"script data escape"と"start state"が本来同じまとまりの中にいるべき単語がそれぞれ別のまとまりにいると解釈される.\\
+と``script data escape''と``start state''が本来同じまとまりの中にいるべき単語がそれぞれ別のまとまりにいると解釈される.\\
 よって状態名を1つのトークンとして扱われるようにし,適切に命令の文が解釈されるようにするため,次のような記法に置き換えることにした.\\
 ・空白、”-”を”\_”にする.\\
 ・”(“,”)”を除く.\\
@@ -58,28 +60,28 @@ attribute value (double-quoted) state $\Rightarrow$
 Attribute\_value\_double\_quoted\_state 
 
 \subsubsection*{Unicodeの置き換え}
-仕様書内では"U+xxxx"というユニコードが多用されている.
-これにそのまま自然言語処理を行うと,単語分割において"U", "+xxxx"と2つのトークンに分割される.
-よってユニコード内の"+"を"\_"に置き換えることによって1つのトークンとして認識させるようにした.\\
+仕様書内では``U+xxxx''というユニコードが多用されている.
+これにそのまま自然言語処理を行うと,単語分割において``U'', ``+xxxx''と2つのトークンに分割される.
+よってユニコード内の``+''を``\_''に置き換えることによって1つのトークンとして認識させるようにした.\\
 例:\\
 “U+00AB” $\Rightarrow$ “U_00AB”
 
 \subsubsection*{動詞の置き換え}
 %
 自然言語処理の結果を確認してみると,品詞解析の時点で動詞と認識されるべき単語が名詞扱いされることがあった.\\
-例えば,"Reconsume"は"re"と"consume"の複合語であり,一般的な辞書にも載ってないので動詞として解釈されないことがあった.
-よってこのような単語の前に"you"という単語を付け加え,"you Reconsume $\cdots$"とすることによって,"Reconsume"を動詞として解釈させるようにした.\\
+例えば,``Reconsume''は``re''と``consume''の複合語であり,一般的な辞書にも載ってないので動詞として解釈されないことがあった.
+よってこのような単語の前に``you''という単語を付け加え,``you Reconsume $\cdots$''とすることによって,``Reconsume''を動詞として解釈させるようにした.\\
 また,Stanford CoreNLPは命令文の解釈が苦手である.
-よって特定の単語(Switch, Reconsume, Emit, Flush, Append, Add, Multiply)の前に"you"という仮の主語を付け加え,命令文にならないようにする.\\
+よって特定の単語(Switch, Reconsume, Emit, Flush, Append, Add, Multiply)の前に``you''という仮の主語を付け加え,命令文にならないようにする.\\
 %“<動詞>” $\Rightarrow$ “you <特定の動詞>”
 例:\\
 “Switch to the data state.” $\Rightarrow$ “you Switch to the data state.”
 % Multiply $\Rightarrow$ multiply
 \subsubsection*{その他の置き換え}
 \begin{itemize}
-   \item "-"で繋がれている単語は1つのトークンとして認識されないため,“-” を “_”に置き換えた.
+   \item ``-''で繋がれている単語は1つのトークンとして認識されないため,“-” を “_”に置き換えた.
    \item 句読点をまたいでいる場合,参照関係の解析が上手くいかないことがあった.参照関係が多く出てくるSet文に関して, 
-   "(,$|$.) set" $\Rightarrow$ “ and set” と置き換えをした.
+   ``(,$|$.) set'' $\Rightarrow$ “ and set” と置き換えをした.
    \item “!”が文末記号と認識されるため, “!” は “EXC” に置き換える.
  \end{itemize}
 
@@ -88,7 +90,7 @@ Attribute\_value\_double\_quoted\_state
 StanfordCoreNLPを用いての自然言語処理から得られる情報のうち,
 単語の原型の情報,構文解析の結果,参照関係の解析の結果を使用した.
 %  仕様書の文章が決まった形で書かれていることが多かったため,構文木の情報から命令の抽出が出来ると考え,係り受け解析の情報は使用していない.
-そしてそれらの情報を,Scalaで定義したTag型の構造に変換した.\\
+多分木の木構造のデータ型であるTag型をプログラミング言語Scalaで定義し,それらの情報をTag型に変換した.\\
 %  Tagの情報を使用し,命令の抽出を行った.
 %Tag型の説明=====
 \subsection{Tag型}
@@ -117,7 +119,7 @@ Token型は単語,単語の原型,参照関係の番号の情報を持つ.\\
 \subsection{Tag型への変換}
 % 変換の例を書く
 % 取り出せる情報の具体例を書く
-変換の対象として,"Create a token. Emit the token."を例にとる.
+変換の対象として,``Create a token. Emit the token.''を例にとる.
 %2つのセンテンスに分けられる.\\
 %構文木のへ説明
 \subsubsection{構文木の処理}
@@ -125,15 +127,15 @@ Token型は単語,単語の原型,参照関係の番号の情報を持つ.\\
 基本的には自然言語処理の構文木の出力の形を保った状態で木構造であるTag型に変換するが,
 例外的に以下の処理を加える.\\%書き方直す
 \begin{screen}
-１．-NP-PRP-"you"となっている部分を取り除く.\\
-２．PRNノード,"("と")"の間にあるノードを取り除く.\\
+１．-NP-PRP-``you''となっている部分を取り除く.\\
+２．PRNノード,``(''と``)''の間にあるノードを取り除く.\\
 ３．ドット(.)を取り除く.\\
-４．動詞を表す品詞は複数(VB,VBZ,VBP...)あるが,それらは"VB"に統一する.
+４．動詞を表す品詞は複数(VB,VBZ,VBP...)あるが,それらは``VB''に統一する.
 \end{screen}
-1つ目は,自然言語の前処理として適切な解釈がなされるように加えた"you"を取り除くためである.
+1つ目は,自然言語の前処理として適切な解釈がなされるように加えた``you''を取り除くためである.
 2つ目の処理は,カッコの中身に書いてある文章は補足説明が多く,命令の抽出に必要ないと判断したためである.
 3つ目は,既に自然言語処理の段階で文章の分割がなされており不要であるから,Tag構造を簡潔なものにするため取り除く.
-4つ目は,命令の抽出において,単語が動詞かどうかを判断できれば十分であるので"VB"に統一することにした.\\
+4つ目は,命令の抽出において,単語が動詞かどうかを判断できれば十分であるので``VB''に統一することにした.\\
 %参照関係の説明
 \subsubsection{参照関係の処理}
 参照関係の出力として,CorefEntity : 1 $\Rightarrow$ [a tag token, the token]
@@ -143,17 +145,17 @@ Token型は単語,単語の原型,参照関係の番号の情報を持つ.\\
 %% 変換後のTag構造
 \subsubsection*{変換後のTag構造}
 構文木の処理と参照関係の処理を行った結果.\\
-\Tree [.ROOT [.S [.VP [.(VB,Token(Create,create,-1)) ]
+\Tree [.ROOT [.S [.VP [.VB Token(Create,create,-1) ]
            [.NP
-              [.(DT,Token(a,a,1)) ]
-              [.(NN,Token(tag,tag,1)) ]
-              [.(NN,Token(token,token,1)) ]
+              [.DT Token(a,a,1) ]
+              [.(NN Token(tag,tag,1) ]
+              [.(NN Token(token,token,1) ]
            ]
       ] ] ]
-\Tree [.ROOT [.S [.VP [.(VB,Token(Emit,emit,-1)) ]
+\Tree [.ROOT [.S [.VP [.VB Token(Emit,emit,-1) ]
       [.NP
-         [.(DT,Token(the,the,1)) ]
-         [.(NN,Token(token,token,1)) ]
+         [.DT Token(the,the,1) ]
+         [.NN Token(token,token,1) ]
       ]
       ] ] ]
 

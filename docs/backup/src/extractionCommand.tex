@@ -4,28 +4,66 @@
 \begin{document}
 \chapter{命令の抽出}
 \label{命令抽出}
-%% 後半 チャプターを分けてもよい-----------------------------------------------------------------
+\ref{自然言語処理}章において自然言語処理し, その結果を変換して得たTag型の情報を用いて, \ref{形式}章で定式化した形の命令の抽出を行う.
 %% 自然言語処理で取り出した情報(tag構造)を使ってどう命令の抽出を行ったか.
-\section{Tag型からCommand型への変換}
-\subsection{Sノードの変換}
-\Tree [.S [.S s ]
-           [.CC and ]
-           [.rst ]
+\section{Tag型からCommandへの変換}
+Tag型の形に関してのパターンマッチングを用いてCommand型へ変換する.
+文章, 動詞句, 名詞句(TagのノードがNodeのNodenameがS, VP, NP)である場合に分け, 変換を行った. 
+葉の値はレンマ化された単語の情報のみ表記する.\\
+\subsection{文章(Sノード)の変換}
+NodenameがSであるNodeから, Command型のリストへ変換する関数を$\mathcal{T_S}$と置く.\\
+$\mathcal{T_S}$は以下のパターンマッチを行い, マッチしたものに応じたCommandListを返す.\\
+%関数見たくかく？
+Sの子ノードのリストの先頭がSノードの場合, つまりTag型が
+\Tree [.S  [.S s1 ]
+           [.rst1 ]
+      ]\\
+という木構造の形の時,
+$\mathcal{T_S}$(Node(S,s1)) + $\mathcal{T_S}$(Node(S,rst1)) を返す.\\
+
+Sの子ノードのリストの先頭が葉``and'',カンマの場合, つまりTag型が\\
+\Tree [.S  [.CC and ]
+           [.rst1 ]
       ]
+\Tree [.S  [.Comma . ]
+    [.rst1 ]
+]
+\Tree [.S  [.ADVP [.RB then ] ]
+           [.rst1 ]
+      ]\\
+という木構造の形の時,
+commandList $\leftarrow$ $\mathcal{T}_S$(Node(S,rst1))\\
 
-あ
+Sの子ノードのリストの先頭がVPノードの場合, つまりTag型が
+\Tree [.S  [.VP vp1 ]
+           [.rst1 ]
+      ]\\
+% \Tree [.S [.Node(VP,vp) ] ]\\
+%\Tree [.S \qroof{vp}.VP ]\\
+という木構造の形の時,
+% Node Sの子ノードがNode(VP,vp)の時\\
+commandList $\leftarrow$ $\mathcal{T_S}$(Node(VP,vp1)) + $\mathcal{T_S}$(Node(S,rst1))\\
+(Node(VP, vp)に関して, 動詞句の変換を行う.)
+\\
+%if文書く===
+If\\
+%Otherwise文====
+Otherwise\\
 
-\subsection{VPノードの変換}
-\subsubsection*{Switch文}
-Switch to the $\cdots$ state\\
+\subsection{動詞句の変換}
+NodenameがVPであるNode(動詞句)から, Command型のリストへ変換する関数を$\mathcal{T}_{VP}$と置く.\\
+$\mathcal{T}_{VP}$は以下のパターンマッチを行い, マッチしたものに応じたCommand型のListを返す.\\
+\subsubsection*{Switch文のマッチ}
+(元の文 : Switch to the $\cdots$ state)\\
+Tagの形が,\\
 \Tree [.VP [.VB switch ]
            [.PP
               [.IN to ]
               [.NP $\langle$state$\rangle$ ]
            ]
-      ]
-
-$\rightarrow$Switch($\langle$state$\rangle$)
+      ]\\
+の時,
+Switch($\langle$state$\rangle$) を返す.
 \subsubsection*{Reconsume文}
 Reconsume in the $\cdots$ state\\
 \Tree [.VP [.VB reconusme ]
@@ -37,13 +75,80 @@ Reconsume in the $\cdots$ state\\
 
 $\rightarrow$Reconsume($\langle$state$\rangle$)
 
-\subsection{NPノードの変換}
+\subsubsection*{Set文}
+変数に値を代入する.
+\Tree [.VP [.VB set ]
+           [.NP $\langle$variable$\rangle$ ]
+           [.NP
+              [.IN to ]
+              [.NP $\langle$value$\rangle$ ]
+           ]
+      ]\\
+変数の状態を変える.
+\Tree [.VP [.VB set ]
+            [.NP $\langle$variable$\rangle$ ]
+            [.PP
+                [.IN to ]
+                [.NP $\langle$status$\rangle$ ]
+            ]
+        ]\\
+% \paragraph{個別に対応した例}\\
+% onと書かれていないflag
+``Set the self-closing flag of the current tag token.'' のような状態の切り替え先を示す``to on''が省略されている場合もあった.
+このような文の構文木は\\
+\Tree [.VP [.VB set ]
+            [.NP $\langle$variable$\rangle$ ]
+        ]\\
+となる.よってこの形にマッチした場合は, 
+Set($\langle$variable$\rangle$, On)とさせた.
+% Setのとこ手を加えたやつ===
+% ``Set that attribute's name to the current input character, and its value to the empty string.''
+% \Tree [.VP [.VB set ]
+%             [.NP $\langle$variable$\rangle$ ]
+%         ]\\
+%====
+
+\subsubsection*{Emit文}
+\subsubsection*{Emit文}
+\subsubsection*{Emit文}
+\subsubsection*{Emit文}
+
+\subsection{名詞句の変換}
+\subsubsection*{列挙の分解}
+% NPの分解とか(and)
+名詞句には複数の名詞をandやカンマで区切っているものがある.\\
+それをNPノードのリストに分解した.
+\Tree [.NP 
+        [.NP np1 ]
+        [.CC and ]
+        [.rst ]
+      ]
+
+% \paragraph{特殊な例} \\
+Set that attribute's name and valueのとこ手を加えた\\
+that attribute'sはnameとvalueどちらにも係っているので,
+この名詞句はthat attribute's name and that attribute's valueという解釈が正しい.
+しかし,自然言語処理ではthat attribute'sはnameにしか係っていない風に解釈される.
+\Tree [.NP 
+        \qroof{that attribute 's}.NP
+        [.NN name ]
+        [.CC and ]
+        [.NN value ]
+      ]
+    
+\subsubsection*{CommandValue型への変換}
+NPノードをCommandValue型に変換する際, 単純に文字列に特定の単語が含まれているかどうかを調べるというやり方で実装した.
+%参照関係の使用の部分を書く
+
 
 \section{If文の処理}
+If the temporary buffer is the string ``script'', then switch to the script data escaped state. Otherwise, switch to the script data double escaped state. Emit the current input character as a character token.
 
-\section{NPノードからCommandValue型への変換}
-NPノードをCommandValue型に変換する際,単純に文字列に特定の単語が含まれているかどうかを調べるというやり方で実装した.
-%参照関係の使用の部分を書く
- 
+どの部分の文章までがotherwise文なのかが曖昧であった.
+手動でIf文の処理をしようと考えた.
+% 段落を認識させる?
+
+% \section{NPノードからCommandValue型への変換}
+% NPノードをCommandValue型に変換する際,単純に文字列に特定の単語が含まれているかどうかを調べるというやり方で実装した.
 
 \end{document}
