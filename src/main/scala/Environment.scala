@@ -12,6 +12,44 @@ object Environment {
   case class StateVal(state: String) extends Value
   case class BoolVal(b: Boolean) extends Value
 
+  def Add(v1: Value, v2: Value): Value = {
+    v1 match {
+      case StringVal(s1) => {
+        v2 match {
+          case StringVal(s2) => StringVal(s1 + s2)
+          case CharVal(c2) => StringVal(s1 + c2)
+          case IntVal(i2) => StringVal(s1 + i2)
+          case EOFVal => StringVal(s1)
+          case _ => println("AddValueError");StringVal(s1)
+        }
+      }
+      case CharVal(c1) => {
+        v2 match {
+          case StringVal(s2) => StringVal(c1 + s2)
+          case CharVal(c2) => StringVal(c1.toString + c2.toString)
+          case IntVal(i2) => IntVal(c1 + i2)
+          case EOFVal => CharVal(c1)
+          case _ => println("AddValueError");CharVal(c1)
+        }
+      }
+      case IntVal(i1) => {
+        v2 match {
+          case StringVal(s2) => StringVal(i1 + s2)
+          case CharVal(c2) => IntVal(i1 + c2)
+          case IntVal(i2) => IntVal(i1 + i2)
+          case _ => println("AddValueError");IntVal(i1)
+        }
+      }
+      case EOFVal => {
+        case StringVal(s2) => StringVal(s2)
+        case CharVal(c2) => CharVal(c2)
+        case EOFVal => EOFVal
+        case _ =>println("AddValueError");EOFVal
+      }
+      case _ => println("AddValueError");v1
+    }
+  }
+
   class Env {
     // 現在の状態
     var currentState: StateVal = null
