@@ -7,34 +7,55 @@
 % 読んでもらうことに必要なこと
 % 自然言語処理のこと,必要な言葉
 %html5のtokenizer仕様のことは3章
-\section{品詞タグ}
-品詞タグの説明~\cite{pennTreebankTags}
-S : 節
-VP : 動詞句
-NP : 名詞句
-VB : 動詞
-NN : 名詞
+\section{節, 品詞タグ}
+いくつかの主要な節, 品詞タグの説明をする. ~\cite{pennTreebankTags}\\
+節レベル\\
+S : 節 $\cdots$\\
+VP : 動詞句 $\cdots$\\
+NP : 名詞句 $\cdots$\\
+単語レベル\\
+VB : 動詞 $\cdots$\\
+NN : 名詞 $\cdots$\\
 
 \section{自然言語処理}
-\subsection{使用ライブラリ}
-自然言語処理のライブラリとして,Stanford CoreNLP~\cite{manning-EtAl:2014:P14-5}を使用した.
-Stanford CoreNLPは自然言語処理ツールのひとつであり,スタンフォード大学によって提供されている.
-StanfordCoreNLPでは,
-% ライブラリでどういう情報を得られるか
-形態素解析(品詞タグ付け、単語の原型の取得),構文解析,意味解析などが出来る.\\
-%以下の例で詳しく述べる.\\
-% pipelineの説明をする===
-(pipelineの説明をする)\\
-%====
-\subsection{概要}
-``Mika likes her dog's name.''をStanford CoreNLPで自然言語処理をさせる.
-\subsubsection{トークン分割、品詞タグ付け、原型}
-Mika/NNP  likes/VBZ her/PRP\$ dog/NN 's/POS name/NN ./.\\
-Mika/Mika  likes/like her/she dog/dog 's/'s name/name ./.
-\subsubsection{固有表現抽出}
-数字や時間、アドレス、人間、地名といった固有な表現を抽出することが出来る.\\
-Mika : PERSON
-\subsubsection{構文木解析}
+% 自然言語処理とは
+自然言語処理とは, 自然言語で書かれている文章に対して, 形態素解析(品詞タグ付け、単語の原型の取得)や構文解析, 意味解析などをする処理である.
+
+% % 使用ライブラリは　序論OR自然言語の章に移してもよいかも
+% \subsection{使用ライブラリ}
+% 実装では, 自然言語処理のライブラリとして, スタンフォード大学によって提供されている Stanford CoreNLP~\cite{manning-EtAl:2014:P14-5}を使用した.
+% % Stanford CoreNLPは自然言語処理ツールのひとつであり,スタンフォード大学によって提供されている.
+% % StanfordCoreNLPでは,
+% % % ライブラリでどういう情報を得られるか
+% % 形態素解析(品詞タグ付け、単語の原型の取得),構文解析,意味解析などが出来る.\\
+% %以下の例で詳しく述べる.\\
+% % pipelineの説明をする===
+% (pipelineの説明をする)\\
+% %====
+
+% ``Mika likes her dog's name.''をStanford CoreNLPで自然言語処理をさせる.
+\subsection{トークン分割, 品詞タグ付け, レンマ化}
+% 概要
+トークン化では, 文章を単語に分割する. 
+品詞タグ付けでは, その単語の品詞を調べる.
+レンマ化とは, 単語の原型を調べるものである.
+
+例1
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single][htbp]
+     Mika likes her dog's name.
+\end{lstlisting}
+これをトークン分割, 品詞タグ付け及びレンマ化をすると, \\
+単語/品詞タグ : 
+Mika/NNP $\hspace{10pt}$ likes/VBZ $\hspace{10pt}$ her/PRP\$ $\hspace{10pt}$ dog/NN $\hspace{10pt}$ 's/POS $\hspace{10pt}$ name/NN $\hspace{10pt}$ ./.\\
+単語/原型 : 
+Mika/Mika $\hspace{10pt}$  likes/like $\hspace{10pt}$ her/she $\hspace{10pt}$ dog/dog $\hspace{10pt}$ 's/'s $\hspace{10pt}$ name/name $\hspace{10pt}$ ./.\\
+となる.
+\subsection{構文木解析}
+% 概要
+構文木解析とは, 単語を節という単位でグループ化し, その構成を木構造で表現するものである.
+構文木解析をすることによって, 文章の構造や単語同士のまとまりを調べることが出来る.\\
+
+例1の``Mika likes her dog's name.''を構文木解析すると.\\
 \Tree [.S [.NP [.NNP Mika ] ]
            [.VP
               [.VBZ likes ]
@@ -42,17 +63,39 @@ Mika : PERSON
                     [.NN name ] ]
            ]
            [.. . ]
-      ]
-\subsubsection{係り受け解析}
-係り受け解析とは、単語間の関係を解析するものである.\\
+      ]\\
+の様になる.
+\subsection{係り受け解析}
+係り受け解析とは、節や単語間の関係を調べるものである. \\%を係り受けタグによって関連付け, の関係を解析するものである.\\
+%%係り受けタグとは
+目的語, 修飾語などといったの単語や節の関係性を表す係り受けタグを使用し, それらを関連付ける.%%使い, であり, 
+例えば, 単語Bが単語Aの目的語である場合, 
+A $\xrightarrow{目的語}$ B 
+という風に表記する.\\
+
+例の, ``Mika likes her dog's name.''を係り受け解析すると, 図\ref{dependency}の様になり,\\
+``Mika''が好きなのは, ``name'', 
+``name''は ``dog'' の名前, 
+``dog'' は 彼女(her)の犬である\\
+という様に, 単語の目的語, 所有しているものを示してる単語が解析されている.\\
 \begin{figure}[h]
-  \centering
-  \includegraphics[keepaspectratio, scale=1.0]
-       {figure/dependency.png}
-  \caption{dependency(仮)}
-  \label{dependency}
-\end{figure}
-\subsubsection{参照関係の解析}
-参照関係の解析とは,文章内で複数個同じものを指し示す単語がある時、それを抽出するものである.itやheなどの指示語の指し示すものを見つける時になどに使用される.\\
-Mika, her
+     \centering
+     \includegraphics[keepaspectratio, scale=0.7]
+          {figure/dependencyEx.png}
+     \caption{係り受け解析}
+     \label{dependency}
+   \end{figure}
+%明示的に示されている.\\
+
+\subsection{固有表現抽出}
+固有表現抽出とは, 文章内に数字や時間、アドレス、人間、地名を意味する単語があった場合, 「この単語は地名を表すものである」という風に, 固有な表現を解析するものである.\\
+
+例1の``Mika likes her dog's name.''の場合は, 
+``Mika'' が``人間''を表す単語であるということが固有表現抽出によって出力される. 
+\subsection{参照関係の解析}
+参照関係の解析とは,文章内で同じものを指し示している単語が複数ある時, それらを関連付けさせ, 抽出するものである.\\
+これによって, ``it''や``he''などの指示語の指し示すものを見つけることなどが出来る.\\
+
+例1の``Mika likes her dog's name.''の場合は, 
+``Mika'', ``her''が同一のものであることが参照関係の解析によって分かる.
 \end{document}

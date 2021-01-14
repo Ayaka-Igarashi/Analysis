@@ -148,18 +148,18 @@ INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisg-v.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisg-h.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmss12.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisg-v.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisg-h.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm
-INPUT figure/dependency.png
-INPUT extractbb -B cropbox -O figure/dependency.png
+INPUT figure/dependencyEx.png
+INPUT extractbb -B cropbox -O figure/dependencyEx.png
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/html5parser.aux
 INPUT html5parser.tex
 INPUT html5parser.tex
 INPUT figure/html5-bw.png
 INPUT extractbb -B cropbox -O figure/html5-bw.png
-INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
-INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisg-v.tfm
-INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisg-h.tfm
-INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/commandFormat.aux
 INPUT commandFormat.tex
 INPUT commandFormat.tex
