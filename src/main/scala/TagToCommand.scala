@@ -1,3 +1,5 @@
+import java.util.Scanner
+
 import CommandStructure._
 import Main.txtOut
 import TagStructure._
@@ -120,11 +122,11 @@ object TagToCommand {
       case Node(VP, list) => {
         list match {
           case Nil =>
-          case Leaf(CC,Token_(_,_,_,"and")) :: rst => commandList ++= STag(Node(S, rst))
-          case Leaf(Comma, _) :: rst => commandList ++= STag(Node(S, rst))
+          case Leaf(CC,Token_(_,_,_,"and")) :: rst => commandList ++= VPTag(Node(VP, rst))
+          case Leaf(Comma, _) :: rst => commandList ++= VPTag(Node(VP, rst))
           case Node(VP, vp1) :: rst => {
             commandList ++= VPTag(Node(VP, vp1))
-            commandList ++= STag(Node(S, rst))
+            commandList ++= VPTag(Node(VP, rst))
           }
 //          // &文
 //          case Node(VP, vp1) :: Leaf(CC,Token_(_,_,_,"and")) :: rst => {
@@ -411,7 +413,7 @@ object TagToCommand {
         newCommandList :+= If(b, t, f)
         newCommandList ++= e
       }
-      case command :: rst => newCommandList :+= command;newCommandList ++= uniteIf(rst)
+      case command :: rst => newCommandList :+= command; newCommandList ++= uniteIf(rst)
       case Nil =>
     }
     newCommandList
@@ -422,10 +424,19 @@ object TagToCommand {
       case i if (i < commandList.length) => {
         val t = uniteIf(commandList.slice(0, i))
         val fe = uniteIf(commandList.slice(i + 1, commandList.length))
-        if (true) {
+        if (false) {
           (t, fe, List())
         } else {
-          (t, fe.slice(0, 1), fe.slice(1, fe.length))
+          var r = fe.length
+          if (fe.length > 1) {
+            var j = 1
+            for (c <- fe) { print(c + " |[" + j + "] "); j += 1 }
+            println()
+            print(" >")
+            val scanner = new Scanner(System.in)
+            r = scanner.next().toInt
+          }
+          (t, fe.slice(0, r), fe.slice(r, fe.length))
         }
       }
       case _ => (commandList, List(), List())
@@ -512,9 +523,11 @@ object TagToCommand {
       if (str.contains("name")) NameOf(CurrentTagToken)
       else CurrentTagToken
     }
+      //------
     else if (str.contains("name") && id != -1) NameOf(Variable("x_" + id))
     else if (str.contains("value") && id != -1) ValueOf(Variable("x_" + id))
     else if (id != -1) Variable("x_" + id)
+      //------
     else if (!("0x[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.findFirstIn(str).isEmpty)) {
       "0x[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.findFirstIn(str) match {
         case Some(i) => CInt(Utility.unicodeToInt(i))

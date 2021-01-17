@@ -213,6 +213,7 @@ object Implement {
           case s: StateVal => newEnv.nextState = s
           case _ =>
         }
+//        newEnv.inputText = Add(newEnv.currentInputCharacter, newEnv.inputText)
         newEnv.currentInputCharacter match {
           case CharVal(c) => newEnv.inputText = c + newEnv.inputText
           case StringVal(string) => newEnv.inputText = string + newEnv.inputText
