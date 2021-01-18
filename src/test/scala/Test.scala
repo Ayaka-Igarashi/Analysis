@@ -33,18 +33,18 @@ class Test extends FunSuite {
   test("domjs.test") {
     startTest()
     testFormat("domjs")
-//    testFormat("entities")
-//    testFormat("escapeFlag")
-//    testFormat("namedEntities")
-//    testFormat("numericEntities")
-//    testFormat("pendingSpecChanges")
-//    testFormat("test1")
-//    testFormat("test2")
-//    testFormat("test3")
-//    testFormat("test4")
-//    testFormat("unicodeChars")
-//    testFormat("unicodeCharsProblematic")
-//    testFormat("xmlViolation")
+    testFormat("entities")
+    testFormat("escapeFlag")
+    testFormat("namedEntities")
+    testFormat("numericEntities")
+    testFormat("pendingSpecChanges")
+    testFormat("test1")
+    testFormat("test2")
+    testFormat("test3")
+    testFormat("test4")
+    testFormat("unicodeChars")
+    testFormat("unicodeCharsProblematic")
+    testFormat("xmlViolation")
 
 //    txtOut4.println("domjs")
 //    val model = TestFormatter.format("src/test/testFile/domjs.test")
@@ -124,23 +124,32 @@ class Test extends FunSuite {
     IOUtils.closeIgnoringExceptions(txtOut3)
   }
 
-  def convertOutput(outputList: List[util.List[Any]]): List[Environment.Token] = {
+  def convertOutput(outputList: List[util.List[Any]], doubleEscaped: Boolean): List[Environment.Token] = {
     var convertedOutput: List[Environment.Token] = List()
     for (out <- outputList) {
       out.get(0) match {
         case "DOCTYPE"=>{
           val name = out.get(1) match {
-            case s: String => s
+            case s: String => {
+              if (doubleEscaped) "\\\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.replaceAllIn(s, m => Integer.parseInt(m.toString().tail.tail, 16).toChar.toString)
+              else s
+            }
             case null => null
             case _ => ""
           }
           val public_id = out.get(2) match {
-            case s: String => s
+            case s: String => {
+              if (doubleEscaped) "\\\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.replaceAllIn(s, m => Integer.parseInt(m.toString().tail.tail, 16).toChar.toString)
+              else s
+            }
             case null => null
             case _ => ""
           }
           val system_id = out.get(3) match {
-            case s: String => s
+            case s: String => {
+              if (doubleEscaped) "\\\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.replaceAllIn(s, m => Integer.parseInt(m.toString().tail.tail, 16).toChar.toString)
+              else s
+            }
             case null => null
             case _ => ""
           }
@@ -152,7 +161,10 @@ class Test extends FunSuite {
         }
         case "StartTag" => {
           val name = out.get(1) match {
-            case s: String => s
+            case s: String => {
+              if (doubleEscaped) "\\\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.replaceAllIn(s, m => Integer.parseInt(m.toString().tail.tail, 16).toChar.toString)
+              else s
+            }
             case null => null
             case _ => ""
           }
@@ -174,7 +186,10 @@ class Test extends FunSuite {
         }
         case "EndTag" =>{
           val name = out.get(1) match {
-            case s: String => s
+            case s: String => {
+              if (doubleEscaped) "\\\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.replaceAllIn(s, m => Integer.parseInt(m.toString().tail.tail, 16).toChar.toString)
+              else s
+            }
             case null => null
             case _ => ""
           }
@@ -182,7 +197,10 @@ class Test extends FunSuite {
         }
         case "Comment" => {
           val data = out.get(1) match {
-            case s: String => s
+            case s: String => {
+              if (doubleEscaped) "\\\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.replaceAllIn(s, m => Integer.parseInt(m.toString().tail.tail, 16).toChar.toString)
+              else s
+            }
             case null => null
             case _ => ""
           }
@@ -190,7 +208,10 @@ class Test extends FunSuite {
         }
         case "Character" => {
           val data = out.get(1) match {
-            case s: String => s
+            case s: String => {
+              if (doubleEscaped) "\\\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.replaceAllIn(s, m => Integer.parseInt(m.toString().tail.tail, 16).toChar.toString)
+              else s
+            }
             case null => null
             case _ => ""
           }
@@ -227,13 +248,19 @@ class Test extends FunSuite {
   def doTest(test: TestFormat) = {
     val initialStates = getInitialStates(test.initialStates)
 
+    var inputText = test.input
+    val doubleEscaped = (test.doubleEscaped != null && test.doubleEscaped)
+    if (doubleEscaped) {
+      inputText = "\\\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]".r.replaceAllIn(inputText, m => Integer.parseInt(m.toString().tail.tail, 16).toChar.toString)
+    }
+
     val lastStartTagName = test.lastStartTag
 
     val outputList = test.output.asScala.toList
-    val convertedOutput = convertOutput(outputList)
+    val convertedOutput = convertOutput(outputList, doubleEscaped)
 
     for (initialState <- initialStates) {
-      val env = implement(test.input, initialState, lastStartTagName)
+      val env = implement(inputText, initialState, lastStartTagName)
 
       var isCorrect = true
       var emitTokens = Main.combineCharacterToken(env.emitTokens)
