@@ -5,6 +5,11 @@ James Graham, Geoffrey Sneddon, et~al.
 \newblock html5lib-tests, 2020.
 \newblock \url{https://github.com/html5lib/html5lib-tests}.
 
+\bibitem{jsoup}
+Jonathan Hedley.
+\newblock jsoup: Java html parser, 2020.
+\newblock \url{https://jsoup.org/}.
+
 \bibitem{manning-EtAl:2014:P14-5}
 Christopher~D. Manning, Mihai Surdeanu, John Bauer, Jenny Finkel, Steven~J.
   Bethard, and David McClosky.

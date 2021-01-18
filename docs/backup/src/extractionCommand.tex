@@ -4,76 +4,135 @@
 \begin{document}
 \chapter{命令の抽出}
 \label{命令抽出}
-\ref{自然言語処理}章において自然言語処理し, その結果を変換して得たTag型の情報を用いて, \ref{形式}章で定式化した形の命令の抽出を行う.
+\ref{自然言語処理}章において自然言語処理し, その出力を利用して得たTag型の情報を用いて, \ref{形式}章で定式化した形での命令の抽出を行う.
 %% 自然言語処理で取り出した情報(tag構造)を使ってどう命令の抽出を行ったか.
 \section{Tag型からCommandへの変換}
-Tag型の形に関してのパターンマッチングを用いてCommand型へ変換する.
-文章, 動詞句, 名詞句(TagのノードがNodeのNodenameがS, VP, NP)である場合に分け, 変換を行った. 
-葉の値はレンマ化された単語の情報のみ表記する.\\
-\subsection{文章(Sノード)の変換}
-NodenameがSであるNodeから, Command型のリストへ変換する関数を$\mathcal{T_S}$と置く.\\
-$\mathcal{T_S}$は以下のパターンマッチを行い, マッチしたものに応じたCommandListを返す.\\
-%関数見たくかく？
+Tag型の形に関してのパターンマッチングをして, CommandList型の値へ変換する.
+Tag型のNodeのNodeTypeがS, VP, NP(文, 動詞句, 名詞句)である場合に分け, 変換を行った. 
+木の形のマッチに関しては, 葉の値は単語の原型の情報のみ表記, 使用する.\\
+
+この変換を関数として表記する.\\
+NodeTypeがSであるNodeから, CommandList型へ変換する関数を$\mathcal{T_S}$, 
+NodeTypeがVPであるNodeから, CommandList型へ変換する関数を$\mathcal{T}_{VP}$, 
+NodeTypeがNPであるNodeから, CommandList型へ変換する関数を$\mathcal{T}_{NP}$と書く.
+
+\subsection{文(Sノード)の変換 $\mathcal{T_S}$}
+$\mathcal{T_S}$は以下のパターンマッチを行い, マッチしたものに応じたCommandList型の値を返す.
+
+\subsubsection{子ノードの先頭がSノード}
 Sの子ノードのリストの先頭がSノードの場合, つまりTag型が
 \Tree [.S  [.S s1 ]
-           [.rst1 ]
+           [.rst ]
       ]\\
-という木構造の形の時,
-$\mathcal{T_S}$(Node(S,s1)) + $\mathcal{T_S}$(Node(S,rst1)) を返す.\\
+という形(rst はTag型のリスト) \\ $\Rightarrow$ 
+$\mathcal{T_S}$(Node(S, s1)) ++ $\mathcal{T_S}$(Node(S, rst)) を返す.\\
 
-Sの子ノードのリストの先頭が葉``and'',カンマの場合, つまりTag型が\\
+\subsubsection{子ノードの先頭がand, then, カンマ}
+Sの子ノードのリストの先頭が葉``and'', ``then'', カンマの場合, つまりTag型が\\
 \Tree [.S  [.CC and ]
-           [.rst1 ]
+           [.rst ]
       ]
-\Tree [.S  [.Comma . ]
-    [.rst1 ]
-]
+\Tree [.S  [.Comma , ]
+            [.rst ]
+      ]
 \Tree [.S  [.ADVP [.RB then ] ]
-           [.rst1 ]
+           [.rst ]
       ]\\
-という木構造の形の時,
-commandList $\leftarrow$ $\mathcal{T}_S$(Node(S,rst1))\\
+という形(rst はTag型のリスト) \\ $\Rightarrow$ 
+$\mathcal{T}_S$(Node(S, rst)) を返す. 
+(``and'', ``then'', カンマは無視し, 子ノードの残りのノードに関して$\mathcal{T}_S$を適用する.)
 
+\subsubsection{子ノードが空リスト}
+Sの子ノードの空リストの場合, Nil を返す.\\
+
+\subsubsection{子ノードの先頭がVPノード}
 Sの子ノードのリストの先頭がVPノードの場合, つまりTag型が
 \Tree [.S  [.VP vp1 ]
-           [.rst1 ]
+           [.rst ]
       ]\\
 % \Tree [.S [.Node(VP,vp) ] ]\\
 %\Tree [.S \qroof{vp}.VP ]\\
-という木構造の形の時,
+という形 (rst はTag型のリスト) \\ $\Rightarrow$ 
 % Node Sの子ノードがNode(VP,vp)の時\\
-commandList $\leftarrow$ $\mathcal{T_S}$(Node(VP,vp1)) + $\mathcal{T_S}$(Node(S,rst1))\\
-(Node(VP, vp)に関して, 動詞句の変換を行う.)
-\\
-%if文書く===
-If\\
-%Otherwise文====
-Otherwise\\
+$\mathcal{T}_{VP}$(Node(VP,vp1)) ++ $\mathcal{T_S}$(Node(S,rst)) を返す.\\
+(Node(VP, vp)に関して, 動詞句の変換を行う.)\\
 
-\subsection{動詞句の変換}
-NodenameがVPであるNode(動詞句)から, Command型のリストへ変換する関数を$\mathcal{T}_{VP}$と置く.\\
+%if文書く===
+\subsubsection{If文}
+Sの子ノードのリストの先頭が条件文, つまりTag型が, 
+\Tree [.S  [.SBAR [.IN if ] 
+                  [.S bool ] ]
+           [.rst ]
+      ]\\
+の形 (rst はTag型のリスト) \\ $\Rightarrow$ 
+IF_($\mathcal{T_B}$(bool)) :: $\mathcal{T_S}$(Node(S,rst))\\
+を返す.\\
+%Otherwise文====
+\subsubsection{Otherwise文}
+Sの子ノードのリストの先頭が``Otherwise''のとき, つまりTag 型が, 
+\Tree [.S  [.ADVP [.RB otherwise ] ]
+           [.rst ]
+      ]\\
+の形 (rst はTag型のリスト) \\ $\Rightarrow$ 
+Otherwise_() :: $\mathcal{T_S}$(Node(S,rst)) を返す.\\
+%error
+\subsubsection{Error文}
+Tag型が, 
+\Tree [.S  [.NP [.DT this ] ]
+            [.VP [.VB be ] 
+                  \qroof{$\cdots$ error}.NP
+            ]
+      ]\\
+の形 \\ $\Rightarrow$ 
+Error($\cdots$ error) :: Nil を返す.\\
+
+\subsection{動詞句(VPノード)の変換 $\mathcal{T}_{VP}$}
+NodeTypeがVPであるNode(動詞句)から, Command型のリストへ変換する関数を$\mathcal{T}_{VP}$と置く.\\
 $\mathcal{T}_{VP}$は以下のパターンマッチを行い, マッチしたものに応じたCommand型のListを返す.\\
-\subsubsection*{Switch文のマッチ}
+
+\subsubsection*{VPノード}
+VPの子ノードのリストの先頭がVPノードの場合, つまりTag型が
+\Tree [.VP  [.VP vp1 ]
+           [.rst ]
+      ]\\
+という木構造の形の時, 
+$\mathcal{T}_{VP}$(Node(VP,vp1)) ++ $\mathcal{T}_{VP}$(Node(VP,rst)) を返す.\\
+
+\subsubsection*{VPを繋ぐ単語}
+VPの子ノードのリストの先頭が葉``and'', カンマの場合, つまりTag型が\\
+\Tree [.VP  [.CC and ]
+           [.rst ]
+      ]
+\Tree [.VP  [.Comma , ]
+            [.rst ]
+      ]\\
+という木構造の形の時, 
+$\mathcal{T}_{VP}$(Node(VP, rst)) を返す.\\
+\subsubsection*{空リスト}
+VPの子ノードの空リストの場合, Nil を返す.\\
+
+\subsubsection*{Switch文}
 (元の文 : Switch to the $\cdots$ state)\\
 Tagの形が,\\
 \Tree [.VP [.VB switch ]
            [.PP
               [.IN to ]
-              [.NP $\langle$state$\rangle$ ]
+              [.NP np1 ]
            ]
       ]\\
-の時,
-Switch($\langle$state$\rangle$) を返す.
+の時, 
+Switch($\mathcal{T}_{NP}$(np1)) :: Nil を返す.
 \subsubsection*{Reconsume文}
 Reconsume in the $\cdots$ state\\
 \Tree [.VP [.VB reconusme ]
            [.PP
               [.IN in ]
-              [.NP $\langle$state$\rangle$ ]
+              [.NP np1 ]
            ]
-      ]
-
-$\rightarrow$Reconsume($\langle$state$\rangle$)
+      ]\\
+の時, 
+Reconsume($\mathcal{T}_{NP}$(np1)) :: Nil を返す.
+% $\rightarrow$Reconsume($\langle$state$\rangle$)
 
 \subsubsection*{Set文}
 変数に値を代入する.
@@ -102,18 +161,26 @@ $\rightarrow$Reconsume($\langle$state$\rangle$)
 となる.よってこの形にマッチした場合は, 
 Set($\langle$variable$\rangle$, On)とさせた.
 % Setのとこ手を加えたやつ===
-% ``Set that attribute's name to the current input character, and its value to the empty string.''
-% \Tree [.VP [.VB set ]
-%             [.NP $\langle$variable$\rangle$ ]
-%         ]\\
+``Set that attribute's name to the current input character, and its value to the empty string.''
+\Tree [.VP [.VB set ]
+            [.NP $\langle$variable$\rangle$ ]
+        ]\\
 %====
 
-\subsubsection*{Emit文}
-\subsubsection*{Emit文}
-\subsubsection*{Emit文}
+\subsubsection*{AppendTo文}
 \subsubsection*{Emit文}
 
-\subsection{名詞句の変換}
+
+\subsubsection*{Consume文}
+\subsubsection*{Create文}
+\subsubsection*{Ignore文}
+\subsubsection*{AddTo文}
+\subsubsection*{MultiplyBy文}
+\subsubsection*{FlushCodePoint文}
+\subsubsection*{StartAttribute文}
+\subsubsection*{TreatAsAnythingElse文}
+
+\subsection{名詞句(NPノード)の変換 $\mathcal{T}_{NP}$}
 \subsubsection*{列挙の分解}
 % NPの分解とか(and)
 名詞句には複数の名詞をandやカンマで区切っているものがある.\\
@@ -125,10 +192,10 @@ Set($\langle$variable$\rangle$, On)とさせた.
       ]
 
 % \paragraph{特殊な例} \\
-Set that attribute's name and valueのとこ手を加えた\\
-that attribute'sはnameとvalueどちらにも係っているので,
-この名詞句はthat attribute's name and that attribute's valueという解釈が正しい.
-しかし,自然言語処理ではthat attribute'sはnameにしか係っていない風に解釈される.
+``Set that attribute's name and value''のとこ手を加えた. \\
+that attribute'sはnameとvalueどちらにも係っているので, 
+この名詞句は``that attribute's name and that attribute's value''という解釈が正しい.
+しかし, 自然言語処理ではthat attribute'sはnameにしか係っていない風に解釈される.
 \Tree [.NP 
         \qroof{that attribute 's}.NP
         [.NN name ]
@@ -136,19 +203,86 @@ that attribute'sはnameとvalueどちらにも係っているので,
         [.NN value ]
       ]
     
-\subsubsection*{CommandValue型への変換}
-NPノードをCommandValue型に変換する際, 単純に文字列に特定の単語が含まれているかどうかを調べるというやり方で実装した.
-%参照関係の使用の部分を書く
+\subsubsection*{CommandValue型, ImplementVariable型への変換}
+HTML5の仕様書には様々な変数の言葉や値の言葉が出てくる. 
+NPノード内の自然言語で記述している言葉から, CommandValue型やImplementVariable型というプログラムが認識できる形にする際, 
+単純に文字列に変数名や値などの特定の単語が含まれているかどうかを調べるというやり方をとった. 
+% NPノードをCommandValue型に変換する際, 
 
+例えば, 変換対象のNPノード内に"return state"という言葉が含まれていた場合は, ReturnStateを返す. 
+%参照関係の使用の部分を書く
+特定の単語にマッチせず, かつ参照番号が-1でない数字nのとき(その単語にラベルnの参照関係があるとき)は "x\_n"という変数という意味を持つ, Variable("x\_n") を返す.
+      name, valueが含まれている場合は
 
 \section{If文の処理}
 If the temporary buffer is the string ``script'', then switch to the script data escaped state. Otherwise, switch to the script data double escaped state. Emit the current input character as a character token.
 
-どの部分の文章までがotherwise文なのかが曖昧であった.
-手動でIf文の処理をしようと考えた.
+If ~~, then ~~. Otherwise, switch to the script data double escaped state. Emit the current input character as a character token.
+
+この文章の, ``Emit the current input character as a character token.'' がOtherwiseで処理したい文なのか曖昧な部分があった. 
+このような文は人の目で見てもパット見判断しずらいから, 機械の処理でも正しく解釈するのは難しいと思った.
+よってIf文に関しては, 手動でどこまでがotherwiseにの処理に入る文なのかを判断させるようにした. 
+
+\subsection{具体的な処理}
+\begin{screen}
+      If_(b)\\
+      command$_1$\\
+      command$_2$\\
+      Otherwise_()\\
+      command$_3$\\
+      command$_4$
+\end{screen}
+% If_(b)
+% command$_1$
+% command$_2$
+% Otherwise_()
+% command$_3$
+% command$_4$
+
+If(b, List(command$_1$, command$_2$), List(command$_3$, command$_4$))\\
+If(b, List(command$_1$, command$_2$), List(command$_3$)), command$_4$\\
+正しいほうを人の手で選ぶ.
+% どの部分の文章までがotherwiseで処理したい文なのかが曖昧であった.
+
 % 段落を認識させる?
 
 % \section{NPノードからCommandValue型への変換}
 % NPノードをCommandValue型に変換する際,単純に文字列に特定の単語が含まれているかどうかを調べるというやり方で実装した.
+
+\section{命令への変換例}
+例\ref{tagEx}の ``Create a comment token. Emit the token.''から命令型CommandListを抽出する.\\
+
+\Tree [.ROOT [.S [.VP [.VB Token(Create,create,-1) ]
+           [.NP
+              [.DT Token(a,a,1) ]
+              [.NN Token(comment,comment,1) ]
+              [.NN Token(token,token,1) ]
+           ]
+      ] ] ]\\
+\Tree [.ROOT [.S [.VP [.VB Token(Emit,emit,-1) ]
+                        [.NP
+                        [.DT Token(the,the,1) ]
+                        [.NN Token(token,token,1) ]
+                        ]
+      ] ] ]
+
+ROOTタグ直下のSタグに$\mathcal{T}_{S}$を適用させると, 
+~~~~VPのやつにマッチして
+\Tree [.VP [.VB Token(Emit,emit,-1) ]
+            [.NP
+            [.DT Token(the,the,1) ]
+            [.NN Token(token,token,1) ]
+      ] ]\\
+これに$\mathcal{T}_{VP}$を適用させると, 
+Emit文にマッチして, 
+Emit($\mathcal{T}_{NP}$(NP...))
+\Tree [.NP
+            [.DT Token(the,the,1) ]
+            [.NN Token(token,token,1) ]
+      ]\\
+これに$\mathcal{T}_{NP}$を適用させると, 
+the tokenが番号が1の参照関係を持っているので, Variable("x1") となる.
+
+Create(Variable("x1"), NewCommentToken) :: Emit(Variable("x1")) :: Nil
 
 \end{document}

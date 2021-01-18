@@ -18,6 +18,28 @@
 %掛っている部分にかんして.
 that attribute'sはnameとvalue
 
+%
+NPノードからCommandValue型への変換する際, 係り受け解析を使用したほうが楽だと思った.
+``its tag name''とか, 
+構文木解析だと, 
+\Tree [.NP [.PRP\$ its ]
+            [.NN tag ]
+            [.NN name ]
+     ]\\
+という結果が得られるが, \\
+係り受け解析だと
+\begin{figure}[h]
+    \centering
+    \includegraphics[keepaspectratio, scale=0.5]
+         {figure/nptagEx.png}
+    \caption{example}
+    \label{npEx}
+\end{figure}
+という結果が得られ, 
+``name''が``its''のものであるということがはっきりわかり, 得られる情報が多い.\\
+よって, NPノードを解析する際, 構文木解析と係り受け解析併用したほうがいいと思った.
+% 正直、NPノードを変換する奴はかなり力技でやってしまった。という反省
+
 %%
 % ある程度仕様書の記法に一貫性があれば、上手くできる.
 % it等の指示語が多く使われていたから、参照関係の解析をするという面では自然言語処理は役に立つ.

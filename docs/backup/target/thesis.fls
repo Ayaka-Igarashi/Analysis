@@ -128,8 +128,8 @@ INPUT introduction.tex
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisg-v.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisg-h.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
-INPUT figure/流れ.png
-INPUT extractbb -B cropbox -O figure/流れ.png
+INPUT figure/流れ2.png
+INPUT extractbb -B cropbox -O figure/流れ2.png
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisr-v.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisr-h.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
@@ -169,6 +169,17 @@ INPUT nlProcessing.tex
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/extractionCommand.aux
 INPUT extractionCommand.tex
 INPUT extractionCommand.tex
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmr6.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmmi8.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmmi6.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisr-h.tfm
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/implementation.aux
 INPUT implementation.tex
 INPUT implementation.tex
@@ -179,6 +190,8 @@ INPUT evaluation.tex
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/conclusion.aux
 INPUT conclusion.tex
 INPUT conclusion.tex
+INPUT figure/nptagEx.png
+INPUT extractbb -B cropbox -O figure/nptagEx.png
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/acknowledgments.aux
 INPUT acknowledgments.tex
 INPUT acknowledgments.tex

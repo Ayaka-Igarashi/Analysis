@@ -2,13 +2,13 @@
 \usepackage{thesis}
 
 \begin{document}
-\chapter{抽出の形式}
+\chapter{抽出の形式（モデル）}
 \label{形式}
 HTML5の仕様書から命令を抽出するため, BNFの記法を用いて, 命令を形式化する.
 \section{抽出する命令の形式}
 % 例：抽出する命令を形式化したいため, BNFで命令を定義した.
 %BNFの形式を使って, 仕様書から抽出したい命令を形式化する.\\
-
+% 仕様書において, 字句解析器の変数や値として出てくるもの
 まず命令の形式の, メタ変数, 型を以下で定める.\\
 \begin{alignat*}{3}
   &{\rm cList } & &{\rm : CommandList }&\quad&\cdots 命令文のリスト\\
@@ -17,6 +17,7 @@ HTML5の仕様書から命令を抽出するため, BNFの記法を用いて, �
   &{\rm cval }& &{\rm : CommandValue }& &\cdots 命令文が引数に持つ値\\
   &{\rm ival }& &{\rm : InplementVariable} & &\cdots 命令文が引数に持つ代入される変数の種類\\
 \end{alignat*}
+cval, ivalは仕様書において, 字句解析器の変数や値として出てくるものであり, ivalは代入される対象, cvalは代入するものを表している. \\
 メタ変数は, c$_1$, c$_2$のように, 添え字つけられていてもよいものとする. \\
 % \begin{flalign*}
 %   &cList &:& CommandList \cdots 命令文のリスト&\\
@@ -35,10 +36,11 @@ HTML5の仕様書から命令を抽出するため, BNFの記法を用いて, �
 それぞれの型の構造は以下のように定める. \\
 \subsection*{CommandList型}
 \begin{eqnarray*}
-  {\rm cList }&\bnfdef& \mbox{ c :: cList} \bnfor \mbox{ Nil}\\
+  {\rm cList }&\bnfdef& \mbox{ c :: cList} \bnfor \mbox{ cList$_1$ $++$ cList$_2$} \bnfor \mbox{ Nil}\\
 \end{eqnarray*}
 実際の実装では単にScalaのList構造を用いている.
 \subsection*{Command型}
+%  if b then list$_1$: List[Command] else list$_2$: List[Command]
 \begin{alignat*}{3}
   {\rm c }::&= &\quad&\mbox{ If(b, cList$_1$, cList$_2$)} &\quad&\mbox{ // if b then cList$_1$ else cList$_2$}\\
     &|& &\mbox{ Ignore()} & &\mbox{ // 何もしない処理} \\
@@ -196,7 +198,7 @@ HTML5の仕様書から命令を抽出するため, BNFの記法を用いて, �
 \end{alignat*}
 
 string,char,int,booleanはそれぞれScalaの標準の型(String,Char,Int,Boolean)の値
-\section{例}
+\section{命令形式の例}
 自然言語の文から, 上記の形式への変換の例をいくつか記す.\\
 
 状態Data_stateへ遷移するという意味の文に関して, 

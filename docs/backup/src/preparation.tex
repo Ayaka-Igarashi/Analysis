@@ -7,15 +7,24 @@
 % 読んでもらうことに必要なこと
 % 自然言語処理のこと,必要な言葉
 %html5のtokenizer仕様のことは3章
-\section{節, 品詞タグ}
-いくつかの主要な節, 品詞タグの説明をする. ~\cite{pennTreebankTags}\\
-節レベル\\
-S : 節 $\cdots$\\
-VP : 動詞句 $\cdots$\\
-NP : 名詞句 $\cdots$\\
-単語レベル\\
-VB : 動詞 $\cdots$\\
-NN : 名詞 $\cdots$\\
+\section{節, 句, 品詞タグ}
+% 本論文ではいくつかの品詞タグを使用する. 
+本論文で使用する, いくつかの主要な節,句,単語のタグ名とその意味について書く. ~\cite{pennTreebankTags}\\
+
+節, 句の種類
+\begin{alignat*}{3}%&{\rm 節, 句の種類 } && && \\
+     &{\rm S } &\quad &{\rm : 文 }&\quad& \\
+     &{\rm VP }& &{\rm : 動詞句 }& & \\
+     &{\rm NP }& &{\rm : 名詞句 }& & \\
+     &{\rm PP }& &{\rm : 前置詞句 }& & \\
+\end{alignat*}
+
+単語の種類(品詞)
+\begin{alignat*}{3}
+     &{\rm VB }&\quad &{\rm : 動詞 }& & \\
+     &{\rm NN }& &{\rm : 名詞} & & \\
+     &{\rm IN }& &{\rm : 前置詞 or 従属接続詞} & & \\
+\end{alignat*}
 
 \section{自然言語処理}
 % 自然言語処理とは
