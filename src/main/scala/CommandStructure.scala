@@ -95,7 +95,8 @@ object CommandStructure {
   case object CurrentAttribute extends CommandValue
   case object CommentToken extends CommandValue
   case object EndOfFileToken extends CommandValue
-  case class CharacterToken(chara: String) extends CommandValue
+//  case class CharacterToken(chara: String) extends CommandValue
+  case class CharacterToken(chara: CommandValue) extends CommandValue
 
   case class LowerCase(token: CommandValue) extends CommandValue
   case class NumericVersion(token: CommandValue) extends CommandValue

@@ -427,7 +427,7 @@ object Implement {
       case FlushCodePoint() => {
         val flushCommand =  If(CharacterReferenceConsumedAsAttributeVal(),
                               List(AppendTo(TemporaryBuffer, IValueOf(ICurrentAttribute))),
-                               List(Emit(TemporaryBuffer)))
+                               List(Emit(CharacterToken(TemporaryBuffer))))
         newEnv = interpretCommand(newEnv, flushCommand)
       }
       case TreatAsAnythingElse() => {
@@ -584,7 +584,15 @@ object Implement {
         }
       }
       case CommandStructure.EndOfFileToken => value = TokenVal(endOfFileToken())
-      case CommandStructure.CharacterToken(c) => value = TokenVal(characterToken(c))
+      case CommandStructure.CharacterToken(cval) => {
+//        value = TokenVal(characterToken(c))
+         commandValueToValue(cval, env)._1 match {
+                case CharVal(c) => value = TokenVal(characterToken(c.toString))
+                case StringVal(s) => value = TokenVal(characterToken(s))
+                case IntVal(i) => value = TokenVal(characterToken(i.toChar.toString))
+                case _ =>
+              }
+      }
       case Variable(x) => {
         env.map.get(x + uniqueId.toString) match {
           case Some(a) => value = a

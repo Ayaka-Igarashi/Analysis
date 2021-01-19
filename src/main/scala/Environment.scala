@@ -41,14 +41,80 @@ object Environment {
         }
       }
       case EOFVal => {
-        case StringVal(s2) => StringVal(s2)
-        case CharVal(c2) => CharVal(c2)
-        case EOFVal => EOFVal
-        case _ =>println("AddValueError");EOFVal
+        v2 match {
+          case StringVal(s2) => StringVal(s2)
+          case CharVal(c2) => CharVal(c2)
+          case EOFVal => EOFVal
+          case _ => println("AddValueError"); EOFVal
+        }
       }
       case _ => println("AddValueError");v1
     }
   }
+  def Head(v: Value): Value = {
+    v match {
+      case StringVal(s) => s.headOption match {
+        case Some(c) => CharVal(c)
+        case None => EOFVal
+      }
+      case CharVal(c) => CharVal(c)
+      case _ => null
+    }
+  }
+  def Tail(v: Value): Value = {
+    null
+//    v match {
+//      case StringVal(s) => s.headOption match {
+//        case Some(c) => CharVal(c)
+//        case None => EOFVal
+//      }
+//      case CharVal(c) => CharVal(c)
+//      case _ => null
+//    }
+  }
+//  def Add(v1: CharVal, v2: StringVal): StringVal = {
+//    v1 match {
+//      case CharVal(c) => v2 match {
+//        case StringVal(s) => StringVal(c + s)
+//      }
+//    }
+//  }
+//  def StringAdd(v1: Value, v2: Value): StringVal = {
+//    v1 match {
+//      case StringVal(s1) => {
+//        v2 match {
+//          case StringVal(s2) => StringVal(s1 + s2)
+//          case CharVal(c2) => StringVal(s1 + c2)
+//          case IntVal(i2) => StringVal(s1 + i2)
+//          case EOFVal => StringVal(s1)
+//          case _ => println("AddValueError");null
+//        }
+//      }
+//      case CharVal(c1) => {
+//        v2 match {
+//          case StringVal(s2) => StringVal(c1 + s2)
+//          case CharVal(c2) => StringVal(c1.toString + c2.toString)
+//          case EOFVal => StringVal(c1.toString)
+//          case _ => println("AddValueError");null
+//        }
+//      }
+//      case IntVal(i1) => {
+//        v2 match {
+//          case StringVal(s2) => StringVal(i1 + s2)
+//          case CharVal(c2) => StringVal((i1 + c2).toString)
+//          case IntVal(i2) => StringVal((i1 + i2).toString)
+//          case _ => println("AddValueError");null
+//        }
+//      }
+//      case EOFVal => v2 match {
+//        case StringVal(s2) => StringVal(s2)
+//        case CharVal(c2) => StringVal(c2.toString)
+//        case EOFVal => StringVal("")
+//        case _ => null
+//      }
+//      case _ => println("AddValueError");null
+//    }
+//  }
 
   class Env {
     // 現在の状態
@@ -77,7 +143,7 @@ object Environment {
     var map: Map[String, Value] = Map()
     var mapID : Int = 0
 
-    def setInputText(text: String) = { inputText = text }
+    def setInputText(text: String) = { inputText = (text) }
     def setNextState(state: StateVal) = { nextState = state }
     def addEmitToken(token: Token) = { emitTokens :+= token }
     def addMap(key: String, value: Value) = { map += (key -> value)}

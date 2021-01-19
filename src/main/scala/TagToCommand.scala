@@ -208,11 +208,12 @@ object TagToCommand {
           // emit2
           case List(Leaf(VB,Token_(_,_,_,"emit")), Node(NP,np), Node(PP, pp)) => {
             for (n <- NPDistribute(Node(NP, np))) {
-              var token: CommandValue = null
-              if (getLeave(n._1).contains("current input character")) token = CurrentInputCharacter
-              else if (n._2 != -1) token = Variable("x_" + n._2.toString)
-              else token = CommandStructure.CharacterToken(getLeave(n._1))
-              commandList :+= Emit(token)
+              commandList :+= Emit(CommandStructure.CharacterToken(nptagToCommandValue(n._1)))
+//              var token: CommandValue = null
+//              if (getLeave(n._1).contains("current input character")) token = CurrentInputCharacter
+//              else if (n._2 != -1) token = Variable("x_" + n._2.toString)
+//              else token = CommandStructure.CharacterToken(getLeave(n._1))
+//              commandList :+= Emit(token)
             }
           }
           // ignore
@@ -517,7 +518,7 @@ object TagToCommand {
       if (str.contains("new")) NewCommentToken
       else CommentToken
     }
-    else if (str.contains("character token")) CommandStructure.CharacterToken(str)
+    else if (str.contains("character token")) {println("charat");CommandStructure.CharacterToken(CString(str))}
     else if (str.contains("empty string")) CString("")
     else if (str.contains("current") && str.contains("tag")) {
       if (str.contains("name")) NameOf(CurrentTagToken)

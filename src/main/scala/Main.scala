@@ -71,6 +71,7 @@ object Main {
         parse(1, 79)
         PreserveDefinition.preserve[List[nState]](nStateList, "src/parsed.dat")
         tagConvert()
+        PreserveDefinition.preserve(pStateMap, "src/definition.dat")
       }
     } else if (true) {
       // 出力ファイル
@@ -83,6 +84,7 @@ object Main {
       // 取り出す
       nStateList = PreserveDefinition.read[List[nState]]("src/parsed.dat")
       tagConvert()
+      PreserveDefinition.preserve(pStateMap, "src/definition.dat")
 
       //implement("<abar d=kl rt=hhh>tyu</huj>", "Data_state")
     } else {
@@ -236,7 +238,7 @@ object Main {
     }
 
     txtOut.println(pStateMap)
-    PreserveDefinition.preserve(pStateMap, "src/definition.dat")
+
 
     var endtime = System.currentTimeMillis
     System.out.println("convert time = " + formatter.format(endtime - start))
