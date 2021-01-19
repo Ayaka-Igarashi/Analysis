@@ -41,7 +41,12 @@ HTML5字句解析仕様書はHTMLによって構造的に書かれているの�
    <\dl>
 \end{lstlisting}
 これを HTMLパーサーのライブラリ jsoup ~\cite{jsoup}を使って, 
-状態名, 文字マッチングする前の処理, 文字iとその文字にマッチした時の処理のリストをもつ構造体 State に置き換える. \\
+「状態名」, 「文字マッチングする前の処理」, 「文字iとその文字にマッチした時の処理のリスト」をもつ, 図\ref{StateStructure}の構造体 State に置き換える. \\
+%コードを書く
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, caption=Stateの構造体,label=StateStructure][htbp]
+   case class State(name: String, prevProcess: String, trans: List[Trans])
+   case class Trans(character: String, process: String)
+\end{lstlisting}
 % の構造体にHTMLパーサーを使い, 
 具体的な処理としては, 
 ``\texttt{h5}'', ``\texttt{dfn}''タグで囲まれている文を``状態名''として取り出し, 
@@ -49,6 +54,8 @@ HTML5字句解析仕様書はHTMLによって構造的に書かれているの�
 文字のマッチングの処理は, ``\texttt{dl}''タグ内に書かれており, 
 その中の ``\texttt{dt}''タグから``マッチングの文字i'', その直後にある``\texttt{dd}''タグから``文字iにマッチした時の処理''を取り出す.\\
 % case class Trans(文字, 文字にマッチした時の処理)
+自然言語処理は, 「文字マッチングする前の処理」と「文字iとその文字にマッチした時の処理のリスト」の処理の部分に対して行う. 
+
 
 % \subsubsection{StateStructure}
 % 状態名は``\texttt{h5}''タグでくくられており,
@@ -191,17 +198,17 @@ Leaf型が持つTokenに関しては, 単語の原型の部分にレンマ化の
 %% 変換後のTag構造
 \section{Tagへの変換例}
 \label{tagEx}
-文章 ``Create a tag token. Emit the token.'' からTag型に変換する例を示す.\\
+文章 ``Create a comment token. Emit the token.'' からTag型に変換する例を示す.\\
 まず, 文字の置き換えの前処理を行うと, ``Create a token. you Emit the token.''となる. \\
 次に, これに対して自然言語処理を行うと, \\
 単語の原型は, \\
-Create/create $\hspace{10pt}$ a/a $\hspace{10pt}$ tag/tag $\hspace{10pt}$ token/token $\hspace{10pt}$ ./.\\
+Create/create $\hspace{10pt}$ a/a $\hspace{10pt}$ comment/comment $\hspace{10pt}$ token/token $\hspace{10pt}$ ./.\\
 you/you $\hspace{10pt}$ Emit/emit $\hspace{10pt}$ the/the $\hspace{10pt}$ token/token $\hspace{10pt}$ ./.\\
 構文木解析は, \\
 \Tree [.ROOT [.S [.VP [.VB Create ]
            [.NP
               [.DT a ]
-              [.NN tag ]
+              [.NN comment ]
               [.NN token ]
            ]
       ]
@@ -217,23 +224,30 @@ you/you $\hspace{10pt}$ Emit/emit $\hspace{10pt}$ the/the $\hspace{10pt}$ token/
       [.. . ] ] ]\\
 \vspace{0.5\baselineskip}\\
 参照関係の解析では, 
-``a tag token''と ``the token''が同じものであると出力される.\\
+``a comment token''と ``the token''が同じものであると出力される.\\
 
 そして, 構文木の処理と参照関係の処理を行い, これをTag型への変換をすると, \\
+\begin{figure}[h]
+   \centering
+   \includegraphics[keepaspectratio, scale=0.5]
+        {figure/tagTreeRoot.jpg}
+   \caption{Tag型}
+   \label{tagTree1}
+\end{figure}
 % 構文木の処理と参照関係の処理を行った結果.\\
-\Tree [.ROOT [.S [.VP [.VB Token(Create,create,-1) ]
-           [.NP
-              [.DT Token(a,a,1) ]
-              [.NN Token(tag,tag,1) ]
-              [.NN Token(token,token,1) ]
-           ]
-      ] ] ]\\
-\Tree [.ROOT [.S [.VP [.VB Token(Emit,emit,-1) ]
-      [.NP
-         [.DT Token(the,the,1) ]
-         [.NN Token(token,token,1) ]
-      ]
-      ] ] ]\\
-\vspace{0.5\baselineskip}\\
-となる.
+% \Tree [.ROOT [.S [.VP [.VB Token(Create,create,-1) ]
+%            [.NP
+%               [.DT Token(a,a,1) ]
+%               [.NN Token(comment,comment,1) ]
+%               [.NN Token(token,token,1) ]
+%            ]
+%       ] ] ]\\
+% \Tree [.ROOT [.S [.VP [.VB Token(Emit,emit,-1) ]
+%       [.NP
+%          [.DT Token(the,the,1) ]
+%          [.NN Token(token,token,1) ]
+%       ]
+%       ] ] ]\\
+% \vspace{0.5\baselineskip}\\
+図\ref{tagTree1}のようになる.
 \end{document}

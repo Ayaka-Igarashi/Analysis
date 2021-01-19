@@ -5,40 +5,28 @@
 \chapter{抽出の形式（モデル）}
 \label{形式}
 HTML5の仕様書から命令を抽出するため, BNFの記法を用いて, 命令を形式化する.
+\section{1状態の目標とする形}%後ろに移動する
+
 \section{抽出する命令の形式}
 % 例：抽出する命令を形式化したいため, BNFで命令を定義した.
 %BNFの形式を使って, 仕様書から抽出したい命令を形式化する.\\
 % 仕様書において, 字句解析器の変数や値として出てくるもの
 まず命令の形式の, メタ変数, 型を以下で定める.\\
-\begin{alignat*}{3}
-  &{\rm cList } & &{\rm : CommandList }&\quad&\cdots 命令文のリスト\\
-  &{\rm c }& &{\rm : Command }& &\cdots 命令文\\
+\begin{alignat*}{3}%  &{\rm cList } & &{\rm : CommandList }&\quad&\cdots 命令文のリスト\\
+  &{\rm c }& &{\rm : Command }&\quad &\cdots 命令文\\
   &{\rm b }& &{\rm : Bool }& &\cdots {\rm if}文の命令文の条件部分の文\\
   &{\rm cval }& &{\rm : CommandValue }& &\cdots 命令文が引数に持つ値\\
   &{\rm ival }& &{\rm : InplementVariable} & &\cdots 命令文が引数に持つ代入される変数の種類\\
 \end{alignat*}
 cval, ivalは仕様書において, 字句解析器の変数や値として出てくるものであり, ivalは代入される対象, cvalは代入するものを表している. \\
 メタ変数は, c$_1$, c$_2$のように, 添え字つけられていてもよいものとする. \\
-% \begin{flalign*}
-%   &cList &:& CommandList \cdots 命令文のリスト&\\
-%   &c &:& Command \cdots 命令文&\\
-%   &b &:& Bool \cdots 条件文&\\
-%   &cval &:& CommandValue \cdots 値&\\
-%   &ival &:& InplementVariable \cdots 代入される変数&\\
-% \end{flalign*}
-
-%   & cList : CommandList $\cdots$ 命令文のリスト\\
-%   & c : Command $\cdots$ 命令文\\
-%   & b : Bool $\cdots$ 条件文\\
-%   & cval : CommandValue $\cdots$ 値\\
-%   & ival : InplementVariable $\cdots$ 代入される変数\\
 
 それぞれの型の構造は以下のように定める. \\
-\subsection*{CommandList型}
-\begin{eqnarray*}
-  {\rm cList }&\bnfdef& \mbox{ c :: cList} \bnfor \mbox{ cList$_1$ $++$ cList$_2$} \bnfor \mbox{ Nil}\\
-\end{eqnarray*}
-実際の実装では単にScalaのList構造を用いている.
+% \subsection*{CommandList型}
+% \begin{eqnarray*}
+%   {\rm cList }&\bnfdef& \mbox{ c :: cList} \bnfor \mbox{ cList$_1$ $++$ cList$_2$} \bnfor \mbox{ Nil}\\
+% \end{eqnarray*}
+% 実際の実装では単にScalaのList構造を用いている.
 \subsection*{Command型}
 %  if b then list$_1$: List[Command] else list$_2$: List[Command]
 \begin{alignat*}{3}
@@ -49,7 +37,7 @@ cval, ivalは仕様書において, 字句解析器の変数や値として出�
     &|& &\mbox{ Set(ival, cval)} & &\mbox{ // ivalにcvalを代入する (ival $\leftarrow$ cval)} \\
     &|& &\mbox{ AppendTo(cval, ival)} & &\mbox{ // ivalにcvalを追加する (ival $\leftarrow$ ival + cval)} \\
     &|& &\mbox{ Emit(cval)} & &\mbox{ // トークンcvalを排出する} \\
-    &|& &\mbox{ Create(cval)} & &\mbox{ // トークンcvalを新たに作る} \\
+    &|& &\mbox{ Create(string, cval)} & &\mbox{ // トークンcvalを新たに作り, 変数stringにトークンcvalを代入する} \\
     &|& &\mbox{ Consume(cval)} & &\mbox{ // 文字cvalを消費する} \\
     &|& &\mbox{ Error(string)} & &\mbox{ // エラーstringを排出する} \\
     &|& &\mbox{ FlushCodePoint()} & &\mbox{ // 一時バッファの内容を排出する} \\
@@ -157,23 +145,24 @@ cval, ivalは仕様書において, 字句解析器の変数や値として出�
 \subsection*{CommandValue型}
 \begin{alignat*}{3}
   {\rm cval }::&= &\quad& \mbox{ StateName(string)} &\quad&\mbox{ // 状態名string}\\
-    &|& &\mbox{ ReturnState} & &\mbox{ // return state} \\
-    &|& &\mbox{ TemporaryBuffer} & &\mbox{ // temporary buffer} \\
-    &|& &\mbox{ CharacterReferenceCode} & &\mbox{ // character reference code} \\
-    &|& &\mbox{ NewStartTagToken} & &\mbox{ // 新しいstart tag token} \\
-    &|& &\mbox{ NewEndTagToken} & &\mbox{ // 新しいend tag token} \\
-    &|& &\mbox{ NewDOCTYPEToken} & &\mbox{ // 新しいDOCTYPE token} \\
-    &|& &\mbox{ NewCommentToken} & &\mbox{ // 新しいcomment token} \\
-    &|& &\mbox{ CurrentTagToken} & &\mbox{ // 一番新しく作られたtag token} \\
-    &|& &\mbox{ CurrentDOCTYPEToken} & &\mbox{ // 一番新しく作られたDOCTYPE token} \\
-    &|& &\mbox{ CurrentAttribute} & &\mbox{ // 一番新しく作られたattribute} \\
-    &|& &\mbox{ CommentToken} & &\mbox{ // 一番新しく作られたcomment token} \\
-    &|& &\mbox{ EndOfFileToken} & &\mbox{ // end of fileトークン} \\
-    &|& &\mbox{ CharacterToken(char)} & &\mbox{ // character token : char} \\
+    &|& &\mbox{ ReturnState} & &\mbox{ // 字句解析器の変数 : return state} \\
+    &|& &\mbox{ TemporaryBuffer} & &\mbox{ // 字句解析器の変数 : temporary buffer (一時バッファ)} \\
+    &|& &\mbox{ CharacterReferenceCode} & &\mbox{ // 字句解析器の変数 : character reference code} \\
+    &|& &\mbox{ NewStartTagToken} & &\mbox{ // 初期状態の開始タグトークン} \\
+    &|& &\mbox{ NewEndTagToken} & &\mbox{ // 初期状態の終了タグトークン} \\
+    &|& &\mbox{ NewDOCTYPEToken} & &\mbox{ // 初期状態のDOCTYPEトークン} \\
+    &|& &\mbox{ NewCommentToken} & &\mbox{ // 初期状態のコメントトークン} \\
+    &|& &\mbox{ CurrentTagToken} & &\mbox{ // 一番新しく作られたタグトークン} \\
+    &|& &\mbox{ CurrentDOCTYPEToken} & &\mbox{ // 一番新しく作られたDOCTYPEトークン} \\
+    &|& &\mbox{ CurrentAttribute} & &\mbox{ // 一番新しく作られたタグトークンの属性(attribute)} \\
+    &|& &\mbox{ CommentToken} & &\mbox{ // 一番新しく作られたコメントトークン} \\
+    &|& &\mbox{ EndOfFileToken} & &\mbox{ // EOFトークン} \\
+    &|& &\mbox{ CharacterToken(cval)} & &\mbox{ // 中身がcvalの文字トークン} \\
     &|& &\mbox{ LowerCase(cval)} & &\mbox{ // cvalの小文字} \\
     &|& &\mbox{ NumericVersion(cval)} & &\mbox{ // 16進数表記されているcvalの数字としての値} \\
     &|& &\mbox{ CurrentInputCharacter} & &\mbox{ // 現在消費した文字} \\
     &|& &\mbox{ NextInputCharacter} & &\mbox{ // 入力文字列の一番最初の文字} \\
+    &|& &\mbox{ Substitute(string, cval)} & &\mbox{ // cval\ (副作用として変数stringにcvalを代入する)} \\
     &|& &\mbox{ Variable(string)} & &\mbox{ // 変数string} \\
     &|& &\mbox{ CChar(char)} & &\mbox{ // Char型の値char} \\
     &|& &\mbox{ CString(string)} & &\mbox{ // String型の値string} \\
@@ -182,19 +171,19 @@ cval, ivalは仕様書において, 字句解析器の変数や値として出�
 \end{alignat*}
 \subsection*{InplementVariable型}
 \begin{alignat*}{3}
-  {\rm ival }::&= &\quad& \mbox{ IReturnState} &\quad&\mbox{ // return state}\\
-    &|& &\mbox{ ITemporaryBuffer} & &\mbox{ // 一時バッファ} \\
-    &|& &\mbox{ ICharacterReferenceCode} & &\mbox{ // character reference code} \\
-    &|& &\mbox{ ICurrentTagToken} & &\mbox{ // 一番新しく作られたtag token} \\
-    &|& &\mbox{ ICurrentDOCTYPEToken} & &\mbox{ // 一番新しく作られたDOCTYPE token} \\
-    &|& &\mbox{ ICurrentAttribute} & &\mbox{ // 一番新しく作られたattribute} \\
-    &|& &\mbox{ ICommentToken} & &\mbox{ // 一番新しく作られたcomment token} \\
+  {\rm ival }::&= &\quad& \mbox{ IReturnState} &\quad&\mbox{ // 字句解析器の変数 : return state}\\
+    &|& &\mbox{ ITemporaryBuffer} & &\mbox{ // 字句解析器の変数 : temporary buffer} \\
+    &|& &\mbox{ ICharacterReferenceCode} & &\mbox{ // 字句解析器の変数 : character reference code} \\
+    &|& &\mbox{ ICurrentTagToken} & &\mbox{ // 一番新しく作られたタグトークン} \\
+    &|& &\mbox{ ICurrentDOCTYPEToken} & &\mbox{ // 一番新しく作られたDOCTYPEトークン} \\
+    &|& &\mbox{ ICurrentAttribute} & &\mbox{ // 一番新しく作られたタグトークンの属性(attribute)} \\
+    &|& &\mbox{ ICommentToken} & &\mbox{ // 一番新しく作られたコメントトークン} \\
     &|& &\mbox{ IVariable(string)} & &\mbox{ // 変数string} \\
-    &|& &\mbox{ INameOf(ival)} & &\mbox{ // ivalの名前} \\
-    &|& &\mbox{ IValueOf(ival)} & &\mbox{ // ivalの値} \\
-    &|& &\mbox{ IFlagOf(ival)} & &\mbox{ // ivalのflag} \\
-    &|& &\mbox{ SystemIdentifierOf(ival)} & &\mbox{ // ivalのsystem identifier} \\
-    &|& &\mbox{ PublicIdentifierOf(ival)} & &\mbox{ // ivalのpublic identifier} \\
+    &|& &\mbox{ INameOf(ival)} & &\mbox{ // タグトークン, 属性であるivalの名前} \\
+    &|& &\mbox{ IValueOf(ival)} & &\mbox{ // 属性ivalの値} \\
+    &|& &\mbox{ IFlagOf(ival)} & &\mbox{ // DOCTYPE, タグトークンivalのフラグ} \\
+    &|& &\mbox{ SystemIdentifierOf(ival)} & &\mbox{ // DOCTYPEトークンivalのシステム識別子} \\
+    &|& &\mbox{ PublicIdentifierOf(ival)} & &\mbox{ // DOCTYPEトークンivalの公開識別子} \\
 \end{alignat*}
 
 string,char,int,booleanはそれぞれScalaの標準の型(String,Char,Int,Boolean)の値

@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.3-u1.26-191112-2.6 (utf8.uptex) (TeX Live 2020/W32TeX) (preloaded format=uplatex 2020.4.7)  17 JAN 2021 19:06
+This is e-upTeX, Version 3.14159265-p3.8.3-u1.26-191112-2.6 (utf8.uptex) (TeX Live 2020/W32TeX) (preloaded format=uplatex 2020.4.7)  19 JAN 2021 23:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -464,9 +464,9 @@ LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 File: figure/流れ2.png Graphic file (type bmp)
 <figure/流れ2.png>
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 35.
+(Font)              scaled to size 8.32214pt on input line 37.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 35.
+(Font)              scaled to size 8.32214pt on input line 37.
 )
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -488,19 +488,19 @@ LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 (Font)              scaled to size 13.31541pt on input line 10.
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 11.09619pt on input line 46.
+(Font)              scaled to size 11.09619pt on input line 48.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 11.09619pt on input line 46.
+(Font)              scaled to size 11.09619pt on input line 48.
 LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 11.09619pt on input line 46.
+(Font)              scaled to size 11.09619pt on input line 48.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 11.09619pt on input line 46.
+(Font)              scaled to size 11.09619pt on input line 48.
 LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 7.39746pt on input line 53.
+(Font)              scaled to size 7.39746pt on input line 55.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 7.39746pt on input line 53.
+(Font)              scaled to size 7.39746pt on input line 55.
 
-Package Listings Warning: Text dropped after begin of listing on input line 53.
+Package Listings Warning: Text dropped after begin of listing on input line 55.
 
 
 [3
@@ -534,7 +534,7 @@ Package Listings Warning: Text dropped after begin of listing on input line 40.
  (./commandFormat.tex
 第4章
 
-Overfull \hbox (8.0391pt too wide) detected at line 60
+Overfull \hbox (8.0391pt too wide) detected at line 48
 []
  []
 
@@ -543,7 +543,7 @@ Overfull \hbox (8.0391pt too wide) detected at line 60
 
 
 ]
-Overfull \hbox (50.59564pt too wide) detected at line 156
+Overfull \hbox (50.59564pt too wide) detected at line 144
 []
  []
 
@@ -560,78 +560,104 @@ Package Listings Warning: Text dropped after begin of listing on input line 32.
 
 
 
-] [14] [15]
+]
 
-Package Listings Warning: Text dropped after begin of listing on input line 136
+Package Listings Warning: Text dropped after begin of listing on input line 46.
+
+
+[14] [15]
+
+Package Listings Warning: Text dropped after begin of listing on input line 143
 .
 
 
-Package Listings Warning: Text dropped after begin of listing on input line 155
+Package Listings Warning: Text dropped after begin of listing on input line 162
 .
 
-[16] [17]) [18] [19]
+[16] [17]
+File: figure/tagTreeRoot.jpg Graphic file (type bmp)
+ <figure/tagTreeRoot.jpg>
+Overfull \hbox (13.14738pt too wide) in paragraph at lines 232--234
+ [][] 
+ []
+
+) [18]
 \openout2 = `extractionCommand.aux'.
 
  (./extractionCommand.tex
 第6章
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
 (Font)              scaled to size 5.5481pt on input line 19.
-[20
+[19
 
 
 
-] [21] [22] [23] [24] [25] [26]
-Overfull \hbox (141.00726pt too wide) in paragraph at lines 269--285
-[]\OT1/cmr/m/n/10 ROOT \JY2/mc/m/n/10 タグ直下の \OT1/cmr/m/n/10 S \JY2/mc
-/m/n/10 タグに $\OMS/cmsy/m/n/10 T[]$ \JY2/mc/m/n/10 を適用させると\O
-T1/cmr/m/n/10 ,     VP \JY2/mc/m/n/10 のやつにマ ッチして [] 
+] [20] [21] [22] [23] [24] [25] [26] [27]
+File: figure/tagTree.jpg Graphic file (type bmp)
+ <figure/tagTree.jpg>
+Overfull \hbox (3.10678pt too wide) in paragraph at lines 400--402
+ [][] 
+ []
+
+[28]
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 6.47278pt on input line 428.
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 4.62341pt on input line 428.
+
+Overfull \hbox (24.07886pt too wide) detected at line 428
+[]
  []
 
 
-Overfull \hbox (18.75682pt too wide) in paragraph at lines 269--285
-[]\JY2/mc/m/n/10 これに $\OMS/cmsy/m/n/10 T[]$ \JY2/mc/m/n/10 を適用さ
-せると\OT1/cmr/m/n/10 , Emit \JY2/mc/m/n/10 文にマ ッチして\OT1/cmr/m
-/n/10 , Emit($\OMS/cmsy/m/n/10 T[]$\OT1/cmr/m/n/10 (NP...))  [] 
+Overfull \hbox (35.30734pt too wide) detected at line 435
+[]
  []
 
-[27]) [28]
+File: figure/RCDATALT.png Graphic file (type bmp)
+<figure/RCDATALT.png> [29]) [30]
 \openout2 = `implementation.aux'.
 
  (./implementation.tex
 第7章
-\myBox1=\box107
-\myScoreStart1=\dimen256
-\myCenter1=\dimen257
-\myScoreEnd1=\dimen258
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 55.
-[29
+File: figure/インタープリタ.png Graphic file (type bmp)
+<figure/インタープリタ.png>
+
+Package Listings Warning: Text dropped after begin of listing on input line 23.
+
+
+[31
 
 
 
-] [30]) [31]
+]) [32]
 \openout2 = `evaluation.aux'.
 
  (./evaluation.tex
 第8章
-[32
+
+Overfull \hbox (17.2656pt too wide) in paragraph at lines 12--28
+[][][][] 
+ []
+
+[33
 
 
 
-]) [33]
+]) [34]
 \openout2 = `conclusion.aux'.
 
  (./conclusion.tex
 第9章
 File: figure/nptagEx.png Graphic file (type bmp)
-<figure/nptagEx.png>) [34
+<figure/nptagEx.png>) [35
 
 
 
 ]
 \openout2 = `acknowledgments.aux'.
 
- (./acknowledgments.tex) [35
+ (./acknowledgments.tex) [36
 
 
 ]
@@ -644,7 +670,7 @@ LaTeX Font Info:    Font shape `JY2/gt/m/it' in size <10> not available
 (Font)              Font shape `JY2/gt/m/n' tried instead on input line 17.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 (Font)              scaled to size 9.24683pt on input line 17.
-) [36
+) [37
 
 
 ]
@@ -661,13 +687,13 @@ LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 (C:/Users/ayaka/Desktop/textest/temp/target/conclusion.aux)
 (C:/Users/ayaka/Desktop/textest/temp/target/acknowledgments.aux)) ) 
 Here is how much of TeX's memory you used:
- 4373 strings out of 481133
- 58819 string characters out of 5919255
- 345676 words of memory out of 5000000
- 20290 multiletter control sequences out of 15000+600000
- 547642 words of font info for 103 fonts, out of 8000000 for 9000
+ 4392 strings out of 481133
+ 59229 string characters out of 5919255
+ 353742 words of memory out of 5000000
+ 20304 multiletter control sequences out of 15000+600000
+ 547751 words of font info for 104 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
  38i,20n,40p,378b,1754s stack positions out of 5000i,500n,10000p,500000b,80000s
 
-Output written on C:/Users/ayaka/Desktop/textest/temp/target/thesis.dvi (40 pag
-es, 115300 bytes).
+Output written on C:/Users/ayaka/Desktop/textest/temp/target/thesis.dvi (41 pag
+es, 130460 bytes).

@@ -4,96 +4,121 @@
 \begin{document}
 \chapter{実装}
 \label{実装}
-インタープリタを作成した.
-\section{概略}
+\ref{命令抽出}章でHTML5字句解析仕様から抽出し, 形式化したもの使ってHTML5の字句解析のインタープリタを作成した.
+\section{概要}
 % インタープリタの概略図書く
+\begin{figure}[h]
+    \centering
+    \includegraphics[keepaspectratio, scale=0.5]
+         {figure/インタープリタ.png}
+    \caption{インタープリタ概略}
+    \label{interpret}
+\end{figure}
+形式化した命令をもとに動かす. 
+\section{インタープリタの実装の詳細}
+\subsection{CommandValue型の解釈}
+CommandValue型と環境を受け取り, Value型を返す関数を実装した.
+\subsubsection{Value型}
+インタープリタで扱う値の型
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, caption=Value型,label=Value][htbp]
+    IntVal(int: Int)
+    BooleanVal(boolean: Boolean)
+    CharVal(c: Char)
+    StringVal(string: String)
+    EOFVal
+    StateVal(statename: String)
+    TokenVal(token: Token)
+\end{lstlisting}
+\subsection{Command型の解釈}
+Command型と環境を受け取り, 新しい環境, 排出トークン, エラー内容を返す関数を実装した.
 
-\section{Env}
-next state
+% \section{字句解析器の変数}
+% next state
 
-current state
+% current state
 
-return state
+% return state
 
 
-\section{Command型}
-実装したCommand型のそれぞれの動作を操作的意味論を用いて表す. 
-\subsection*{Switch(state: CommandValue)}
-$\langle$ Switch(state), $env \rangle \rightarrow env[nextState \leftarrow \mathcal{I}_{cval}[\![state]\!] ]$
+% \section{Command型}
+% 実装したCommand型のそれぞれの動作を操作的意味論を用いて表す. 
+% \subsection*{Switch(state: CommandValue)}
+% $\langle$ Switch(state), $env \rangle \rightarrow env[nextState \leftarrow \mathcal{I}_{cval}[\![state]\!] ]$
 
-\subsection*{Recomsume(state: CommandValue)}
-$\langle$ Recomsume(state), $env \rangle \rightarrow env[nextState \leftarrow \mathcal{I}_{cval}[\![state]\!] , {\rm inputText} \leftarrow {\rm char + inputText} ]$\\
- if currentInputCharacter = CharVal(char)\\
-$\langle$ Recomsume(state), $env \rangle \rightarrow env[nextState \leftarrow \mathcal{I}_{cval}[\![state]\!] , {\rm inputText} \leftarrow {\rm string + inputText} ]$\\
- if currentInputCharacter = StringVal(string)\\
-$\langle$ Recomsume(state), $env \rangle \rightarrow env[nextState \leftarrow \mathcal{I}_{cval}[\![state]\!] ]$\\
- if currentInputCharacter = EOFVal\\
+% \subsection*{Recomsume(state: CommandValue)}
+% $\langle$ Recomsume(state), $env \rangle \rightarrow env[nextState \leftarrow \mathcal{I}_{cval}[\![state]\!] , {\rm inputText} \leftarrow {\rm char + inputText} ]$\\
+%  if currentInputCharacter = CharVal(char)\\
+% $\langle$ Recomsume(state), $env \rangle \rightarrow env[nextState \leftarrow \mathcal{I}_{cval}[\![state]\!] , {\rm inputText} \leftarrow {\rm string + inputText} ]$\\
+%  if currentInputCharacter = StringVal(string)\\
+% $\langle$ Recomsume(state), $env \rangle \rightarrow env[nextState \leftarrow \mathcal{I}_{cval}[\![state]\!] ]$\\
+%  if currentInputCharacter = EOFVal\\
 
-\subsection*{Consume()}
+% \subsection*{Consume()}
 
-\subsection*{Consume()}
+% \subsection*{Consume()}
 
-\subsection*{Consume()}
+% \subsection*{Consume()}
 
-\subsection*{Consume()}
+% \subsection*{Consume()}
 
-\subsection*{Consume()}
+% \subsection*{Consume()}
 
-\subsection*{Consume()}
+% \subsection*{Consume()}
 
-\subsection*{Consume()}
+% \subsection*{Consume()}
 
-\subsection*{Consume()}
+% \subsection*{Consume()}
 
-\subsection*{Consume()}
+% \subsection*{Consume()}
 
-\subsection*{Consume()}
+% \subsection*{Consume()}
 
-\subsection*{If(bool: Bool, t: CommandList, f: CommandList)}
-\begin{prooftree}
-    \AxiomC{$\langle$ clist1, $env\rangle \rightarrow env^\prime $ }
-    \RightLabel{{\scriptsize if $\mathcal{B}[\![b]\!] = true$}}
-    \UnaryInfC{$\langle$if $b$ then clist1 else clist2, $env\rangle \rightarrow env^\prime$}
-\end{prooftree}
-\begin{prooftree}
-    \AxiomC{$\langle$ clist2, $env\rangle \rightarrow env^\prime $ }
-    \RightLabel{{\scriptsize if $\mathcal{B}[\![\mathcal{C}[\![b]\!]]\!] = false$}}
-    \UnaryInfC{$\langle$if $b$ then clist1 else clist2, $env\rangle \rightarrow env^\prime$}
-\end{prooftree}
+% \subsection*{If(bool: Bool, t: CommandList, f: CommandList)}
+% \begin{prooftree}
+%     \AxiomC{$\langle$ clist1, $env\rangle \rightarrow env^\prime $ }
+%     \RightLabel{{\scriptsize if $\mathcal{B}[\![b]\!] = true$}}
+%     \UnaryInfC{$\langle$if $b$ then clist1 else clist2, $env\rangle \rightarrow env^\prime$}
+% \end{prooftree}
+% \begin{prooftree}
+%     \AxiomC{$\langle$ clist2, $env\rangle \rightarrow env^\prime $ }
+%     \RightLabel{{\scriptsize if $\mathcal{B}[\![\mathcal{C}[\![b]\!]]\!] = false$}}
+%     \UnaryInfC{$\langle$if $b$ then clist1 else clist2, $env\rangle \rightarrow env^\prime$}
+% \end{prooftree}
 
-\section{Bool型}
-\subsection*{And(a: Bool, b: Bool)}
-\subsection*{CharacterReferenceConsumedAsAttributeVal()}
-\subsection*{CurrentEndTagIsAppropriate()}
-\subsection*{IsEqual(a: CommandValue, b: CommandValue)}
+% \section{Bool型}
+% \subsection*{And(a: Bool, b: Bool)}
+% \subsection*{CharacterReferenceConsumedAsAttributeVal()}
+% \subsection*{CurrentEndTagIsAppropriate()}
+% \subsection*{IsEqual(a: CommandValue, b: CommandValue)}
 
-\section{Token型}
-tagToken(isStart: Boolean, name: String, attributes: List[Attribute])
-DOCTYPEToken( systemIdentifier: String, publicIdentifier: String)
-characterToken()
-\section{Value}
-CharVal(c: Char)
-StringVal(string: String)
-EOFVal
-StateVal(statename: String)
-TokenVal(token: Token)
+% \section{Token型}
+% tagToken(isStart: Boolean, name: String, attributes: List[Attribute])
+% DOCTYPEToken( systemIdentifier: String, publicIdentifier: String)
+% characterToken()
 
-\section{CommandValue型}
-CommandValue型からValue型の値を返す関数\\
-$C : {\rm CommandValue} \rightarrow {\rm Value} $\\
-\subsection*{LowerCaseVersion(cVal: CommandValue)}
-c.toLowerCase if $C[\![$cVal$]\!] = $c: Char or String
-\subsection*{NumericVersion(cVal: CommandValue)}
-Integer.parseInt(c.toString, 16)
-\subsection*{NextInputCharacter}
-$
-\begin{cases}
-    {\rm CharVal(c)} & {\rm inputText.headOption} = {\rm Some(c)} \\
-    {\rm EOFVal} & {\rm inputText.headOption} = {\rm None}
-\end{cases}
-$
-\subsection*{CurrentInputCharacter}
-currentInputCharacter
-\subsection*{EndOfFileToken}
-TokenVal(endOfFileToken())
+
+% \section{CommandValue型}
+% CommandValue型からValue型の値を返す関数\\
+% $C : {\rm CommandValue} \rightarrow {\rm Value} $\\
+% \subsection*{LowerCaseVersion(cVal: CommandValue)}
+% c.toLowerCase if $C[\![$cVal$]\!] = $c: Char or String
+% \subsection*{NumericVersion(cVal: CommandValue)}
+% Integer.parseInt(c.toString, 16)
+% \subsection*{NextInputCharacter}
+% $
+% \begin{cases}
+%     {\rm CharVal(c)} & {\rm inputText.headOption} = {\rm Some(c)} \\
+%     {\rm EOFVal} & {\rm inputText.headOption} = {\rm None}
+% \end{cases}
+% $
+% \subsection*{CurrentInputCharacter}
+% currentInputCharacter
+% \subsection*{EndOfFileToken}
+% TokenVal(endOfFileToken())
+
+% \section{ImplementVariable型}
+% $\mathcal{I}_{ival}$
+% \subsection{IReturnState}
+% returnState
+
 \end{document}

@@ -166,6 +166,8 @@ INPUT commandFormat.tex
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/nlProcessing.aux
 INPUT nlProcessing.tex
 INPUT nlProcessing.tex
+INPUT figure/tagTreeRoot.jpg
+INPUT extractbb -B cropbox -O figure/tagTreeRoot.jpg
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/extractionCommand.aux
 INPUT extractionCommand.tex
 INPUT extractionCommand.tex
@@ -180,10 +182,17 @@ INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisr-h.tfm
+INPUT figure/tagTree.jpg
+INPUT extractbb -B cropbox -O figure/tagTree.jpg
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisr-v.tfm
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisr-v.tfm
+INPUT figure/RCDATALT.png
+INPUT extractbb -B cropbox -O figure/RCDATALT.png
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/implementation.aux
 INPUT implementation.tex
 INPUT implementation.tex
-INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisr-v.tfm
+INPUT figure/インタープリタ.png
+INPUT extractbb -B cropbox -O figure/インタープリタ.png
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/evaluation.aux
 INPUT evaluation.tex
 INPUT evaluation.tex
