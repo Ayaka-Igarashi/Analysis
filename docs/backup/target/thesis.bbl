@@ -1,9 +1,16 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{html5lib-tests}
 James Graham, Geoffrey Sneddon, et~al.
 \newblock html5lib-tests, 2020.
 \newblock \url{https://github.com/html5lib/html5lib-tests}.
+
+\bibitem{7272551}
+J.~G. {Greghi}, E.~{Martins}, and A.~M. B.~R. {Carvalho}.
+\newblock Semi-automatic generation of extended finite state machines from
+  natural language standard documents.
+\newblock In {\em 2015 IEEE International Conference on Dependable Systems and
+  Networks Workshops}, pages 45--50, 2015.
 
 \bibitem{jsoup}
 Jonathan Hedley.

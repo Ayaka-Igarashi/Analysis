@@ -2,23 +2,21 @@
 \usepackage{thesis}
 
 \begin{document}
-\chapter{抽出の形式（モデル）}
+\chapter{命令の形式（モデル）}
 \label{形式}
-HTML5の仕様書から命令を抽出するため, BNFの記法を用いて, 命令を形式化する.
-\section{1状態の目標とする形}%後ろに移動する
-
+BNFの記法を用いて, HTML5の字句解析の仕様書から抽出する命令を形式化する.
 \section{抽出する命令の形式}
 % 例：抽出する命令を形式化したいため, BNFで命令を定義した.
 %BNFの形式を使って, 仕様書から抽出したい命令を形式化する.\\
 % 仕様書において, 字句解析器の変数や値として出てくるもの
-まず命令の形式の, メタ変数, 型を以下で定める.\\
+まず形式化する命令の, 型とそのメタ変数を以下で定める.\\
 \begin{alignat*}{3}%  &{\rm cList } & &{\rm : CommandList }&\quad&\cdots 命令文のリスト\\
-  &{\rm c }& &{\rm : Command }&\quad &\cdots 命令文\\
-  &{\rm b }& &{\rm : Bool }& &\cdots {\rm if}文の命令文の条件部分の文\\
-  &{\rm cval }& &{\rm : CommandValue }& &\cdots 命令文が引数に持つ値\\
-  &{\rm ival }& &{\rm : InplementVariable} & &\cdots 命令文が引数に持つ代入される変数の種類\\
+  &{\rm c }&\quad &{\rm : Command }&\quad &\cdots\ 命令文の型\\
+  &{\rm b }& &{\rm : Bool }& &\cdots\ {\rm if}文の命令文の条件部分の文の型\\
+  &{\rm cval }& &{\rm : CommandValue }& &\cdots\ 命令文が引数に持つ値の型\\
+  &{\rm ival }& &{\rm : InplementVariable} & &\cdots\ 命令文が引数に持つ代入される変数の種類の型\\
 \end{alignat*}
-cval, ivalは仕様書において, 字句解析器の変数や値として出てくるものであり, ivalは代入される対象, cvalは代入するものを表している. \\
+CommandValue型, InplementVariable型はそれぞれ字句解析器の仕様書に変数や値として出てくる単語を形式化したものであり, InplementVariable型は値を代入される変数として, CommandValue型は単に値をとして区別している. \\
 メタ変数は, c$_1$, c$_2$のように, 添え字つけられていてもよいものとする. \\
 
 それぞれの型の構造は以下のように定める. \\
@@ -30,21 +28,26 @@ cval, ivalは仕様書において, 字句解析器の変数や値として出�
 \subsection*{Command型}
 %  if b then list$_1$: List[Command] else list$_2$: List[Command]
 \begin{alignat*}{3}
-  {\rm c }::&= &\quad&\mbox{ If(b, cList$_1$, cList$_2$)} &\quad&\mbox{ // if b then cList$_1$ else cList$_2$}\\
-    &|& &\mbox{ Ignore()} & &\mbox{ // 何もしない処理} \\
-    &|& &\mbox{ Switch(cval)} & &\mbox{ // 状態cvalへ遷移する} \\
-    &|& &\mbox{ Reconsume(cval)} & &\mbox{ // 状態cvalへ遷移. この状態で消費した文字を,次の状態で再度消費する.} \\
-    &|& &\mbox{ Set(ival, cval)} & &\mbox{ // ivalにcvalを代入する (ival $\leftarrow$ cval)} \\
-    &|& &\mbox{ AppendTo(cval, ival)} & &\mbox{ // ivalにcvalを追加する (ival $\leftarrow$ ival + cval)} \\
-    &|& &\mbox{ Emit(cval)} & &\mbox{ // トークンcvalを排出する} \\
-    &|& &\mbox{ Create(string, cval)} & &\mbox{ // トークンcvalを新たに作り, 変数stringにトークンcvalを代入する} \\
-    &|& &\mbox{ Consume(cval)} & &\mbox{ // 文字cvalを消費する} \\
-    &|& &\mbox{ Error(string)} & &\mbox{ // エラーstringを排出する} \\
+  {\rm c }::&= &\quad&\mbox{ If(b, cList$_1$, cList$_2$)} &\quad&\mbox{ // if b then cList$_1$ else cList$_2$ (cList$_1$, cList$_2$はCommand型のリストの値)}\\
+    &|& &\mbox{ Ignore()} & &\mbox{ // 何もしない} \\
+    &|& &\mbox{ Switch(cval)} & &\mbox{ // cvalが状態を表す値の時, 状態cvalへ遷移する} \\
+    &|& &\mbox{ Reconsume(cval)} & &\mbox{ // cvalが状態を表す値の時, 状態cvalへ遷移. } \\
+    & & & & &\mbox{ \hspace{12pt}この状態で消費した文字を, 次の状態で再度消費する.} \\
+    &|& &\mbox{ Set(ival, cval)} & &\mbox{ // 変数ivalに値cvalを代入する (ival $\leftarrow$ cval)} \\
+    &|& &\mbox{ AppendTo(cval, ival)} & &\mbox{ // ival, cvalが文字, 文字列を表す値の時, 変数ivalの値に, 値cvalを後ろから追加する } \\
+    & & & & &\mbox{ \hspace{12pt}(ival $\leftarrow$ ival + cval)} \\
+    &|& &\mbox{ Emit(cval)} & &\mbox{ // cvalがトークンを表す値の時, トークンcvalを排出する} \\
+    &|& &\mbox{ Create(string, cval)} & &\mbox{ // cvalがトークンを表す値の時, } \\
+    & & & & &\mbox{ \hspace{12pt}トークンcvalを新たに作り, 変数stringにトークンcvalを代入する} \\
+    &|& &\mbox{ Consume(cval)} & &\mbox{ // cvalが文字, 文字列を表す値の時, 文字cvalを入力文字列から消費する} \\
+    &|& &\mbox{ Error(string)} & &\mbox{ // 構文エラーstringを排出する} \\
     &|& &\mbox{ FlushCodePoint()} & &\mbox{ // 一時バッファの内容を排出する} \\
-    &|& &\mbox{ StartAttribute()} & &\mbox{ // 現在のtagTokenに新しい属性を加える} \\
-    &|& &\mbox{ TreatAsAnythingElse()} & &\mbox{ // AnythingElseの処理内容を実行する} \\
-    &|& &\mbox{ AddTo(cval, ival)} & &\mbox{ // ival $\leftarrow$ ival + cval } \\
-    &|& &\mbox{ MultiplyBy(ival, cval)} & &\mbox{ // ival $\leftarrow$ ival * cval} \\
+    &|& &\mbox{ StartAttribute()} & &\mbox{ // 現在のタグトークンに対して新しい属性を追加する} \\
+    &|& &\mbox{ TreatAsAnythingElse()} & &\mbox{ // 現在の状態のAnythingElseに記述してある処理を実行する} \\
+    &|& &\mbox{ AddTo(cval, ival)} & &\mbox{ // ival, cvalが数字を表す値の時, 変数ivalの値に, 値cvalを足す} \\
+    & & & & &\mbox{ \hspace{12pt}(ival $\leftarrow$ ival + cval)} \\
+    &|& &\mbox{ MultiplyBy(ival, cval)} & &\mbox{ // ival, cvalが数字を表す値の時, 変数ivalの値に, 値cvalをかける} \\
+    & & & & &\mbox{ \hspace{12pt}(ival $\leftarrow$ ival * cval)} \\
 \end{alignat*}
 
 % \begin{alignat*}{3}
@@ -136,8 +139,8 @@ cval, ivalは仕様書において, 字句解析器の変数や値として出�
       &|& &\mbox{ Or(b$_1$, b$_2$)} & &\mbox{ // b$_1$ または b$_2$ である} \\
       &|& &\mbox{ Not(b)} & &\mbox{ // bでない} \\
       &|& &\mbox{ CharacterReferenceConsumedAsAttributeVal}()& & \mbox{ // CharacterReferenceCodeが属性の値として} \\
-      & & & & &\mbox{ \hspace{12pt}消費されているか} \\
-      &|& &\mbox{ CurrentEndTagIsAppropriate}()& & \mbox{ // EndTagTokenが適切なものであるか } \\
+      & & & & &\mbox{ \hspace{12pt}消費されている} \\
+      &|& &\mbox{ CurrentEndTagIsAppropriate}()& & \mbox{ // EndTagTokenが適切なものである } \\
       &|& &\mbox{ IsEqual(cval$_1$, cval$_2$)} & &\mbox{ // cval$_1$とcval$_2$の値が等しい} \\
       &|& &\mbox{ AsciiCaseInsensitiveMatch(cval$_1$, cval$_2$)} & &\mbox{ // cval$_1$とcval$_2$が文字列であるとき, } \\
       & & & & &\mbox{ \hspace{12pt}大文字, 小文字の差を無視しcval$_1$とcval$_2$の値が等しい} \\
@@ -162,13 +165,13 @@ cval, ivalは仕様書において, 字句解析器の変数や値として出�
     &|& &\mbox{ NumericVersion(cval)} & &\mbox{ // 16進数表記されているcvalの数字としての値} \\
     &|& &\mbox{ CurrentInputCharacter} & &\mbox{ // 現在消費した文字} \\
     &|& &\mbox{ NextInputCharacter} & &\mbox{ // 入力文字列の一番最初の文字} \\
+    &|& &\mbox{ On} & &\mbox{ // フラグの状態 : On} \\
     &|& &\mbox{ Substitute(string, cval)} & &\mbox{ // cval\ (副作用として変数stringにcvalを代入する)} \\
     &|& &\mbox{ Variable(string)} & &\mbox{ // 変数string} \\
     &|& &\mbox{ CChar(char)} & &\mbox{ // Char型の値char} \\
     &|& &\mbox{ CString(string)} & &\mbox{ // String型の値string} \\
     &|& &\mbox{ CInt(int)} & &\mbox{ // Int型の値int} \\
-    &|& &\mbox{ CBool(boolean)} & &\mbox{ // Boolean型の値boolean} \\
-\end{alignat*}
+\end{alignat*}%&|& &\mbox{ CBool(boolean)} & &\mbox{ // Boolean型の値boolean} \\
 \subsection*{InplementVariable型}
 \begin{alignat*}{3}
   {\rm ival }::&= &\quad& \mbox{ IReturnState} &\quad&\mbox{ // 字句解析器の変数 : return state}\\
@@ -187,27 +190,26 @@ cval, ivalは仕様書において, 字句解析器の変数や値として出�
 \end{alignat*}
 
 string,char,int,booleanはそれぞれScalaの標準の型(String,Char,Int,Boolean)の値
+
 \section{命令形式の例}
-自然言語の文から, 上記の形式への変換の例をいくつか記す.\\
+自然言語の文から, 上記の命令の形式への変換の例をいくつか示す.\\
 
-状態Data_stateへ遷移するという意味の文に関して, 
-
-Switch to the Data_state.\\
 %$\Rightarrow$ Switch(\underline{the Data_state})\\
-$\Rightarrow$ Switch(StateName(Data_state))
+状態Data_stateへ遷移するという意味の文 ``Switch to the Data_state.'' 
+は, Switch(StateName(Data_state)) として抽出される. \\
+(状態名を意味するStateName(Data_state)というCommandValue型の値を持つ, Command型の値Switch)\\
+%Switchという遷移を意味する
 
-状態名を意味するStateName(Data_state)というCommandValue型の値を持つ, Switchという遷移を意味するCommand型の値に変換する.\\
-
-また, 現在のタグトークン名に, 現在消費した文字を小文字にしたものを付け足すという意味の文に関して, 
-
-Append the lowercase version of the current input character to the current tag token's tag name.\\
-$\Rightarrow$ Append(LowerCase(CurrentInputCharacter), INameOf(CurrentTagToken))
-
-第1引数に``現在消費した文字の小文字''を意味するCommandValue型の値, 第2引数に``現在のタグトークン名''を意味するImplementVariable型の値を持つCommand型のAppendという値に変換される.\\
+また, 現在のタグトークン名に, 現在消費した文字を小文字にしたものを付け足すという意味の文 
+``Append the lowercase version of the current input character to the current tag token's tag name.'' は, \\
+Append(LowerCase(CurrentInputCharacter), INameOf(CurrentTagToken)) として抽出される. \\
+(第1引数に``現在消費した文字の小文字''を意味するCommandValue型の値, 第2引数に``現在のタグトークン名''を意味するImplementVariable型の値を持つCommand型の値Append)\\
 
 この自然言語の文章から上記の形式への変換の過程を\ref{自然言語処理}, \ref{命令抽出}章で説明していく.\\
 % 自然言語処理の情報を取り出す過程を5章
 % 取り出した情報からCommand型へ変換する過程を6章
+
+
 
 % \begin{eqnarray*}
 %     {\rm c }&::=& \mbox{if $\langle$Bool$\rangle$ then $\langle$cList$\rangle_1$ else $\langle$cList$\rangle_2$}\\

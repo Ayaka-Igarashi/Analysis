@@ -7,17 +7,18 @@
 \ref{自然言語処理}章において自然言語処理し, その出力を利用して得たTag型の情報を用いて, \ref{形式}章で定式化した形での命令の抽出を行う.
 %% 自然言語処理で取り出した情報(tag構造)を使ってどう命令の抽出を行ったか.
 \section{Tag型からCommandへの変換}
-Tag型の形に関してのパターンマッチングをして, CommandList型の値へ変換する.
+Tag型の形に関してのパターンマッチングをして, Command型のリストの値へ変換する.
 Tag型のNodeのNodeTypeがS, VP, NP(文, 動詞句, 名詞句)である場合に分け, 変換を行った. 
 木の形のマッチに関しては, 葉の値は単語の原型の情報のみ表記, 使用する.\\
 
 この変換を関数として表記する.\\
-NodeTypeがSであるNodeから, CommandList型へ変換する関数を$\mathcal{T_S}$, 
-NodeTypeがVPであるNodeから, CommandList型へ変換する関数を$\mathcal{T}_{VP}$, 
-NodeTypeがNPであるNodeから, CommandList型へ変換する関数を$\mathcal{T}_{NP}$と書く.
+NodeTypeがSであるNodeから, Command型のリストへ変換する関数を$\mathcal{T_S}$, 
+NodeTypeがVPであるNodeから, Command型のリストへ変換する関数を$\mathcal{T}_{VP}$, 
+NodeTypeがNPであるNodeから, CommandValue型へ変換する関数を$\mathcal{T}_{NP_{C}}$, 
+ImplementVariable型へ変換する関数を$\mathcal{T}_{NP_{I}}$, と書く.
 
 \subsection{文(Sノード)の変換 $\mathcal{T_S}$}
-$\mathcal{T_S}$は以下のパターンマッチを行い, マッチしたものに応じたCommandList型の値を返す.
+$\mathcal{T_S}$は以下のパターンマッチを行い, マッチしたものに応じたCommand型のリストの値を返す.
 
 \subsubsection{子ノードの先頭がSノード}
 Sの子ノードのリストの先頭がSノードの場合, つまりTag型が
@@ -43,7 +44,7 @@ $\mathcal{T}_S$(Node(S, rst)) を返す.
 (``and'', ``then'', カンマは無視し, 子ノードの残りのノードに関して$\mathcal{T}_S$を適用する.)
 
 \subsubsection{子ノードが空リスト}
-Sの子ノードの空リストの場合, Nil を返す.\\
+Sの子ノードの空リストの場合, 空リスト を返す.\\
 
 \subsubsection{子ノードの先頭がVPノード}
 Sの子ノードのリストの先頭がVPノードの場合, つまりTag型が
@@ -65,7 +66,7 @@ Sの子ノードのリストの先頭が条件文, つまりTag型が,
            [.rst ]
       ]\\
 の形 (rst はTag型のリスト) \\ $\Rightarrow$ 
-IF_($\mathcal{T_B}$(bool)) :: $\mathcal{T_S}$(Node(S,rst))\\
+$[\ $IF_($\mathcal{T_B}$(bool))$\ ]$ ++ $\mathcal{T_S}$(Node(S,rst))\\
 を返す.\\
 %Otherwise文====
 \subsubsection{子ノードの先頭がOtherwise}
@@ -74,7 +75,7 @@ Sの子ノードのリストの先頭が``Otherwise''のとき, つまりTag 型
            [.rst ]
       ]\\
 の形 (rst はTag型のリスト) \\ $\Rightarrow$ 
-Otherwise_() :: $\mathcal{T_S}$(Node(S,rst)) を返す.\\
+$[\ $Otherwise_()$\ ]$ ++ $\mathcal{T_S}$(Node(S,rst)) を返す.\\
 %error
 \subsubsection{Error文のマッチ}
 Tag型が, 
@@ -84,7 +85,7 @@ Tag型が,
             ]
       ]\\
 の形 \\ $\Rightarrow$ 
-Error($\cdots$ error) :: Nil を返す.\\
+$[\ $Error($\cdots$ error)$\ ]$ を返す.\\
 
 \subsection{動詞句(VPノード)の変換 $\mathcal{T}_{VP}$}
 NodeTypeがVPであるNode(動詞句)から, Command型のリストへ変換する関数を$\mathcal{T}_{VP}$と置く.\\
@@ -96,7 +97,7 @@ VPの子ノードのリストの先頭がVPノードの場合, つまりTag型�
            [.rst ]
       ]\\
 という木構造の形の時, 
-$\mathcal{T}_{VP}$(Node(VP,vp1)) ++ $\mathcal{T}_{VP}$(Node(VP,rst)) を返す.\\
+$\mathcal{T}_{VP}$(Node(VP,vp1))  ++  $\mathcal{T}_{VP}$(Node(VP,rst))  を返す.\\
 
 \subsubsection*{子ノードの先頭がand, カンマ(VPを繋ぐ単語)}
 VPの子ノードのリストの先頭が葉``and'', カンマの場合, つまりTag型が\\
@@ -109,7 +110,7 @@ VPの子ノードのリストの先頭が葉``and'', カンマの場合, つま�
 という木構造の形の時, 
 $\mathcal{T}_{VP}$(Node(VP, rst)) を返す.\\
 \subsubsection*{子ノードが空リスト}
-VPの子ノードの空リストの場合, Nil を返す.\\
+VPの子ノードの空リストの場合, 空のコマンド型のリストを返す.\\
 
 \subsubsection*{Switch文のマッチ}
 (元の文 : Switch to the $\cdots$ state)\\
@@ -121,7 +122,7 @@ Tagの形が,\\
            ]
       ]\\
 の時, 
-Switch($\mathcal{T}_{NP}$(np1)) :: Nil を返す.
+$[\ $Switch($\mathcal{T}_{NP_{C}}$(np1)) $\ ]$ を返す.
 \subsubsection*{Reconsume文のマッチ}
 Reconsume in the $\cdots$ state\\
 \Tree [.VP [.VB reconusme ]
@@ -131,11 +132,11 @@ Reconsume in the $\cdots$ state\\
            ]
       ]\\
 の時, 
-Reconsume($\mathcal{T}_{NP}$(np1)) :: Nil を返す.
+$[\ $Reconsume($\mathcal{T}_{NP_{C}}$(np1)) $\ ]$ を返す.
 % $\rightarrow$Reconsume($\langle$state$\rangle$)
 
 \subsubsection*{Set文のマッチ}
-変数に値を代入する.
+% 変数に値を代入する.
 \Tree [.VP [.VB set ]
            [.NP np1 ]
            [.NP
@@ -143,9 +144,9 @@ Reconsume($\mathcal{T}_{NP}$(np1)) :: Nil を返す.
               [.NP np2 ]
            ]
       ]\\
-の場合 \\ $\Rightarrow$ 
-Set($\mathcal{T}_{NP}$(Node(NP, np1)), $\mathcal{T}_{NP}$(Node(NP, np2))) を返す. \\
-変数の状態を変える.
+の場合, 
+$[\ $Set($\mathcal{T}_{NP_{I}}$(Node(NP, np1)), $\mathcal{T}_{NP_{C}}$(Node(NP, np2))) $\ ]$ を返す. \\
+% 変数の状態を変える.
 \Tree [.VP [.VB set ]
             [.NP np ]
             [.PP
@@ -153,32 +154,31 @@ Set($\mathcal{T}_{NP}$(Node(NP, np1)), $\mathcal{T}_{NP}$(Node(NP, np2))) を返
                 [.PP pp ]
             ]
         ]\\
-の場合 \\ $\Rightarrow$ 
+の場合, \\ 
 ppが``on''だったら, 
-Set($\mathcal{T}_{NP}$(Node(NP, np)), On) を返す. \\
+$[\ $Set($\mathcal{T}_{NP}$(Node(NP, np)), On) $\ ]$ を返す. \\
 % ``off''だったら, 
 % Set($\mathcal{T}_{NP}$(Node(NP, np)), CBool(false)) を返す. \\
 
 \paragraph{個別に対応したSet文のマッチ}
-
 % onと書かれていないflag
-``Set the self-closing flag of the current tag token.'' のような状態の切り替え先を示す``to on''が省略されている場合もあった.
+``Set the self-closing flag of the current tag token.'' のような状態の切り替え先を示す``to on''が省略されている場合がある.
 このような文の構文木は\\
 \Tree [.VP [.VB set ]
             [.NP np ]
         ]\\
-となる.よってこの形にマッチした場合は, 
-Set($\mathcal{T}_{NP}$(Node(NP, np)), On)とさせた.
+となる. よってこの形にマッチした場合は, 
+$[\ $Set($\mathcal{T}_{NP}$(Node(NP, np)), On) $\ ]$ を返す.\\
 
 % Setのとこ手を加えたやつ===
 ``Set that attribute's name to the current input character, and its value to the empty string.'' 
-みたいな文は木構造が上記のものと違うものになってきてしまうので, 個別に対応した. \\
-木構造が, \\
+みたいな文は木構造が上記のものと違うものになってきてしまうので, これを個別に対応した. \\
+木構造が, 
 \Tree [.VP [.VB set ]
             [.NP [.NP [.NP np1 ]
                         [.To to ]
                         [.NP np2 ] ]
-                  [., , ]
+                  [.Comma , ]
                   [.CC and ]
                   [.NP [.NP np3 ]
                         [.PP [.IN to ]
@@ -201,29 +201,31 @@ $[\ $Set($\mathcal{T}_{NP}$(Node(NP, np1)), $\mathcal{T}_{NP}$(Node(NP, np2))), 
                   [.PP [.IN to ]
                         [.NP nplist2 ] ] ]
  ]\\
-の場合 \\ $\Rightarrow$ 
-AppendTo($\mathcal{T}_{NP}$(Node(NP, nplist1)), $\mathcal{T}_{NP}$(Node(NP, nplist2))) を返す. \\
+の場合, 
+$[\ $AppendTo($\mathcal{T}_{NP}$(Node(NP, nplist1)), $\mathcal{T}_{NP}$(Node(NP, nplist2))) $\ ]$を返す. \\
 \subsubsection*{Emit文のマッチ}
 木構造が, 
 \Tree [.VP [.VB emit ]
            [.NP nplist ]
       ]\\
-の場合 \\ $\Rightarrow$ 
-Emit($\mathcal{T}_{NP}$(Node(NP, nplist))) を返す. \\
+の場合, 
+% for all np $\leftarrow$ $\mathcal{D}$(Node(NP, nplist)) \\
+% \quad $[\ $Emit($\mathcal{T}_{NP}$(np)) $\ ]$ を返す. \\
+$\mathcal{D}$(Node(NP, nplist)).map (np $\Rightarrow$ Emit($\mathcal{T}_{NP}$(np))) を返す. \\
 木構造が, 
 \Tree [.VP [.VB emit ]
       [.NP nplist ]
       \qroof{as a character token}.PP
  ]\\
-の場合 \\ $\Rightarrow$ 
-Emit(CharacterToken($\mathcal{T}_{NP}$(Node(NP, nplist)))) を返す.
+の場合, 
+$[\ $Emit(CharacterToken($\mathcal{T}_{NP}$(Node(NP, nplist)))) $\ ]$ を返す.
 \subsubsection*{Consume文のマッチ}
 木構造が, 
 \Tree [.VP [.VB consume ]
            [.NP nplist ]
       ]\\
-の場合 \\ $\Rightarrow$ 
-Consume($\mathcal{T}_{NP}$(Node(NP, nplist))) を返す.
+の場合, 
+$[\ $Consume($\mathcal{T}_{NP}$(Node(NP, nplist)))  $\ ]$を返す.
 \subsubsection*{Create文のマッチ}
 木構造が, 
 \Tree [.VP [.VB create ]
@@ -232,10 +234,10 @@ Consume($\mathcal{T}_{NP}$(Node(NP, nplist))) を返す.
 の場合 \\ 
 nplistの単語に番号nの参照関係が存在 
 $\Rightarrow$ 
-Create(``x$_n$'', $\mathcal{T}_{NP}$(Node(NP, nplist))) を返す. \\
+$[\ $Create(``x$_n$'', $\mathcal{T}_{NP}$(Node(NP, nplist))) $\ ]$を返す. \\
 そうでない 
 $\Rightarrow$ 
-Create(``'', $\mathcal{T}_{NP}$(Node(NP, nplist))) を返す.
+$[\ $Create(``'', $\mathcal{T}_{NP}$(Node(NP, nplist))) $\ ]$を返す.
 \subsubsection*{AddTo文のマッチ}
 木構造が, 
 \Tree [.VP [.VB add ]
@@ -249,8 +251,8 @@ Create(``'', $\mathcal{T}_{NP}$(Node(NP, nplist))) を返す.
                   [.PP [.IN to ]
                         [.NP nplist2 ] ] ]
  ]\\
-の場合 \\ $\Rightarrow$ 
-AddTo($\mathcal{T}_{NP}$(Node(NP, nplist1)), $\mathcal{T}_{NP}$(Node(NP, nplist2))) を返す. \\
+の場合, 
+$[\ $AddTo($\mathcal{T}_{NP}$(Node(NP, nplist1)), $\mathcal{T}_{NP}$(Node(NP, nplist2))) $\ ]$ を返す. \\
 \subsubsection*{MultiplyBy文のマッチ}
 木構造が, 
 \Tree [.VP [.VB multiply ]
@@ -258,8 +260,8 @@ AddTo($\mathcal{T}_{NP}$(Node(NP, nplist1)), $\mathcal{T}_{NP}$(Node(NP, nplist2
             [.PP [.IN by ]
                   [.NP nplist2 ] ]
  ]\\
- の場合 \\ $\Rightarrow$ 
- MultiplyBy($\mathcal{T}_{NP}$(Node(NP, nplist1)), $\mathcal{T}_{NP}$(Node(NP, nplist2))) を返す. \\
+ の場合, 
+ $[\ $MultiplyBy($\mathcal{T}_{NP}$(Node(NP, nplist1)), $\mathcal{T}_{NP}$(Node(NP, nplist2))) $\ ]$ を返す. \\
 \subsubsection*{Ignore, FlushCodePoint文のマッチ}
 木構造が, 
 \Tree [.VP [.VB v ]
@@ -267,9 +269,9 @@ AddTo($\mathcal{T}_{NP}$(Node(NP, nplist1)), $\mathcal{T}_{NP}$(Node(NP, nplist2
       ]\\
 の場合 \\ 
 vが "ingore"の時, 
-Ignore() を返す. \\
+$[\ $Ignore() $\ ]$ を返す. \\
 vが "flush"の時, 
-FlushCodePoint() を返す.
+$[\ $FlushCodePoint() $\ ]$ を返す.
 \subsubsection*{StartAttribute文のマッチ}
 木構造が, 
 % \Tree [.VP [.VB start ]
@@ -280,8 +282,8 @@ FlushCodePoint() を返す.
             [.NP $\cdots$ ]
             [.PP $\cdots$ ]
 ]\\
-の場合 \\ $\Rightarrow$ 
-StartAttribute() を返す.
+の場合, 
+$[\ $StartAttribute() $\ ]$を返す.
 \subsubsection*{TreatAsAnythingElse文のマッチ}
 木構造が, 
 \Tree [.VP [.VB treat ]
@@ -289,11 +291,10 @@ StartAttribute() を返す.
             [.(PP) $\cdots$ ]
             [.ADVP $\cdots$ ]
  ]\\
-の場合 \\ $\Rightarrow$ 
-TreatAsAnythingElse() を返す. \\
+の場合, 
+$[\ $TreatAsAnythingElse() $\ ]$ を返す. \\
 
-\subsection{名詞句(NPノード)の変換 $\mathcal{T}_{NP}$}
-\subsubsection*{名詞の列挙の分解}
+\subsection{名詞句(NPノード)の分割 $\mathcal{D}$}
 ``A and B''や``A, B''など1つの名詞句の中に複数の名詞が含まれている場合もある.
 それらを分解し, 名詞のリストとして出力する.
 
@@ -339,6 +340,7 @@ TreatAsAnythingElse() を返す. \\
 %             [.NN value ]
 %       ]
     
+\subsection{名詞句(NPノード)の変換 $\mathcal{T}_{NP}$}
 \subsubsection*{CommandValue型, ImplementVariable型への変換}
 HTML5の仕様書には様々な変数の言葉や値の言葉が出てくる. 
 NPノード内の自然言語で記述している言葉から, CommandValue型やImplementVariable型というプログラムが認識できる形にする際, 
@@ -350,8 +352,8 @@ NPノード内の自然言語で記述している言葉から, CommandValue型�
 特定の単語にマッチせず, かつ参照番号が-1でない数字nのとき(その単語にラベルnの参照関係があるとき)は 変数"x\_n"という意味を持つ, Variable("x\_n") を返す.
       name, valueが含まれている場合はNameOf(Variable("x\_n")), ValueOf(Variable("x\_n"))
 
-\section{If文の処理}
-仕様書内の条件分岐の文に関して, Command型のリストに変換する際, 一部手を加えた.\\
+\section{条件文の処理}
+仕様書内の条件分岐の文(If文)に関して, Command型のリストに変換する際, 条件分の範囲を判断するときに手を加えた.\\
 % If the temporary buffer is the string ``script'', then switch to the script data escaped state. Otherwise, switch to the script data double escaped state. Emit the current input character as a character token.
 例えば, 仕様書内の\\
 ``If $\cdots$, then $\cdots$. Otherwise, switch to the script data escaped state. Emit the current input character as a character token.''
@@ -364,26 +366,29 @@ Tag型からの変換によって出力されたCommandのリストに以下の�
 \begin{screen}
       If_(b)\\
       command$_1$\\
-      $\cdots$
+      $\cdots$\\
       command$_m$\\
       Otherwise_()\\
       command$_{m+1}$\\
-      $\cdots$
+      $\cdots$\\
       command$_n$
 \end{screen}
 これを考えられるIf文に組み立て, そこから正しいほうを人の手で選ぶ. \\
+
 例えば, 
-\begin{screen}
-      If_(b)\\
-      command$_1$\\
-      Otherwise_()\\
-      command$_2$\\
-      command$_3$
-\end{screen}
+% \begin{screen}
+%       If_(b)\\
+%       command$_1$\\
+%       Otherwise_()\\
+%       command$_2$\\
+%       command$_3$
+% \end{screen}
+条件文の処理をする前のCommand列\\
+$[\ $ If_(b), command$_1$, Otherwise_(), command$_2$, command$_3 \ ]$
 は, \\
 $[\ $ If(b, $[\ $command$_1 \ ]$, $[\ $command$_2$, command$_3 \ ]$ )$\ ]$\\
 $[\ $ If(b, $[\ $command$_1 \ ]$, $[\ $command$_2 \ ]$), command$_3 \ ]$ \\
-と出力され, 正しい解釈の方を手動で選び, 取り出す命令を決定する.
+と2つ出力され, 正しい解釈の方を手動で選び, 取り出す命令を決定する.
 % どの部分の文章までがotherwiseで処理したい文なのかが曖昧であった.
 
 % 段落を認識させる?
@@ -474,6 +479,16 @@ $[\ $Create(Variable(``x_1''), NewCommentToken) , Emit(Variable(``x_1''))$\ ]$ %
 %             [.NN Token(token,token,1) ]
 %       ]\\
 
+\section{1状態の形式的な定義}
+\label{StateDef}
+1状態あたりの処理の内容を記述するクラスを以下で定義する. 
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single][htbp]
+  case class StateDef(
+    stateName:  String,                     // 状態名
+    prevProcess :  List[Command],           // 文字マッチ前の処理
+    trans :  List[(String, List[Command])]  // 文字マッチ （文字, その文字の処理）のリスト
+  )
+\end{lstlisting}
 \section{例2}
 % 1状態からdefinitionの形にする例
 \begin{figure}[h]
@@ -483,21 +498,30 @@ $[\ $Create(Variable(``x_1''), NewCommentToken) , Emit(Variable(``x_1''))$\ ]$ %
       \caption{RCDATA less-than sign state}
       \label{RCDATA}
 \end{figure}
-これに\ref{自然言語処理}, \ref{命令抽出}章の処理をし, pStateの形にすると, %形式のとこで説明する？
-pState(stateName: String, prevProcess: List[Command], trans: List[(String, List[Command])])
+図\ref{RCDATA}の状態に\ref{自然言語処理}, \ref{命令抽出}章の処理をし, \ref{StateDef}節の形式的な定義に変換すると, 
+% pStateの形にすると, %形式のとこで説明する？
+% pState(stateName: String, prevProcess: List[Command], trans: List[(String, List[Command])])
+% stateName = RCDATA_less_than_sign_state
+% prevProcess = \\
+% $[\ $Consume(NextInputCharacter)$\ ]$
+% trans = \\
+% $[$\\
+% (U+002F SOLIDUS (/), \\
+% \quad $[\ $Set(ITemporaryBuffer, CString(``'')), Switch(RCDATA_end_tag_open_state)$\ ]$), \\
+% (Anything else, \\
+% \quad $[\ $Emit(CString(``$<$'')), Recomsume(RCDATA_state)$\ ]$)\\
+% $]$\\
 
-stateName = RCDATA_less_than_sign_state
-
-prevProcess = \\
-$[\ $Consume(NextInputCharacter)$\ ]$
-
-trans = \\
-$[$\\
-(U+002F SOLIDUS (/), \\
-\quad $[\ $Set(ITemporaryBuffer, CString(``'')), Switch(RCDATA_end_tag_open_state)$\ ]$), \\
-(Anything else, \\
-\quad $[\ $Emit(CString(``$<$'')), Recomsume(RCDATA_state)$\ ]$)\\
-$]$\\
-
+\begin{alignat*}{3}
+      &{\rm stateName }&\quad &{\rm = \quad RCDATA\_less\_than\_sign\_state } {\rm \quad\quad\quad//\  状態名 }&\quad & \\
+      &{\rm prevProcess }& &{\rm = \quad}[\  {\rm Consume(NextInputCharacter) }\ ] {\rm \ \ \quad\quad//\  文字マッチ前の処理 }& & \\
+      &{\rm //\  文字マッチ }&\quad & &\quad & \\
+      &{\rm trans }& &{\rm = \quad}[\ & & \\
+      & & &{\rm \quad\quad\quad  (\ } \texttt{U+002F} {\rm \ SOLIDUS\ (/)\ ,} & & \\
+      & & &{\rm \quad\quad\quad\quad} [\ {\rm Set(ITemporaryBuffer,\ CString()),\ Switch(RCDATA\_end\_tag\_open\_state)} \ ]\ )\ ,& & \\
+      & & &{\rm \quad\quad\quad} (\ {\rm Anything else\ ,} & & \\
+      & & &{\rm \quad\quad\quad\quad} [\ {\rm Emit(CString(<)),\ Recomsume(RCDATA\_state)} \ ]\ )& & \\
+      & & &{\rm \quad\quad ]}& & \\
+\end{alignat*}
 となる.
 \end{document}

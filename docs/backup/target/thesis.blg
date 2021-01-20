@@ -9,50 +9,49 @@ A level-1 auxiliary file: commandFormat.aux
 A level-1 auxiliary file: nlProcessing.aux
 A level-1 auxiliary file: extractionCommand.aux
 A level-1 auxiliary file: implementation.aux
-A level-1 auxiliary file: evaluation.aux
 A level-1 auxiliary file: conclusion.aux
 A level-1 auxiliary file: acknowledgments.aux
 The style file: plain.bst
 Database file #1: thesis.bib
-You've used 9 entries,
+You've used 10 entries,
             2118 wiz_defined-function locations,
-            552 strings with 5544 characters,
-and the built_in function-call counts, 2335 in all, are:
-= -- 217
-> -- 112
-< -- 1
-+ -- 46
-- -- 36
-* -- 113
-:= -- 407
-add.period$ -- 27
-call.type$ -- 9
-change.case$ -- 44
+            557 strings with 5783 characters,
+and the built_in function-call counts, 2771 in all, are:
+= -- 258
+> -- 130
+< -- 2
++ -- 53
+- -- 42
+* -- 139
+:= -- 472
+add.period$ -- 30
+call.type$ -- 10
+change.case$ -- 50
 chr.to.int$ -- 0
-cite$ -- 9
-duplicate$ -- 89
-empty$ -- 195
-format.name$ -- 36
-if$ -- 487
+cite$ -- 10
+duplicate$ -- 110
+empty$ -- 233
+format.name$ -- 42
+if$ -- 588
 int.to.chr$ -- 0
-int.to.str$ -- 9
-missing$ -- 5
-newline$ -- 48
-num.names$ -- 18
-pop$ -- 67
+int.to.str$ -- 10
+missing$ -- 6
+newline$ -- 53
+num.names$ -- 20
+pop$ -- 76
 preamble$ -- 1
-purify$ -- 35
+purify$ -- 40
 quote$ -- 0
-skip$ -- 76
+skip$ -- 92
 stack$ -- 0
-substring$ -- 70
-swap$ -- 17
-text.length$ -- 1
+substring$ -- 95
+swap$ -- 26
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 36
+type$ -- 40
 warning$ -- 0
-while$ -- 21
-width$ -- 10
-write$ -- 93
+while$ -- 25
+width$ -- 12
+write$ -- 104
 is.kanji.str$ -- 0

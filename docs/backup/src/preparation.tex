@@ -9,7 +9,7 @@
 %html5のtokenizer仕様のことは3章
 \section{節, 句, 品詞タグ}
 % 本論文ではいくつかの品詞タグを使用する. 
-本論文で使用する, いくつかの主要な節,句,単語のタグ名とその意味について書く. ~\cite{pennTreebankTags}\\
+本論文で使用する, いくつかの主要な節,句,単語のタグ名とその意味~\cite{pennTreebankTags}について書く. \\
 
 節, 句の種類
 \begin{alignat*}{3}%&{\rm 節, 句の種類 } && && \\
@@ -26,6 +26,7 @@
      &{\rm IN }& &{\rm : 前置詞, 従属接続詞} & & \\
      &{\rm DT }& &{\rm : 限定詞} & & \\
      &{\rm CC }& &{\rm : 等位接続詞} & & \\
+     &{\rm PRP }& &{\rm : 人称代名詞} & & \\
 \end{alignat*}
 
 \section{自然言語処理}
@@ -82,7 +83,7 @@ Mika/Mika $\hspace{10pt}$  likes/like $\hspace{10pt}$ her/she $\hspace{10pt}$ do
 目的語, 修飾語などといったの単語や節の関係性を表す係り受けタグを使用し, それらを関連付ける.%%使い, であり, 
 例えば, 単語Bが単語Aの目的語である場合, 
 A $\xrightarrow{目的語}$ B 
-という風に表記する.\\
+という風に添え字付きの矢印で表記する.\\
 
 例の, ``Mika likes her dog's name.''を係り受け解析すると, 図\ref{dependency}の様になり,\\
 ``Mika''が好きなのは, ``name'', 
