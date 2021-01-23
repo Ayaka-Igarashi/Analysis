@@ -84,7 +84,7 @@ object Main {
       // 取り出す
       nStateList = PreserveDefinition.read[List[nState]]("src/parsed.dat")
       tagConvert()
-      PreserveDefinition.preserve(pStateMap, "src/definition.dat")
+//      PreserveDefinition.preserve(pStateMap, "src/definition.dat")
 
       //implement("<abar d=kl rt=hhh>tyu</huj>", "Data_state")
     } else {

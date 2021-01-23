@@ -97,6 +97,8 @@ INPUT C:/Users/ayaka/Desktop/textest/temp/target/extractionCommand.aux
 INPUT C:/Users/ayaka/Desktop/textest/temp/target/extractionCommand.aux
 INPUT C:/Users/ayaka/Desktop/textest/temp/target/implementation.aux
 INPUT C:/Users/ayaka/Desktop/textest/temp/target/implementation.aux
+INPUT C:/Users/ayaka/Desktop/textest/temp/target/evaluation.aux
+INPUT C:/Users/ayaka/Desktop/textest/temp/target/evaluation.aux
 INPUT C:/Users/ayaka/Desktop/textest/temp/target/conclusion.aux
 INPUT C:/Users/ayaka/Desktop/textest/temp/target/conclusion.aux
 INPUT C:/Users/ayaka/Desktop/textest/temp/target/acknowledgments.aux
@@ -158,8 +160,7 @@ INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/html5parser.aux
 INPUT html5parser.tex
 INPUT html5parser.tex
-INPUT figure/html5-bw.png
-INPUT extractbb -B cropbox -O figure/html5-bw.png
+INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/commandFormat.aux
 INPUT commandFormat.tex
 INPUT commandFormat.tex
@@ -182,12 +183,34 @@ INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisr-h.tfm
+INPUT figure/SnodeList.jpg
+INPUT extractbb -B cropbox -O figure/SnodeList.jpg
+INPUT figure/ifOther.jpg
+INPUT extractbb -B cropbox -O figure/ifOther.jpg
+INPUT figure/error.jpg
+INPUT extractbb -B cropbox -O figure/error.jpg
+INPUT figure/isEqual.jpg
+INPUT extractbb -B cropbox -O figure/isEqual.jpg
+INPUT figure/matchfor.jpg
+INPUT extractbb -B cropbox -O figure/matchfor.jpg
+INPUT figure/vplist.jpg
+INPUT extractbb -B cropbox -O figure/vplist.jpg
+INPUT figure/switch.jpg
+INPUT extractbb -B cropbox -O figure/switch.jpg
+INPUT figure/emit.jpg
+INPUT extractbb -B cropbox -O figure/emit.jpg
+INPUT figure/set.jpg
+INPUT extractbb -B cropbox -O figure/set.jpg
+INPUT figure/set1234.jpg
+INPUT extractbb -B cropbox -O figure/set1234.jpg
+INPUT figure/setflag.jpg
+INPUT extractbb -B cropbox -O figure/setflag.jpg
+INPUT figure/create.jpg
+INPUT extractbb -B cropbox -O figure/create.jpg
 INPUT figure/tagTree.jpg
 INPUT extractbb -B cropbox -O figure/tagTree.jpg
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisr-v.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisr-v.tfm
-INPUT figure/RCDATALT.png
-INPUT extractbb -B cropbox -O figure/RCDATALT.png
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisg-v.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisg-h.tfm
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
@@ -199,6 +222,9 @@ INPUT implementation.tex
 INPUT implementation.tex
 INPUT figure/インタープリタ.png
 INPUT extractbb -B cropbox -O figure/インタープリタ.png
+OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/evaluation.aux
+INPUT evaluation.tex
+INPUT evaluation.tex
 OUTPUT C:/Users/ayaka/Desktop/textest/temp/target/conclusion.aux
 INPUT conclusion.tex
 INPUT conclusion.tex
@@ -227,6 +253,8 @@ INPUT C:/Users/ayaka/Desktop/textest/temp/target/extractionCommand.aux
 INPUT C:/Users/ayaka/Desktop/textest/temp/target/extractionCommand.aux
 INPUT C:/Users/ayaka/Desktop/textest/temp/target/implementation.aux
 INPUT C:/Users/ayaka/Desktop/textest/temp/target/implementation.aux
+INPUT C:/Users/ayaka/Desktop/textest/temp/target/evaluation.aux
+INPUT C:/Users/ayaka/Desktop/textest/temp/target/evaluation.aux
 INPUT C:/Users/ayaka/Desktop/textest/temp/target/conclusion.aux
 INPUT C:/Users/ayaka/Desktop/textest/temp/target/conclusion.aux
 INPUT C:/Users/ayaka/Desktop/textest/temp/target/acknowledgments.aux

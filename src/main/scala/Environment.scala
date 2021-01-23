@@ -180,6 +180,8 @@ object Environment {
   case class commentToken(data: String) extends Token
   case class characterToken(data: String) extends Token
   case class endOfFileToken() extends Token
+//  case class startTagToken(name: String, self_closing_flag: Boolean, var attributes: List[Attribute]) extends Token
+//  case class endTagToken(name: String, self_closing_flag: Boolean, var attributes: List[Attribute]) extends Token
 
   case class Attribute(name: String, value: String)
 

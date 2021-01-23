@@ -26,7 +26,7 @@ Christopher~D. Manning, Mihai Surdeanu, John Bauer, Jenny Finkel, Steven~J.
 
 \bibitem{HTML5Testing}
 Yasuhiko Minamide and Shunsuke Mori.
-\newblock Reachability analysis of the html5 parser specification and its
+\newblock Reachability analysis of the {HTML5} parser specification and its
   application to compatibility testing.
 \newblock {\em FM 2012: Formal Methods}, 2012.
 
@@ -39,7 +39,7 @@ Jeanette Pettibone.
 \bibitem{arm}
 Anh~V. Vu and Mizuhito Ogawa.
 \newblock Formal semantics extraction from natural language specifications for
-  arm.
+  {ARM}.
 \newblock {\em Formal Methods--The Next 30 Years}, 2019.
 
 \bibitem{html5specification}

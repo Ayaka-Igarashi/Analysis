@@ -9,13 +9,14 @@ A level-1 auxiliary file: commandFormat.aux
 A level-1 auxiliary file: nlProcessing.aux
 A level-1 auxiliary file: extractionCommand.aux
 A level-1 auxiliary file: implementation.aux
+A level-1 auxiliary file: evaluation.aux
 A level-1 auxiliary file: conclusion.aux
 A level-1 auxiliary file: acknowledgments.aux
 The style file: plain.bst
 Database file #1: thesis.bib
 You've used 10 entries,
             2118 wiz_defined-function locations,
-            557 strings with 5783 characters,
+            558 strings with 5801 characters,
 and the built_in function-call counts, 2771 in all, are:
 = -- 258
 > -- 130

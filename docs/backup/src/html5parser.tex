@@ -10,17 +10,31 @@
 % \subsection*{状態}
 HTML5字句解析仕様はWHATWG communityのwebサイトから得られる.~\cite{html5specification}\\
 HTML5の字句解析器は80個の状態のあるオートマトンとして定義されており, 
-それぞれの状態は以下の図\ref{html5}の形式で書かれている.\\
-\begin{figure}[h]
-    \centering
-    \includegraphics[keepaspectratio, scale=0.5]
-         {figure/html5-bw.png}
-    \caption{HTML5字句解析仕様書（仮）}
-    \label{html5}
-\end{figure}
-
+% それぞれの状態は以下の形式で処理が記述されている. 
+ほとんどの状態は, 表\ref{state72}のような文字マッチ前の処理と文字マッチングの処理(文字とその文字にマッチした時の処理)の要素から成り立っている. 
+% \begin{figure}[h]
+%     \centering
+%     \fbox{\includegraphics[keepaspectratio, scale=0.5]
+%             {figure/html5-3.png}
+%     }    
+%     \caption{HTML5字句解析仕様}
+%     \label{html5}
+% \end{figure}
+\begin{table}[htb]
+    \begin{center}
+      \caption{HTML5字句解析仕様の状態 : Character reference state}
+        \begin{tabular}{|p{2.5cm}|p{3.5cm}|p{8.5cm}|}\hline
+            {\bf 状態名} & \multicolumn{2}{|p{12cm}|}{Character reference state}\\ \hline
+            {\bf 文字マッチ前の処理} & \multicolumn{2}{|p{12cm}|}  {  Set the temporary buffer to the empty string. Append a U+0026 AMPERSAND (\&) character to the temporary buffer. Consume the next input character: } \\ \hline
+            {\bf 文字マッチ処理} & {\bf 文字} & {\bf 処理} \\ \cline{2-3}
+            & \begin{tabular}{l}ASCII \\alphanumeric \end{tabular}& Reconsume in the named character reference state. \\ \cline{2-3}
+            & \begin{tabular}{l}U+0023 \\NUMBER SIGN (\#) \end{tabular}& Append the current input character to the temporary buffer. Switch to the numeric character reference state. \\ \cline{2-3}
+            & \begin{tabular}{l}Anything else \end{tabular}& Flush code points consumed as a character reference. Reconsume in the return state. \\ \hline
+        \end{tabular}
+        \label{state72}
+    \end{center}
+\end{table}
 % 状態を1つの単位として, 仕様書に自然言語処理を適用していく.
-
 \subsection*{字句解析トークン}
 HTML5字句解析器は, HTML5で書かれている文章をその文法の構成単位であるトークンに分解するプログラムである.\\
 HTML5字句解析器により出力されるトークンは5つの種類がある.
