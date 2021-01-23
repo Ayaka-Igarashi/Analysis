@@ -97,7 +97,7 @@ object OtherStates {
         comlist ++= List(FlushCodePoint(), Switch(ReturnState))
       }
       else {
-        if (b2) {
+        if (!b2) {
           comlist :+= Error("missing_semicolon_after_character_reference parse error")
         }
         comlist ++= List(Set(ITemporaryBuffer, CString("")), AppendTo(CString(characterReferencePair._2), ITemporaryBuffer),

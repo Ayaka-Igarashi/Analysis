@@ -17,6 +17,7 @@ class Test extends FunSuite {
   pStateMap = PreserveDefinition.read[ListMap[String, pState]]("src/definition.dat")
   var count: Int = 0
   var correctCount: Int = 0
+  var correctCountError: Int = 0
 
   test("example") {
     assert(1+2 === 3)
@@ -105,12 +106,14 @@ class Test extends FunSuite {
   def testFormat(file: String) = {
     count = 0
     correctCount = 0
+    correctCountError = 0
     //startTest()
     txtOut4.println(file)
     val model = TestFormatter.format("src/test/testFile/" + file + ".test")
     val tests = model.tests.asScala.toList//.slice(3,4)
     for (test <- tests) doTest(test)
     println(file + " => correct : " + correctCount + "/" + count)
+    println(file + " => correctError : " + correctCountError + "/" + count)
     //finishTest()
   }
 
@@ -300,9 +303,39 @@ class Test extends FunSuite {
       for (error <- correctError) txtOut4.print(" " + error.code)
       txtOut4.println("")
 
+      val errorIsCorrect = doErrorTest(test.errors, env.errorContent)
+      txtOut4.println("errorText -> " + errorIsCorrect)
+      if (errorIsCorrect) correctCountError += 1
 
       txtOut4.println(" -> " + isCorrect + "\n")
     }
 
+  }
+
+  def doErrorTest(correct: java.util.List[com.jsonSchema.Error], imp: List[String]): Boolean = {
+    val correctError = if (correct == null) List() else correct.asScala.toList
+    var impErrorList = imp
+    var isEqual = true
+    for (error <- correctError) {
+      if (impErrorList != Nil) {
+        if (!error.code.contains("-in-input-stream")) {
+          if (error.code+ " parse error" != impErrorList.head.replace("_", "-")) {
+            txtOut4.println(error.code)
+            isEqual = false
+          }
+          impErrorList = impErrorList.tail
+        }
+      }
+      else {
+        if (!error.code.contains("-in-input-stream")) {
+          isEqual = false
+        }
+      }
+    }
+    if (impErrorList != Nil) {
+      txtOut4.println("notnil" + impErrorList)
+      isEqual = false
+    }
+    isEqual
   }
 }

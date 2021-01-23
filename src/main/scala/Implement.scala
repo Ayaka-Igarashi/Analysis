@@ -333,7 +333,10 @@ object Implement {
         val t = ValueToToken(value, newEnv)
         t match {
           case tagToken(true, name, _, _) => newEnv.lastStartTagName = name
-          case tagToken(false, _, _, attributes) if attributes != List() => newEnv.errorContent :+= "end_tag_with_attributes parse error"
+          case tagToken(false, _, flag, attributes)  => {
+            if (attributes != List()) newEnv.errorContent :+= "end_tag_with_attributes parse error"
+            if (flag == true) newEnv.errorContent :+= "end_tag_with_trailing_solidus parse error"
+          }
           case _ =>
         }
         if (t != null) newEnv.addEmitToken(t)
