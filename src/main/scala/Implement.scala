@@ -57,7 +57,7 @@ object Implement {
               newEnv = interpretCommand(newEnv, command)
             }
 
-            // attribute
+            // attribute name stateの後処理
             if (currentState == "Attribute_name_state" && newEnv.nextState != StateVal("Attribute_name_state")) {
               val name = newEnv.map.get(newEnv.currentAttribute) match {
                 case Some(AttributeVal(Attribute(n,_))) => n
@@ -319,8 +319,8 @@ object Implement {
           case StringVal(s) => {
             if (newEnv.inputText.startsWith(s)) newEnv.inputText = newEnv.inputText.substring(s.length)
               /** ここ本来は違う*/
-            else if (newEnv.currentInputCharacter == CharVal(s.head) && newEnv.inputText.startsWith(s.tail)) newEnv.inputText = newEnv.inputText.substring(s.length - 1)
-            else println("consume error : " + StringVal(s))
+//            else if (newEnv.currentInputCharacter == CharVal(s.head) && newEnv.inputText.startsWith(s.tail)) newEnv.inputText = newEnv.inputText.substring(s.length - 1)
+//            else println("consume error : " + StringVal(s))
           }
           case EOFVal =>
           case _ =>

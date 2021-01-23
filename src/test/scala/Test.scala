@@ -33,6 +33,7 @@ class Test extends FunSuite {
   }
   test("domjs.test") {
     startTest()
+    testFormat("contentModelFlags")
     testFormat("domjs")
     testFormat("entities")
     testFormat("escapeFlag")
