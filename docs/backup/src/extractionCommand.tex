@@ -638,7 +638,9 @@ $[\ $Create(Variable(``x_1''), NewCommentToken) , Emit(Variable(``x_1''))$\ ]$ %
 
 \section{1状態の形式的な定義}
 \label{StateDef}
-1状態あたりの処理の内容を記述するクラスを以下で定義する. 
+実装では, 
+1状態あたりの形式化した内容を記述するクラスとして\texttt{StateDef}を定義する. 
+\texttt{StateDef}は状態名, 文字マッチ前の処理, 文字マッチの処理を有する. 
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single][htbp]
   case class StateDef(
     stateName:  String,                     // 状態名
@@ -646,7 +648,7 @@ $[\ $Create(Variable(``x_1''), NewCommentToken) , Emit(Variable(``x_1''))$\ ]$ %
     trans :  List[(String, List[Command])]  // 文字マッチ （文字, その文字の処理）のリスト
   )
 \end{lstlisting}
-\section{例2}
+\subsection{例}
 % 1状態からdefinitionの形にする例
 % \begin{figure}[h]
 %       \centering
@@ -669,7 +671,8 @@ $[\ $Create(Variable(``x_1''), NewCommentToken) , Emit(Variable(``x_1''))$\ ]$ %
           \label{state9}
       \end{center}
   \end{table}
-表\ref{state9}の状態に\ref{自然言語処理}, \ref{命令抽出}章の処理をし, \ref{StateDef}節の形式的な定義に変換すると, 
+表\ref{state9}の状態に\ref{自然言語処理}, \ref{命令抽出}章の処理をし, 1状態の形式的な定義に変換すると, 
+図\ref{RCDATA形式化}のようになる. 
 % pStateの形にすると, %形式のとこで説明する？
 % pState(stateName: String, prevProcess: List[Command], trans: List[(String, List[Command])])
 % stateName = RCDATA_less_than_sign_state
@@ -683,16 +686,28 @@ $[\ $Create(Variable(``x_1''), NewCommentToken) , Emit(Variable(``x_1''))$\ ]$ %
 % \quad $[\ $Emit(CString(``$<$'')), Recomsume(RCDATA_state)$\ ]$)\\
 % $]$\\
 
-\begin{alignat*}{3}
-      &{\rm stateName }&\quad &{\rm = \quad RCDATA\_less\_than\_sign\_state } {\rm \quad\quad\quad//\  状態名 }&\quad & \\
-      &{\rm prevProcess }& &{\rm = \quad}[\  {\rm Consume(NextInputCharacter) }\ ] {\rm \ \ \quad\quad//\  文字マッチ前の処理 }& & \\
-      &{\rm //\  文字マッチ }&\quad & &\quad & \\
-      &{\rm trans }& &{\rm = \quad}[\ & & \\
-      & & &{\rm \quad\quad\quad  (\ } \texttt{U+002F} {\rm \ SOLIDUS\ (/)\ ,} & & \\
-      & & &{\rm \quad\quad\quad\quad} [\ {\rm Set(ITemporaryBuffer,\ CString()),\ Switch(RCDATA\_end\_tag\_open\_state)} \ ]\ )\ ,& & \\
-      & & &{\rm \quad\quad\quad} (\ {\rm Anything else\ ,} & & \\
-      & & &{\rm \quad\quad\quad\quad} [\ {\rm Emit(CString(<)),\ Recomsume(RCDATA\_state)} \ ]\ )& & \\
-      & & &{\rm \quad\quad ]}& & \\
-\end{alignat*}
-となる.
+% \begin{alignat*}{3}
+%       &{\rm stateName }&\quad &{\rm = \quad RCDATA\_less\_than\_sign\_state } {\rm \quad\quad\quad//\  状態名 }&\quad & \\
+%       &{\rm prevProcess }& &{\rm = \quad}[\  {\rm Consume(NextInputCharacter) }\ ] {\rm \ \ \quad\quad//\  文字マッチ前の処理 }& & \\
+%       &{\rm //\  文字マッチ }&\quad & &\quad & \\
+%       &{\rm trans }& &{\rm = \quad}[\ & & \\
+%       & & &{\rm \quad\quad\quad  (\ } \texttt{U+002F} {\rm \ SOLIDUS\ (/)\ ,} & & \\
+%       & & &{\rm \quad\quad\quad\quad} [\ {\rm Set(ITemporaryBuffer,\ CString()),\ Switch(RCDATA\_end\_tag\_open\_state)} \ ]\ )\ ,& & \\
+%       & & &{\rm \quad\quad\quad} (\ {\rm Anything else\ ,} & & \\
+%       & & &{\rm \quad\quad\quad\quad} [\ {\rm Emit(CString(<)),\ Recomsume(RCDATA\_state)} \ ]\ )& & \\
+%       & & &{\rm \quad\quad ]}& & \\
+% \end{alignat*}
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, caption=RCDATA less-than sign stateの形式化, label=RCDATA形式化][htbp]
+   // 状態名
+   stateName = RCDATA_less_than_sign_state
+   // 文字マッチ前の処理
+   prevProcess = [ Consume(NextInputCharacter) ]
+   // 文字マッチ
+   trans = [
+      ( U+002F SOLIDUS (/), 
+            [ Set(ITemporaryBuffer, CString()), Switch(RCDATA_end_tag_open_state) ] ),
+      ( Anything else, 
+            [ Emit(CString(<)), Recomsume(RCDATA_state) ] )
+   ]
+\end{lstlisting}
 \end{document}

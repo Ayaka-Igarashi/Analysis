@@ -4,10 +4,14 @@
 \begin{document}
 \chapter{字句解析器の実装}
 \label{実装}
-\ref{命令抽出}章でHTML5字句解析仕様から抽出し, 形式化したもの使ってHTML5の字句解析のインタプリタを作成した.
+\ref{命令抽出}章で形式化した命令を「字句解析の状態の定義」として入力にとる, 
+HTML5の字句解析をするインタプリタを実装した. 
+実装はプログラミング言語Scalaで行った. 
+% \ref{命令抽出}章でHTML5字句解析仕様から抽出し, 形式化したもの使ってHTML5の字句解析のインタプリタを作成した.
 \section{実装の概観}
-実装はプログラミング言語Scalaで行った. \\
-% インタープリタの概略図書く
+字句解析インタプリタは, 図\ref{interpret}のような感じで, 入力として 字句解析器の処理の定義, 字句解析器の環境をとり, 
+字句解析トークン列, 構文エラー, 新しい字句解析器の環境 を返す. 
+% インタープリタの概略図
 \begin{figure}[h]
     \centering
     \includegraphics[keepaspectratio, scale=0.5]
@@ -15,41 +19,69 @@
     \caption{インタープリタ概略}
     \label{interpret}
 \end{figure}
-形式化した命令をもとに動かす. 
+
+字句解析インタプリタの処理の流れは, 
+まず, 字句解析器の環境の``現在の状態''を参照し, 
+``字句解析器の処理の定義''から現在の状態に対応する処理を取り出す. 
+文字マッチ前の処理の部分に入っているCommand型の列を取り出し, それを前から1つずつ
+Command型の解釈の関数によって実行していく. 
+
+次に, 字句解析器の環境の ``現在消費した文字''を参照し, その文字に関して文字の種類のマッチングを行い, その文字にマッチする処理(Command型の列)を取り出す. 
+
+そして, 取り出したCommand型の列をそれを前から1つずつ
+Command型の解釈の関数によって実行していく. 
+
+この一連の処理を, 字句解析インタプリタがEOFトークンを排出するまで繰り返す. 
+\subsection{字句解析器の環境}
+字句解析仕様に出てくる語句を実装数字句解析器の環境の変数としてとる. 
+環境の変数には, 
+現在の状態, 
+入力文字列から消費したばかりの文字を表す``現在消費した文字'', 
+状態名を値として持つ``return state''
+等がある. 
+% 形式化した命令をもとに動かす. 
 \section{インタプリタの実装の詳細}
 \subsection{字句解析トークン}
-字句解析器によって出力されるトークンは, Tokenというトレイトとして実装した. 
-TokenはDOCTYPEトークンを表す DOCTYPEToken(s,s,s,b), 
-開始タグトークンを表すstartTagToken(), 
-終了タグトークンを表すendTagToken(), 
-コメントトークンを表すcommentToken(s), 
-文字トークンを表すcharacterToken(s), 
-EOFトークンを表すendOfFileToken()
+字句解析器によって出力されるトークンは, \texttt{Token}というトレイトとして実装した. 
+\texttt{Token}はDOCTYPEトークンを表す \texttt{DOCTYPEToken(s,s,s,b)}, 
+開始タグトークンを表す\texttt{startTagToken()}, 
+終了タグトークンを表す\texttt{endTagToken()}, 
+コメントトークンを表す\texttt{commentToken(s)}, 
+文字トークンを表す\texttt{characterToken(s)}, 
+EOFトークンを表す\texttt{endOfFileToken()} 
+を有する.
+
+\subsection{Value型}
+インタープリタで扱う変数の値の型として\texttt{Value}をトレイトとして実装した. 
+\texttt{Value}はIntの値を表す \texttt{IntVal(int: Int)}, 
+Booleanの値を表す\texttt{BooleanVal(boolean: Boolean)}, 
+Charの値を表す\texttt{CharVal(c: Char)}, 
+Stringの値を表す\texttt{StringVal(string: String)}, 
+文章の終端EOFを表す\texttt{EOFVal}, 
+字句解析器の状態名を表す\texttt{StateVal(statename: String)}, 
+字句解析トークンの値を表す\texttt{TokenVal(token: Token)} 
+を有する.
+% \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, caption=Value型,label=Value][htbp]
+% \end{lstlisting}
+
 \subsection{文字マッチングの処理}
-字句解析の定義と現在消費した文字(current inputCharacter)を受け取り, 
-マッチした文字に対応する処理 Command型のリストを返す.
+字句解析器の現在の状態の文字マッチの処理の定義と現在消費した文字(current inputCharacter)を受け取り, 
+マッチした文字に対応する処理 Command型のリストを返す処理を実装した. 
+
 \subsection{CommandValue型の解釈}
 CommandValue型と環境を受け取り, Value型を返す関数を実装した.
-\subsubsection{Value型}
-インタープリタで扱う値の型
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, caption=Value型,label=Value][htbp]
-    IntVal(int: Int)
-    BooleanVal(boolean: Boolean)
-    CharVal(c: Char)
-    StringVal(string: String)
-    EOFVal
-    StateVal(statename: String)
-    TokenVal(token: Token)
-\end{lstlisting}
+\subsubsection{CommandValue型の解釈例：ReturnState}
+字句解析器の環境の変数である, Value型の値 returnStateを返す. 
+
 \subsection{Command型の解釈}
-Command型と環境を受け取り, 新しい環境, 排出トークン, エラー内容を返す関数を実装した.
+Command型と環境を受け取り, 新しい環境, 排出トークン, エラー内容を返す関数を実装した. 
+Command型の値ごとにその処理を記述した. 
+\subsubsection{Command型の解釈例：Switch文}
+字句解析器の環境の変数である, ``現在の状態''に, 
+CommandValue型の引数をCommandValue型の解釈する関数でValue型にした値を代入する. 
 
-% \section{字句解析器の変数}
-% next state
-
-% current state
-
-% return state
+% \subsection{その他}
+% Attribute name stateの後処理なども実装した.
 
 
 % \section{Command型}

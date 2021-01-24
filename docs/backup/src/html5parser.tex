@@ -8,10 +8,13 @@
 \section{概要}
 %トークンより状態の説明先がいい？
 % \subsection*{状態}
-HTML5字句解析仕様はWHATWG communityのwebサイトから得られる.~\cite{html5specification}\\
+HTML5字句解析仕様はWHATWG communityのwebサイト~\cite{html5specification}から得られ, 
+全て自然言語（英語）によって書かれている. 
+
 HTML5の字句解析器は80個の状態のあるオートマトンとして定義されており, 
 % それぞれの状態は以下の形式で処理が記述されている. 
-ほとんどの状態は, 表\ref{state72}のような文字マッチ前の処理と文字マッチングの処理(文字とその文字にマッチした時の処理)の要素から成り立っている. 
+ほとんどの状態は, 文字マッチ前の処理と文字マッチングの処理(文字とその文字にマッチした時の処理)の要素から成り立っている. 
+表\ref{state72}は字句解析器の状態の１つである, Character reference state の例である.
 % \begin{figure}[h]
 %     \centering
 %     \fbox{\includegraphics[keepaspectratio, scale=0.5]

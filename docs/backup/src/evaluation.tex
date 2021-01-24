@@ -6,15 +6,17 @@
 \label{評価}
 \section{実装の評価}
 % 字句解析のインタプリターの正しさを検証するために, 
-html5lib-tests~\cite{html5lib-tests}のtokenizerのテストデータを用い, \ref{実装}章で実装した字句解析インタープリタのテストをし, 抽出した命令の正しさを検証した.
+\ref{実装}章で実装したインタプリタの関数をそれぞれテストした後,  
+html5lib-tests~\cite{html5lib-tests}のtokenizerのテストデータを用い, 抽出した命令を定義として入れた, 字句解析インタープリタのテストをし, 抽出した命令の正しさを検証した.
 \subsection{HTML5字句解析テスト}
 %テストデータの説明
-字句解析器のテストデータは, 1つのテストファイルに複数のテストが含まれており, 
+使用した字句解析器のテストデータは, 1つのテストファイルに複数のテストが含まれており, 
 1つのテストあたり, 入力文字列, 出力するトークン列, 字句解析する際の初期状態, 直前に排出されている開始タグトークン名, 出力されるエラーの情報を持つ. 
 
 テストは, テストデータの入力文字列, 初期状態, 直前の開始タグトークン名を字句解析インタプリタの初期の環境として設定し, 
 字句解析を行い, 
 テストデータの字句解析トークンの出力と, 実装したインタプリタによる字句解析トークンの出力を比べる. 
+また, テストデータのエラーの出力と, 実装したインタプリタによるエラーの出力も比較する. 
 そしてそれらが一致していたら成功とする. 
 \begin{table}[htb]
     \begin{tabular}{|l|c|l|} \hline
@@ -35,6 +37,26 @@ html5lib-tests~\cite{html5lib-tests}のtokenizerのテストデータを用い, 
     \end{tabular}
 \end{table}
 
+\begin{table}[htb]
+  \begin{tabular}{|l|c|l|} \hline
+    テストファイル名 & 結果 & テスト内容\\ \hline 
+    contentModelFlags.test & 24/24 &  \\
+    domjs.test & 57/58 &  \\
+    entities.test & 80/80 & \&から始まる文字列の文字の参照が上手くいっているか\\
+    escapeFlag.test & 9/9 & 偽のコメントトークンに対する処理\\
+    namedEntities.test & 4210/4210 & named character referencesの表の参照が上手くいっているか\\
+    numericEntities.test & 336/336 & character reference codeから文字への参照が上手くいっているか\\
+    pendingSpecChanges.test & 1/1 & コメントトークン中にEOFトークンが出てきた場合のテスト\\
+    test1.test & 68/68 & テスト1 \\
+    test2.test & 34/45 & テスト2 \\
+    test3.test & 1346/1786 & テスト3 \\
+    test4.test & 81/85 & テスト4 \\
+    unicodeChars.test & 323/323 & ユニコード表記の文字列が対応する文字に変換されているか\\
+    unicodeCharsProblem.test & 5/5 & 不適切な場合のユニコードの処理が上手くいっているか\\ \hline 
+  \end{tabular}
+\end{table}
+
+\subsubsection*{思ったこと}
 %思ったこと
 Tag型からの命令抽出に関しては, 特殊な部分を逐一個別に対応していたので上手くいったと思われる.%手作業でやった部分が多いので上手くいったと思う.
 \subsubsection*{domjsが上手くいかなかった原因}
