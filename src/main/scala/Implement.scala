@@ -13,6 +13,7 @@ object Implement {
   def interpret(env: Env, definition: ListMap[String, pState]): Env = {
     var newEnv: Env = env
     uniqueId = (uniqueId+ 1)
+
     // 最初の処理
     newEnv.currentState = newEnv.nextState
     val currentState = newEnv.currentState match {
@@ -23,12 +24,12 @@ object Implement {
     //newEnv.errorContent = null
 
     currentState match {
-      case "Markup_declaration_open_state" => newEnv = OtherStates.markupDeclarationOpenState(newEnv)
-      case "Named_character_reference_state" => {
+      case "Markup_declaration_open_state"|"Markup declaration open state" => newEnv = OtherStates.markupDeclarationOpenState(newEnv)
+      case "Named_character_reference_state"|"Named character reference state" => {
         OtherStates.loadTable()
         newEnv = OtherStates.namedCharacterReferenceState(newEnv)
       }
-      case "Numeric_character_reference_end_state" => {
+      case "Numeric_character_reference_end_state"|"Numeric character reference end state" => {
         OtherStates.loadTable()
         newEnv = OtherStates.numericCharacterReferenceEndState(newEnv)
       }
@@ -480,7 +481,7 @@ object Implement {
         for (c <- comList) newEnv = interpretCommand(newEnv, c)
       }
       case IF_(_) | OTHERWISE_() => println("IF not converted error : " + command)
-      case _ => println("undefined command error : " + command)
+      case _ => //println("undefined command error : " + command)
     }
     newEnv
   }
@@ -599,7 +600,7 @@ object Implement {
       case Variable(x) => {
         env.map.get(x + uniqueId.toString) match {
           case Some(a) => value = a
-          case None => println("cant find : " + x + " in map")
+          case None => //println("cant find : " + x + " in map")
         }
       }
       case Substitute(Variable(x), c) => {

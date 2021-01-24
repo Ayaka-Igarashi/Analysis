@@ -487,6 +487,7 @@ object TagToCommand {
     else if (str.contains("next input character")) NextInputCharacter(1)
     else if (str.contains("current input character")) CurrentInputCharacter
     else if(str.contains("_state")) StateName(str)
+//    else if(str.contains("state")) StateName(str)
     else if (str.matches(".*U_[0-9A-F][0-9A-F][0-9A-F][0-9A-F].* character.*")) {
       val unicode: String = "U_[0-9A-F][0-9A-F][0-9A-F][0-9A-F]".r.findFirstIn(str) match {
         case Some(s) => s

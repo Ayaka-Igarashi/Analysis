@@ -1,0 +1,991 @@
+[mM]arkup declaration open state|[nN]amed character reference state|[nN]umeric character reference end state|Data state|data state|RCDATA state|rCDATA state|RAWTEXT state|rAWTEXT state|Script data state|script data state|PLAINTEXT state|pLAINTEXT state|Tag open state|tag open state|End tag open state|end tag open state|Tag name state|tag name state|RCDATA less-than sign state|rCDATA less-than sign state|RCDATA end tag open state|rCDATA end tag open state|RCDATA end tag name state|rCDATA end tag name state|RAWTEXT less-than sign state|rAWTEXT less-than sign state|RAWTEXT end tag open state|rAWTEXT end tag open state|RAWTEXT end tag name state|rAWTEXT end tag name state|Script data less-than sign state|script data less-than sign state|Script data end tag open state|script data end tag open state|Script data end tag name state|script data end tag name state|Script data escape start state|script data escape start state|Script data escape start dash state|script data escape start dash state|Script data escaped state|script data escaped state|Script data escaped dash state|script data escaped dash state|Script data escaped dash dash state|script data escaped dash dash state|Script data escaped less-than sign state|script data escaped less-than sign state|Script data escaped end tag open state|script data escaped end tag open state|Script data escaped end tag name state|script data escaped end tag name state|Script data double escape start state|script data double escape start state|Script data double escaped state|script data double escaped state|Script data double escaped dash state|script data double escaped dash state|Script data double escaped dash dash state|script data double escaped dash dash state|Script data double escaped less-than sign state|script data double escaped less-than sign state|Script data double escape end state|script data double escape end state|Before attribute name state|before attribute name state|Attribute name state|attribute name state|After attribute name state|after attribute name state|Before attribute value state|before attribute value state|Attribute value \(double-quoted\) state|attribute value \(double-quoted\) state|Attribute value \(single-quoted\) state|attribute value \(single-quoted\) state|Attribute value \(unquoted\) state|attribute value \(unquoted\) state|After attribute value \(quoted\) state|after attribute value \(quoted\) state|Self-closing start tag state|self-closing start tag state|Bogus comment state|bogus comment state|Markup declaration open state|markup declaration open state|Comment start state|comment start state|Comment start dash state|comment start dash state|Comment state|comment state|Comment less-than sign state|comment less-than sign state|Comment less-than sign bang state|comment less-than sign bang state|Comment less-than sign bang dash state|comment less-than sign bang dash state|Comment less-than sign bang dash dash state|comment less-than sign bang dash dash state|Comment end dash state|comment end dash state|Comment end state|comment end state|Comment end bang state|comment end bang state|DOCTYPE state|dOCTYPE state|Before DOCTYPE name state|before DOCTYPE name state|DOCTYPE name state|dOCTYPE name state|After DOCTYPE name state|after DOCTYPE name state|After DOCTYPE public keyword state|after DOCTYPE public keyword state|Before DOCTYPE public identifier state|before DOCTYPE public identifier state|DOCTYPE public identifier \(double-quoted\) state|dOCTYPE public identifier \(double-quoted\) state|DOCTYPE public identifier \(single-quoted\) state|dOCTYPE public identifier \(single-quoted\) state|After DOCTYPE public identifier state|after DOCTYPE public identifier state|Between DOCTYPE public and system identifiers state|between DOCTYPE public and system identifiers state|After DOCTYPE system keyword state|after DOCTYPE system keyword state|Before DOCTYPE system identifier state|before DOCTYPE system identifier state|DOCTYPE system identifier \(double-quoted\) state|dOCTYPE system identifier \(double-quoted\) state|DOCTYPE system identifier \(single-quoted\) state|dOCTYPE system identifier \(single-quoted\) state|After DOCTYPE system identifier state|after DOCTYPE system identifier state|Bogus DOCTYPE state|bogus DOCTYPE state|CDATA section state|cDATA section state|CDATA section bracket state|cDATA section bracket state|CDATA section end state|cDATA section end state|Character reference state|character reference state|Named character reference state|named character reference state|Ambiguous ampersand state|ambiguous ampersand state|Numeric character reference state|numeric character reference state|Hexadecimal character reference start state|hexadecimal character reference start state|Decimal character reference start state|decimal character reference start state|Hexadecimal character reference state|hexadecimal character reference state|Decimal character reference state|decimal character reference state
+Consume the next input character:
+ => Consume the next input character.
+Set the return state to the data state. Switch to the character reference state.
+ => Set the return state to the Data_state. Switch to the Character_reference_state.
+Switch to the tag open state.
+ => Switch to the Tag_open_state.
+This is an unexpected-null-character parse error. Emit the current input character as a character token.
+ => This is an unexpected_null_character parse error. Emit the current input character as a character token.
+Emit an end-of-file token.
+ => Emit an end_of_file token.
+Emit the current input character as a character token.
+ => Emit the current input character as a character token.
+Consume the next input character:
+ => Consume the next input character.
+Set the return state to the RCDATA state. Switch to the character reference state.
+ => Set the return state to the RCDATA_state. Switch to the Character_reference_state.
+Switch to the RCDATA less-than sign state.
+ => Switch to the RCDATA_less_than_sign_state.
+This is an unexpected-null-character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+ => This is an unexpected_null_character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+Emit an end-of-file token.
+ => Emit an end_of_file token.
+Emit the current input character as a character token.
+ => Emit the current input character as a character token.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the RAWTEXT less-than sign state.
+ => Switch to the RAWTEXT_less_than_sign_state.
+This is an unexpected-null-character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+ => This is an unexpected_null_character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+Emit an end-of-file token.
+ => Emit an end_of_file token.
+Emit the current input character as a character token.
+ => Emit the current input character as a character token.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the script data less-than sign state.
+ => Switch to the Script_data_less_than_sign_state.
+This is an unexpected-null-character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+ => This is an unexpected_null_character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+Emit an end-of-file token.
+ => Emit an end_of_file token.
+Emit the current input character as a character token.
+ => Emit the current input character as a character token.
+Consume the next input character:
+ => Consume the next input character.
+This is an unexpected-null-character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+ => This is an unexpected_null_character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+Emit an end-of-file token.
+ => Emit an end_of_file token.
+Emit the current input character as a character token.
+ => Emit the current input character as a character token.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the markup declaration open state.
+ => Switch to the Markup_declaration_open_state.
+Switch to the end tag open state.
+ => Switch to the End_tag_open_state.
+Create a new start tag token and set its tag name to the empty string. Reconsume in the tag name state. 
+ => Create a new start tag token and set its tag name to the empty string. Reconsume in the Tag_name_state. 
+This is an unexpected-question-mark-instead-of-tag-name parse error. Create a comment token whose data is the empty string. Reconsume in the bogus comment state.
+ => This is an unexpected_question_mark_instead_of_tag_name parse error. Create a comment token whose data is the empty string. Reconsume in the Bogus_comment_state.
+This is an eof-before-tag-name parse error. Emit a U+003C LESS-THAN SIGN character token and an end-of-file token.
+ => This is an eof_before_tag_name parse error. Emit a U+003C LESS_THAN SIGN character token and an end_of_file token.
+This is an invalid-first-character-of-tag-name parse error. Emit a U+003C LESS-THAN SIGN character token. Reconsume in the data state.
+ => This is an invalid_first_character_of_tag_name parse error. Emit a U+003C LESS_THAN SIGN character token. Reconsume in the Data_state.
+Consume the next input character:
+ => Consume the next input character.
+Create a new end tag token, set its tag name to the empty string. Reconsume in the tag name state. 
+ => Create a new end tag token, set its tag name to the empty string. Reconsume in the Tag_name_state. 
+This is a missing-end-tag-name parse error. Switch to the data state.
+ => This is a missing_end_tag_name parse error. Switch to the Data_state.
+This is an eof-before-tag-name parse error. Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token and an end-of-file token. 
+ => This is an eof_before_tag_name parse error. Emit a U+003C LESS_THAN SIGN character token, a U+002F SOLIDUS character token and an end_of_file token. 
+This is an invalid-first-character-of-tag-name parse error. Create a comment token whose data is the empty string. Reconsume in the bogus comment state.
+ => This is an invalid_first_character_of_tag_name parse error. Create a comment token whose data is the empty string. Reconsume in the Bogus_comment_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the before attribute name state.
+ => Switch to the Before_attribute_name_state.
+Switch to the before attribute name state.
+ => Switch to the Before_attribute_name_state.
+Switch to the before attribute name state.
+ => Switch to the Before_attribute_name_state.
+Switch to the before attribute name state.
+ => Switch to the Before_attribute_name_state.
+Switch to the self-closing start tag state.
+ => Switch to the Self_closing_start_tag_state.
+Switch to the data state. Emit the current tag token.
+ => Switch to the Data_state. Emit the current tag token.
+Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name.
+ => Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name.
+This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current tag token's tag name.
+ => This is an unexpected_null_character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current tag token's tag name.
+This is an eof-in-tag parse error. Emit an end-of-file token.
+ => This is an eof_in_tag parse error. Emit an end_of_file token.
+Append the current input character to the current tag token's tag name.
+ => Append the current input character to the current tag token's tag name.
+Consume the next input character:
+ => Consume the next input character.
+Set the temporary buffer to the empty string. Switch to the RCDATA end tag open state.
+ => Set the temporary buffer to the empty string. Switch to the RCDATA_end_tag_open_state.
+Emit a U+003C LESS-THAN SIGN character token. Reconsume in the RCDATA state.
+ => Emit a U+003C LESS_THAN SIGN character token. Reconsume in the RCDATA_state.
+Consume the next input character:
+ => Consume the next input character.
+Create a new end tag token, set its tag name to the empty string. Reconsume in the RCDATA end tag name state. 
+ => Create a new end tag token, set its tag name to the empty string. Reconsume in the RCDATA_end_tag_name_state. 
+Emit a U+003C LESS-THAN SIGN character token and a U+002F SOLIDUS character token. Reconsume in the RCDATA state.
+ => Emit a U+003C LESS_THAN SIGN character token and a U+002F SOLIDUS character token. Reconsume in the RCDATA_state.
+Consume the next input character:
+ => Consume the next input character.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the self-closing start tag state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Self_closing_start_tag_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the data state and emit the current tag token. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Data_state and emit the current tag token. Otherwise, treat it as per the "anything else" entry below.
+Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name. Append the current input character to the temporary buffer.
+ => Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name. Append the current input character to the temporary buffer.
+Append the current input character to the current tag token's tag name. Append the current input character to the temporary buffer.
+ => Append the current input character to the current tag token's tag name. Append the current input character to the temporary buffer.
+Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token, and a character token for each of the characters in the temporary buffer (in the order they were added to the buffer). Reconsume in the RCDATA state.
+ => Emit a U+003C LESS_THAN SIGN character token, a U+002F SOLIDUS character token, and a character token for each of the characters in the temporary buffer (in the order they were added to the buffer). Reconsume in the RCDATA_state.
+Consume the next input character:
+ => Consume the next input character.
+Set the temporary buffer to the empty string. Switch to the RAWTEXT end tag open state.
+ => Set the temporary buffer to the empty string. Switch to the RAWTEXT_end_tag_open_state.
+Emit a U+003C LESS-THAN SIGN character token. Reconsume in the RAWTEXT state.
+ => Emit a U+003C LESS_THAN SIGN character token. Reconsume in the RAWTEXT_state.
+Consume the next input character:
+ => Consume the next input character.
+Create a new end tag token, set its tag name to the empty string. Reconsume in the RAWTEXT end tag name state. 
+ => Create a new end tag token, set its tag name to the empty string. Reconsume in the RAWTEXT_end_tag_name_state. 
+Emit a U+003C LESS-THAN SIGN character token and a U+002F SOLIDUS character token. Reconsume in the RAWTEXT state.
+ => Emit a U+003C LESS_THAN SIGN character token and a U+002F SOLIDUS character token. Reconsume in the RAWTEXT_state.
+Consume the next input character:
+ => Consume the next input character.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the self-closing start tag state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Self_closing_start_tag_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the data state and emit the current tag token. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Data_state and emit the current tag token. Otherwise, treat it as per the "anything else" entry below.
+Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name. Append the current input character to the temporary buffer.
+ => Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name. Append the current input character to the temporary buffer.
+Append the current input character to the current tag token's tag name. Append the current input character to the temporary buffer.
+ => Append the current input character to the current tag token's tag name. Append the current input character to the temporary buffer.
+Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token, and a character token for each of the characters in the temporary buffer (in the order they were added to the buffer). Reconsume in the RAWTEXT state.
+ => Emit a U+003C LESS_THAN SIGN character token, a U+002F SOLIDUS character token, and a character token for each of the characters in the temporary buffer (in the order they were added to the buffer). Reconsume in the RAWTEXT_state.
+Consume the next input character:
+ => Consume the next input character.
+Set the temporary buffer to the empty string. Switch to the script data end tag open state.
+ => Set the temporary buffer to the empty string. Switch to the Script_data_end_tag_open_state.
+Switch to the script data escape start state. Emit a U+003C LESS-THAN SIGN character token and a U+0021 EXCLAMATION MARK character token.
+ => Switch to the Script_data_escape_start_state. Emit a U+003C LESS_THAN SIGN character token and a U+0021 EXCLAMATION MARK character token.
+Emit a U+003C LESS-THAN SIGN character token. Reconsume in the script data state.
+ => Emit a U+003C LESS_THAN SIGN character token. Reconsume in the Script_data_state.
+Consume the next input character:
+ => Consume the next input character.
+Create a new end tag token, set its tag name to the empty string. Reconsume in the script data end tag name state. 
+ => Create a new end tag token, set its tag name to the empty string. Reconsume in the Script_data_end_tag_name_state. 
+Emit a U+003C LESS-THAN SIGN character token and a U+002F SOLIDUS character token. Reconsume in the script data state.
+ => Emit a U+003C LESS_THAN SIGN character token and a U+002F SOLIDUS character token. Reconsume in the Script_data_state.
+Consume the next input character:
+ => Consume the next input character.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the self-closing start tag state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Self_closing_start_tag_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the data state and emit the current tag token. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Data_state and emit the current tag token. Otherwise, treat it as per the "anything else" entry below.
+Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name. Append the current input character to the temporary buffer.
+ => Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name. Append the current input character to the temporary buffer.
+Append the current input character to the current tag token's tag name. Append the current input character to the temporary buffer.
+ => Append the current input character to the current tag token's tag name. Append the current input character to the temporary buffer.
+Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token, and a character token for each of the characters in the temporary buffer (in the order they were added to the buffer). Reconsume in the script data state.
+ => Emit a U+003C LESS_THAN SIGN character token, a U+002F SOLIDUS character token, and a character token for each of the characters in the temporary buffer (in the order they were added to the buffer). Reconsume in the Script_data_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the script data escape start dash state. Emit a U+002D HYPHEN-MINUS character token.
+ => Switch to the Script_data_escape_start_dash_state. Emit a U+002D HYPHEN_MINUS character token.
+Reconsume in the script data state.
+ => Reconsume in the Script_data_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the script data escaped dash dash state. Emit a U+002D HYPHEN-MINUS character token.
+ => Switch to the Script_data_escaped_dash_dash_state. Emit a U+002D HYPHEN_MINUS character token.
+Reconsume in the script data state.
+ => Reconsume in the Script_data_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the script data escaped dash state. Emit a U+002D HYPHEN-MINUS character token.
+ => Switch to the Script_data_escaped_dash_state. Emit a U+002D HYPHEN_MINUS character token.
+Switch to the script data escaped less-than sign state.
+ => Switch to the Script_data_escaped_less_than_sign_state.
+This is an unexpected-null-character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+ => This is an unexpected_null_character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+This is an eof-in-script-html-comment-like-text parse error. Emit an end-of-file token.
+ => This is an eof_in_script_html_comment_like_text parse error. Emit an end_of_file token.
+Emit the current input character as a character token.
+ => Emit the current input character as a character token.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the script data escaped dash dash state. Emit a U+002D HYPHEN-MINUS character token.
+ => Switch to the Script_data_escaped_dash_dash_state. Emit a U+002D HYPHEN_MINUS character token.
+Switch to the script data escaped less-than sign state.
+ => Switch to the Script_data_escaped_less_than_sign_state.
+This is an unexpected-null-character parse error. Switch to the script data escaped state. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+ => This is an unexpected_null_character parse error. Switch to the Script_data_escaped_state. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+This is an eof-in-script-html-comment-like-text parse error. Emit an end-of-file token.
+ => This is an eof_in_script_html_comment_like_text parse error. Emit an end_of_file token.
+Switch to the script data escaped state. Emit the current input character as a character token.
+ => Switch to the Script_data_escaped_state. Emit the current input character as a character token.
+Consume the next input character:
+ => Consume the next input character.
+Emit a U+002D HYPHEN-MINUS character token.
+ => Emit a U+002D HYPHEN_MINUS character token.
+Switch to the script data escaped less-than sign state.
+ => Switch to the Script_data_escaped_less_than_sign_state.
+Switch to the script data state. Emit a U+003E GREATER-THAN SIGN character token.
+ => Switch to the Script_data_state. Emit a U+003E GREATER_THAN SIGN character token.
+This is an unexpected-null-character parse error. Switch to the script data escaped state. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+ => This is an unexpected_null_character parse error. Switch to the Script_data_escaped_state. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+This is an eof-in-script-html-comment-like-text parse error. Emit an end-of-file token.
+ => This is an eof_in_script_html_comment_like_text parse error. Emit an end_of_file token.
+Switch to the script data escaped state. Emit the current input character as a character token.
+ => Switch to the Script_data_escaped_state. Emit the current input character as a character token.
+Consume the next input character:
+ => Consume the next input character.
+Set the temporary buffer to the empty string. Switch to the script data escaped end tag open state.
+ => Set the temporary buffer to the empty string. Switch to the Script_data_escaped_end_tag_open_state.
+Set the temporary buffer to the empty string. Emit a U+003C LESS-THAN SIGN character token. Reconsume in the script data double escape start state.
+ => Set the temporary buffer to the empty string. Emit a U+003C LESS_THAN SIGN character token. Reconsume in the Script_data_double_escape_start_state.
+Emit a U+003C LESS-THAN SIGN character token. Reconsume in the script data escaped state.
+ => Emit a U+003C LESS_THAN SIGN character token. Reconsume in the Script_data_escaped_state.
+Consume the next input character:
+ => Consume the next input character.
+Create a new end tag token, set its tag name to the empty string. Reconsume in the script data escaped end tag name state.
+ => Create a new end tag token, set its tag name to the empty string. Reconsume in the Script_data_escaped_end_tag_name_state.
+Emit a U+003C LESS-THAN SIGN character token and a U+002F SOLIDUS character token. Reconsume in the script data escaped state.
+ => Emit a U+003C LESS_THAN SIGN character token and a U+002F SOLIDUS character token. Reconsume in the Script_data_escaped_state.
+Consume the next input character:
+ => Consume the next input character.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Before_attribute_name_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the self-closing start tag state. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Self_closing_start_tag_state. Otherwise, treat it as per the "anything else" entry below.
+If the current end tag token is an appropriate end tag token, then switch to the data state and emit the current tag token. Otherwise, treat it as per the "anything else" entry below.
+ => If the current end tag token is an appropriate end tag token, then switch to the Data_state and emit the current tag token. Otherwise, treat it as per the "anything else" entry below.
+Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name. Append the current input character to the temporary buffer.
+ => Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name. Append the current input character to the temporary buffer.
+Append the current input character to the current tag token's tag name. Append the current input character to the temporary buffer.
+ => Append the current input character to the current tag token's tag name. Append the current input character to the temporary buffer.
+Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token, and a character token for each of the characters in the temporary buffer  (in the order they were added to the buffer). Reconsume in the script data escaped state.
+ => Emit a U+003C LESS_THAN SIGN character token, a U+002F SOLIDUS character token, and a character token for each of the characters in the temporary buffer  (in the order they were added to the buffer). Reconsume in the Script_data_escaped_state.
+Consume the next input character:
+ => Consume the next input character.
+If the temporary buffer is the string "script", then switch to the script data double escaped state. Otherwise, switch to the script data escaped state. Emit the current input character as a character token.
+ => If the temporary buffer is the string "script", then switch to the Script_data_double_escaped_state. Otherwise, switch to the Script_data_escaped_state. Emit the current input character as a character token.
+If the temporary buffer is the string "script", then switch to the script data double escaped state. Otherwise, switch to the script data escaped state. Emit the current input character as a character token.
+ => If the temporary buffer is the string "script", then switch to the Script_data_double_escaped_state. Otherwise, switch to the Script_data_escaped_state. Emit the current input character as a character token.
+If the temporary buffer is the string "script", then switch to the script data double escaped state. Otherwise, switch to the script data escaped state. Emit the current input character as a character token.
+ => If the temporary buffer is the string "script", then switch to the Script_data_double_escaped_state. Otherwise, switch to the Script_data_escaped_state. Emit the current input character as a character token.
+If the temporary buffer is the string "script", then switch to the script data double escaped state. Otherwise, switch to the script data escaped state. Emit the current input character as a character token.
+ => If the temporary buffer is the string "script", then switch to the Script_data_double_escaped_state. Otherwise, switch to the Script_data_escaped_state. Emit the current input character as a character token.
+If the temporary buffer is the string "script", then switch to the script data double escaped state. Otherwise, switch to the script data escaped state. Emit the current input character as a character token.
+ => If the temporary buffer is the string "script", then switch to the Script_data_double_escaped_state. Otherwise, switch to the Script_data_escaped_state. Emit the current input character as a character token.
+If the temporary buffer is the string "script", then switch to the script data double escaped state. Otherwise, switch to the script data escaped state. Emit the current input character as a character token.
+ => If the temporary buffer is the string "script", then switch to the Script_data_double_escaped_state. Otherwise, switch to the Script_data_escaped_state. Emit the current input character as a character token.
+Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the temporary buffer. Emit the current input character as a character token.
+ => Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the temporary buffer. Emit the current input character as a character token.
+Append the current input character to the temporary buffer. Emit the current input character as a character token.
+ => Append the current input character to the temporary buffer. Emit the current input character as a character token.
+Reconsume in the script data escaped state.
+ => Reconsume in the Script_data_escaped_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the script data double escaped dash state. Emit a U+002D HYPHEN-MINUS character token.
+ => Switch to the Script_data_double_escaped_dash_state. Emit a U+002D HYPHEN_MINUS character token.
+Switch to the script data double escaped less-than sign state. Emit a U+003C LESS-THAN SIGN character token.
+ => Switch to the Script_data_double_escaped_less_than_sign_state. Emit a U+003C LESS_THAN SIGN character token.
+This is an unexpected-null-character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+ => This is an unexpected_null_character parse error. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+This is an eof-in-script-html-comment-like-text parse error. Emit an end-of-file token.
+ => This is an eof_in_script_html_comment_like_text parse error. Emit an end_of_file token.
+Emit the current input character as a character token.
+ => Emit the current input character as a character token.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the script data double escaped dash dash state. Emit a U+002D HYPHEN-MINUS character token.
+ => Switch to the Script_data_double_escaped_dash_dash_state. Emit a U+002D HYPHEN_MINUS character token.
+Switch to the script data double escaped less-than sign state. Emit a U+003C LESS-THAN SIGN character token.
+ => Switch to the Script_data_double_escaped_less_than_sign_state. Emit a U+003C LESS_THAN SIGN character token.
+This is an unexpected-null-character parse error. Switch to the script data double escaped state. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+ => This is an unexpected_null_character parse error. Switch to the Script_data_double_escaped_state. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+This is an eof-in-script-html-comment-like-text parse error. Emit an end-of-file token.
+ => This is an eof_in_script_html_comment_like_text parse error. Emit an end_of_file token.
+Switch to the script data double escaped state. Emit the current input character as a character token.
+ => Switch to the Script_data_double_escaped_state. Emit the current input character as a character token.
+Consume the next input character:
+ => Consume the next input character.
+Emit a U+002D HYPHEN-MINUS character token.
+ => Emit a U+002D HYPHEN_MINUS character token.
+Switch to the script data double escaped less-than sign state. Emit a U+003C LESS-THAN SIGN character token.
+ => Switch to the Script_data_double_escaped_less_than_sign_state. Emit a U+003C LESS_THAN SIGN character token.
+Switch to the script data state. Emit a U+003E GREATER-THAN SIGN character token.
+ => Switch to the Script_data_state. Emit a U+003E GREATER_THAN SIGN character token.
+This is an unexpected-null-character parse error. Switch to the script data double escaped state. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+ => This is an unexpected_null_character parse error. Switch to the Script_data_double_escaped_state. Emit a U+FFFD REPLACEMENT CHARACTER character token.
+This is an eof-in-script-html-comment-like-text parse error. Emit an end-of-file token.
+ => This is an eof_in_script_html_comment_like_text parse error. Emit an end_of_file token.
+Switch to the script data double escaped state. Emit the current input character as a character token.
+ => Switch to the Script_data_double_escaped_state. Emit the current input character as a character token.
+Consume the next input character:
+ => Consume the next input character.
+Set the temporary buffer to the empty string. Switch to the script data double escape end state. Emit a U+002F SOLIDUS character token.
+ => Set the temporary buffer to the empty string. Switch to the Script_data_double_escape_end_state. Emit a U+002F SOLIDUS character token.
+Reconsume in the script data double escaped state.
+ => Reconsume in the Script_data_double_escaped_state.
+Consume the next input character:
+ => Consume the next input character.
+If the temporary buffer is the string "script", then switch to the script data escaped state. Otherwise, switch to the script data double escaped state. Emit the current input character as a character token.
+ => If the temporary buffer is the string "script", then switch to the Script_data_escaped_state. Otherwise, switch to the Script_data_double_escaped_state. Emit the current input character as a character token.
+If the temporary buffer is the string "script", then switch to the script data escaped state. Otherwise, switch to the script data double escaped state. Emit the current input character as a character token.
+ => If the temporary buffer is the string "script", then switch to the Script_data_escaped_state. Otherwise, switch to the Script_data_double_escaped_state. Emit the current input character as a character token.
+If the temporary buffer is the string "script", then switch to the script data escaped state. Otherwise, switch to the script data double escaped state. Emit the current input character as a character token.
+ => If the temporary buffer is the string "script", then switch to the Script_data_escaped_state. Otherwise, switch to the Script_data_double_escaped_state. Emit the current input character as a character token.
+If the temporary buffer is the string "script", then switch to the script data escaped state. Otherwise, switch to the script data double escaped state. Emit the current input character as a character token.
+ => If the temporary buffer is the string "script", then switch to the Script_data_escaped_state. Otherwise, switch to the Script_data_double_escaped_state. Emit the current input character as a character token.
+If the temporary buffer is the string "script", then switch to the script data escaped state. Otherwise, switch to the script data double escaped state. Emit the current input character as a character token.
+ => If the temporary buffer is the string "script", then switch to the Script_data_escaped_state. Otherwise, switch to the Script_data_double_escaped_state. Emit the current input character as a character token.
+If the temporary buffer is the string "script", then switch to the script data escaped state. Otherwise, switch to the script data double escaped state. Emit the current input character as a character token.
+ => If the temporary buffer is the string "script", then switch to the Script_data_escaped_state. Otherwise, switch to the Script_data_double_escaped_state. Emit the current input character as a character token.
+Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the temporary buffer. Emit the current input character as a character token.
+ => Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the temporary buffer. Emit the current input character as a character token.
+Append the current input character to the temporary buffer. Emit the current input character as a character token.
+ => Append the current input character to the temporary buffer. Emit the current input character as a character token.
+Reconsume in the script data double escaped state.
+ => Reconsume in the Script_data_double_escaped_state.
+Consume the next input character:
+ => Consume the next input character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Reconsume in the after attribute name state.
+ => Reconsume in the After_attribute_name_state.
+Reconsume in the after attribute name state.
+ => Reconsume in the After_attribute_name_state.
+Reconsume in the after attribute name state.
+ => Reconsume in the After_attribute_name_state.
+This is an unexpected-equals-sign-before-attribute-name parse error. Start a new attribute in the current tag token. Set that attribute's name to the current input character, and its value to the empty string. Switch to the attribute name state.
+ => This is an unexpected_equals_sign_before_attribute_name parse error. Start a new attribute in the current tag token. Set that attribute's name to the current input character, and its value to the empty string. Switch to the Attribute_name_state.
+Start a new attribute in the current tag token. Set that attribute name and value to the empty string. Reconsume in the attribute name state.
+ => Start a new attribute in the current tag token. Set that attribute name and value to the empty string. Reconsume in the Attribute_name_state.
+Consume the next input character:
+ => Consume the next input character.
+Reconsume in the after attribute name state.
+ => Reconsume in the After_attribute_name_state.
+Reconsume in the after attribute name state.
+ => Reconsume in the After_attribute_name_state.
+Reconsume in the after attribute name state.
+ => Reconsume in the After_attribute_name_state.
+Reconsume in the after attribute name state.
+ => Reconsume in the After_attribute_name_state.
+Reconsume in the after attribute name state.
+ => Reconsume in the After_attribute_name_state.
+Reconsume in the after attribute name state.
+ => Reconsume in the After_attribute_name_state.
+Reconsume in the after attribute name state.
+ => Reconsume in the After_attribute_name_state.
+Switch to the before attribute value state.
+ => Switch to the Before_attribute_value_state.
+Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current attribute's name.
+ => Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current attribute's name.
+This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current attribute's name.
+ => This is an unexpected_null_character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current attribute's name.
+This is an unexpected-character-in-attribute-name parse error. Treat it as per the "anything else" entry below.
+ => This is an unexpected_character_in_attribute_name parse error. Treat it as per the "anything else" entry below.
+This is an unexpected-character-in-attribute-name parse error. Treat it as per the "anything else" entry below.
+ => This is an unexpected_character_in_attribute_name parse error. Treat it as per the "anything else" entry below.
+This is an unexpected-character-in-attribute-name parse error. Treat it as per the "anything else" entry below.
+ => This is an unexpected_character_in_attribute_name parse error. Treat it as per the "anything else" entry below.
+Append the current input character to the current attribute's name.
+ => Append the current input character to the current attribute's name.
+Consume the next input character:
+ => Consume the next input character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Switch to the self-closing start tag state.
+ => Switch to the Self_closing_start_tag_state.
+Switch to the before attribute value state.
+ => Switch to the Before_attribute_value_state.
+Switch to the data state. Emit the current tag token.
+ => Switch to the Data_state. Emit the current tag token.
+This is an eof-in-tag parse error. Emit an end-of-file token.
+ => This is an eof_in_tag parse error. Emit an end_of_file token.
+Start a new attribute in the current tag token. Set that attribute name and value to the empty string. Reconsume in the attribute name state.
+ => Start a new attribute in the current tag token. Set that attribute name and value to the empty string. Reconsume in the Attribute_name_state.
+Consume the next input character:
+ => Consume the next input character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Switch to the attribute value (double-quoted) state.
+ => Switch to the Attribute_value_double_quoted_state.
+Switch to the attribute value (single-quoted) state.
+ => Switch to the Attribute_value_single_quoted_state.
+This is a missing-attribute-value parse error. Switch to the data state. Emit the current tag token.
+ => This is a missing_attribute_value parse error. Switch to the Data_state. Emit the current tag token.
+Reconsume in the attribute value (unquoted) state.
+ => Reconsume in the Attribute_value_unquoted_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the after attribute value (quoted) state.
+ => Switch to the After_attribute_value_quoted_state.
+Set the return state to the attribute value (double-quoted) state. Switch to the character reference state.
+ => Set the return state to the Attribute_value_double_quoted_state. Switch to the Character_reference_state.
+This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current attribute's value.
+ => This is an unexpected_null_character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current attribute's value.
+This is an eof-in-tag parse error. Emit an end-of-file token.
+ => This is an eof_in_tag parse error. Emit an end_of_file token.
+Append the current input character to the current attribute's value.
+ => Append the current input character to the current attribute's value.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the after attribute value (quoted) state.
+ => Switch to the After_attribute_value_quoted_state.
+Set the return state to the attribute value (single-quoted) state. Switch to the character reference state.
+ => Set the return state to the Attribute_value_single_quoted_state. Switch to the Character_reference_state.
+This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current attribute's value.
+ => This is an unexpected_null_character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current attribute's value.
+This is an eof-in-tag parse error. Emit an end-of-file token.
+ => This is an eof_in_tag parse error. Emit an end_of_file token.
+Append the current input character to the current attribute's value.
+ => Append the current input character to the current attribute's value.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the before attribute name state.
+ => Switch to the Before_attribute_name_state.
+Switch to the before attribute name state.
+ => Switch to the Before_attribute_name_state.
+Switch to the before attribute name state.
+ => Switch to the Before_attribute_name_state.
+Switch to the before attribute name state.
+ => Switch to the Before_attribute_name_state.
+Set the return state to the attribute value (unquoted) state. Switch to the character reference state.
+ => Set the return state to the Attribute_value_unquoted_state. Switch to the Character_reference_state.
+Switch to the data state. Emit the current tag token.
+ => Switch to the Data_state. Emit the current tag token.
+This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current attribute's value.
+ => This is an unexpected_null_character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current attribute's value.
+This is an unexpected-character-in-unquoted-attribute-value parse error. Treat it as per the "anything else" entry below.
+ => This is an unexpected_character_in_unquoted_attribute_value parse error. Treat it as per the "anything else" entry below.
+This is an unexpected-character-in-unquoted-attribute-value parse error. Treat it as per the "anything else" entry below.
+ => This is an unexpected_character_in_unquoted_attribute_value parse error. Treat it as per the "anything else" entry below.
+This is an unexpected-character-in-unquoted-attribute-value parse error. Treat it as per the "anything else" entry below.
+ => This is an unexpected_character_in_unquoted_attribute_value parse error. Treat it as per the "anything else" entry below.
+This is an unexpected-character-in-unquoted-attribute-value parse error. Treat it as per the "anything else" entry below.
+ => This is an unexpected_character_in_unquoted_attribute_value parse error. Treat it as per the "anything else" entry below.
+This is an unexpected-character-in-unquoted-attribute-value parse error. Treat it as per the "anything else" entry below.
+ => This is an unexpected_character_in_unquoted_attribute_value parse error. Treat it as per the "anything else" entry below.
+This is an eof-in-tag parse error. Emit an end-of-file token.
+ => This is an eof_in_tag parse error. Emit an end_of_file token.
+Append the current input character to the current attribute's value.
+ => Append the current input character to the current attribute's value.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the before attribute name state.
+ => Switch to the Before_attribute_name_state.
+Switch to the before attribute name state.
+ => Switch to the Before_attribute_name_state.
+Switch to the before attribute name state.
+ => Switch to the Before_attribute_name_state.
+Switch to the before attribute name state.
+ => Switch to the Before_attribute_name_state.
+Switch to the self-closing start tag state.
+ => Switch to the Self_closing_start_tag_state.
+Switch to the data state. Emit the current tag token.
+ => Switch to the Data_state. Emit the current tag token.
+This is an eof-in-tag parse error. Emit an end-of-file token.
+ => This is an eof_in_tag parse error. Emit an end_of_file token.
+This is a missing-whitespace-between-attributes parse error. Reconsume in the before attribute name state. 
+ => This is a missing_whitespace_between_attributes parse error. Reconsume in the Before_attribute_name_state. 
+Consume the next input character:
+ => Consume the next input character.
+Set the self-closing flag of the current tag token. Switch to the data state. Emit the current tag token.
+ => Set the self_closing flag of the current tag token. Switch to the Data_state. Emit the current tag token.
+This is an eof-in-tag parse error. Emit an end-of-file token.
+ => This is an eof_in_tag parse error. Emit an end_of_file token.
+This is an unexpected-solidus-in-tag parse error. Reconsume in the before attribute name state.
+ => This is an unexpected_solidus_in_tag parse error. Reconsume in the Before_attribute_name_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the data state. Emit the comment token.
+ => Switch to the Data_state. Emit the comment token.
+Emit the comment. Emit an end-of-file token.
+ => Emit the comment. Emit an end_of_file token.
+This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the comment token's data.
+ => This is an unexpected_null_character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the comment token's data.
+Append the current input character to the comment token's data.
+ => Append the current input character to the comment token's data.
+If the next few characters are: 
+ => If the next few characters are: 
+Consume those two characters, create a comment token whose data is the empty string, and switch to the comment start state.
+ => Consume those two characters, create a comment token whose data is the empty string, and switch to the Comment_start_state.
+Consume those characters and switch to the DOCTYPE state.
+ => Consume those characters and switch to the DOCTYPE_state.
+Consume those characters. If there is an adjusted current node and it is not an element in the HTML namespace, then switch to the CDATA section state. Otherwise, this is a cdata-in-html-content parse error. Create a comment token whose data is the "[CDATA[" string. Switch to the bogus comment state.
+ => Consume those characters. If there is an adjusted current node and it is not an element in the HTML namespace, then switch to the CDATA_section_state. Otherwise, this is a cdata_in_html_content parse error. Create a comment token whose data is the "[CDATA[" string. Switch to the Bogus_comment_state.
+This is an incorrectly-opened-comment parse error. Create a comment token whose data is the empty string. Switch to the bogus comment state (don't consume anything in the current state).
+ => This is an incorrectly_opened_comment parse error. Create a comment token whose data is the empty string. Switch to the Bogus_comment_state (don't consume anything in the current state).
+Consume the next input character:
+ => Consume the next input character.
+Switch to the comment start dash state.
+ => Switch to the Comment_start_dash_state.
+This is an abrupt-closing-of-empty-comment parse error. Switch to the data state. Emit the comment token.
+ => This is an abrupt_closing_of_empty_comment parse error. Switch to the Data_state. Emit the comment token.
+Reconsume in the comment state.
+ => Reconsume in the Comment_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the comment end state
+ => Switch to the Comment_end_state
+This is an abrupt-closing-of-empty-comment parse error. Switch to the data state. Emit the comment token.
+ => This is an abrupt_closing_of_empty_comment parse error. Switch to the Data_state. Emit the comment token.
+This is an eof-in-comment parse error. Emit the comment token. Emit an end-of-file token.
+ => This is an eof_in_comment parse error. Emit the comment token. Emit an end_of_file token.
+Append a U+002D HYPHEN-MINUS character (-) to the comment token's data. Reconsume in the comment state.
+ => Append a U+002D HYPHEN_MINUS character (_) to the comment token's data. Reconsume in the Comment_state.
+Consume the next input character:
+ => Consume the next input character.
+Append the current input character to the comment token's data. Switch to the comment less-than sign state.
+ => Append the current input character to the comment token's data. Switch to the Comment_less_than_sign_state.
+Switch to the comment end dash state.
+ => Switch to the Comment_end_dash_state.
+This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the comment token's data.
+ => This is an unexpected_null_character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the comment token's data.
+This is an eof-in-comment parse error. Emit the comment token. Emit an end-of-file token.
+ => This is an eof_in_comment parse error. Emit the comment token. Emit an end_of_file token.
+Append the current input character to the comment token's data.
+ => Append the current input character to the comment token's data.
+Consume the next input character:
+ => Consume the next input character.
+Append the current input character to the comment token's data. Switch to the comment less-than sign bang state.
+ => Append the current input character to the comment token's data. Switch to the Comment_less_than_sign_bang_state.
+Append the current input character to the comment token's data.
+ => Append the current input character to the comment token's data.
+Reconsume in the comment state.
+ => Reconsume in the Comment_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the comment less-than sign bang dash state.
+ => Switch to the Comment_less_than_sign_bang_dash_state.
+Reconsume in the comment state.
+ => Reconsume in the Comment_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the comment less-than sign bang dash dash state.
+ => Switch to the Comment_less_than_sign_bang_dash_dash_state.
+Reconsume in the comment end dash state.
+ => Reconsume in the Comment_end_dash_state.
+Consume the next input character:
+ => Consume the next input character.
+Reconsume in the comment end state.
+ => Reconsume in the Comment_end_state.
+Reconsume in the comment end state.
+ => Reconsume in the Comment_end_state.
+This is a nested-comment parse error. Reconsume in the comment end state.
+ => This is a nested_comment parse error. Reconsume in the Comment_end_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the comment end state
+ => Switch to the Comment_end_state
+This is an eof-in-comment parse error. Emit the comment token. Emit an end-of-file token.
+ => This is an eof_in_comment parse error. Emit the comment token. Emit an end_of_file token.
+Append a U+002D HYPHEN-MINUS character (-) to the comment token's data. Reconsume in the comment state.
+ => Append a U+002D HYPHEN_MINUS character (_) to the comment token's data. Reconsume in the Comment_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the data state. Emit the comment token.
+ => Switch to the Data_state. Emit the comment token.
+Switch to the comment end bang state.
+ => Switch to the Comment_end_bang_state.
+Append a U+002D HYPHEN-MINUS character (-) to the comment token's data.
+ => Append a U+002D HYPHEN_MINUS character (_) to the comment token's data.
+This is an eof-in-comment parse error. Emit the comment token. Emit an end-of-file token.
+ => This is an eof_in_comment parse error. Emit the comment token. Emit an end_of_file token.
+Append two U+002D HYPHEN-MINUS characters (-) to the comment token's data. Reconsume in the comment state.
+ => Append two U+002D HYPHEN_MINUS characters (_) to the comment token's data. Reconsume in the Comment_state.
+Consume the next input character:
+ => Consume the next input character.
+Append two U+002D HYPHEN-MINUS characters (-) and a U+0021 EXCLAMATION MARK character (-EXC-) to the comment token's data. Switch to the comment end dash state.
+ => Append two U+002D HYPHEN_MINUS characters (_) and a U+0021 EXCLAMATION MARK character (_EXC_) to the comment token's data. Switch to the Comment_end_dash_state.
+This is an incorrectly-closed-comment parse error. Switch to the data state. Emit the comment token.
+ => This is an incorrectly_closed_comment parse error. Switch to the Data_state. Emit the comment token.
+This is an eof-in-comment parse error. Emit the comment token. Emit an end-of-file token.
+ => This is an eof_in_comment parse error. Emit the comment token. Emit an end_of_file token.
+Append two U+002D HYPHEN-MINUS characters (-) and a U+0021 EXCLAMATION MARK character (!) to the comment token's data. Reconsume in the comment state.
+ => Append two U+002D HYPHEN_MINUS characters (_) and a U+0021 EXCLAMATION MARK character (!) to the comment token's data. Reconsume in the Comment_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the before DOCTYPE name state.
+ => Switch to the Before_DOCTYPE_name_state.
+Switch to the before DOCTYPE name state.
+ => Switch to the Before_DOCTYPE_name_state.
+Switch to the before DOCTYPE name state.
+ => Switch to the Before_DOCTYPE_name_state.
+Switch to the before DOCTYPE name state.
+ => Switch to the Before_DOCTYPE_name_state.
+Reconsume in the before DOCTYPE name state.
+ => Reconsume in the Before_DOCTYPE_name_state.
+This is an eof-in-doctype parse error. Create a new DOCTYPE token. Set its force-quirks flag to on. Emit the token. Emit an end-of-file token.
+ => This is an eof_in_doctype parse error. Create a new DOCTYPE token. Set its force_quirks flag to on. Emit the token. Emit an end_of_file token.
+This is a missing-whitespace-before-doctype-name parse error. Reconsume in the before DOCTYPE name state. 
+ => This is a missing_whitespace_before_doctype_name parse error. Reconsume in the Before_DOCTYPE_name_state. 
+Consume the next input character:
+ => Consume the next input character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Create a new DOCTYPE token. Set the token's name to the lowercase version of the current input character (add 0x0020 to the character's code point). Switch to the DOCTYPE name state.
+ => Create a new DOCTYPE token. Set the token's name to the lowercase version of the current input character (add 0x0020 to the character's code point). Switch to the DOCTYPE_name_state.
+This is an unexpected-null-character parse error. Create a new DOCTYPE token. Set the token's name to a U+FFFD REPLACEMENT CHARACTER character. Switch to the DOCTYPE name state.
+ => This is an unexpected_null_character parse error. Create a new DOCTYPE token. Set the token's name to a U+FFFD REPLACEMENT CHARACTER character. Switch to the DOCTYPE_name_state.
+This is a missing-doctype-name parse error. Create a new DOCTYPE token. Set its force-quirks flag to on. Switch to the data state. Emit the token.
+ => This is a missing_doctype_name parse error. Create a new DOCTYPE token. Set its force_quirks flag to on. Switch to the Data_state. Emit the token.
+This is an eof-in-doctype parse error. Create a new DOCTYPE token. Set its  force-quirks flag to on. Emit the token. Emit an end-of-file token.
+ => This is an eof_in_doctype parse error. Create a new DOCTYPE token. Set its  force_quirks flag to on. Emit the token. Emit an end_of_file token.
+Create a new DOCTYPE token. Set the token's name to the current input character. Switch to the DOCTYPE name state.
+ => Create a new DOCTYPE token. Set the token's name to the current input character. Switch to the DOCTYPE_name_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the after DOCTYPE name state.
+ => Switch to the After_DOCTYPE_name_state.
+Switch to the after DOCTYPE name state.
+ => Switch to the After_DOCTYPE_name_state.
+Switch to the after DOCTYPE name state.
+ => Switch to the After_DOCTYPE_name_state.
+Switch to the after DOCTYPE name state.
+ => Switch to the After_DOCTYPE_name_state.
+Switch to the data state. Emit the current DOCTYPE token.
+ => Switch to the Data_state. Emit the current DOCTYPE token.
+Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current DOCTYPE token's name.
+ => Append the lowercase version of the current input character (add 0x0020 to the character's code point) to the current DOCTYPE token's name.
+This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's name.
+ => This is an unexpected_null_character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's name.
+This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
+ => This is an eof_in_doctype parse error. Set the DOCTYPE token's force_quirks flag to on. Emit that DOCTYPE token. Emit an end_of_file token.
+Append the current input character to the current DOCTYPE token's name.
+ => Append the current input character to the current DOCTYPE token's name.
+Consume the next input character:
+ => Consume the next input character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Switch to the data state. Emit the current DOCTYPE token.
+ => Switch to the Data_state. Emit the current DOCTYPE token.
+This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
+ => This is an eof_in_doctype parse error. Set the DOCTYPE token's force_quirks flag to on. Emit that DOCTYPE token. Emit an end_of_file token.
+ If the six characters starting from the current input character are an ASCII case-insensitive match for the word "PUBLIC", then consume those characters and switch to the after DOCTYPE public keyword state. Otherwise, if the six characters starting from the current input character are an ASCII case-insensitive match for the word "SYSTEM", then consume those characters and switch to the after DOCTYPE system keyword state. Otherwise, this is an invalid-character-sequence-after-doctype-name parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state. 
+ =>  If the six characters starting from the current input character are an ASCII case_insensitive match for the word "PUBLIC", then consume those characters and switch to the After_DOCTYPE_public_keyword_state. Otherwise, if the six characters starting from the current input character are an ASCII case_insensitive match for the word "SYSTEM", then consume those characters and switch to the After_DOCTYPE_system_keyword_state. Otherwise, this is an invalid_character_sequence_after_doctype_name parse error. Set the DOCTYPE token's force_quirks flag to on. Reconsume in the Bogus_DOCTYPE_state. 
+Consume the next input character:
+ => Consume the next input character.
+Switch to the before DOCTYPE public identifier state.
+ => Switch to the Before_DOCTYPE_public_identifier_state.
+Switch to the before DOCTYPE public identifier state.
+ => Switch to the Before_DOCTYPE_public_identifier_state.
+Switch to the before DOCTYPE public identifier state.
+ => Switch to the Before_DOCTYPE_public_identifier_state.
+Switch to the before DOCTYPE public identifier state.
+ => Switch to the Before_DOCTYPE_public_identifier_state.
+This is a missing-whitespace-after-doctype-public-keyword parse error. Set the DOCTYPE token's public identifier to the empty string (not missing), then switch to the DOCTYPE public identifier (double-quoted) state.
+ => This is a missing_whitespace_after_doctype_public_keyword parse error. Set the DOCTYPE token's public identifier to the empty string (not missing), then switch to the DOCTYPE_public_identifier_double_quoted_state.
+This is a missing-whitespace-after-doctype-public-keyword parse error. Set the DOCTYPE token's public identifier to the empty string (not missing), then switch to the DOCTYPE public identifier (single-quoted) state.
+ => This is a missing_whitespace_after_doctype_public_keyword parse error. Set the DOCTYPE token's public identifier to the empty string (not missing), then switch to the DOCTYPE_public_identifier_single_quoted_state.
+This is a missing-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
+ => This is a missing_doctype_public_identifier parse error. Set the DOCTYPE token's force_quirks flag to on. Switch to the Data_state. Emit that DOCTYPE token.
+This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
+ => This is an eof_in_doctype parse error. Set the DOCTYPE token's force_quirks flag to on. Emit that DOCTYPE token. Emit an end_of_file token.
+This is a missing-quote-before-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state.
+ => This is a missing_quote_before_doctype_public_identifier parse error. Set the DOCTYPE token's force_quirks flag to on. Reconsume in the Bogus_DOCTYPE_state.
+Consume the next input character:
+ => Consume the next input character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Set the DOCTYPE token's public identifier to the empty string (not missing), then switch to the DOCTYPE public identifier (double-quoted) state.
+ => Set the DOCTYPE token's public identifier to the empty string (not missing), then switch to the DOCTYPE_public_identifier_double_quoted_state.
+Set the DOCTYPE token's public identifier to the empty string (not missing), then switch to the DOCTYPE public identifier (single-quoted) state.
+ => Set the DOCTYPE token's public identifier to the empty string (not missing), then switch to the DOCTYPE_public_identifier_single_quoted_state.
+This is a missing-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
+ => This is a missing_doctype_public_identifier parse error. Set the DOCTYPE token's force_quirks flag to on. Switch to the Data_state. Emit that DOCTYPE token.
+This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
+ => This is an eof_in_doctype parse error. Set the DOCTYPE token's force_quirks flag to on. Emit that DOCTYPE token. Emit an end_of_file token.
+This is a missing-quote-before-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state.
+ => This is a missing_quote_before_doctype_public_identifier parse error. Set the DOCTYPE token's force_quirks flag to on. Reconsume in the Bogus_DOCTYPE_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the after DOCTYPE public identifier state.
+ => Switch to the After_DOCTYPE_public_identifier_state.
+This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's public identifier.
+ => This is an unexpected_null_character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's public identifier.
+This is an abrupt-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
+ => This is an abrupt_doctype_public_identifier parse error. Set the DOCTYPE token's force_quirks flag to on. Switch to the Data_state. Emit that DOCTYPE token.
+This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
+ => This is an eof_in_doctype parse error. Set the DOCTYPE token's force_quirks flag to on. Emit that DOCTYPE token. Emit an end_of_file token.
+Append the current input character to the current DOCTYPE token's public identifier.
+ => Append the current input character to the current DOCTYPE token's public identifier.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the after DOCTYPE public identifier state.
+ => Switch to the After_DOCTYPE_public_identifier_state.
+This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's public identifier.
+ => This is an unexpected_null_character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's public identifier.
+This is an abrupt-doctype-public-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
+ => This is an abrupt_doctype_public_identifier parse error. Set the DOCTYPE token's force_quirks flag to on. Switch to the Data_state. Emit that DOCTYPE token.
+This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
+ => This is an eof_in_doctype parse error. Set the DOCTYPE token's force_quirks flag to on. Emit that DOCTYPE token. Emit an end_of_file token.
+Append the current input character to the current DOCTYPE token's public identifier.
+ => Append the current input character to the current DOCTYPE token's public identifier.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the between DOCTYPE public and system identifiers state.
+ => Switch to the Between_DOCTYPE_public_and_system_identifiers_state.
+Switch to the between DOCTYPE public and system identifiers state.
+ => Switch to the Between_DOCTYPE_public_and_system_identifiers_state.
+Switch to the between DOCTYPE public and system identifiers state.
+ => Switch to the Between_DOCTYPE_public_and_system_identifiers_state.
+Switch to the between DOCTYPE public and system identifiers state.
+ => Switch to the Between_DOCTYPE_public_and_system_identifiers_state.
+Switch to the data state. Emit the current DOCTYPE token.
+ => Switch to the Data_state. Emit the current DOCTYPE token.
+This is a missing-whitespace-between-doctype-public-and-system-identifiers parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE system identifier (double-quoted) state.
+ => This is a missing_whitespace_between_doctype_public_and_system_identifiers parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE_system_identifier_double_quoted_state.
+This is a missing-whitespace-between-doctype-public-and-system-identifiers parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE system identifier (single-quoted) state.
+ => This is a missing_whitespace_between_doctype_public_and_system_identifiers parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE_system_identifier_single_quoted_state.
+This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
+ => This is an eof_in_doctype parse error. Set the DOCTYPE token's force_quirks flag to on. Emit that DOCTYPE token. Emit an end_of_file token.
+This is a missing-quote-before-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state.
+ => This is a missing_quote_before_doctype_system_identifier parse error. Set the DOCTYPE token's force_quirks flag to on. Reconsume in the Bogus_DOCTYPE_state.
+Consume the next input character:
+ => Consume the next input character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Switch to the data state. Emit the current DOCTYPE token.
+ => Switch to the Data_state. Emit the current DOCTYPE token.
+Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE system identifier (double-quoted) state.
+ => Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE_system_identifier_double_quoted_state.
+Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE system identifier (single-quoted) state.
+ => Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE_system_identifier_single_quoted_state.
+This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
+ => This is an eof_in_doctype parse error. Set the DOCTYPE token's force_quirks flag to on. Emit that DOCTYPE token. Emit an end_of_file token.
+This is a missing-quote-before-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state.
+ => This is a missing_quote_before_doctype_system_identifier parse error. Set the DOCTYPE token's force_quirks flag to on. Reconsume in the Bogus_DOCTYPE_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the before DOCTYPE system identifier state.
+ => Switch to the Before_DOCTYPE_system_identifier_state.
+Switch to the before DOCTYPE system identifier state.
+ => Switch to the Before_DOCTYPE_system_identifier_state.
+Switch to the before DOCTYPE system identifier state.
+ => Switch to the Before_DOCTYPE_system_identifier_state.
+Switch to the before DOCTYPE system identifier state.
+ => Switch to the Before_DOCTYPE_system_identifier_state.
+This is a missing-whitespace-after-doctype-system-keyword parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE system identifier (double-quoted) state.
+ => This is a missing_whitespace_after_doctype_system_keyword parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE_system_identifier_double_quoted_state.
+This is a missing-whitespace-after-doctype-system-keyword parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE system identifier (single-quoted) state.
+ => This is a missing_whitespace_after_doctype_system_keyword parse error. Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE_system_identifier_single_quoted_state.
+This is a missing-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
+ => This is a missing_doctype_system_identifier parse error. Set the DOCTYPE token's force_quirks flag to on. Switch to the Data_state. Emit that DOCTYPE token.
+This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
+ => This is an eof_in_doctype parse error. Set the DOCTYPE token's force_quirks flag to on. Emit that DOCTYPE token. Emit an end_of_file token.
+This is a missing-quote-before-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state.
+ => This is a missing_quote_before_doctype_system_identifier parse error. Set the DOCTYPE token's force_quirks flag to on. Reconsume in the Bogus_DOCTYPE_state.
+Consume the next input character:
+ => Consume the next input character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE system identifier (double-quoted) state.
+ => Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE_system_identifier_double_quoted_state.
+Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE system identifier (single-quoted) state.
+ => Set the DOCTYPE token's system identifier to the empty string (not missing), then switch to the DOCTYPE_system_identifier_single_quoted_state.
+This is a missing-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
+ => This is a missing_doctype_system_identifier parse error. Set the DOCTYPE token's force_quirks flag to on. Switch to the Data_state. Emit that DOCTYPE token.
+This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
+ => This is an eof_in_doctype parse error. Set the DOCTYPE token's force_quirks flag to on. Emit that DOCTYPE token. Emit an end_of_file token.
+This is a missing-quote-before-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state.
+ => This is a missing_quote_before_doctype_system_identifier parse error. Set the DOCTYPE token's force_quirks flag to on. Reconsume in the Bogus_DOCTYPE_state.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the after DOCTYPE system identifier state.
+ => Switch to the After_DOCTYPE_system_identifier_state.
+This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's system identifier.
+ => This is an unexpected_null_character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's system identifier.
+This is an abrupt-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
+ => This is an abrupt_doctype_system_identifier parse error. Set the DOCTYPE token's force_quirks flag to on. Switch to the Data_state. Emit that DOCTYPE token.
+This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
+ => This is an eof_in_doctype parse error. Set the DOCTYPE token's force_quirks flag to on. Emit that DOCTYPE token. Emit an end_of_file token.
+Append the current input character to the current DOCTYPE token's system identifier.
+ => Append the current input character to the current DOCTYPE token's system identifier.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the after DOCTYPE system identifier state.
+ => Switch to the After_DOCTYPE_system_identifier_state.
+This is an unexpected-null-character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's system identifier.
+ => This is an unexpected_null_character parse error. Append a U+FFFD REPLACEMENT CHARACTER character to the current DOCTYPE token's system identifier.
+This is an abrupt-doctype-system-identifier parse error. Set the DOCTYPE token's force-quirks flag to on. Switch to the data state. Emit that DOCTYPE token.
+ => This is an abrupt_doctype_system_identifier parse error. Set the DOCTYPE token's force_quirks flag to on. Switch to the Data_state. Emit that DOCTYPE token.
+This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
+ => This is an eof_in_doctype parse error. Set the DOCTYPE token's force_quirks flag to on. Emit that DOCTYPE token. Emit an end_of_file token.
+Append the current input character to the current DOCTYPE token's system identifier.
+ => Append the current input character to the current DOCTYPE token's system identifier.
+Consume the next input character:
+ => Consume the next input character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Ignore the character.
+ => Ignore the character.
+Switch to the data state. Emit the current DOCTYPE token.
+ => Switch to the Data_state. Emit the current DOCTYPE token.
+This is an eof-in-doctype parse error. Set the DOCTYPE token's force-quirks flag to on. Emit that DOCTYPE token. Emit an end-of-file token.
+ => This is an eof_in_doctype parse error. Set the DOCTYPE token's force_quirks flag to on. Emit that DOCTYPE token. Emit an end_of_file token.
+This is an unexpected-character-after-doctype-system-identifier parse error. Reconsume in the bogus DOCTYPE state. (This does not set the DOCTYPE token's force-quirks flag to on.)
+ => This is an unexpected_character_after_doctype_system_identifier parse error. Reconsume in the Bogus_DOCTYPE_state. (This does not set the DOCTYPE token's force_quirks flag to on.)
+Consume the next input character:
+ => Consume the next input character.
+Switch to the data state. Emit the DOCTYPE token.
+ => Switch to the Data_state. Emit the DOCTYPE token.
+This is an unexpected-null-character parse error. Ignore the character.
+ => This is an unexpected_null_character parse error. Ignore the character.
+Emit the DOCTYPE token. Emit an end-of-file token.
+ => Emit the DOCTYPE token. Emit an end_of_file token.
+Ignore the character.
+ => Ignore the character.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the CDATA section bracket state.
+ => Switch to the CDATA_section_bracket_state.
+This is an eof-in-cdata parse error. Emit an end-of-file token.
+ => This is an eof_in_cdata parse error. Emit an end_of_file token.
+Emit the current input character as a character token.
+ => Emit the current input character as a character token.
+Consume the next input character:
+ => Consume the next input character.
+Switch to the CDATA section end state.
+ => Switch to the CDATA_section_end_state.
+Emit a U+005D RIGHT SQUARE BRACKET character token. Reconsume in the CDATA section state.
+ => Emit a U+005D RIGHT SQUARE BRACKET character token. Reconsume in the CDATA_section_state.
+Consume the next input character:
+ => Consume the next input character.
+Emit a U+005D RIGHT SQUARE BRACKET character token.
+ => Emit a U+005D RIGHT SQUARE BRACKET character token.
+Switch to the data state.
+ => Switch to the Data_state.
+Emit two U+005D RIGHT SQUARE BRACKET character tokens. Reconsume in the CDATA section state.
+ => Emit two U+005D RIGHT SQUARE BRACKET character tokens. Reconsume in the CDATA_section_state.
+Set the temporary buffer to the empty string. Append a U+0026 AMPERSAND (&amp;) character to the temporary buffer. Consume the next input character:
+ => Set the temporary buffer to the empty string. Append a U+0026 AMPERSAND (&amp;) character to the temporary buffer. Consume the next input character.
+Reconsume in the named character reference state.
+ => Reconsume in the Named_character_reference_state.
+Append the current input character to the temporary buffer. Switch to the numeric character reference state.
+ => Append the current input character to the temporary buffer. Switch to the Numeric_character_reference_state.
+Flush code points consumed as a character reference. Reconsume in the return state.
+ => Flush code points consumed as a character reference. Reconsume in the return state.
+Consume the maximum number of characters possible, where the consumed characters are one of the identifiers in the first column of the named character references table. Append each character to the temporary buffer when it's consumed.
+ => Consume the maximum number of characters possible, where the consumed characters are one of the identifiers in the first column of the named character references table. Append each character to the temporary buffer when it's consumed.
+ If the character reference was consumed as part of an attribute, and the last character matched is not a U+003B SEMICOLON character (;), and the next input character is either a U+003D EQUALS SIGN character (=) or an ASCII alphanumeric, then, for historical reasons, flush code points consumed as a character reference and switch to the return state.  Otherwise: If the last character matched is not a U+003B SEMICOLON character (;), then this is a missing-semicolon-after-character-reference parse error.Set the temporary buffer to the empty string. Append one or two characters corresponding to the character reference name (as given by the second column of the named character references table) to the temporary buffer.Flush code points consumed as a character reference. Switch to the return state. 
+ =>  If the character reference was consumed as part of an attribute, and the last character matched is not a U+003B SEMICOLON character (;), and the next input character is either a U+003D EQUALS SIGN character (=) or an ASCII alphanumeric, then, for historical reasons, flush code points consumed as a character reference and switch to the return state.  Otherwise: If the last character matched is not a U+003B SEMICOLON character (;), then this is a missing_semicolon_after_character_reference parse error.Set the temporary buffer to the empty string. Append one or two characters corresponding to the character reference name (as given by the second column of the named character references table) to the temporary buffer.Flush code points consumed as a character reference. Switch to the return state. 
+Flush code points consumed as a character reference. Switch to the ambiguous ampersand state.
+ => Flush code points consumed as a character reference. Switch to the Ambiguous_ampersand_state.
+Consume the next input character:
+ => Consume the next input character.
+If the character reference was consumed as part of an attribute, then append the current input character to the current attribute's value. Otherwise, emit the current input character as a character token.
+ => If the character reference was consumed as part of an attribute, then append the current input character to the current attribute's value. Otherwise, emit the current input character as a character token.
+This is an unknown-named-character-reference parse error. Reconsume in the return state. 
+ => This is an unknown_named_character_reference parse error. Reconsume in the return state. 
+Reconsume in the return state.
+ => Reconsume in the return state.
+Set the character reference code to zero (0).Consume the next input character:
+ => Set the character reference code to zero (0).Consume the next input character.
+Append the current input character to the temporary buffer. Switch to the hexadecimal character reference start state.
+ => Append the current input character to the temporary buffer. Switch to the Hexadecimal_character_reference_start_state.
+Append the current input character to the temporary buffer. Switch to the hexadecimal character reference start state.
+ => Append the current input character to the temporary buffer. Switch to the Hexadecimal_character_reference_start_state.
+Reconsume in the decimal character reference start state.
+ => Reconsume in the Decimal_character_reference_start_state.
+Consume the next input character:
+ => Consume the next input character.
+Reconsume in the hexadecimal character reference state.
+ => Reconsume in the Hexadecimal_character_reference_state.
+This is an absence-of-digits-in-numeric-character-reference parse error. Flush code points consumed as a character reference. Reconsume in the return state.
+ => This is an absence_of_digits_in_numeric_character_reference parse error. Flush code points consumed as a character reference. Reconsume in the return state.
+Consume the next input character:
+ => Consume the next input character.
+Reconsume in the decimal character reference state.
+ => Reconsume in the Decimal_character_reference_state.
+This is an absence-of-digits-in-numeric-character-reference parse error. Flush code points consumed as a character reference. Reconsume in the return state.
+ => This is an absence_of_digits_in_numeric_character_reference parse error. Flush code points consumed as a character reference. Reconsume in the return state.
+Consume the next input character:
+ => Consume the next input character.
+Multiply the character reference code by 16. Add a numeric version of the current input character (subtract 0x0030 from the character's code point) to the character reference code.
+ => Multiply the character reference code by 16. Add a numeric version of the current input character (subtract 0x0030 from the character's code point) to the character reference code.
+Multiply the character reference code by 16. Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0037 from the character's code point) to the character reference code.
+ => Multiply the character reference code by 16. Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0037 from the character's code point) to the character reference code.
+Multiply the character reference code by 16. Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0057 from the character's code point) to the character reference code.
+ => Multiply the character reference code by 16. Add a numeric version of the current input character as a hexadecimal digit (subtract 0x0057 from the character's code point) to the character reference code.
+Switch to the numeric character reference end state.
+ => Switch to the Numeric_character_reference_end_state.
+This is a missing-semicolon-after-character-reference parse error. Reconsume in the numeric character reference end state.
+ => This is a missing_semicolon_after_character_reference parse error. Reconsume in the Numeric_character_reference_end_state.
+Consume the next input character:
+ => Consume the next input character.
+Multiply the character reference code by 10. Add a numeric version of the current input character (subtract 0x0030 from the character's code point) to the character reference code.
+ => Multiply the character reference code by 10. Add a numeric version of the current input character (subtract 0x0030 from the character's code point) to the character reference code.
+Switch to the numeric character reference end state.
+ => Switch to the Numeric_character_reference_end_state.
+This is a missing-semicolon-after-character-reference parse error. Reconsume in the numeric character reference end state.
+ => This is a missing_semicolon_after_character_reference parse error. Reconsume in the Numeric_character_reference_end_state.

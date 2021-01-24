@@ -16,8 +16,9 @@ import scala.collection.immutable.ListMap
 class Test extends FunSuite {
   pStateMap = PreserveDefinition.read[ListMap[String, pState]]("src/definition.dat")
   var count: Int = 0
-  var correctCount: Int = 0
+  var correctCountTokens: Int = 0
   var correctCountError: Int = 0
+  var correctCount: Int = 0
 
   test("example") {
     assert(1+2 === 3)
@@ -28,7 +29,7 @@ class Test extends FunSuite {
     val model = TestFormatter.format("src/test/testFile/contentModelFlags.test")
     val tests = model.tests.asScala.toList
     for (test <- tests) doTest(test)
-    println("correct : " + correctCount + "/" + count)
+    println("correct : " + correctCountTokens + "/" + count)
     finishTest()
   }
   test("domjs.test") {
@@ -48,73 +49,22 @@ class Test extends FunSuite {
     testFormat("unicodeCharsProblematic")
     testFormat("xmlViolation")
 
-//    txtOut4.println("domjs")
-//    val model = TestFormatter.format("src/test/testFile/domjs.test")
-//    val tests = model.tests.asScala.toList//.slice(3,4)
-//    for (test <- tests) doTest(test)
-//    println("correct : " + correctCount + "/" + count)
     finishTest()
-  }
-  test("entities.test") {
-    TestFormatter.format("src/test/testFile/entities.test")
-    assert(1+2 === 3)
-  }
-  test("escapeFlag.test") {
-    TestFormatter.format("src/test/testFile/escapeFlag.test")
-    assert(1+2 === 3)
-  }
-  test("namedEntities.test") {
-    TestFormatter.format("src/test/testFile/namedEntities.test")
-    assert(1+2 === 3)
-  }
-  test("numericEntities.test") {
-    TestFormatter.format("src/test/testFile/numericEntities.test")
-    assert(1+2 === 3)
-  }
-  test("pendingSpecChanges.test") {
-    TestFormatter.format("src/test/testFile/pendingSpecChanges.test")
-    assert(1+2 === 3)
-  }
-  test("test1.test") {
-    TestFormatter.format("src/test/testFile/test1.test")
-    assert(1+2 === 3)
-  }
-  test("test2.test") {
-    TestFormatter.format("src/test/testFile/test2.test")
-    assert(1+2 === 3)
-  }
-  test("test3.test") {
-    TestFormatter.format("src/test/testFile/test3.test")
-    assert(1+2 === 3)
-  }
-  test("test4.test") {
-    TestFormatter.format("src/test/testFile/test4.test")
-    assert(1+2 === 3)
-  }
-  test("unicodeChars.test") {
-    TestFormatter.format("src/test/testFile/unicodeChars.test")
-    assert(1+2 === 3)
-  }
-  test("unicodeCharsProblematic.test") {
-    TestFormatter.format("src/test/testFile/unicodeCharsProblematic.test")
-    assert(1+2 === 3)
-  }
-  test("xmlViolation.test") {
-    TestFormatter.format("src/test/testFile/xmlViolation.test")
-    assert(1+2 === 3)
   }
 
   def testFormat(file: String) = {
     count = 0
-    correctCount = 0
+    correctCountTokens = 0
     correctCountError = 0
+    correctCount = 0
     //startTest()
     txtOut4.println(file)
     val model = TestFormatter.format("src/test/testFile/" + file + ".test")
     val tests = model.tests.asScala.toList//.slice(3,4)
     for (test <- tests) doTest(test)
-    println(file + " => correct : " + correctCount + "/" + count)
-    println(file + " => correctError : " + correctCountError + "/" + count)
+    print(file + " => correctToken : " + correctCountTokens + "/" + count)
+    print(" , correctError : " + correctCountError + "/" + count)
+    println("  , correct : " + correctCount + "/" + count)
     //finishTest()
   }
 
@@ -229,24 +179,16 @@ class Test extends FunSuite {
   }
 
   def getInitialStates(initialStates: util.List[String]): List[String] = {
-    if (initialStates == null) List("Data_state")
+    if (initialStates == null) List("Data_state") //
     else {
       val initialStates_scalaList = initialStates.asScala.toList
-      if (initialStates_scalaList == Nil) List("Data_state")
+      if (initialStates_scalaList == Nil) List("Data_state") //
       else {
         var newStates: List[String] = List()
-        for (state <- initialStates_scalaList) newStates +:= state.replace(" ", "_")
+        for (state <- initialStates_scalaList) newStates +:= state.replace(" ", "_") //
         newStates
       }
     }
-//    var initialState: List[String] = List()
-//    if (initialStates != null) {
-//      initialState = initialStates.asScala.toList match {
-//        case state :: rst => List(state.replace(" ", "_"))
-//        case Nil => initialState
-//      }
-//    }
-//    initialState
   }
 
   def doTest(test: TestFormat) = {
@@ -290,7 +232,7 @@ class Test extends FunSuite {
         }
       }
       count += 1
-      if (isCorrect) correctCount += 1
+      if (isCorrect) correctCountTokens += 1
       txtOut4.println("testnum :" + count + ";")
       txtOut4.println("state : " + initialState)
       txtOut4.println("lastStartTagName : " + lastStartTagName)
@@ -308,7 +250,10 @@ class Test extends FunSuite {
       txtOut4.println("errorText -> " + errorIsCorrect)
       if (errorIsCorrect) correctCountError += 1
 
-      txtOut4.println(" -> " + isCorrect + "\n")
+      if (isCorrect && errorIsCorrect) correctCount += 1
+
+      txtOut4.println("EmitCorrect -> " + isCorrect + "\n")
+      txtOut4.println(" -> " + (isCorrect && errorIsCorrect) + "\n")
     }
 
   }

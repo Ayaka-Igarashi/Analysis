@@ -17,6 +17,11 @@ object Replacement {
         .replace("(", "").replace(")", "")
       m2(0).toUpper + m2.tail
     })
+    // 仮のやつ
+//    s = re1.replaceAllIn(s, m => {
+//      val m2 = m.toString()
+//      m2(0).toUpper + m2.tail
+//    })
 
     s = s.replace("-", "_")
 
@@ -42,6 +47,8 @@ object Replacement {
 
     s = s.replace("that attribute", "that attribute's")
     s = s.replace("'s's", "'s")
+
+
     s = ":$".r.replaceAllIn(s, ".")
 
     replace_out.println(" => " + s)

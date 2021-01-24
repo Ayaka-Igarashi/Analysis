@@ -70,8 +70,10 @@ object Main {
 
         parse(1, 79)
         PreserveDefinition.preserve[List[nState]](nStateList, "src/parsed.dat")
+//        PreserveDefinition.preserve[List[nState]](nStateList, "src/parsed.dat")
         tagConvert()
         PreserveDefinition.preserve(pStateMap, "src/definition.dat")
+//        PreserveDefinition.preserve(pStateMap, "src/definition.dat")
       }
     } else if (true) {
       // 出力ファイル
@@ -246,7 +248,7 @@ object Main {
 
   var uniqueId = 0
   def parseStatementToTag(str: String): (String, List[List[(Integer, CorefChain)]], List[Tag]) = {
-    val newStr = Replacement.replace(str)
+    val newStr = Replacement.replace(str) // str
     var (coref, tree_List, depMapList) = analysis(newStr)
 
     var tagList: List[Tag] = List()

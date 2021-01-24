@@ -68,6 +68,7 @@ object ParseHtml {
         val stateName = getLeave(child)
         state.name = stateName.replace(" ", "_").replace("-","_")
           .replace("(", "").replace(")", "")
+//        state.name = stateName.replace("-","_")
         val komoji: String = stateName(0).toLower + stateName.tail
         Replacement.replaceState += ("|" + stateName.replace("(", "\\(").replace(")", "\\)") + "|" + komoji.replace("(", "\\(").replace(")", "\\)"))
       }
