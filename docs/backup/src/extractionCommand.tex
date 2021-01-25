@@ -161,8 +161,8 @@ $\mathcal{T}_B$はTag型の値 T を受け取り, T の形にマッチしたも�
       \includegraphics[keepaspectratio, scale=0.55]
            {figure/isEqual.jpg}
 \end{figure}
-T$_1$ の限定詞を除いた語が ``current end tag token'', 
-T$_2$ の限定詞を除いた語が ``appropriate end tag token'' の時, 
+部分木T$_1$ 内の限定詞を除いた文字列が ``current end tag token'', 
+部分木T$_2$ 内の限定詞を除いた文字列が ``appropriate end tag token'' の時, 
 CurrentEndTagIsAppropriate()\\
 T$_2$の形が, 
 \begin{figure}[H]
@@ -174,13 +174,16 @@ T$_2$の形が,
 AsciiCaseInsensitiveMatch($\mathcal{T}_{NP_{C}}$(T$_1$), $\mathcal{T}_{NP_{C}}$(T$_2^\prime$))\\
 それ以外の時, 
 IsEqual($\mathcal{T}_{NP_{C}}$(T$_1$), $\mathcal{T}_{NP_{C}}$(T$_2$))\\
-また, T の文字列が, 
+
+また, 木T内にある文字列が の文字列が, 
 ``character reference was consumed as part of an attribute'' の時, 
-CharacterReferenceConsumedAsAttributeVal()
+CharacterReferenceConsumedAsAttributeVal() を返す.
 \subsection{動詞句(VPノード)の変換 $\mathcal{T}_{VP}$}
-$\mathcal{T}_{VP}$はTag型の値 T を受け取り, Tの形にマッチしたものに応じたCommand型のリストの値を返す. \\
+$\mathcal{T}_{VP}$はTag型の値 T を受け取り, Tの形にマッチしたものに応じたCommand型のリストの値を返す. 
+
 % NodeTypeがVPであるNode(動詞句)から, Command型のリストへ変換する関数を$\mathcal{T}_{VP}$と置く.\\
 % $\mathcal{T}_{VP}$は以下のパターンマッチを行い, マッチしたものに応じたCommand型のListを返す.\\
+ここで表記していない, 残りのCommand型の命令に関しても, その命令文の構文木の形を調べて, 変換の規則を作っていく.
 
 \subsubsection{動詞句の分解}
 子ノードに動詞句を持つパターン\\
@@ -248,7 +251,7 @@ $[\ $Switch($\mathcal{T}_{NP_{C}}$(T$^\prime$)) $\ ]$ を返す.
 % の時, 
 % $[\ $Reconsume($\mathcal{T}_{NP_{C}}$(np1)) $\ ]$ を返す.
 \subsubsection*{Emit文のマッチ}
-木構造が, 
+Tag型の値Tの木構造が, 
 \begin{figure}[H]
       \centering
       \includegraphics[keepaspectratio, scale=0.55]
@@ -257,7 +260,7 @@ $[\ $Switch($\mathcal{T}_{NP_{C}}$(T$^\prime$)) $\ ]$ を返す.
 % \Tree [.VP [.VB emit ]
 %            [.NP nplist ]
 %       ]\\
-の場合, 
+(i)の場合, 
 % for all np $\leftarrow$ $\mathcal{D}$(Node(NP, nplist)) \\
 % \quad $[\ $Emit($\mathcal{T}_{NP}$(np)) $\ ]$ を返す. \\
 $\mathcal{D}$(T$^\prime$) = [T$^\prime_1$, $\ldots$, T$^\prime_n$] の時, 
@@ -272,7 +275,7 @@ $[\ $Emit($\mathcal{T}_{NP}$(T$^\prime_1$)), $\ldots$,Emit($\mathcal{T}_{NP}$(T$
 %       [.NP nplist ]
 %       \qroof{as a character token}.PP
 %  ]\\
-% の場合, 
+(ii)の場合, 
 $\mathcal{D}$(T$^\prime$) = [T$^\prime_1$, $\ldots$, T$^\prime_n$] の時, \\
 $[\ $Emit(CharacterToken($\mathcal{T}_{NP}$(T$^\prime_1$))), $\ldots$,Emit(CharacterToken($\mathcal{T}_{NP}$(T$^\prime_n$)))  $\ ]$ を返す. \\
 % $[\ $Emit(CharacterToken($\mathcal{T}_{NP}$(Node(NP, nplist)))) $\ ]$ を返す.
@@ -291,8 +294,8 @@ $[\ $Emit(CharacterToken($\mathcal{T}_{NP}$(T$^\prime_1$))), $\ldots$,Emit(Chara
 %               [.NP np2 ]
 %            ]
 %       ]\\
-の場合, 
-$[\ $Set($\mathcal{T}_{NP_{I}}$(Node(NP, np1)), $\mathcal{T}_{NP_{C}}$(Node(NP, np2))) $\ ]$ を返す. \\
+(i)の場合, 変数に値を代入するという意味のSet文であるので, 
+$[\ $Set($\mathcal{T}_{NP_{I}}$(T$_1$), $\mathcal{T}_{NP_{C}}$(T$_2$)) $\ ]$ を返す. \\
 % 変数の状態を変える.
 % \Tree [.VP [.VB set ]
 %             [.NP np ]
@@ -301,23 +304,24 @@ $[\ $Set($\mathcal{T}_{NP_{I}}$(Node(NP, np1)), $\mathcal{T}_{NP_{C}}$(Node(NP, 
 %                 [.PP pp ]
 %             ]
 %         ]\\
-の場合, \\ 
-ppが``on''だったら, 
-$[\ $Set($\mathcal{T}_{NP}$(Node(NP, np)), On) $\ ]$ を返す. \\
+(ii)の場合, 変数の状態を変えるという意味のSet文である. \\
+部分木T$_2$内にある文字列が``on''だったら, 
+$[\ $Set($\mathcal{T}_{NP_{I}}$(T$_1$), On) $\ ]$ を返す. \\
 % ``off''だったら, 
 % Set($\mathcal{T}_{NP}$(Node(NP, np)), CBool(false)) を返す. \\
 
-\paragraph{個別に対応したSet文のマッチ}
-
+\subsubsection*{個別に対応したSet文のマッチ}
 % Setのとこ手を加えたやつ===
 ``Set that attribute's name to the current input character, and its value to the empty string.'' 
-みたいな文は木構造が上記のものと違うものになってきてしまうので, これを個別に対応した. \\
-木構造が, 
+のような, 1文の中に2つの命令が含まれている文章も仕様書内に出てくるが, このような文の構文木は, 
+% みたいな文は木構造が上記のものと違うものになってきてしまうので, これを個別に対応した. \\
+% 木構造が, 
 \begin{figure}[H]
       \centering   
       \includegraphics[keepaspectratio, scale=0.55]
            {figure/set1234.jpg}
 \end{figure}
+のように, 特殊な形になっている. よってこのような木構造になっているもののCommand型の変換を個別に対応し, 
 % \Tree [.VP [.VB set ]
 %             [.NP [.NP [.NP np1 ]
 %                         [.To to ]
@@ -328,13 +332,15 @@ $[\ $Set($\mathcal{T}_{NP}$(Node(NP, np)), On) $\ ]$ を返す. \\
 %                         [.PP [.IN to ]
 %                               [.NP np4 ] ] ] ]
 %         ]\\
-のとき, \\
+% のとき, \\
 % $[\ $Set($\mathcal{T}_{NP}$(Node(NP, np1)), $\mathcal{T}_{NP}$(Node(NP, np2))), Set($\mathcal{T}_{NP}$(Node(NP, np3)), $\mathcal{T}_{NP}$(Node(NP, np4)))$\ ]$ を返す. \\
-$[\ $Set($\mathcal{T}_{NP}$(T$_1$), $\mathcal{T}_{NP}$(T$_2$)), Set($\mathcal{T}_{NP}$(T$_3$), $\mathcal{T}_{NP}$(T$_4$))$\ ]$ を返す. 
+$[\ $Set($\mathcal{T}_{NP}$(T$_1$), $\mathcal{T}_{NP}$(T$_2$)), Set($\mathcal{T}_{NP}$(T$_3$), $\mathcal{T}_{NP}$(T$_4$))$\ ]$ を返すようにした. 
 
 % onと書かれていないflag
-``Set the self-closing flag of the current tag token.'' のような状態の切り替え先を示す``to on''が省略されている場合がある.
-このような文の構文木は\\
+また, 
+``Set the self-closing flag of the current tag token.'' のような状態の切り替え先を示す``to on''が省略されている文章も仕様書内に存在する. 
+このような文に対応するため, 
+Tag型の値Tが, 
 \begin{figure}[H]
       \centering
       \includegraphics[keepaspectratio, scale=0.55]
@@ -343,8 +349,8 @@ $[\ $Set($\mathcal{T}_{NP}$(T$_1$), $\mathcal{T}_{NP}$(T$_2$)), Set($\mathcal{T}
 % \Tree [.VP [.VB set ]
 %             [.NP np ]
 %         ]\\
-となる. よってこの形にマッチした場合は, 
-$[\ $Set($\mathcal{T}_{NP}$(Node(NP, np)), On) $\ ]$ を返す.
+にマッチした場合は, 
+$[\ $Set($\mathcal{T}_{NP}$(Node(NP, np)), On) $\ ]$ を返すようにした. 
 
 % \subsubsection*{AppendTo文のマッチ}
 % 木構造が, 
@@ -492,20 +498,33 @@ NPノードを受け取って, NPノードのリストを返す関数. \\
 %       ]
     
 \subsection{名詞句(NPノード)の変換 $\mathcal{T}_{NP_C}$, $\mathcal{T}_{NP_I}$}
-$\mathcal{T}_{NP_C}$, $\mathcal{T}_{NP_I}$はTag型の値 T を受け取り, それぞれCommandValue型, ImplementVariable型の値を返す. \\
+$\mathcal{T}_{NP_C}$, $\mathcal{T}_{NP_I}$はTag型の値 T を受け取り, それぞれCommandValue型, ImplementVariable型の値を返す. 
+$\mathcal{T}_{NP_C}$と$\mathcal{T}_{NP_I}$は変換後の型が違うだけで, 同じ動作をする. 
+
 % \subsubsection*{CommandValue型, ImplementVariable型への変換}
 HTML5の仕様書には様々な変数の言葉や値の言葉が出てくる. 
 NPノード内の自然言語で記述している言葉から, CommandValue型やImplementVariable型というプログラムが認識できる形にする際, 
-単純に文字列に変数名や値などの特定の単語が含まれているかどうかを調べるというやり方をとった. 
+ノード内に含まれる文字列に, 変数名や値などを表す特定の文字列が含まれているかどうかと, 
+そのノード内の文字列に何らかの参照関係が存在するかを調べるというやり方をとった. 
 % NPノードをCommandValue型に変換する際, 
 
-例えば, 変換対象のNPノード内に"return state"という言葉が含まれていた場合は, ReturnStateを返す. 
+例えば, 変換対象のNPノード内に"return state"という言葉が含まれていた場合は, ReturnStateを返す. \\
+
 %参照関係の使用の部分を書く
+あるCommandValue型の値cvalに変換され, 参照番号が-1でない数字nのとき(その単語にラベルnの参照関係があるとき)は, 
+字句解析器の実行において, CommandValue型の意味を解釈する際, 変数"x\_n"に解釈後のcvalの値を代入するという意味を持つ, 
+Substitute("x\_n", cval) を返す. \\
+
 特定の単語にマッチせず, かつ参照番号が-1でない数字nのとき(その単語にラベルnの参照関係があるとき)は 変数"x\_n"という意味を持つ, Variable("x\_n") を返す.
-      name, valueが含まれている場合はNameOf(Variable("x\_n")), ValueOf(Variable("x\_n"))
+また, name, valueが含まれており, 参照番号が-1でない数字nの場合はNameOf(Variable("x\_n")), ValueOf(Variable("x\_n")) を返す.
+
+例：its tag name木を書く
+この文字列には, nameにマッチするかつ, 
 
 \section{条件分岐文の処理}
 Command変換の時に, If文をまとめてあれしなかったのは, 
+If文の内容をまとめて取り出すのではなく, 順に一つの要素ずつ取り出したのは, 
+``If $\cdots$ then $\cdots$. Otherwise $\cdots$.''という決まった形である
 自ら組み立てようとする方針にしたのは, Otherwiseの処理がどこまでなのかの判別が難しかったからである.
 仕様書内の条件分岐の文(If文)に関して, Command型のリストに変換する際, 条件分の範囲を判断するときに手を加えた.\\
 % If the temporary buffer is the string ``script'', then switch to the script data escaped state. Otherwise, switch to the script data double escaped state. Emit the current input character as a character token.

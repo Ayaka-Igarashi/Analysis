@@ -320,7 +320,7 @@ object Implement {
           case StringVal(s) => {
             if (newEnv.inputText.startsWith(s)) newEnv.inputText = newEnv.inputText.substring(s.length)
               /** ここ本来は違う*/
-//            else if (newEnv.currentInputCharacter == CharVal(s.head) && newEnv.inputText.startsWith(s.tail)) newEnv.inputText = newEnv.inputText.substring(s.length - 1)
+            else if (newEnv.currentInputCharacter == CharVal(s.head) && newEnv.inputText.startsWith(s.tail)) newEnv.inputText = newEnv.inputText.substring(s.length - 1)
 //            else println("consume error : " + StringVal(s))
           }
           case EOFVal =>

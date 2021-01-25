@@ -43,15 +43,17 @@ Command型の解釈の関数によって実行していく.
 \section{インタプリタの実装の詳細}
 \subsection{字句解析トークン}
 字句解析器によって出力されるトークンは, \texttt{Token}というトレイトとして実装した. 
-\texttt{Token}はDOCTYPEトークンを表す \texttt{DOCTYPEToken(s,s,s,b)}, 
-開始タグトークンを表す\texttt{startTagToken()}, 
-終了タグトークンを表す\texttt{endTagToken()}, 
-コメントトークンを表す\texttt{commentToken(s)}, 
-文字トークンを表す\texttt{characterToken(s)}, 
+\texttt{Token}はDOCTYPEトークンを表す \texttt{DOCTYPEToken(name: String, public_identifier: String, system_identifier: String, force_quirks_flag: Boolean)}, 
+開始タグトークンを表す\texttt{startTagToken(name: String, self_closing_flag: Boolean, attributes: List[Attribute])}, 
+終了タグトークンを表す\texttt{endTagToken(name: String, self_closing_flag: Boolean, attributes: List[Attribute])}, 
+コメントトークンを表す\texttt{commentToken(data: String)}, 
+文字トークンを表す\texttt{characterToken(data: String)}, 
 EOFトークンを表す\texttt{endOfFileToken()} 
-を有する.
+を有する. 
 
-\subsection{Value型}
+タグトークンが持つ属性を表す型\texttt{Attribute}は\texttt{Attribute(name: String, value: String)}と, 名前,  値を持つクラスである. 
+
+\subsection{字句解析器の変数の型 : Value型}
 インタープリタで扱う変数の値の型として\texttt{Value}をトレイトとして実装した. 
 \texttt{Value}はIntの値を表す \texttt{IntVal(int: Int)}, 
 Booleanの値を表す\texttt{BooleanVal(boolean: Boolean)}, 
@@ -65,20 +67,48 @@ Stringの値を表す\texttt{StringVal(string: String)},
 % \end{lstlisting}
 
 \subsection{文字マッチングの処理}
+字句解析の状態において, 
+現在消費した文字がどういう種類の文字なのかによって, どの処理をするかの分岐が起こる. その文字マッチングの処理を実装した. 
+
 字句解析器の現在の状態の文字マッチの処理の定義と現在消費した文字(current inputCharacter)を受け取り, 
 マッチした文字に対応する処理 Command型のリストを返す処理を実装した. 
 
 \subsection{CommandValue型の解釈}
-CommandValue型と環境を受け取り, Value型を返す関数を実装した.
-\subsubsection{CommandValue型の解釈例：ReturnState}
-字句解析器の環境の変数である, Value型の値 returnStateを返す. 
+CommandValue型の値と環境を受け取り, Value型を返す関数を実装した.
+\subsubsection{処理の例}
+入力がCommandValue型ReturnState, 字句解析の環境envである場合, 
+envの変数である,``return state''の値を参照し, その値を返す. 
 
 \subsection{Command型の解釈}
-Command型と環境を受け取り, 新しい環境, 排出トークン, エラー内容を返す関数を実装した. 
-Command型の値ごとにその処理を記述した. 
-\subsubsection{Command型の解釈例：Switch文}
-字句解析器の環境の変数である, ``現在の状態''に, 
-CommandValue型の引数をCommandValue型の解釈する関数でValue型にした値を代入する. 
+Command型の値と環境を受け取り, 変更後の環境, 排出トークン, エラー内容を返す関数を実装した. 
+% Command型の値ごとにその処理を記述した. 
+
+\subsubsection{処理の例1}
+入力がCommand型の値\texttt{Switch(StateName(``Data_state''))}, 字句解析の環境envである場合, 
+これは, ``Data_state''という名前の状態に遷移するという意味の命令なので, 
+字句解析の環境envの``現在の状態''に\texttt{StateVal(``Data_state'')}(StateName(``Data_state'')をCommandValue型の解釈する関数でValue型にした値)
+を代入するという処理を行う. 
+\subsubsection{処理の例2}
+入力がCommand型の値\texttt{Set(IReturnState, StateName(``Data_state''))}, 字句解析の環境envである場合, 
+これは, 字句解析の変数である``return state''の値を, 状態``Data_state''にするという意味の命令なので, 
+字句解析の環境envの``return state''に\texttt{StateVal(``Data_state'')}(StateName(``Data_state'')をCommandValue型の解釈する関数でValue型にした値)
+を代入するという処理を行う.
+% \subsubsection{Command型の解釈例：Switch文}
+% 字句解析器の環境の変数である, ``現在の状態''に, 
+% CommandValue型の引数をCommandValue型の解釈する関数でValue型にした値を代入する. 
+
+\subsection{Bool型の解釈}
+Bool型の値と環境を受け取り, 変更後の環境と真偽(Boolean型の値)を返す関数を実装した. 
+
+実装の例として, 
+CharacterReferenceCodeが属性の値として消費されているかという条件文は, 
+字句解析の環境のreturn stateの値が字句解析の状態である``attribute value (double-quoted) state''か 
+``attribute value (single-quoted) state''か ``attribute value (unquoted) state''のいずれかであったら, 
+\texttt{true}であるという意味の文である. 
+
+よって, その意味を持つBool型の値 CurrentEndTagIsAppropriate()も その通りに実装した.
+% よって, 入力としてBool型の値 CurrentEndTagIsAppropriate(), 字句解析の環境envがきたら, 
+% 条件文であるので, その通りに実装した.
 
 % \subsection{その他}
 % Attribute name stateの後処理なども実装した.

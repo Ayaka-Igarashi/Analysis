@@ -4,64 +4,135 @@
 \begin{document}
 \chapter{実装の評価}
 \label{評価}
-\section{実装の評価}
 % 字句解析のインタプリターの正しさを検証するために, 
-\ref{実装}章で実装したインタプリタの関数をそれぞれテストした後,  
-html5lib-tests~\cite{html5lib-tests}のtokenizerのテストデータを用い, 抽出した命令を定義として入れた, 字句解析インタープリタのテストをし, 抽出した命令の正しさを検証した.
-\subsection{HTML5字句解析テスト}
+\ref{実装}章で実装した字句解析インタプリタの関数をそれぞれテストした後, 
+HTML5の字句解析のテストである, html5lib-tests~\cite{html5lib-tests}のtokenizerのテストデータを用い, \ref{命令抽出}章で抽出した命令を字句解析インタープリタの定義として入れ, 実装した字句解析器のテストをし, 抽出した命令の正しさを検証した.
+\section{概要}
 %テストデータの説明
-使用した字句解析器のテストデータは, 1つのテストファイルに複数のテストが含まれており, 
+使用したHTML5字句解析器のテストデータは, 14つのテストファイルから成り立っており, 1つのテストファイルには複数のテストが含まれている. 
+
+% テストファイルの説明
+テストファイルには, 
+`\&'から始まるHTML特殊文字コードの処理のテストをするentities.test, 
+偽のコメントトークンに対する処理のテストをする escapeFlag.test, 
+Named character references状態における, 表の参照のテストをする namedEntities.test, 
+character reference codeの値から文字への参照のテストをする numericEntities.test, 
+DOCTYPEやタグトークンなどのトークンが適切に排出されるかのテストをするcontentModelFlags.test, domjs.test, pendingSpecChanges.test, test1-4, 
+ユニコードで書かれた文字列の処理が上手くいくかのテストをするunicodeChars.test, 
+不適切な場合のユニコードの処理のテストをするunicodeCharsProblem, 
+不適切なXMLのコードの処理のテストであるxmlViolation.test 
+がある. 
+
 1つのテストあたり, 入力文字列, 出力するトークン列, 字句解析する際の初期状態, 直前に排出されている開始タグトークン名, 出力されるエラーの情報を持つ. 
 
 テストは, テストデータの入力文字列, 初期状態, 直前の開始タグトークン名を字句解析インタプリタの初期の環境として設定し, 
 字句解析を行い, 
 テストデータの字句解析トークンの出力と, 実装したインタプリタによる字句解析トークンの出力を比べる. 
 また, テストデータのエラーの出力と, 実装したインタプリタによるエラーの出力も比較する. 
-そしてそれらが一致していたら成功とする. 
-\begin{table}[htb]
-    \begin{tabular}{|l|c|l|} \hline
-      テストファイル名 & 結果 & テスト内容\\ \hline 
-      contentModelFlags.test & 24/24 &  \\
-      domjs.test & 57/58 &  \\
-      entities.test & 80/80 & \&から始まる文字列の文字の参照が上手くいっているか\\
-      escapeFlag.test & 9/9 & 偽のコメントトークンに対する処理\\
-      namedEntities.test & 4210/4210 & named character referencesの表の参照が上手くいっているか\\
-      numericEntities.test & 336/336 & character reference codeから文字への参照が上手くいっているか\\
-      pendingSpecChanges.test & 1/1 & コメントトークン中にEOFトークンが出てきた場合のテスト\\
-      test1.test & 68/68 & テスト1 \\
-      test2.test & 35/45 & テスト2 \\
-      test3.test & 1374/1786 & テスト3 \\
-      test4.test & 81/85 & テスト4 \\
-      unicodeChars.test & 323/323 & ユニコード表記の文字列が対応する文字に変換されているか\\
-      unicodeCharsProblem.test & 5/5 & 不適切な場合のユニコードの処理が上手くいっているか\\ \hline 
+そしてそれらが両方一致していたら成功とする. 
+
+HTML5字句解析テストファイルのうち, ``domjs.test''の中の``CDATA in HTML content''という名前のテストと, ``xmlViolation.test''のテストは, 字句解析器の命令の実装以外の部分も実装する必要があったので, 今回のテストからは省いた. 
+% ``Coercing an HTML DOM into an infoset'' の部分も実装する必要があったので, 
+
+\section{HTML5字句解析テストの実行}
+If文の処理をしなかった場合のテスト結果
+% \begin{table}[H]
+%   \begin{center}
+%     \label{IFの処理なし}
+%     \caption{IF文の処理をしない場合のテスト結果}
+%     \begin{tabular}{|l|c|p{8.5cm}|} \hline
+%       テストファイル名 & 結果 & テスト内容\\ \hline 
+%       contentModelFlags.test & 24/24 &  タグトークンが適切に排出するかのテスト\\
+%       domjs.test & 57/57 &  \\
+%       entities.test & 80/80 & `\&'から始まるHTML特殊文字コードの処理のテスト\\
+%       escapeFlag.test & 9/9 & 偽のコメントトークンに対する処理のテスト\\
+%       namedEntities.test & 4210/4210 & Named character references状態における, 表の参照のテスト\\
+%       numericEntities.test & 336/336 & character reference codeの値から文字への参照のテスト\\
+%       pendingSpecChanges.test & 1/1 & コメントトークン中にEOFトークンが出てきた場合のテスト\\
+%       test1.test & 68/68 & DOCTYPEやコメントトークンなどのテスト \\
+%       test2.test & 34/45 & 構文エラーになるようなトークンなどのテスト \\
+%       test3.test & 1232/1786 & 文字トークンなどのトークンのテスト \\
+%       test4.test & 81/85 & トークンのテスト \\
+%       unicodeChars.test & 323/323 & ユニコード表記の文字列が対応する文字に変換されているかのテスト\\
+%       unicodeCharsProblem.test & 5/5 & 不適切な場合のユニコードの処理のテスト\\ \hline 
+%     \end{tabular}
+%   \end{center}
+% \end{table}
+\begin{table}[H]
+  \begin{center}
+    \label{IFの処理なし}
+    \caption{IF文の処理をしない場合のテスト結果}
+    \begin{tabular}{|l|c|} \hline
+      テストファイル名 & 結果 \\ \hline 
+      contentModelFlags.test & 24/24 \\
+      domjs.test & 57/57  \\
+      entities.test & 80/80 \\
+      escapeFlag.test & 9/9 \\
+      namedEntities.test & 4210/4210 \\
+      numericEntities.test & 336/336 \\
+      pendingSpecChanges.test & 1/1 \\
+      test1.test & 68/68 \\
+      test2.test & 34/45 \\
+      test3.test & 1232/1786 \\
+      test4.test & 81/85 \\
+      unicodeChars.test & 323/323 \\
+      unicodeCharsProblem.test & 5/5 \\ \hline 
     \end{tabular}
+  \end{center}
+\end{table}
+出来なかった部分の結果を調べてみたら, ...
+
+IF文の処理をしたら, 正しく命令が抽出されるようになったが, テスト結果自体はあまり改善は見られなかった.
+\begin{table}[H]
+  \begin{center}
+    \label{IFの処理}
+    \caption{IF文の処理した場合のテスト結果}
+    \begin{tabular}{|l|c|} \hline
+      テストファイル名 & 結果 \\ \hline 
+      contentModelFlags.test & 24/24  \\
+      domjs.test & 57/57  \\
+      entities.test & 80/80 \\
+      escapeFlag.test & 9/9 \\
+      namedEntities.test & 4210/4210 \\
+      numericEntities.test & 336/336 \\
+      pendingSpecChanges.test & 1/1 \\
+      test1.test & 68/68  \\
+      test2.test & 34/45  \\
+      test3.test & 1346/1786  \\
+      test4.test & 81/85 \\
+      unicodeChars.test & 323/323 \\
+      unicodeCharsProblem.test & 5/5 \\ \hline 
+    \end{tabular}
+\end{center}
 \end{table}
 
-\begin{table}[htb]
-  \begin{tabular}{|l|c|l|} \hline
-    テストファイル名 & 結果 & テスト内容\\ \hline 
-    contentModelFlags.test & 24/24 &  \\
-    domjs.test & 57/58 &  \\
-    entities.test & 80/80 & \&から始まる文字列の文字の参照が上手くいっているか\\
-    escapeFlag.test & 9/9 & 偽のコメントトークンに対する処理\\
-    namedEntities.test & 4210/4210 & named character referencesの表の参照が上手くいっているか\\
-    numericEntities.test & 336/336 & character reference codeから文字への参照が上手くいっているか\\
-    pendingSpecChanges.test & 1/1 & コメントトークン中にEOFトークンが出てきた場合のテスト\\
-    test1.test & 68/68 & テスト1 \\
-    test2.test & 34/45 & テスト2 \\
-    test3.test & 1346/1786 & テスト3 \\
-    test4.test & 81/85 & テスト4 \\
-    unicodeChars.test & 323/323 & ユニコード表記の文字列が対応する文字に変換されているか\\
-    unicodeCharsProblem.test & 5/5 & 不適切な場合のユニコードの処理が上手くいっているか\\ \hline 
+ちなみに, 状態名の置き換え, ``-''の``_''への置き換えのみを文字列の置き換えの前処理として行った場合, 表\ref{置き換えなし}のような結果になる. 
+\begin{table}[H]
+  \begin{center}
+  \label{置き換えなし}
+  \caption{状態名の置き換え, ``-''の``_''への置き換えのみをした場合のテスト結果}
+  \begin{tabular}{|l|c|} \hline
+    テストファイル名 & 結果 \\ \hline 
+    contentModelFlags.test & 4/24  \\
+    domjs.test & 12/57  \\
+    entities.test & 1/80 \\
+    escapeFlag.test & 0/9 \\
+    namedEntities.test & 2231/4210 \\
+    numericEntities.test & 1/336 \\
+    pendingSpecChanges.test & 0/1 \\
+    test1.test & 24/68 \\
+    test2.test & 17/45 \\
+    test3.test & 757/1786 \\
+    test4.test & 38/85 \\
+    unicodeChars.test & 322/323 \\
+    unicodeCharsProblem.test & 5/5 \\ \hline 
   \end{tabular}
+\end{center}
 \end{table}
 
-\subsubsection*{思ったこと}
-%思ったこと
-Tag型からの命令抽出に関しては, 特殊な部分を逐一個別に対応していたので上手くいったと思われる.%手作業でやった部分が多いので上手くいったと思う.
-\subsubsection*{domjsが上手くいかなかった原因}
-% 入力文字列を字句解析器に通す前に, 入力文字列に対して文字の置き換えをする必要があった.
-CDATAの部分の処理を実装していなかったため.
+% \subsubsection*{domjsが上手くいかなかった原因}
+% % 入力文字列を字句解析器に通す前に, 入力文字列に対して文字の置き換えをする必要があった.
+% CDATAの部分の処理を実装していなかったため.
 
 \subsection{問題点}
 %上手くいかなかった点
@@ -69,19 +140,37 @@ CDATAの部分の処理を実装していなかったため.
 %正しく命令が抽出されたように思われても、正しくなかった例
 ``If the six characters starting from the current input character are an ASCII case-insensitive match for the word ``PUBLIC'', then consume those characters''
 この文章を自然言語解析させると``those characters''は``the six characters starting from the current input character''を参照するという出力になる.\\
-もし,この状態へ遷移した時点での入力文字列が``public $\cdots$''であったら,まず文字'p'を消費し,入力文字列が``ublic $\cdots$''となる.\\
+もし,この状態へ遷移した時点での入力文字列が``public $\cdots$''であったら,まず文字`p'を消費し,入力文字列が``ublic $\cdots$''となる.\\
 機械的にこの文章を処理しようとすると,現在の入力文字列``ublic $\cdots$''から文字列``public''を消費せよという解釈になるので,上手くいかない.\\
 この問題を手動で解決させた結果, 以下のようなテスト結果の改善が成された.\\
 \begin{table}[htb]
+  \begin{center}
+    \label{Consumeの処理}
+    \caption{処理した場合のテスト結果}
     \begin{tabular}{|l|c|} \hline
       テストファイル名 & 結果 \\ \hline 
-      domjs.test & 57/58 \\
+      contentModelFlags.test & 24/24  \\
+      domjs.test & 57/57  \\
+      entities.test & 80/80 \\
+      escapeFlag.test & 9/9 \\
+      namedEntities.test & 4210/4210 \\
+      numericEntities.test & 336/336 \\
+      pendingSpecChanges.test & 1/1 \\
+      test1.test & 68/68  \\
       test2.test & 45/45 \\
       test3.test & 1786/1786 \\
-      test4.test & 85/85 \\ \hline 
+      test4.test & 85/85 \\ 
+      unicodeChars.test & 323/323 \\
+      unicodeCharsProblem.test & 5/5 \\ \hline 
     \end{tabular}
+  \end{center}
 \end{table}
+テストの内容をすべて成功していたので, 
+仕様書からの命令の抽出が基本的には, 上手くいったと思われる. 
 
+\subsubsection*{思ったこと(memo)}
+%思ったこと
+Tag型からの命令抽出に関しては, 特殊な部分を逐一個別に対応していたので上手くいったと思われる.%手作業でやった部分が多いので上手くいったと思う.
 
 
 \end{document}

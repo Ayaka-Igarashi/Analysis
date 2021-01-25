@@ -2,7 +2,7 @@
 \usepackage{thesis}
 
 \begin{document}
-\chapter{自然言語処理}
+\chapter{HTML5字句解析仕様の自然言語処理}
 HTML5の字句解析仕様に対して自然言語処理を適用する. 
 % 使用ライブラリ
 そのための自然言語処理のライブラリとして, スタンフォード大学によって提供されている Stanford CoreNLP~\cite{manning-EtAl:2014:P14-5}を使用し, 処理を行った.
@@ -139,7 +139,7 @@ Stanford CoreNLPを用いての自然言語処理から得られる情報のう�
 % 多分木の木構造のデータ型であるTag型をプログラミング言語Scalaで定義し, それらの情報をTag型に変換した.\\
 %  Tagの情報を使用し,命令の抽出を行った.
 \subsection{Tag型}
-図\ref{Tag}にTag型の定義を載せる.\\
+図\ref{Tag}にTag型の定義を示す.\\
 Tag型は, Node型とLeaf型の2種類を持っている.
 Node型は構文木の句を表すもので, 句の種類を表すNodeTypeと, そのノードの子であるTag型のリストを持つ.
 Leaf型は構文木の末端である単語を表すもので, 品詞名を表すLeafTypeと, 単語の情報を格納するToken型を持つ.

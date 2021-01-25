@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.3-u1.26-191112-2.6 (utf8.uptex) (TeX Live 2020/W32TeX) (preloaded format=uplatex 2020.4.7)  24 JAN 2021 13:29
+This is e-upTeX, Version 3.14159265-p3.8.3-u1.26-191112-2.6 (utf8.uptex) (TeX Live 2020/W32TeX) (preloaded format=uplatex 2020.4.7)  25 JAN 2021 20:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -533,111 +533,129 @@ File: figure/setflag.jpg Graphic file (type bmp)
 File: figure/create.jpg Graphic file (type bmp)
  <figure/create.jpg> [6] [7]
 
-LaTeX Warning: Reference `tagEx' on page 8 undefined on input line 557.
+LaTeX Warning: Reference `tagEx' on page 8 undefined on input line 576.
 
 File: figure/tagTree.jpg Graphic file (type bmp)
 <figure/tagTree.jpg>
-Overfull \hbox (3.10678pt too wide) in paragraph at lines 562--564
+Overfull \hbox (3.10678pt too wide) in paragraph at lines 581--583
  [][] 
  []
 
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 564.
+(Font)              scaled to size 8.32214pt on input line 583.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 564.
+(Font)              scaled to size 8.32214pt on input line 583.
 LaTeX Font Info:    Font shape `JT2/mc/b/n' in size <9> not available
-(Font)              Font shape `JT2/mc/bx/n' tried instead on input line 564.
+(Font)              Font shape `JT2/mc/bx/n' tried instead on input line 583.
 LaTeX Font Info:    Font shape `JT2/mc/bx/n' in size <9> not available
-(Font)              Font shape `JT2/gt/m/n' tried instead on input line 564.
+(Font)              Font shape `JT2/gt/m/n' tried instead on input line 583.
 LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 564.
+(Font)              scaled to size 8.32214pt on input line 583.
 LaTeX Font Info:    Font shape `JY2/mc/b/n' in size <9> not available
-(Font)              Font shape `JY2/mc/bx/n' tried instead on input line 564.
+(Font)              Font shape `JY2/mc/bx/n' tried instead on input line 583.
 LaTeX Font Info:    Font shape `JY2/mc/bx/n' in size <9> not available
-(Font)              Font shape `JY2/gt/m/n' tried instead on input line 564.
+(Font)              Font shape `JY2/gt/m/n' tried instead on input line 583.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 564.
+(Font)              scaled to size 8.32214pt on input line 583.
 
-LaTeX Warning: Reference `tagEx' on page 8 undefined on input line 564.
-
-
-LaTeX Warning: Reference `tagEx' on page 8 undefined on input line 564.
+LaTeX Warning: Reference `tagEx' on page 8 undefined on input line 583.
 
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 590.
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 4.62341pt on input line 590.
-
-Overfull \hbox (24.07886pt too wide) detected at line 590
-[]
- []
+LaTeX Warning: Reference `tagEx' on page 8 undefined on input line 583.
 
 [8]
-Overfull \hbox (35.30734pt too wide) detected at line 597
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 6.47278pt on input line 609.
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 4.62341pt on input line 609.
+
+Overfull \hbox (24.07886pt too wide) detected at line 609
+[]
+ []
+
+
+Overfull \hbox (35.30734pt too wide) detected at line 616
 []
  []
 
 LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 7.39746pt on input line 644.
+(Font)              scaled to size 7.39746pt on input line 663.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 7.39746pt on input line 644.
+(Font)              scaled to size 7.39746pt on input line 663.
 
-Package Listings Warning: Text dropped after begin of listing on input line 644
+Package Listings Warning: Text dropped after begin of listing on input line 663
 .
 
 
 LaTeX Warning: Reference `自然言語処理' on page 9 undefined on input line
- 674.
+ 693.
 
+[9]
 
-Package Listings Warning: Text dropped after begin of listing on input line 700
+Package Listings Warning: Text dropped after begin of listing on input line 719
 .
 
-[9]) [10]
+) [10]
 \openout2 = `implementation.aux'.
 
  (./implementation.tex
 第2章
 File: figure/インタープリタ.png Graphic file (type bmp)
-<figure/インタープリタ.png> [11
+<figure/インタープリタ.png>
+Underfull \hbox (badness 10000) in paragraph at lines 45--53
+\OT1/cmr/m/n/10 DOC-TYPE \JY2/mc/m/n/10 ト ークンを表す \OT1/cmtt/m/n/10
+ DOCTYPEToken(name: String, public[]-identifier: String,
+ []
+
+
+Underfull \hbox (badness 5985) in paragraph at lines 45--53
+\OT1/cmtt/m/n/10 system[]-identifier: String, force[]-quirks[]-flag: Boolean)\O
+T1/cmr/m/n/10 , \JY2/mc/m/n/10 開始タグト ークンを表す
+ []
+
+
+Overfull \hbox (11.04922pt too wide) in paragraph at lines 45--53
+\OT1/cmtt/m/n/10 startTagToken(name: String, self[]-closing[]-flag: Boolean, at
+tributes: List[Attribute])\OT1/cmr/m/n/10 ,
+ []
+
+
+Overfull \hbox (5.9634pt too wide) in paragraph at lines 45--53
+\JY2/mc/m/n/10 終了タグト ークンを表す \OT1/cmtt/m/n/10 endTagToken(
+name: String, self[]-closing[]-flag: Boolean, attributes:
+ []
+
+[11
 
 
 
-]) [12]
+] [12]) [13]
 \openout2 = `evaluation.aux'.
 
  (./evaluation.tex
 第3章
-
-Overfull \hbox (17.2656pt too wide) in paragraph at lines 22--38
-[][][][] 
- []
-
-[13
+[14
 
 
 
-]) [14]
+] [15]) [16] [17]
 \openout2 = `conclusion.aux'.
 
  (./conclusion.tex
 第4章
 File: figure/tagname.png Graphic file (type bmp)
-<figure/tagname.png>) [15
+<figure/tagname.png> [18
 
 
 
-]
+]) [19]
 \openout2 = `acknowledgments.aux'.
 
- (./acknowledgments.tex) [16
+ (./acknowledgments.tex) [20
 
 
 ]
-(C:/Users/ayaka/Desktop/textest/temp/target/thesis.bbl) [17
+(C:/Users/ayaka/Desktop/textest/temp/target/thesis.bbl) [21
 
 
 ]
@@ -653,13 +671,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 4418 strings out of 481133
- 58714 string characters out of 5919255
- 335450 words of memory out of 5000000
- 20350 multiletter control sequences out of 15000+600000
+ 4423 strings out of 481133
+ 58793 string characters out of 5919255
+ 336496 words of memory out of 5000000
+ 20355 multiletter control sequences out of 15000+600000
  548308 words of font info for 107 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 38i,15n,40p,355b,1748s stack positions out of 5000i,500n,10000p,500000b,80000s
+ 38i,15n,40p,371b,1121s stack positions out of 5000i,500n,10000p,500000b,80000s
 
-Output written on C:/Users/ayaka/Desktop/textest/temp/target/thesis.dvi (20 pag
-es, 48384 bytes).
+Output written on C:/Users/ayaka/Desktop/textest/temp/target/thesis.dvi (24 pag
+es, 60256 bytes).

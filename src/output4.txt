@@ -990,19 +990,6 @@ EmitCorrect -> true
  -> true
 
 testnum :52;
-state : Data_state
-lastStartTagName : null
-input : "<![CDATA[foo]]>"
-implement : List(characterToken(foo), endOfFileToken())
-correct : List(commentToken([CDATA[foo]]), endOfFileToken())
-implement_error : List()
-correct_error :  cdata-in-html-content
-errorText -> false
-EmitCorrect -> false
-
- -> false
-
-testnum :53;
 state : CDATA_section_state
 lastStartTagName : null
 input : "foo&#32;]]>"
@@ -1015,7 +1002,7 @@ EmitCorrect -> true
 
  -> true
 
-testnum :54;
+testnum :53;
 state : CDATA_section_state
 lastStartTagName : null
 input : "foo&#32;]]>&#32;"
@@ -1028,7 +1015,7 @@ EmitCorrect -> true
 
  -> true
 
-testnum :55;
+testnum :54;
 state : CDATA_section_state
 lastStartTagName : null
 input : "foo]]]>"
@@ -1041,7 +1028,7 @@ EmitCorrect -> true
 
  -> true
 
-testnum :56;
+testnum :55;
 state : CDATA_section_state
 lastStartTagName : null
 input : "foo"
@@ -1054,7 +1041,7 @@ EmitCorrect -> true
 
  -> true
 
-testnum :57;
+testnum :56;
 state : CDATA_section_state
 lastStartTagName : null
 input : "foo]"
@@ -1067,7 +1054,7 @@ EmitCorrect -> true
 
  -> true
 
-testnum :58;
+testnum :57;
 state : CDATA_section_state
 lastStartTagName : null
 input : "foo]]"
