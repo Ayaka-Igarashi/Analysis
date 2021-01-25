@@ -294,8 +294,10 @@ $[\ $Emit(CharacterToken($\mathcal{T}_{NP}$(T$^\prime_1$))), $\ldots$,Emit(Chara
 %               [.NP np2 ]
 %            ]
 %       ]\\
-(i)の場合, 変数に値を代入するという意味のSet文であるので, 
-$[\ $Set($\mathcal{T}_{NP_{I}}$(T$_1$), $\mathcal{T}_{NP_{C}}$(T$_2$)) $\ ]$ を返す. \\
+(i)の場合, 変数に値を代入するという意味のSet文である. \\
+$\mathcal{D}$(T$_1$) = [T$_1^1$, $\ldots$, T$_1^n$] の時, 
+$[\ $Set($\mathcal{T}_{NP_{I}}$(T$_1^1$), $\mathcal{T}_{NP_{C}}$(T$_2$)), $\ldots$,Set($\mathcal{T}_{NP_{I}}$(T$_1^n$), $\mathcal{T}_{NP_{C}}$(T$_2$)) $\ ]$ を返す. \\
+% $[\ $Set($\mathcal{T}_{NP_{I}}$(T$_1$), $\mathcal{T}_{NP_{C}}$(T$_2$)) $\ ]$ を返す. \\
 % 変数の状態を変える.
 % \Tree [.VP [.VB set ]
 %             [.NP np ]
@@ -306,7 +308,9 @@ $[\ $Set($\mathcal{T}_{NP_{I}}$(T$_1$), $\mathcal{T}_{NP_{C}}$(T$_2$)) $\ ]$ を
 %         ]\\
 (ii)の場合, 変数の状態を変えるという意味のSet文である. \\
 部分木T$_2$内にある文字列が``on''だったら, 
-$[\ $Set($\mathcal{T}_{NP_{I}}$(T$_1$), On) $\ ]$ を返す. \\
+$\mathcal{D}$(T$_1$) = [T$_1^1$, $\ldots$, T$_1^n$] の時, 
+$[\ $Set($\mathcal{T}_{NP_{I}}$(T$_1^1$), On), $\ldots$,Set($\mathcal{T}_{NP_{I}}$(T$_1^n$), On) $\ ]$ を返す. \\
+% $[\ $Set($\mathcal{T}_{NP_{I}}$(T$_1$), On) $\ ]$ を返す. \\
 % ``off''だったら, 
 % Set($\mathcal{T}_{NP}$(Node(NP, np)), CBool(false)) を返す. \\
 
@@ -449,13 +453,16 @@ $[\ $Create(``'', $\mathcal{T}_{NP}$(T$^\prime$)) $\ ]$を返す.
 % $[\ $TreatAsAnythingElse() $\ ]$ を返す. \\
 
 \subsection{名詞句(NPノード)の分割 $\mathcal{D}$}
-$\mathcal{D}$はTag型の値 T を受け取り, Tag型のリストの値を返す. \\
-% 分割と変換を一つの関数にまとめたほうがいいかも
-NPノードを受け取って, NPノードのリストを返す関数. \\
-``A and B''や``A, B''など1つの名詞句の中に複数の名詞が含まれている場合もある.
-それらを分解し, 名詞のリストとして出力する.
+$\mathcal{D}$はTag型の値 T を受け取り, それを分割したTag型のリストの値を返す. 
 
-例えば, 
+% 分割と変換を一つの関数にまとめたほうがいいかも
+% NPノードを受け取って, NPノードのリストを返す関数. \\
+名詞句には, 
+``A and B''や``A, B''のような, 複数の名詞句の連結の形であることがある. 
+%など1つの名詞句の中に複数の名詞が含まれている場合もある.
+$\mathcal{D}$はそれらを分解し, Tag型のリストとして出力するものである. 
+
+例えば, 以下のandで繋がれている名詞句を
 ``the current tag token and an end-of-file token''\\
 \Tree [.NP 
         [.NP [.DT the ]
@@ -467,7 +474,7 @@ NPノードを受け取って, NPノードのリストを返す関数. \\
             [.NN end-of-file ]
             [.NN token ] ]
       ]\\
-これを, \\
+以下の2つの名詞句のTag型に分解する. \\
 \Tree [.NP [.DT the ]
               [.JJ current ]
               [.NN tag ]
@@ -475,7 +482,6 @@ NPノードを受け取って, NPノードのリストを返す関数. \\
 \Tree [.NP [.DT a ]
             [.NN end-of-file ]
             [.NN token ] ]\\
-という風にする.
 % NPの分解とか(and)
 % 名詞句には複数の名詞をandやカンマで区切っているものがある.\\
 % それをNPノードのリストに分解した.
@@ -499,16 +505,18 @@ NPノードを受け取って, NPノードのリストを返す関数. \\
     
 \subsection{名詞句(NPノード)の変換 $\mathcal{T}_{NP_C}$, $\mathcal{T}_{NP_I}$}
 $\mathcal{T}_{NP_C}$, $\mathcal{T}_{NP_I}$はTag型の値 T を受け取り, それぞれCommandValue型, ImplementVariable型の値を返す. 
-$\mathcal{T}_{NP_C}$と$\mathcal{T}_{NP_I}$は変換後の型が違うだけで, 同じ動作をする. 
+$\mathcal{T}_{NP_C}$と$\mathcal{T}_{NP_I}$は変換後の型が違うのみで, 同じ動作をする. 
 
+Tag型の値Tから, CommandValue型やImplementVariable型へ変換する際, 
+T内の文字列に変数名や値などを表す特定の文字列が含まれているかどうかと, 何らかの参照関係が存在するかを調べるというやり方をとった. 
 % \subsubsection*{CommandValue型, ImplementVariable型への変換}
-HTML5の仕様書には様々な変数の言葉や値の言葉が出てくる. 
-NPノード内の自然言語で記述している言葉から, CommandValue型やImplementVariable型というプログラムが認識できる形にする際, 
-ノード内に含まれる文字列に, 変数名や値などを表す特定の文字列が含まれているかどうかと, 
-そのノード内の文字列に何らかの参照関係が存在するかを調べるというやり方をとった. 
+% HTML5の仕様書には様々な変数の言葉や値の言葉が出てくる. 
+% NPノード内の自然言語で記述している言葉から, CommandValue型やImplementVariable型というプログラムが認識できる形にする際, 
+% ノード内に含まれる文字列に, 変数名や値などを表す特定の文字列が含まれているかどうかと, 
+% そのノード内の文字列に何らかの参照関係が存在するかを調べるというやり方をとった. 
 % NPノードをCommandValue型に変換する際, 
 
-例えば, 変換対象のNPノード内に"return state"という言葉が含まれていた場合は, ReturnStateを返す. \\
+例えば, T内に"return state"という文字列が含まれていた場合は, $\mathcal{T}_{NP_C}$の場合はReturnState, $\mathcal{T}_{NP_I}$の場合はIReturnStateを返す. \\
 
 %参照関係の使用の部分を書く
 あるCommandValue型の値cvalに変換され, 参照番号が-1でない数字nのとき(その単語にラベルnの参照関係があるとき)は, 
@@ -518,37 +526,48 @@ Substitute("x\_n", cval) を返す. \\
 特定の単語にマッチせず, かつ参照番号が-1でない数字nのとき(その単語にラベルnの参照関係があるとき)は 変数"x\_n"という意味を持つ, Variable("x\_n") を返す.
 また, name, valueが含まれており, 参照番号が-1でない数字nの場合はNameOf(Variable("x\_n")), ValueOf(Variable("x\_n")) を返す.
 
-例：its tag name木を書く
-この文字列には, nameにマッチするかつ, 
+\subsubsection{例}
+Tag型の値が
+\begin{figure}[H]
+      \centering
+      \includegraphics[keepaspectratio, scale=0.55]
+           {figure/itstagname.jpg}
+\end{figure}
+の場合, 
+% \Tree [.NP  [.JJ Token(its) ]
+%             [.NN tag ]
+%             [.NN name ] ]
+この文字列には, nameという単語が含まれているかつ, ``its''に参照関係の番号1がついているので, NameOf(Variable("x\_1")) を返す. 
 
 \section{条件分岐文の処理}
-Command変換の時に, If文をまとめてあれしなかったのは, 
-If文の内容をまとめて取り出すのではなく, 順に一つの要素ずつ取り出したのは, 
-``If $\cdots$ then $\cdots$. Otherwise $\cdots$.''という決まった形である
-自ら組み立てようとする方針にしたのは, Otherwiseの処理がどこまでなのかの判別が難しかったからである.
-仕様書内の条件分岐の文(If文)に関して, Command型のリストに変換する際, 条件分の範囲を判断するときに手を加えた.\\
+Command型への変換の時に, %If文をまとめてあれしなかったのは, 
+If(...,...,...)の様に, If文の内容をまとめて取り出すのではなく, If_(...), ..., Otherwise_(), ...という風に順に一つの要素ずつ取り出したのは, 
+If(...,...,...)という形に, 手動で組み立てようと考えからである. 
+この方針にした理由は, Otherwiseの処理がどこまでなのかの判別が難しかったからである.
+% ``If $\cdots$ then $\cdots$. Otherwise $\cdots$.''という決まった形である
+% 仕様書内の条件分岐の文(If文)に関して, Command型のリストに変換する際, 条件分の範囲を判断するときに手を加えた.\\
 % If the temporary buffer is the string ``script'', then switch to the script data escaped state. Otherwise, switch to the script data double escaped state. Emit the current input character as a character token.
 例えば, 仕様書内の\\
 ``If $\cdots$, then $\cdots$. Otherwise, switch to the script data escaped state. Emit the current input character as a character token.''
 という文の, ``Emit the current input character as a character token.'' の部分がOtherwiseの中の文として処理したいのか曖昧である. 
-このような文は人でも判断しずらいものだから, 機械による処理でも正しく解釈するのは難しい.
+このような文は人でも判断しずらいものもあった. %だから, 機械による処理でも正しく解釈するのは難しい.
 よって条件分岐文に関しては, 手動でどこまでがotherwiseにの処理に入る文なのかを判断するようにした. 
 
 具体的な処理としては, 
-Tag型からの変換によって出力されたCommandのリストに以下のような形があったら, 
-\begin{screen}
-      If_(b)\\
-      command$_1$\\
-      $\cdots$\\
-      command$_m$\\
-      Otherwise_()\\
-      command$_{m+1}$\\
-      $\cdots$\\
-      command$_n$
-\end{screen}
-これを考えられるIf文に組み立て, そこから正しいほうを人の手で選ぶ. \\
-
-例えば, 
+Tag型からの変換によって出力されたCommandのリストに \\
+$[\ $ If_(b), command$_1$, $\ldots$ , command$_m$, Otherwise_(), command$_{m+1}$, $\ldots$ , command$_n \ ]$\\
+% \begin{screen}
+%       If_(b)\\
+%       command$_1$\\
+%       $\cdots$\\
+%       command$_m$\\
+%       Otherwise_()\\
+%       command$_{m+1}$\\
+%       $\cdots$\\
+%       command$_n$
+% \end{screen}
+のような形があったら, これを考えられるIf文に組み立て, そこから正しいほうを人の手で選ぶ. 
+\subsection*{例}
 % \begin{screen}
 %       If_(b)\\
 %       command$_1$\\
@@ -557,7 +576,8 @@ Tag型からの変換によって出力されたCommandのリストに以下の�
 %       command$_3$
 % \end{screen}
 条件文の処理をする前のCommand列\\
-$[\ $ If_(b), command$_1$, Otherwise_(), command$_2$, command$_3 \ ]$
+% $[\ $ If_(b), command$_1$, Otherwise_(), command$_2$, command$_3 \ ]$
+$[\ $ If_(b), Switch($\cdots$), Otherwise_(), Switch($\cdots$), Emit($\cdots$)$ \ ]$
 は, \\
 % \begin{equation}
 %       \begin{cases*}
@@ -565,8 +585,10 @@ $[\ $ If_(b), command$_1$, Otherwise_(), command$_2$, command$_3 \ ]$
 %             [\  {\rm If(b, }[\ {\rm command}_1 \ ],\ [\ {\rm command}_2 \ ] )\ ,\ \ {\rm command}_3\ ]
 %       \end{cases*}
 % \end{equation}
-$\Rightarrow\ $ $[\ $ If(b, $[\ $command$_1 \ ]$, $[\ $command$_2$, command$_3 \ ]$ )$\ ]$\\
-$\Rightarrow\ $ $[\ $ If(b, $[\ $command$_1 \ ]$, $[\ $command$_2 \ ]$), command$_3 \ ]$ \\
+% $\Rightarrow\ $ $[\ $ If(b, $[\ $command$_1 \ ]$, $[\ $command$_2$, command$_3 \ ]$ )$\ ]$\\
+% $\Rightarrow\ $ $[\ $ If(b, $[\ $command$_1 \ ]$, $[\ $command$_2 \ ]$), command$_3 \ ]$ \\
+$\Rightarrow\ $ $[\ $ If(b, $[\ $Switch($\cdots$)$ \ ]$, $[\ $Switch($\cdots$), Emit($\cdots$)$ \ ]$ )$\ ]$\\
+$\Rightarrow\ $ $[\ $ If(b, $[\ $Switch($\cdots$)$ \ ]$, $[\ $Switch($\cdots$)$ \ ]$), Emit($\cdots$)$ \ ]$ \\
 と2つ出力され, 正しい解釈の方を手動で選び, 取り出す命令を決定する.
 % どの部分の文章までがotherwiseで処理したい文なのかが曖昧であった.
 

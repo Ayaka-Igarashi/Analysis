@@ -170,6 +170,8 @@ INPUT figure/setflag.jpg
 INPUT extractbb -B cropbox -O figure/setflag.jpg
 INPUT figure/create.jpg
 INPUT extractbb -B cropbox -O figure/create.jpg
+INPUT figure/itstagname.jpg
+INPUT extractbb -B cropbox -O figure/itstagname.jpg
 INPUT figure/tagTree.jpg
 INPUT extractbb -B cropbox -O figure/tagTree.jpg
 INPUT c:/w32tex/share/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisr-v.tfm

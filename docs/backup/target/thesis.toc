@@ -7,12 +7,13 @@
 \contentsline {subsection}{\numberline {1.1.2}条件文の変換 $\mathcal {T}\@uscore .{B}$}{3}%
 \contentsline {subsection}{\numberline {1.1.3}動詞句(VPノード)の変換 $\mathcal {T}\@uscore .{VP}$}{4}%
 \contentsline {subsubsection}{動詞句の分解}{4}%
-\contentsline {subsection}{\numberline {1.1.4}名詞句(NPノード)の分割 $\mathcal {D}$}{7}%
+\contentsline {subsection}{\numberline {1.1.4}名詞句(NPノード)の分割 $\mathcal {D}$}{6}%
 \contentsline {subsection}{\numberline {1.1.5}名詞句(NPノード)の変換 $\mathcal {T}\@uscore .{NP\@uscore .C}$, $\mathcal {T}\@uscore .{NP\@uscore .I}$}{7}%
+\contentsline {subsubsection}{例}{7}%
 \contentsline {section}{\numberline {1.2}条件分岐文の処理}{8}%
 \contentsline {section}{\numberline {1.3}命令への変換の例}{8}%
 \contentsline {section}{\numberline {1.4}1状態の形式的な定義}{9}%
-\contentsline {subsection}{\numberline {1.4.1}例}{10}%
+\contentsline {subsection}{\numberline {1.4.1}例}{9}%
 \contentsline {chapter}{\numberline {第2章}字句解析器の実装}{11}%
 \contentsline {section}{\numberline {2.1}実装の概観}{11}%
 \contentsline {subsection}{\numberline {2.1.1}字句解析器の環境}{11}%
@@ -29,6 +30,6 @@
 \contentsline {chapter}{\numberline {第3章}実装の評価}{14}%
 \contentsline {section}{\numberline {3.1}概要}{14}%
 \contentsline {section}{\numberline {3.2}HTML5字句解析テストの実行}{14}%
-\contentsline {subsection}{\numberline {3.2.1}問題点}{16}%
-\contentsline {chapter}{\numberline {第4章}結論}{18}%
-\contentsline {chapter}{参考文献}{21}%
+\contentsline {subsection}{\numberline {3.2.1}問題点}{15}%
+\contentsline {chapter}{\numberline {第4章}結論}{17}%
+\contentsline {chapter}{参考文献}{20}%
