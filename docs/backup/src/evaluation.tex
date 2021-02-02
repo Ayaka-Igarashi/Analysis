@@ -23,9 +23,24 @@ DOCTYPEやタグトークンなどのトークンが適切に排出されるか�
 不適切なXMLのコードの処理のテストであるxmlViolation.test 
 がある. 
 
-1つのテストあたり, 入力文字列, 出力するトークン列, 字句解析する際の初期状態, 直前に排出されている開始タグトークン名, 出力されるエラーの情報を持つ. 
+テストは1つあたり, プログラム\ref{HTMLtest}のようなJSON形式で記述されており, 
+"description"にそのテストの名前, "initialStates"に字句解析する際の初期状態(複数ある場合はそれぞれの場合を別々に実行する), "lastStartTag"に直前に排出されている開始タグトークンの名前, 
+"input"に字句解析器への入力文字列, "output"出力すると想定されるトークン列, "errors"に字句解析をする際出力され得る構文エラーの情報を持つ. 
+% 1つのテストあたり, 入力文字列, 出力するトークン列, 字句解析する際の初期状態, 直前に排出されている開始タグトークン名, 出力されるエラーの情報を持つ. 
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, caption=HTML5lib contentModelFlags.test,label=HTMLtest][htbp]
+  {
+    "description":"End tag closing RCDATA or RAWTEXT (ending with space)",
+    "initialStates":["RCDATA state", "RAWTEXT state"],
+    "lastStartTag":"xmp",
+    "input":"foo</xmp ",
+    "output":[["Character", "foo"]],
+    "errors":[
+        { "code": "eof-in-tag", "line": 1, "col": 10 }
+    ]
+  }
+\end{lstlisting}
 
-テストは, テストデータの入力文字列, 初期状態, 直前の開始タグトークン名を字句解析インタプリタの初期の環境として設定し, 
+本研究で行うテストは, テストデータの入力文字列, 初期状態, 直前の開始タグトークン名を字句解析インタプリタの初期の環境として設定し, 
 字句解析を行い, 
 テストデータの字句解析トークンの出力と, 実装したインタプリタによる字句解析トークンの出力を比べる. 
 また, テストデータのエラーの出力と, 実装したインタプリタによるエラーの出力も比較する. 
@@ -85,7 +100,7 @@ HTML5字句解析テストファイルのうち, ``domjs.test''の中の``CDATA 
       \begin{minipage}{0.5\hsize}
         \begin{center}
           \label{IFの処理}
-          \caption{IF文の処理した場合のテスト結果}
+          \caption{文字列の置き換えの処理した場合のテスト結果}
           \begin{tabular}{|l|c|} \hline
             テストファイル名 & 結果 \\ \hline 
             contentModelFlags.test & 24/24  \\
@@ -109,7 +124,11 @@ HTML5字句解析テストファイルのうち, ``domjs.test''の中の``CDATA 
 \end{table}
 
 % ちなみに, 
-まず, 状態名の置き換え, ``-''の``_''への置き換えのみを文字列の置き換えの前処理として行った場合, 表\ref{置き換えなし}のような結果になる. 
+状態名の置き換え, ``-''の``_''への置き換えのみを文字列の置き換えの前処理として行った場合, 表\ref{置き換えなし}の結果になり, 
+\ref{自然言語処理}章の置き換えの前処理をすべて行った場合, 表\ref{IFの処理}の結果になる. 
+
+文字列の置き換えの工夫をしなかったら, 適切に命令の抽出が出来ず, 字句解析器のテストを通してもあまり上手くいかなかったが, 
+置き換えの工夫を行った後は, 字句解析のテストの結果もよくなった. 
 % \begin{table}[H]
 %   \begin{center}
 %   \label{置き換えなし}
@@ -188,15 +207,53 @@ HTML5字句解析テストファイルのうち, ``domjs.test''の中の``CDATA 
 % % 入力文字列を字句解析器に通す前に, 入力文字列に対して文字の置き換えをする必要があった.
 % CDATAの部分の処理を実装していなかったため.
 
-\subsection{問題点}
-%上手くいかなかった点
+\subsection{上手くいかなかった点}
+文字列の置き換えの処理や, 構文木のアドホックな処理などをした状態でのテストである, 
+表\ref{IFの処理}の結果において, 上手くいかなかったテストがある理由として, 
+適切に命令を抽出できたと見えても, 実際は正しいものから少しずれていたというケースがあった. 
+
 % subsection*{test2.test,test3.test,test4.testが上手くいかなかった原因}
 %正しく命令が抽出されたように思われても、正しくなかった例
-``If the six characters starting from the current input character are an ASCII case-insensitive match for the word ``PUBLIC'', then consume those characters''
-この文章を自然言語解析させると``those characters''は``the six characters starting from the current input character''を参照するという出力になる.\\
-もし,この状態へ遷移した時点での入力文字列が``public $\cdots$''であったら,まず文字`p'を消費し,入力文字列が``ublic $\cdots$''となる.\\
-機械的にこの文章を処理しようとすると,現在の入力文字列``ublic $\cdots$''から文字列``public''を消費せよという解釈になるので,上手くいかない.\\
-この問題を手動で解決させた結果, 以下のようなテスト結果の改善が成された.\\
+例えば表\ref{state56}の字句解析の状態``After DOCTYPE name state''において, 入力文字列が``public $\cdots$''であるとき, 
+まず文字`p'を消費し, その文字マッチングによりAnything elseの処理を行う. 
+その処理の文の中の``If the six characters starting from the current input character are an ASCII case-insensitive match for the word ``PUBLIC'', then consume those characters''の部分において, 
+これを形式化すると, $[\ $If(AsciiCaseInsensitiveMatch(Substitute(``1'', CharactersFromCurrentInputCharacter(6)), CString(``PUBLIC''))), Comsume(Variable(``1''))$\ ]$となので, 
+この処理を行うとき, 変数``1''は``public''という文字列を指すことになる. よってComsume(Variable(``1''))は文字列``public''を消費するという操作になる. 
+
+しかし, この時入力文字列が``ublic $\cdots$''という状態であるはずだから, 適切に処理をするために本来は文字列``ublic''を消費すべきである. 
+%だが, 仕様書に書いてある意味をそのまま捉えてしまい, 文字列``public''を消費するという意味になってしまう. 
+このように, 人間なら``those characters''の指しているものをそのまま消費すると上手くいかないとわかることを, 機械だとうまく認識できないという問題が見られた. 
+\begin{table}[htb]
+  \begin{center}
+    \caption{HTML5字句解析仕様の状態 : After DOCTYPE name state}
+      \begin{tabular}{|p{2.5cm}|p{3.5cm}|p{8.5cm}|}\hline
+          {\bf 状態名} & \multicolumn{2}{|p{12cm}|}{After DOCTYPE name state}\\ \hline
+          {\bf 文字マッチ前の処理} & \multicolumn{2}{|p{12cm}|}  { Consume the next input character: } \\ \hline
+          {\bf 文字マッチ処理} & {\bf 文字} & {\bf 処理} \\ \cline{2-3}
+          & \begin{tabular}{l}$\cdots$ \end{tabular}& $\cdots$ \\ \cline{2-3}
+          & \begin{tabular}{l}Anything else \end{tabular}& If the six characters starting from the current input character are an ASCII case-insensitive match for the word "PUBLIC", then consume those characters and switch to the after DOCTYPE public keyword state. Otherwise, $\cdots$ \\ \hline
+      \end{tabular}
+      \label{state56}
+  \end{center}
+\end{table}
+
+
+% 例えば, 
+% 仕様書内の文章である, ``If the six characters starting from the current input character are an ASCII case-insensitive match for the word ``PUBLIC'', then consume those characters''
+% この文章を自然言語解析させると``those characters''は``the six characters starting from the current input character''を参照するという出力になる.\\
+% \ref{命令抽出}章で形式化したら, $[\ $If(AsciiCaseInsensitiveMatch(Substitute(``1'', CharactersFromCurrentInputCharacter(6)), CString(``PUBLIC''))), Comsume(Variable(``1''))$\ ]$
+% となる. 
+
+% CharactersFromCurrentInputCharacter(6)は, 現在消費した文字も含めた, 入力文字列の6文字という意味であるから, これは文字列``public''と解釈され, さらに変数``1''に``public''が代入される. 
+% % ``1''には``public''という文字が対応しているので, 
+% よって, Comsume(Variable(``1''))という命令は ``public''という文字列を消費するという意味になるが, 
+% 入力文字列は, ``ublic $\cdots$''なので, 消費できない. 
+
+% もし, この状態へ遷移した時点での入力文字列が``public $\cdots$''であったら,まず文字`p'を消費し,入力文字列が``ublic $\cdots$''となる.\\
+% 機械的にこの文章を処理しようとすると,現在の入力文字列``ublic $\cdots$''から文字列``public''を消費せよという解釈になるので,上手くいかない.\\
+
+この問題をアドホックな形で手動で解決させた結果, 以下の表\ref{Consumeの処理}のテスト結果になり, テストの内容がすべて成功していたので, 
+仕様書からの命令の抽出が基本的には, 上手くいったと思われる. 
 \begin{table}[htb]
   \begin{center}
     \label{Consumeの処理}
@@ -219,12 +276,10 @@ HTML5字句解析テストファイルのうち, ``domjs.test''の中の``CDATA 
     \end{tabular}
   \end{center}
 \end{table}
-テストの内容をすべて成功していたので, 
-仕様書からの命令の抽出が基本的には, 上手くいったと思われる. 
 
-\subsubsection*{思ったこと(memo)}
-%思ったこと
-Tag型からの命令抽出に関しては, 特殊な部分を逐一個別に対応していたので上手くいったと思われる.%手作業でやった部分が多いので上手くいったと思う.
+% \subsubsection*{思ったこと(memo)}
+% %思ったこと
+% Tag型からの命令抽出に関しては, 特殊な部分を逐一個別に対応していたので上手くいったと思われる.%手作業でやった部分が多いので上手くいったと思う.
 
 
 \end{document}
