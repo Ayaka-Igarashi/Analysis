@@ -1,0 +1,371 @@
+This is e-upTeX, Version 3.14159265-p3.8.3-u1.26-191112-2.6 (utf8.uptex) (TeX Live 2020/W32TeX) (preloaded format=uplatex 2020.4.7)  4 FEB 2021 14:26
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**thesis.tex
+(./thesis.tex
+pLaTeX2e <2020-02-02u03>+3 (based on LaTeX2e <2020-02-02> patch level 5)
+L3 programming layer <2020-04-06>
+(c:/w32tex/share/texmf-dist/tex/platex/jsclasses/jsreport.cls
+Document Class: jsreport 2020/02/02 jsclasses (okumura, texjporg)
+\jsc@mpt=\dimen150
+\jsc@mmm=\dimen151
+\jsc@smallskipamount=\skip47
+LaTeX Info: Redefining \textmc on input line 497.
+LaTeX Info: Redefining \textgt on input line 499.
+\symmincho=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `mincho' in version `bold'
+(Font)                  JY2/mc/m/n --> JY2/gt/m/n on input line 561.
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 9.24683pt on input line 752.
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 9.24683pt on input line 752.
+\fullwidth=\dimen152
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 7.39746pt on input line 891.
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 7.39746pt on input line 891.
+\c@part=\count166
+\c@chapter=\count167
+\c@section=\count168
+\c@subsection=\count169
+\c@subsubsection=\count170
+\c@paragraph=\count171
+\c@subparagraph=\count172
+\@abstractbox=\box61
+\c@figure=\count173
+\c@table=\count174
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\jsc@tocl@width=\dimen153
+\@lnumwidth=\dimen154
+\bibindent=\dimen155
+(c:/w32tex/share/texmf-dist/tex/platex/jsclasses/jslogo.sty
+Package: jslogo 2019/07/25 okumura, texjporg
+LaTeX Info: Redefining \TeX on input line 94.
+LaTeX Info: Redefining \LaTeX on input line 147.
+LaTeX Info: Redefining \LaTeXe on input line 200.
+)
+\heisei=\count175
+) (./title.sty
+Package: title 
+)
+(./thesis.sty
+Package: thesis 
+ (./docmute.sty
+Package: docmute 2012/03/22 v1.4 Input stand-alone documents
+)
+(c:/w32tex/share/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2020/01/20 v2.17e AMS math features
+\@mathmargin=\skip50
+
+For additional information on amsmath, use the `?' option.
+(c:/w32tex/share/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+
+(c:/w32tex/share/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks16
+\ex@=\dimen156
+))
+(c:/w32tex/share/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen157
+)
+(c:/w32tex/share/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count176
+LaTeX Info: Redefining \frac on input line 227.
+\uproot@=\count177
+\leftroot@=\count178
+LaTeX Info: Redefining \overline on input line 389.
+\classnum@=\count179
+\DOTSCASE@=\count180
+LaTeX Info: Redefining \ldots on input line 486.
+LaTeX Info: Redefining \dots on input line 489.
+LaTeX Info: Redefining \cdots on input line 610.
+\Mathstrutbox@=\box62
+\strutbox@=\box63
+\big@size=\dimen158
+LaTeX Font Info:    Redeclaring font encoding OML on input line 733.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 734.
+\macc@depth=\count181
+\c@MaxMatrixCols=\count182
+\dotsspace@=\muskip16
+\c@parentequation=\count183
+\dspbrk@lvl=\count184
+\tag@help=\toks17
+\row@=\count185
+\column@=\count186
+\maxfields@=\count187
+\andhelp@=\toks18
+\eqnshift@=\dimen159
+\alignsep@=\dimen160
+\tagshift@=\dimen161
+\tagwidth@=\dimen162
+\totwidth@=\dimen163
+\lineht@=\dimen164
+\@envbody=\toks19
+\multlinegap=\skip51
+\multlinetaggap=\skip52
+\mathdisplay@stack=\toks20
+LaTeX Info: Redefining \[ on input line 2859.
+LaTeX Info: Redefining \] on input line 2860.
+)
+(c:/w32tex/share/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2017/10/31 v2.20.4
+\thm@style=\toks21
+\thm@bodyfont=\toks22
+\thm@headfont=\toks23
+\thm@notefont=\toks24
+\thm@headpunct=\toks25
+\thm@preskip=\skip53
+\thm@postskip=\skip54
+\thm@headsep=\skip55
+\dth@everypar=\toks26
+)
+(c:/w32tex/share/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(c:/w32tex/share/texmf-dist/tex/latex/mdwtools/syntax.sty
+Package: syntax 1996/05/17 1.07 Syntax typesetting (MDW)
+\grammarparsep=\skip56
+\grammarindent=\dimen165
+\sdstartspace=\skip57
+\sdendspace=\skip58
+\sdmidskip=\skip59
+\sdtokskip=\skip60
+\sdfinalskip=\skip61
+\sdrulewidth=\dimen166
+\sdcirclediam=\dimen167
+\sdindent=\dimen168
+)
+(c:/w32tex/share/texmf-dist/tex/latex/bussproofs/bussproofs.sty
+Proof Tree (bussproofs) style macros. Version 1.1.
+\theLevel=\count188
+\myMaxLevel=\count189
+\myBoxA=\box64
+\myBoxB=\box65
+\myBoxC=\box66
+\myBoxD=\box67
+\myBoxLL=\box68
+\myBoxRL=\box69
+\thisAboveSkip=\dimen169
+\thisBelowSkip=\dimen170
+\newScoreStart=\dimen171
+\newScoreEnd=\dimen172
+\newCenter=\dimen173
+\displace=\dimen174
+\leftLowerAmt=\dimen175
+\rightLowerAmt=\dimen176
+\scoreHeight=\dimen177
+\scoreDepth=\dimen178
+\htLbox=\dimen179
+\htRbox=\dimen180
+\htRRbox=\dimen181
+\htRRRbox=\dimen182
+\htAbox=\dimen183
+\htCbox=\dimen184
+) (c:/w32tex/share/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2019/11/30 v1.2a Enhanced LaTeX Graphics (DPC,SPQR)
+
+(c:/w32tex/share/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks27
+)
+(c:/w32tex/share/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2019/11/30 v1.4a Standard LaTeX Graphics (DPC,SPQR)
+
+(c:/w32tex/share/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(c:/w32tex/share/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: dvipdfmx.def on input line 105.
+
+(c:/w32tex/share/texmf-dist/tex/latex/graphics-def/dvipdfmx.def
+File: dvipdfmx.def 2017/06/24 v5.0g Graphics/color driver for dvipdfmx
+))
+\Gin@req@height=\dimen185
+\Gin@req@width=\dimen186
+)
+(c:/w32tex/share/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count190
+\lst@gtempboxa=\box70
+\lst@token=\toks28
+\lst@length=\count191
+\lst@currlwidth=\dimen187
+\lst@column=\count192
+\lst@pos=\count193
+\lst@lostspace=\dimen188
+\lst@width=\dimen189
+\lst@newlines=\count194
+\lst@lineno=\count195
+\lst@maxwidth=\dimen190
+
+(c:/w32tex/share/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+\c@lstnumber=\count196
+\lst@skipnumbers=\count197
+\lst@framebox=\box71
+)
+(c:/w32tex/share/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2020/03/24 1.8d listings configuration
+))
+Package: listings 2020/03/24 1.8d (Carsten Heinz)
+ (./jlisting.sty
+Package: jlisting 2006/02/20 0.2 (Thor)
+\lst@nextchar=\count198
+\lst@inputfile=\read2
+)
+(c:/w32tex/share/texmf-dist/tex/latex/ascmac/ascmac.sty
+Package: ascmac 2020/01/15 v2.1 ascmac wrapper (community edition) 
+
+(c:/w32tex/share/texmf-dist/tex/latex/ascmac/tascmac.sty
+Package: tascmac 2020/01/15 v2.1 ascmac package (community edition) 
+\@savetbaselineshift=\dimen191
+\@saveybaselineshift=\dimen192
+\scb@x=\box72
+\scscb@x=\box73
+\@bw=\dimen193
+\@nbox=\box74
+\@nbody=\box75
+\@scw=\dimen194
+\ascmac@hoboxa=\box76
+\ascmac@hoboxb=\box77
+\@itemh=\dimen195
+\@iboxpos=\toks29
+\@iboxstr=\box78
+\@bwsp=\box79
+\@@bwsp=\box80
+\@bcal=\count199
+\shaderule=\dimen196
+))
+(c:/w32tex/share/texmf-dist/tex/latex/here/here.sty)
+(c:/w32tex/share/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count266
+\float@exts=\toks30
+\float@box=\box81
+\@float@everytoks=\toks31
+\@floatcapt=\box82
+)
+\len=\skip62
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 6.47278pt on input line 45.
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 4.62341pt on input line 45.
+)
+(c:/w32tex/share/texmf-dist/tex/latex/abstract/abstract.sty
+Package: abstract 2009/06/08 v1.2a configurable abstracts
+\abstitleskip=\skip63
+\absleftindent=\skip64
+\absrightindent=\skip65
+\absparindent=\skip66
+\absparsep=\skip67
+)
+(c:/w32tex/share/texmf-dist/tex/latex/l3backend/l3backend-dvips.def
+File: l3backend-dvips.def 2020-03-12 L3 backend support: dvips
+\l__pdf_internal_box=\box83
+\g__pdf_backend_object_int=\count267
+\l__pdf_backend_content_box=\box84
+\l__pdf_backend_model_box=\box85
+\g__pdf_backend_annotation_int=\count268
+\g__pdf_backend_link_int=\count269
+\g__pdf_backend_link_sf_int=\count270
+)
+(C:/Users/ayaka/Desktop/textest/abst/target/thesis.aux)
+\openout1 = `thesis.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for JY2/mc/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for JT2/mc/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+\c@lstlisting=\count271
+\docmute@nestinglevel=\count272
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 20.34302pt on input line 25.
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 20.34302pt on input line 25.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <22> not available
+(Font)              size <20.74> substituted on input line 25.
+
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 11.09619pt on input line 25.
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 11.09619pt on input line 25.
+LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
+(Font)              scaled to size 11.09619pt on input line 26.
+LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
+(Font)              scaled to size 11.09619pt on input line 26.
+
+Overfull \hbox (6.0096pt too wide) detected at line 75
+[]
+ []
+
+LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
+(Font)              scaled to size 9.24683pt on input line 119.
+LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
+(Font)              scaled to size 9.24683pt on input line 119.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [1
+
+
+
+
+]
+File: tree.jpg Graphic file (type bmp)
+<tree.jpg>
+
+Overfull \hbox (6.35846pt too wide) in paragraph at lines 132--134
+ [][] 
+ []
+
+(C:/Users/ayaka/Desktop/textest/abst/target/thesis.bbl
+LaTeX Font Info:    Font shape `JT2/gt/m/it' in size <10> not available
+(Font)              Font shape `JT2/gt/m/n' tried instead on input line 7.
+LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
+(Font)              scaled to size 9.24683pt on input line 7.
+LaTeX Font Info:    Font shape `JY2/gt/m/it' in size <10> not available
+(Font)              Font shape `JY2/gt/m/n' tried instead on input line 7.
+LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
+(Font)              scaled to size 9.24683pt on input line 7.
+) [2]
+(C:/Users/ayaka/Desktop/textest/abst/target/thesis.aux)
+
+LaTeX Font Warning: Size substitutions with differences
+(Font)              up to 1.26pt have occurred.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 3702 strings out of 481133
+ 49494 string characters out of 5919255
+ 312486 words of memory out of 5000000
+ 19712 multiletter control sequences out of 15000+600000
+ 539964 words of font info for 67 fonts, out of 8000000 for 9000
+ 934 hyphenation exceptions out of 8191
+ 38i,9n,40p,279b,285s stack positions out of 5000i,500n,10000p,500000b,80000s
+
+Output written on C:/Users/ayaka/Desktop/textest/abst/target/thesis.dvi (2 page
+s, 12588 bytes).

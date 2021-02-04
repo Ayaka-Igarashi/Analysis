@@ -1,0 +1,28 @@
+\begin{thebibliography}{1}
+
+\bibitem{manning-EtAl:2014:P14-5}
+Christopher~D. Manning, Mihai Surdeanu, John Bauer, Jenny Finkel, Steven~J.
+  Bethard, and David McClosky.
+\newblock The {Stanford} {CoreNLP} natural language processing toolkit.
+\newblock In {\em Association for Computational Linguistics (ACL) System
+  Demonstrations}, pages 55--60, 2014.
+
+\bibitem{HTML5Testing}
+Yasuhiko Minamide and Shunsuke Mori.
+\newblock Reachability analysis of the {HTML5} parser specification and its
+  application to compatibility testing.
+\newblock {\em FM 2012: Formal Methods}, 2012.
+
+\bibitem{トランスデューサの包含関係}
+小林 孝広.
+\newblock
+  交代性オートマトンを用いたトランスデューサの包含関係の保守的検査.
+\newblock {\em 東京工業大学　学士論文}, 2019.
+
+\bibitem{XSSAuditor}
+芹田 悠一郎.
+\newblock トランスデューサによる {XSS Auditor}
+  の有効性の分析.
+\newblock {\em 東京工業大学　学士論文}, 2017.
+
+\end{thebibliography}

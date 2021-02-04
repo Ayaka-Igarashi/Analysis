@@ -1,0 +1,46 @@
+\ProvidesPackage{thesis}
+
+\usepackage{docmute}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{url}
+\usepackage{syntax}
+\usepackage{bussproofs}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{listings, jlisting}
+\usepackage{ascmac}%四角囲い
+\usepackage{here}
+
+\renewcommand{\thesection}{\@arabic\c@section} 
+\renewcommand{\bibname}{参考文献}
+
+\newcommand{\myname}{五十嵐彩夏}
+
+\makeatletter
+\renewenvironment{thebibliography}[1]
+{\section*{\refname\@mkboth{\refname}{\refname}}%
+  \list{\@biblabel{\@arabic\c@enumiv}}%
+       {\settowidth\labelwidth{\@biblabel{#1}}%
+        \leftmargin\labelwidth
+        \advance\leftmargin\labelsep
+%  \setlength\itemsep{1.5zh}%←ここの数値を調整(行間のつまり具合)
+ \setlength\baselineskip{15pt}%←ここの数値を調整（追加）(文字の大きさ)
+        \@openbib@code
+        \usecounter{enumiv}%
+        \let\p@enumiv\@empty
+        \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+  \sloppy
+  \clubpenalty4000
+  \@clubpenalty\clubpenalty
+  \widowpenalty4000%
+  \sfcode`\.\@m}
+ {\def\@noitemerr
+   {\@latex@warning{Empty `thebibliography' environment}}%
+  \endlist}
+\makeatother
+
+% BNFの設定
+\newcommand{\bnfdef}{::=}
+\newlength{\len}
+\settowidth{\len}{$\bnfdef$}
+\newcommand{\bnfor}{\makebox[\len]{$|$}}

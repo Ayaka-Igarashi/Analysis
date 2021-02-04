@@ -1,0 +1,90 @@
+\documentclass[a4paper,twocolumn]{jsarticle}
+\usepackage{amsmath,amsthm,txfonts}
+%\usepackage[number]{abstract}   %%% abstractをone-column  『1 概要』となる。
+\usepackage{abstract}   %%% abstractをone-column
+\usepackage{balance}    %%% 最後のページの2段組の高さを揃える。\balanceを入れる。
+                        %%% そろえたくないときは、\nobalance
+\usepackage{graphicx}   %%% 図を入れる。
+
+\setlength{\columnseprule}{0.3pt}
+
+\title{論文形式の例}
+\author{Yoshiki KUMAZAWA}
+\date{\today}
+
+\begin{document}
+
+\twocolumn[
+\maketitle
+\begin{onecolabstract}
+2段組、概要は1段、2段組最終ページのコラム長さを揃える。
+\vskip 5mm
+\end{onecolabstract}
+]
+
+\balance
+%\nobalance
+
+\section{Lisa}
+
+21日付のニューヨーク
+
+\begin{table*}
+\centering
+\begin{tabular}{cc|c|c|c} \hline
+\multicolumn{2}{c|}{あ} & い & う & え \\\hline
+\multicolumn{2}{c|}{か} & き & く & け \\\hline
+\end{tabular}
+\caption{表}
+\end{table*}
+
+
+中村は梨田監督
+\begin{equation}
+f(x)=ddd
+\end{equation}
+
+近鉄の足高管理部長は20日
+
+\section{test}
+
+
+大Knuth (1984)を読んで
+
+\begin{figure*}
+\centering
+\includegraphics[width=3cm,clip]{tiger.eps}
+\caption{図}
+\end{figure*}
+
+\TeX のことは、Lamport (1994)やKnuth (1984)を読んで
+
+\section{Lisa}
+
+1979年、アップル社
+\section{参考文献}
+
+\begingroup
+\parindent=0pt   %% default=20pt
+
+\hangindent=20pt %% default=0pt
+Leslie Lamport.  \newblock \emph{{\LaTeX:} A Document
+    Preparation System}.  \newblock Addison-Wesley, Reading,
+  Massachusetts, second edition, 1994, ISBN~0-201-52983-1.
+  
+\hangindent=20pt %% default=0pt
+Donald~E. Knuth.  \newblock \textit{The \TeX{}book,}
+  Volume~A of \textit{Computers and Typesetting}, Addison-Wesley,
+  Reading, Massachusetts, second edition, 1984, ISBN~0-201-13448-9.
+
+\endgroup
+
+\begin{center}
+Yoshiki KUMAZAWA \\
+1-1-1 Bamba, Hikone\\
+Faculty of Economics,  Shiga University\\
+Shiga, JAPAN\\
+E-mail: kumazawaアットbiwako.shiga-u.ac.jp
+\end{center}
+
+\end{document}
