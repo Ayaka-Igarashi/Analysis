@@ -1,0 +1,29 @@
+\ProvidesPackage{thesis}
+
+
+% \usepackage{bxdpx-beamer}% dvipdfmxなので必要
+% \usepackage{pxjahyper}% 日本語で'しおり'したい
+% \renewcommand{\kanjifamilydefault}{\gtdefault}% 既定をゴシック体に
+
+\usepackage{docmute}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{url}
+\usepackage{syntax}
+\usepackage{bussproofs}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{listings, jlisting}
+\usepackage{ascmac}%四角囲い
+\usepackage{here}
+
+\renewcommand{\lstlistingname}{ソースコード}
+
+\newcommand{\myname}{五十嵐彩夏}
+
+% BNFの設定
+\newcommand{\bnfdef}{::=}
+\newlength{\len}
+\settowidth{\len}{$\bnfdef$}
+\newcommand{\bnfor}{\makebox[\len]{$|$}}
+
+\renewcommand{\bibname}{参考文献}

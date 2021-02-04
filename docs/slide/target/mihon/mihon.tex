@@ -1,0 +1,203 @@
+\documentclass[dvipdfmx,11pt,notheorems]{beamer}
+%%%% 和文用 %%%%%
+\usepackage{bxdpx-beamer}
+\usepackage{pxjahyper}
+\usepackage{minijs}%和文用
+\renewcommand{\kanjifamilydefault}{\gtdefault}%和文用
+
+%%%% スライドの見た目 %%%%%
+\usetheme{Madrid}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{frametitle}[default][center]
+\setbeamertemplate{navigation symbols}{}
+\setbeamercovered{transparent}%好みに応じてどうぞ）
+\setbeamertemplate{footline}[page number]
+\setbeamerfont{footline}{size=\normalsize,series=\bfseries}
+\setbeamercolor{footline}{fg=black,bg=black}
+%%%%
+
+%%%% 定義環境 %%%%%
+\usepackage{amsmath,amssymb}
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}
+\newtheorem{definition}{定義}
+\newtheorem{proposition}{命題}
+\newtheorem{lemma}{補題}
+\newtheorem{corollary}{系}
+\newtheorem{conjecture}{予想}
+\newtheorem*{remark}{Remark}
+\renewcommand{\proofname}{}
+%%%%%%%%%
+
+%%%%% フォント基本設定 %%%%%
+\usepackage[T1]{fontenc}%8bit フォント
+\usepackage{textcomp}%欧文フォントの追加
+\usepackage[utf8]{inputenc}%文字コードをUTF-8
+\usepackage{otf}%otfパッケージ
+\usepackage{lxfonts}%数式・英文ローマン体を Lxfont にする
+\usepackage{bm}%数式太字
+%%%%%%%%%%
+ 
+\title[略タイトル]{\LaTeX +Beamer でスライドを作ろう！}%[略タイトル]{タイトル}
+\author[Xaro]{Xaro Cydeykn}%[略名前]{名前}
+\institute[JPN]{Tokyo, Japan}%[略所属]{所属}
+\date{\today}%日付
+\begin{document}
+
+\begin{frame}[plain]\frametitle{}
+\titlepage %表紙
+\end{frame}
+
+\begin{frame}\frametitle{Contents}
+\tableofcontents %目次
+\end{frame}
+
+\section{何故Beamerを使うのか？}
+\begin{frame}\frametitle{PowerPointじゃだめなの？}
+\begin{alertblock}{PowerPointの問題点}
+\begin{itemize}
+\item PowerPointのバージョン・OSに依存する 
+\item PowerPointは有料
+\item 数式が（相当がんばらないと）汚い 
+\end{itemize}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}\frametitle{何故Beamerを使うのか？}
+\begin{block}{Beamerのよいところ}
+\begin{itemize}
+\item 論文・レジメの再利用が容易 
+\item レイアウトの微調整は\LaTeX に任せることができる 
+\item 数式がきれい 
+\end{itemize}
+\end{block}
+
+\begin{exampleblock}{数式の例} 
+\begin{equation*}
+\frac{\pi}{2} =\left( \int_{0}^{\infty} \frac{\sin x}{\sqrt{x}} dx \right)^2 =\sum_{k=0}^{\infty} \frac{(2k)!}{2^{2k}(k!)^2} \frac{1}{2k+1} 
+=\prod_{k=1}^{\infty} \frac{4k^2}{4k^2 - 1}
+\end{equation*}
+\end{exampleblock}
+\end{frame}
+
+
+\section{具体例}
+
+\begin{frame}\frametitle{定理環境の例}
+\begin{theorem}[Fermat]
+$a^{p-1} \equiv 1 \pmod{p}$
+\end{theorem}
+\pause
+\begin{theorem}[Wilson]
+\begin{equation}
+(p-1)! \equiv 1 \pmod{p}
+\end{equation}
+\end{theorem}
+\end{frame}
+
+\begin{frame}<1-2>\frametitle{オーバーレイ}
+\onslide*<1>{
+\Large{これは1枚目です}
+}
+\onslide*<2>{
+これは2枚目です
+\begin{theorem}[Euclid]
+There is no largest prime number.
+\end{theorem}
+}
+\end{frame}
+
+\begin{frame}\frametitle{色もつけれるよ}
+  {\color{red} red}(\alert{alert}),
+  {\color{blue} blue}(\structure{structure}),
+  {\color{green} green},
+  {\color{cyan} cyan},
+  {\color{magenta} magenta},
+  {\color{yellow} yellow},
+  {\color{black} black},
+  {\color{darkgray} darkgray},
+  {\color{gray} gray},
+  {\color{lightgray} lightgray},
+  {\color{orange} orange},
+  {\color{violet} violet},
+  {\color{purple} purple},
+  {\color{brown} brown},
+\end{frame}
+
+\begin{frame}\frametitle{いろんなブロック}
+\begin{block}{ブロック}
+これは普通のブロックです
+\end{block}
+
+\begin{alertblock}{警告ブロック}
+警告！これは警告ブロックだ！
+\end{alertblock}
+
+\begin{exampleblock}{例ブロック}
+例えば、こんなブロックです。
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}<1-2>\frametitle{画像も貼れるよ}
+\onslide*<1>{
+このように画像を貼れるよ
+%\begin{figure}[htb]
+%\centering
+%\includegraphics[width=12cm,clip]{dummygraph.pdf}
+%\caption{$f(x)=e^{-\frac{x}{10}}\sin(x)$}
+%\end{figure}%
+}
+\onslide*<2>{
+画像や表は各自用意してね
+%\begin{figure}[htb]
+%\centering
+%\includegraphics[width=8cm,clip]{sym4.pdf}
+%\caption{Cayley graph of $\mathfrak{S}_{4}$}
+%\end{figure}%
+}
+\end{frame}
+
+\begin{frame}\frametitle{まとめ}
+\LARGE{大事なのは中身です！}
+\end{frame}
+
+\begin{frame}\frametitle{}
+{\Large ありがとうございました}
+\end{frame}
+\appendix
+
+\newcounter{finalframe}
+\setcounter{finalframe}{\value{framenumber}}
+
+\begin{frame}[containsverbatim]\frametitle{dvipngの使い方(1)}
+\begin{block}{この様なファイルを用意する}
+\tiny{
+\begin{verbatim*}
+\documentclass[43pt]{jsarticle}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\pagestyle{empty}
+\begin{document}
+\begin{equation*}
+\sum_{k=0}^{\infty} \frac{(2k)!}{2^{2k}(k!)^2} \frac{1}{2k+1}=\frac{\pi}{2} 
+\end{equation*}
+\end{document}
+\end{verbatim*}
+}
+\end{block}
+\end{frame}
+
+\begin{frame}[containsverbatim]\frametitle{dvipngの使い方(2)}
+\begin{block}{使い方（コマンドライン）}
+\scriptsize{
+\begin{verbatim*}
+latex dvipng-sample.tex
+dvipng dvipng-sample.dvi -T tight -bd 1000
+\end{verbatim*}
+}
+\end{block}
+\end{frame}
+
+\setcounter{framenumber}{\value{finalframe}}
+\end{document}

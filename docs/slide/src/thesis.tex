@@ -1,0 +1,218 @@
+\documentclass[dvipdfmx]{beamer}
+
+\usetheme{Madrid}
+% \setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[page number]
+
+\newcommand{\backupbegin}{
+   \newcounter{framenumberappendix}
+   \setcounter{framenumberappendix}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \addtocounter{framenumberappendix}{-\value{framenumber}}
+   \addtocounter{framenumber}{\value{framenumberappendix}} 
+}
+
+\title[HTML5字句解析仕様の自然言語処理による意味解析]{HTML5字句解析仕様の\\自然言語処理による意味解析}
+\author[五十嵐 彩夏]{17B01064 五十嵐 彩夏}
+\institute[東工大]{東京工業大学 情報理工学院 数理・計算科学系}
+% \date{\today}
+\date{}
+
+\begin{document}
+
+% \frame{\titlepage}
+%表紙
+\begin{frame}\frametitle{}
+  \titlepage
+\end{frame}
+
+\begin{frame}{概要}
+あいうえおa
+\end{frame}
+
+\begin{frame}{構文解析木}
+   自然言語言語処理することによって, 得られる構文解析木は以下のようなものである. 
+
+\end{frame}
+
+% \begin{frame}{HTML5字句解析仕様の仕様記述言語}
+%    あいうえおa
+% \end{frame}
+
+% 字句解析仕様
+\begin{frame}{HTML5字句解析仕様}
+   字句解析の各状態の記述の例 \\
+   
+   　
+
+\begin{quote}
+   13.2.5.10 RCDATA end tag open state\\
+   Consume the next input character:\\
+   $\ \ \hookrightarrow$ASCII alpha
+
+   \ 
+   \begin{quote}
+      Create a new end tag token, set its tag name to the empty string. 
+      Reconsume in the RCDATA end tag name state. 
+   \end{quote}
+   $\ \ \hookrightarrow $Anything else
+
+   \ 
+   \begin{quote}
+      Emit a U+003C LESS-THAN SIGN character token and a U+002F SOLIDUS character token. 
+      Reconsume in the RCDATA state.
+   \end{quote}
+\end{quote}
+\end{frame}
+
+% 仕様記述言語
+\begin{frame}{仕様記述言語}
+   HTML5字句解析仕様の記述内容をもとに, 
+   その仕様記述言語を以下の型として定義した. 
+   \begin{description}
+       \item[Command] 命令文を表現する型
+       \item[Bool] 条件分岐文の条件部分を表現する型
+       \item[CommandValue] 字句解析仕様の変数や値を表現する型
+       \item[InplementVariable] 字句解析仕様の代入される変数を表現する型
+   \end{description}
+   それぞれの型が有する値は仕様書に出てくる文, 語句に基づいて定めた. 
+   例えば, Command型には以下のような値を持つ. 
+   \begin{alignat*}{3}
+      \mbox{ Command }::&= &\quad&\mbox{ If(b, cList$_1$, cList$_2$)} &\quad&\mbox{ // if b then cList$_1$ else cList$_2$ (cList$_1$, cList$_2$はCommand型のリストの値)}\\
+        &|& &\mbox{ Switch(cval)} & &\mbox{ // cvalが状態を表す値の時, 状態cvalへ遷移する} \\
+        &|& &\mbox{ Set(ival, cval)} & &\mbox{ // 変数ivalに値cvalを代入する (ival $\leftarrow$ cval)} \\
+        &|& &\mbox{ Emit(cval)} & &\mbox{ // cvalがトークンを表す値の時, トークンcvalを生成する} \\
+        &|& &\mbox{ Create(string, cval)} & &\mbox{ // cvalがトークンを表す値の時, } \\
+        & & & & &\mbox{ \hspace{12pt}トークンcvalを新たに作り, 変数stringにトークンcvalを代入する} \\
+        &\cdots& &  & & \\
+    \end{alignat*}
+\end{frame}
+
+% 字句解析仕様2
+\begin{frame}{HTML5字句解析仕様2}
+字句解析の各状態の記述の例 \\
+   
+\begin{quote}
+   13.2.5.10 RCDATA end tag open state\\
+   Consume the next input character:\\
+   $\ \ \hookrightarrow$ASCII alpha
+
+   \ 
+   \begin{quote}
+      Create a new end tag token, set its tag name to the empty string. 
+      Reconsume in the RCDATA end tag name state. 
+   \end{quote}
+   $\ \ \hookrightarrow $Anything else
+
+   \ 
+   \begin{quote}
+      Emit a U+003C LESS-THAN SIGN character token and a U+002F SOLIDUS character token. 
+      Reconsume in the RCDATA state.
+   \end{quote}
+\end{quote}
+　\\
+
+ASCII alphaの部分の仕様記述言語のプログラム\\
+
+\begin{quote}
+   Create(``1'', NewEndTagToken), \\
+   Set(INameOf(IVariable(``1'')), CString()), \\
+   Reconsume(StateName(RCDATA end tag name state)) 
+\end{quote}
+\end{frame}
+
+\begin{frame}{自然言語処理}
+   あいうえおa
+\end{frame}
+
+\begin{frame}{\texttt{Tag}型への変換}
+   あいうえおa
+\end{frame}
+
+%置き換え
+\begin{frame}{文字列の前処理}
+字句解析仕様の文に対してそのまま自然言語処理を適用すると, トークンの分割や品詞解析が適切な形で解釈されない場合がある. 
+そのため自然言語処理する際に前処理として, 特定の文字列の置き換えをし, 適切に文章が解釈されるようにする. 
+
+例えば, 以下のような置き換えを行う. 
+   \begin{itemize}
+    \item 状態名を1つのトークンとして認識させるため, 字句解析の状態名を表す語句に対して, 空白 及び ``\texttt{-}'' を ``\texttt{\_}'' に置き換える. ``('' , ``)'' を除く. 先頭を大文字にする.
+    \item ユニコード``U+xxxx''を1つのトークンとして認識させるため, ``+''を``\_''に置き換える. 
+    \item 命令文の解釈が上手くいくように, ``Reconsume''など自然言語の解釈が上手くいかない動詞の前に仮の主語を表す``you'' を加える. 
+    % \item 命令文の解釈が上手くいくように, 一部の動詞を表す文字列 ``Switch'', ``Reconsume'', ``Emit'', ``Flush'', ``Append'', ``Add'', ``Multiply'' の前に``you'' を加える. %特定の動詞の前
+    % \item ``-''で繋がれている単語は1つのトークンとして認識されないため, ``-'' を ``_''に置き換える.
+    % \item 句読点をまたいでいる場合,参照関係の解析が上手くいかないことがあったので, 参照関係が多く出てくるSet文に関して, 
+    % ``(,$|$.) set'' $\Rightarrow$ `` and set'' と置き換える.
+    % \item ``!''が文末記号と認識されるため, ``!'' は ``EXC'' に置き換える.
+ \end{itemize}
+\end{frame}
+
+\begin{frame}{\texttt{Tag}型への変換の例}
+   あいうえおa
+\end{frame}
+
+\begin{frame}{仕様記述言語への変換}
+   あいうえおa
+\end{frame}
+
+\begin{frame}{実装}
+   プログラミング言語Scalaで仕様記述言語のインタプリタを作成した. 
+そして, 仕様記述言語のインタプリタと, 自然言語処理によって形式化した字句解析仕様をもとに, HTML5の字句解析器を実装した. 
+
+% ------原稿---------------------------------------------------
+
+% -------------------------------------------------------------
+\end{frame}
+
+\begin{frame}{字句解析器のテスト}
+   HTML5の字句解析のテストデータを使い, 字句解析器のテストを行った. 
+
+   % ------原稿---------------------------------------------------
+   % 字句解析仕様から抽出した命令の正しさを検証するため, HTML5の字句解析のテストデータを使い, 字句解析器のテストを行った. 
+   % -------------------------------------------------------------
+\end{frame}
+
+\begin{frame}{字句解析器のテスト}
+   問題点書く
+   解決方法書く
+\end{frame}
+
+\begin{frame}{まとめ}
+   HTML5の字句解析仕様に対して, 自然言語処理の適用をし, その単語と構文木, 参照関係の解析結果を用いることで, 命令の自動形式化を行った. 
+   正しく命令の抽出を行えたことを確認できた. 
+
+   自然言語処理の適用において, 係り受け解析(dependency parse)の情報の利用も検討したい. 
+
+% ------原稿---------------------------------------------------
+% 本研究では, HTML5の字句解析仕様に対して, 命令の形式化を行い, そして自然言語処理の適用をし, 
+% その単語と構文木, 参照関係の解析結果を用いることで, 命令の自動形式化を行った. 
+% そして, 字句解析のインタプリタを作成し, HTML5の字句解析のテストを行い, 正しく命令の抽出が出来たことを確認できた. 
+% しかし, 
+% \texttt{Tag}型から仕様記述言語への変換において, 構文木が特殊な形である場合に個別に対応する必要出てきたり, 
+% 名詞句のTag型の値からCommandValue型への変換が単に文字列のマッチングをするという愚直なやり方になってしまった部分がある. 
+% よって, 自然言語処理の適用において, 係り受け解析(dependency parse)の情報の利用も検討したい. 
+\end{frame}
+
+% \begin{frame}{}
+%    a
+% \end{frame}
+
+% \begin{frame}{仕様記述言語:例}
+%    Switch to the Data state.
+
+%    $\Rightarrow$
+%    Switch(StateName(``Data state''))
+% \end{frame}
+
+%ここから付録===========================
+\appendix
+\backupbegin
+\begin{frame}[plain]
+\end{frame}
+
+% \begin{frame}{appendix}
+
+% \end{frame}
+\backupend
+\end{document}
