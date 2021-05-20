@@ -118,10 +118,44 @@ object TagStructure {
     str
   }
 
+  def getFirstLeaf(tag: Tag): String = {
+    tag match {
+      case Node(_, list) => {
+        list.headOption match {
+          case Some(s) => getFirstLeaf(s)
+          case None => ""
+        }
+      }
+      case Leaf(_, Token_(_,_, word, lem)) => lem
+      case _ => print("matchERROR: ");println(tag);""
+    }
+  }
+
   def getCorefId(tag: Tag): Int = {
     tag match {
       case Node(_, list) => getCorefId(list.head)
       case Leaf(_, Token_(_,id, _, _)) => id
     }
+  }
+
+  def displayTag(tag: Tag): String = {
+    var str = ""
+    tag match {
+      case Node(n, list) => {
+        str += (n.toString + "(")
+        for (t <- list) {
+          str += displayTag(t)
+          str += ","
+        }
+        if (str.endsWith(",")) str = str.substring(0, str.length - 1)
+        str += ")"
+      }
+      case Leaf(l, Token_(_,_, word, lem)) => {
+        str += (l.toString + "(")
+        str += lem + ")"
+      }
+      case _ => print("matchERROR: ");println(tag);""
+    }
+    str
   }
 }

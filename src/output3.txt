@@ -1,0 +1,18 @@
+
+// NPの部分まで反単一化するべき
+ROOT(S(VP(VB(emit),NP(DT(a),JJ(end_of_file),NN(token)))))
+ROOT(S(VP(VB(emit),NP(DT(a),JJ(U_FFFD),NNP(REPLACEMENT),NN(CHARACTER),NN(character),NN(token)))))
+ => ROOT(S(VP(VB(emit),z0)))
+
+// as a character token がくっついているせいで上手くいってない
+ROOT(S(VP(VB(emit),NP(DT(a),JJ(end_of_file),NN(token)))))
+ROOT(S(VP(VB(emit),NP(DT(the),JJ(current),NN(input),NN(character)),PP(IN(as),NP(DT(a),NN(character),NN(token))))))
+ => ROOT(S(z0))
+
+ROOT(S(VP(VB(emit),NP(DT(a),JJ(end_of_file),NN(token)))))
+ROOT(S(VP(VB(emit),NP(NP(DT(a),NML(NNP(u_003c),NNP(LESS_THAN),NNP(SIGN)),NN(character),NN(token)),CC(and),NP(DT(a),JJ(end_of_file),NN(token))))))
+ => ROOT(S(VP(VB(emit),NP(z0,z1,z2))))
+
+ROOT(S(VP(VB(append),NP(NP(DT(the),NN(lowercase),NN(version)),PP(IN(of),NP(DT(the),JJ(current),NN(input),NN(character)))),PP(IN(to),NP(NP(DT(the),JJ(current),NN(tag),NN(token),POS('s)),NN(tag),NN(name))))))
+ROOT(S(VP(VB(append),NP(DT(the),JJ(current),NN(input),NN(character)),PP(IN(to),NP(DT(the),JJ(temporary),NN(buffer))))))
+ => ROOT(S(VP(VB(append),z0,PP(IN(to),NP(z1,z2,NN(z3))))))

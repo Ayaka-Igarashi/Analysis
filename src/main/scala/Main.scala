@@ -75,7 +75,7 @@ object Main {
         PreserveDefinition.preserve(pStateMap, "src/definition.dat")
 //        PreserveDefinition.preserve(pStateMap, "src/definition.dat")
       }
-    } else if (true) {
+    } else if (false) {
       // 出力ファイル
       if (args.length > 1) {
         txtOut = new PrintWriter(new BufferedWriter(new FileWriter(new File(args(1)))))
@@ -89,7 +89,7 @@ object Main {
       PreserveDefinition.preserve(pStateMap, "src/definition.dat")
 
       //implement("<abar d=kl rt=hhh>tyu</huj>", "Data_state")
-    } else {
+    } else if (false) {
       if (args.length > 2) {
         txtOut2 = new PrintWriter(args(2))
         System.out.println("txtOut2: " + args(2))
@@ -99,6 +99,9 @@ object Main {
       pStateMap = PreserveDefinition.read[ListMap[String, pState]]("src/definition.dat")
       //writeDefinition(txtOut2)
       implement("<abar d=kl rt=hhh>tyu</huj>", "Data_state", null)
+    } else {
+
+      AUMain.auMain()
     }
 
     // ファイルを閉じる
